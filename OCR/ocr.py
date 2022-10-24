@@ -261,7 +261,7 @@ def score(out,file):
 
 
 if __name__ == "__main__":
-    pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+    
 
     filename,debug,output = parse()
 
@@ -269,8 +269,8 @@ if __name__ == "__main__":
     if debug: show(orig,'Original')
     image = orig.copy()
 
-    #availableProcesses = [normalize,remove_noise,deskew,remove_shadows]
-    availableProcesses = [remove_bg]
+    availableProcesses = [normalize,remove_noise,remove_shadows]
+    #availableProcesses = [remove_bg]
     #availableProcesses = [binaryAdaptative,normalize,grayscale,gaussianBlur,remove_noise,scaling,brightness_contrast]
 
     arr = [availableProcesses]

@@ -6,9 +6,13 @@ import os
 
 
 
-dateRE = r'(\d{2}\/\d{2}\/\d{4})'
+date1RE = r'(\d{4})[\/|\-](\d{2})[\/|\-](\d{2})'
+
+date2RE = r'(\d{2})[\/|\-](\d{2})[\/|\-](\d{4})'
 
 pdItemRE = r'(\S+) ([a-zA-Z].+)\s( |)((\d|\d{2}),[ ]{0,1}(\d{2}|\d{3}))$'
+
+lidlItemRE = r'^([^\d][^\n]+) ((\d|\d{2})[^\d]{0,2}(\d{2}|\d{3}))[ a-zA-Z]*$'
 
 totalRE = r'\d+(\.\s?|,\s?|[^a-zA-Z\d])\d{2}'
 
@@ -36,7 +40,11 @@ class Receipt():
 
 	def parse(self):
 		self.market = self.parse_market()
-		self.parse_items()
+		if self.market == 'Pingo Doce':
+			self.parse_items_pd()
+		elif self.market == 'Lidl':
+			self.parse_items_lidl()
+
 		self.date = self.parse_date()
 		self.total = 0
 		for item in self.items.keys():
@@ -50,7 +58,6 @@ class Receipt():
 			words = line.split()
 			matches = get_close_matches(keyword, words, 1, accuracy)
 			if matches:
-				print('\n\nMATCHED',matches,'\n',line,'\n',accuracy)
 				return line
 
 	
@@ -70,20 +77,37 @@ class Receipt():
 		return market_match
 
 
-	def parse_items(self):
+	def parse_items_lidl(self):
+		for i,line in enumerate(self.lines):
+			match = re.search(lidlItemRE,line)
+			#match2 = get_close_matches('total', line.split(), 1, 0.6)
+			match3 = get_close_matches('multibanco', line.split(), 1, 0.6)
+			match4 = get_close_matches('contribuinte', line.split(), 1, 0.6)
+			if match3:
+				break
+			if match:
+				itemName = match.group(1)
+				valueDecimal = float(match.group(4))*0.01
+				value = float(match.group(3))+valueDecimal
+				self.items[itemName] = round(value,2)
+				
+
+
+
+
+	def parse_items_pd(self):
 		jump = False
 		for i,line in enumerate(self.lines):
 			if get_close_matches('resumo', line.split(), 1, 0.6):
 				break
-			if jump: 
+			if jump:
 				jump = False
 				continue
 			match = re.search(pdItemRE,line)
 			if match:
-				print('Matched!')
+				value = 0
 				itemName = match.group(2)
 				if get_close_matches('poupanca', self.lines[i+1].split(), 1, 0.6):
-					print('found poupa','\n',self.lines[i+1].split())
 					ivalue = float(match.group(4).replace(',','.').replace(' ',''))
 					matchP = re.search(valueRE,self.lines[i+1])
 					if matchP:
@@ -92,21 +116,26 @@ class Receipt():
 						jump = True
 				else:
 					value = float(match.group(4).replace(',','.').replace(' ',''))
-				self.items[itemName] = value
+				self.items[itemName] = round(value,2)
 
 
 
 	def parse_date(self):
+		date_str = None
 		for line in self.lines:
-			match = re.search(dateRE, line)
-			if match:
-				date_str = match.group(1)
-				date_str = date_str.replace(" ", "")
+			match1 = re.search(date1RE, line)
+			match2 = re.search(date2RE, line)
+			if match1:
+				date_str = match1.group(3) +'-'+ match1.group(2) +'-'+ match1.group(1)
+			if match2:
+				date_str = match2.group(1) +'-'+ match2.group(2) +'-'+ match2.group(3)
+			if match1 or match2:
 				try:
 					dateutil.parser.parse(date_str)
+					break
 				except ValueError:
-					return None
-				return date_str
+					continue
+		return date_str
 
 	
 
@@ -133,12 +162,12 @@ class Receipt():
 			"total": self.total,
 		}
 
-		return json.dumps(object_data)
+		return json.dumps(object_data,indent=2)
 
 
 
 
-raw = open('_NoPreprocessing.txt').read()
+raw = open('_normalize-remove_shadows.txt').read()
 
 
 

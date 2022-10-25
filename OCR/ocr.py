@@ -277,7 +277,7 @@ if __name__ == "__main__":
     for L in range(len(availableProcesses) + 1):
         for subset in it.combinations(availableProcesses, L):
             arr.append(subset)
-    #arr = [[],[normalize],[normalize, binaryAdaptative],[normalize,binaryOtsuGauss]]
+    arr = [[],[normalize,remove_shadows]]
 
     results = {}
     #pl = (normalize,scaling,remove_noise_colored,brightness_contrast)
@@ -295,7 +295,7 @@ if __name__ == "__main__":
         print(f"Trying {name}\n({iter}/{len(arr)})")
         iter += 1
         #try:
-        cer,wer = score(generate_text(name,pipeline(image,i),output),'truerec1.txt')
+        cer,wer = score(generate_text(name,pipeline(image,i),output),'truerec2.txt')
         results[name] = [cer,wer]
         #except:
             #print(f"Error in {name}\n")

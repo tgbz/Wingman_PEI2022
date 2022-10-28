@@ -3,6 +3,7 @@ from difflib import get_close_matches
 import dateutil.parser
 import json
 import os
+import preProcessing as pp
 
 
 
@@ -32,7 +33,6 @@ class Receipt():
 		except:
 			print(f"Error importing '{info_json}'!")
 			exit(0)
-		self.parse()
 
 	def normalize(self,raw):
 			return os.linesep.join([s for s in raw.splitlines() if s.strip()]).lower().splitlines()
@@ -78,6 +78,20 @@ class Receipt():
 
 
 	def parse_items_lidl(self):
+		for i,line in enumerate(self.lines):
+			match = re.search(lidlItemRE,line)
+			#match2 = get_close_matches('total', line.split(), 1, 0.6)
+			match3 = get_close_matches('multibanco', line.split(), 1, 0.6)
+			match4 = get_close_matches('contribuinte', line.split(), 1, 0.6)
+			if match3:
+				break
+			if match:
+				itemName = match.group(1)
+				valueDecimal = float(match.group(4))*0.01
+				value = float(match.group(3))+valueDecimal
+				self.items[itemName] = round(value,2)
+
+	def parse_items_continente(self):
 		for i,line in enumerate(self.lines):
 			match = re.search(lidlItemRE,line)
 			#match2 = get_close_matches('total', line.split(), 1, 0.6)
@@ -165,10 +179,15 @@ class Receipt():
 		return json.dumps(object_data,indent=2)
 
 
+if __name__ == '__main__':
+	filename,debug,output = pp.parse()
 
+	orig = pp.cv2.imread(filename)
+	if debug: pp.show(orig,'Original')
+	image = orig.copy()
 
-raw = open('_normalize-remove_shadows.txt').read()
+	preProc = [pp.normalize,pp.remove_noise,pp.remove_shadows]
+	raw = pp.generate_text('out',pp.pipeline(image,preProc),output)
 
-
-
-Receipt(raw,'info.json')
+	r = Receipt(raw,'info.json')
+	r.parse()

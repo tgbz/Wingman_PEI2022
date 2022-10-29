@@ -1,14 +1,13 @@
 var sql = require('../config/database.js');
 
-var Apostador = function(a){
-    this.Name=a.Nome;
-    this.Apelido=a.Apelido
-    this.email=a.email;
+var User = function(a){
+    this.name=a.name;
     this.password=a.password;
-    this.nif=a.nif;
-    this.birthdate=a.birthdate;
-    this.cc=a.cc;
-    this.Euro=a.Euro;
-    this.ACA=a.ACA;
-    this.Dolar=a.Dolar;
+    this.email=a.email;
+    this.birthDate=a.birthDate;
+    //this.nif = a.nif;
+    this.gender=a.gender;
+    this.savings = a.savings;
 } 
+
+module.exports=User;

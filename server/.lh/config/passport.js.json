@@ -1,0 +1,34 @@
+{
+    "sourceFile": "config/passport.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1667063247803,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1667063622191,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,25 @@\n+const connection = require(\"./database\");\n+\n const customFields = {\n-    usernameField: 'email',\n\\ No newline at end of file\n+    emailField: 'email',\n     passwordField: 'password'\n-};\n+};\n+\n+const verifyCallback = (email, password, done) => {\n+        \n+        connection.query(\"SELECT * FROM users WHERE email = ? \", [email], function (err, results, fields) {\n+            if (err) console.log(err);\n+            if (results.length == 0) {\n+                return done(null, false);\n+            }\n+            const isValid = validPassword(password, results[0].hash, results[0].salt);\n+            user={id:results[0].id, email:results[0].email, hash:results[0].hash, salt:results[0].salt};\n+            if (isValid) {\n+                return done(null, user);\n+            }\n+            else {\n+                return done(null, false);\n+            }\n+        });\n+    };\n+    \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1667063661388,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,5 @@\n+const passport = require(\"passport\");\n const connection = require(\"./database\");\n \n const customFields = {\n     emailField: 'email',\n@@ -20,6 +21,13 @@\n             else {\n                 return done(null, false);\n             }\n         });\n-    };\n-    \n\\ No newline at end of file\n+};\n+\n+const strategy = new LocalStrategy(customFields, verifyCallback);\n+passport.use(strategy);\n+\n+passport.serializeUser((user, done) => {\n+    console.log(\"serializeUser\");\n+    done(null, user.id);\n+});\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1667063751437,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,5 +29,16 @@\n \n passport.serializeUser((user, done) => {\n     console.log(\"serializeUser\");\n     done(null, user.id);\n-});\n\\ No newline at end of file\n+});\n+\n+\n+passport.deserializeUser(function(userId, done) {\n+    console.log(\"deserializeUser\");\n+    connection.query(\"SELECT * FROM users WHERE id = ? \", [userId], function (err, results) {\n+        done(null, results[0]);\n+    });\n+});\n+\n+\n+\n"
+                },
+                {
+                    "date": 1667063911939,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,6 +39,47 @@\n         done(null, results[0]);\n     });\n });\n \n+/* Middleware  */\n \n+function validPassword(password, hash, salt) {\n+    var hashVerify = crypto.pbkdf2Sync(password, salt, 10000, 64, `sha512`).toString(`hex`);\n+    return hash === hashVerify;\n+}\n \n+function genPassword(password) {\n+    var salt = crypto.randomBytes(32).toString('hex');\n+    var genHash = crypto.pbkdf2Sync(password, salt, 10000, 64, `sha512`).toString(`hex`);\n+\n+    return {\n+        salt: salt,\n+        hash: genHash\n+    };\n+}\n+\n+function isAuth(req, res, next) {\n+    if (req.isAuthenticated()) {\n+        return next();\n+    }\n+    res.redirect('/notAuthorized');\n+}\n+\n+function isAdmin(req, res, next) {\n+    if (req.isAuthenticated() && req.user.admin == 1) {\n+        return next();\n+    }\n+    res.redirect('/notAuthorizedAdmin');\n+}\n+\n+\n+function userExists(req, res, next) {\n+    connection.query(\"SELECT * FROM users WHERE email = ? \", [req.body.email], function (err, results, fields) {\n+        if (err) console.log(err);\n+        if (results.length == 0) {\n+            return next();\n+        }\n+        else {\n+            res.redirect('/userExists');\n+        }\n+    });\n+}\n"
+                }
+            ],
+            "date": 1667063247803,
+            "name": "Commit-0",
+            "content": "const customFields = {\n    usernameField: 'email',\n    passwordField: 'password'\n};"
+        }
+    ]
+}

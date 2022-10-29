@@ -1,0 +1,22 @@
+{
+    "sourceFile": "config/database.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1667065053962,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1667065064856,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-r session = require('express-session');\n+var session = require('express-session');\n var mysql = require('mysql2/promise');\n var MySQLStore = require('express-mysql-session')(session);\n var db_config = {\n   host: 'localhost',\n"
+                }
+            ],
+            "date": 1667065053962,
+            "name": "Commit-0",
+            "content": "r session = require('express-session');\nvar mysql = require('mysql2/promise');\nvar MySQLStore = require('express-mysql-session')(session);\nvar db_config = {\n  host: 'localhost',\n  user: 'localUser',\n  password: 'localUser',\n  database: 'wingman',\n  timezone: \"Z\",\n  multipleStatements: true\n}\n\nvar connection = mysql.createPool(db_config)\n\nconnection.getConnection((err,connection)=> {\n  if(err)\n  throw err;\n  console.log('Database connected successfully');\n  connection.release();\n});\n\n\nmodule.exports = connection;\nvar sessionStore = new MySQLStore({}, connection);\nmodule.exports = sessionStore;"
+        }
+    ]
+}

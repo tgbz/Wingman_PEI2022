@@ -1,4 +1,6 @@
-var mysql = require('mysql2')
+var session = require('express-session');
+var mysql = require('mysql2/promise');
+var MySQLStore = require('express-mysql-session')(session);
 var db_config = {
   host: 'localhost',
   user: 'localUser',
@@ -10,11 +12,14 @@ var db_config = {
 
 var connection = mysql.createPool(db_config)
 
-var getConnection = function(callback) {
-  connection.getConnection(function(err, connection) {
-      callback(err, connection);
-  });
-};
+connection.getConnection((err,connection)=> {
+  if(err)
+  throw err;
+  console.log('Database connected successfully');
+  connection.release();
+});
 
-module.exports = getConnection;
+
 module.exports = connection;
+var sessionStore = new MySQLStore({}, connection);
+module.exports = sessionStore;

@@ -37,4 +37,48 @@ app.use(helmet({
     }
 }))
 
+var path = require('path');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var dataBases = require('./config/database');
 
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(cookieParser());
+
+
+var passport = require('passport');
+const { application } = require('express');
+require('./config/passport')(passport);
+
+//DB CONNECTION
+
+
+
+// Routes
+app.use('/', require('./routes/index'));
+
+
+
+
+
+app.use(function (req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+});
+
+// error handler
+app.use(function (err, req, res, next) {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
+    res.status(err.status || 500).send(`${err.message}`);
+    
+});
+
+module.exports = app;

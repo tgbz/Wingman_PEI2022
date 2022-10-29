@@ -6,17 +6,17 @@
             "activePatchIndex": 1,
             "patches": [
                 {
-                    "date": 1667057802552,
+                    "date": 1667058727778,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
                 },
                 {
-                    "date": 1667057847064,
-                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,3 +1,39 @@\n-const express = require('express');\n-const app = express();\n+var express = require('express');\n+var app = express();\n \n+//body parser for post requests\n+var bodyParser = require('body-parser')\n+app.use(bodyParser.json({limit: '50mb'}));         // to support JSON-encoded bodies\n+app.use(bodyParser.urlencoded({\n+    limit : '50mb',\n+    // to support URL-encoded bodies\n+    extended: true,\n+    parameterLimit:50000\n+}));\n+\n+var cors = require('cors')\n+const corsOpts = {\n+    origin: '*',\n+    credentials: true,\n+    methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],\n+    allowedHeaders: ['Accept', 'Authorization', 'Cache-Control', 'Content-Type', 'DNT', 'If-Modified-Since', 'Keep-Alive', 'Origin', 'User-Agent', 'X-Requested-With', 'Content-Length']\n+}\n+app.use(cors(corsOpts))\n+app.options('*', cors(corsOpts))\n+\n+//helmet (sets various HTTP headers to help protect the app)\n+var helmet = require('helmet')\n+app.use(helmet({\n+    //HSTS recommended config\n+    hsts: {\n+        maxAge: 31536000,\n+        includeSubDomains: true,\n+        preload: true\n+    },\n+    contentSecurityPolicy: {\n+        directives: {\n+            defaultSrc: [\"'none'\"]\n+        }\n+    }\n+}))\n+\n"
+                    "date": 1667058741542,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -61,8 +61,12 @@\n \n // Routes\n app.use('/', require('./routes/index'));\n \n+\n+\n+\n+\n app.use(function (req, res, next) {\n     var err = new Error('Not Found');\n     err.status = 404;\n     next(err);\n"
                 }
             ],
-            "date": 1667057802552,
+            "date": 1667058727778,
             "name": "Commit-0",
-            "content": "const express = require('express');\nconst app = express();\n\n"
+            "content": "var express = require('express');\nvar app = express();\n\n//body parser for post requests\nvar bodyParser = require('body-parser')\napp.use(bodyParser.json({limit: '50mb'}));         // to support JSON-encoded bodies\napp.use(bodyParser.urlencoded({\n    limit : '50mb',\n    // to support URL-encoded bodies\n    extended: true,\n    parameterLimit:50000\n}));\n\nvar cors = require('cors')\nconst corsOpts = {\n    origin: '*',\n    credentials: true,\n    methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],\n    allowedHeaders: ['Accept', 'Authorization', 'Cache-Control', 'Content-Type', 'DNT', 'If-Modified-Since', 'Keep-Alive', 'Origin', 'User-Agent', 'X-Requested-With', 'Content-Length']\n}\napp.use(cors(corsOpts))\napp.options('*', cors(corsOpts))\n\n//helmet (sets various HTTP headers to help protect the app)\nvar helmet = require('helmet')\napp.use(helmet({\n    //HSTS recommended config\n    hsts: {\n        maxAge: 31536000,\n        includeSubDomains: true,\n        preload: true\n    },\n    contentSecurityPolicy: {\n        directives: {\n            defaultSrc: [\"'none'\"]\n        }\n    }\n}))\n\nvar path = require('path');\nvar logger = require('morgan');\nvar cookieParser = require('cookie-parser');\nvar dataBases = require('./config/database');\n\n\napp.use(express.static(path.join(__dirname, 'public')));\n\n\napp.use(logger('dev'));\napp.use(express.json());\napp.use(cookieParser());\n\n\nvar passport = require('passport');\nconst { application } = require('express');\nrequire('./config/passport')(passport);\n\n//DB CONNECTION\n\n\n\n// Routes\napp.use('/', require('./routes/index'));\n\napp.use(function (req, res, next) {\n    var err = new Error('Not Found');\n    err.status = 404;\n    next(err);\n});\n\n// error handler\napp.use(function (err, req, res, next) {\n    // set locals, only providing error in development\n    res.locals.message = err.message;\n    res.locals.error = req.app.get('env') === 'development' ? err : {};\n    res.status(err.status || 500).send(`${err.message}`);\n    \n});\n\nmodule.exports = app;\n"
         }
     ]
 }

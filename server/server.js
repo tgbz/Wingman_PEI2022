@@ -53,7 +53,7 @@ app.use(cookieParser());
 
 var passport = require('passport');
 const { application } = require('express');
-require('./config/passport')(passport);
+//require('./config/passport')(passport);
 
 //DB CONNECTION
 
@@ -80,5 +80,11 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500).send(`${err.message}`);
     
 });
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
+});
+
 
 module.exports = app;

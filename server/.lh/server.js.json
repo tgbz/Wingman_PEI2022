@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 11,
+            "activePatchIndex": 15,
             "patches": [
                 {
                     "date": 1667061766661,
@@ -52,6 +52,22 @@
                 {
                     "date": 1667065473170,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -95,9 +95,9 @@\n \n app.use(express.static('public'))\n \n /* Para definir que estamos a usar ejs com o nosso view engine.  */\n-app.set(\"view engine\", \"ejs\");\n+app.set(\"view engine\", \"pug\");\n \n //DB CONNECTION\n \n dataBases.getConnection(function(err, connection) {\n"
+                },
+                {
+                    "date": 1667065883868,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,9 +62,15 @@\n \n app.use(session({\n     key: 'session_cookie_name',\n     secret: 'session_cookie_secret',\n-    store: dataBases.sessionStore, \n+    store: new MySQLStore({\n+        host: dataBases.mysql.host,\n+        port: 3306,\n+        user: dataBases.mysql.user,\n+        password: dataBases.mysql.password,\n+        database: \"session_store\"\n+    }),\n     resave: false,\n     saveUninitialized: false,\n     cookie: {\n         maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week\n"
+                },
+                {
+                    "date": 1667065926644,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -103,22 +103,9 @@\n \n /* Para definir que estamos a usar ejs com o nosso view engine.  */\n app.set(\"view engine\", \"pug\");\n \n-//DB CONNECTION\n \n-dataBases.getConnection(function(err, connection) {\n-    if (err) {\n-        console.log(err);\n-    } else {\n-        console.log(\"Connected to database\");\n-    }\n-});\n-\n- \n-\n-\n-\n // Routes\n app.use('/', require('./routes/index'));\n app.use('/users', require('./routes/users'));\n \n"
+                },
+                {
+                    "date": 1667065994868,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,12 +63,12 @@\n app.use(session({\n     key: 'session_cookie_name',\n     secret: 'session_cookie_secret',\n     store: new MySQLStore({\n-        host: dataBases.mysql.host,\n+        host: dataBases.db_config.host,\n         port: 3306,\n-        user: dataBases.mysql.user,\n-        password: dataBases.mysql.password,\n+        user: dataBases.db_config.user,\n+        password: dataBases.db_config.password,\n         database: \"session_store\"\n     }),\n     resave: false,\n     saveUninitialized: false,\n"
+                },
+                {
+                    "date": 1667066039248,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,12 +63,12 @@\n app.use(session({\n     key: 'session_cookie_name',\n     secret: 'session_cookie_secret',\n     store: new MySQLStore({\n-        host: dataBases.db_config.host,\n+        host: 'localhost',\n         port: 3306,\n-        user: dataBases.db_config.user,\n-        password: dataBases.db_config.password,\n+        user: 'root',\n+        password: 'password',\n         database: \"session_store\"\n     }),\n     resave: false,\n     saveUninitialized: false,\n"
                 }
             ],
             "date": 1667061766661,

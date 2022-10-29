@@ -63,7 +63,13 @@ Aqui estamos um sítio onde podemos guardar toda a informação respectiva à se
 app.use(session({
     key: 'session_cookie_name',
     secret: 'session_cookie_secret',
-    store: dataBases.sessionStore, 
+    store: new MySQLStore({
+        host: 'localhost',
+        port: 3306,
+        user: 'root',
+        password: 'password',
+        database: "session_store"
+    }),
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -97,19 +103,6 @@ app.use(express.static('public'))
 
 /* Para definir que estamos a usar ejs com o nosso view engine.  */
 app.set("view engine", "pug");
-
-//DB CONNECTION
-
-dataBases.getConnection(function(err, connection) {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log("Connected to database");
-    }
-});
-
- 
-
 
 
 // Routes

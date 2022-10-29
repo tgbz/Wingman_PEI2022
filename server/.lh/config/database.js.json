@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 5,
             "patches": [
                 {
                     "date": 1667065053962,
@@ -12,6 +12,22 @@
                 {
                     "date": 1667065064856,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-r session = require('express-session');\n+var session = require('express-session');\n var mysql = require('mysql2/promise');\n var MySQLStore = require('express-mysql-session')(session);\n var db_config = {\n   host: 'localhost',\n"
+                },
+                {
+                    "date": 1667065755795,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n var session = require('express-session');\n var mysql = require('mysql2/promise');\n-var MySQLStore = require('express-mysql-session')(session);\n+\n var db_config = {\n   host: 'localhost',\n   user: 'localUser',\n   password: 'localUser',\n@@ -20,6 +20,4 @@\n });\n \n \n module.exports = connection;\n-var sessionStore = new MySQLStore({}, connection);\n-module.exports = sessionStore;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1667066055293,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,10 +2,10 @@\n var mysql = require('mysql2/promise');\n \n var db_config = {\n   host: 'localhost',\n-  user: 'localUser',\n-  password: 'localUser',\n+  user: 'root',\n+  password: 'admin',\n   database: 'wingman',\n   timezone: \"Z\",\n   multipleStatements: true\n }\n"
+                },
+                {
+                    "date": 1667066280182,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n \n var db_config = {\n   host: 'localhost',\n   user: 'root',\n-  password: 'admin',\n+  password: 'password',\n   database: 'wingman',\n   timezone: \"Z\",\n   multipleStatements: true\n }\n"
+                },
+                {
+                    "date": 1667067300070,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n \n var db_config = {\n   host: 'localhost',\n   user: 'root',\n+  port: 3306,\n   password: 'password',\n   database: 'wingman',\n   timezone: \"Z\",\n   multipleStatements: true\n"
                 }
             ],
             "date": 1667065053962,

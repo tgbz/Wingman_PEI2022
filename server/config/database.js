@@ -1,10 +1,11 @@
 var session = require('express-session');
 var mysql = require('mysql2/promise');
-var MySQLStore = require('express-mysql-session')(session);
+
 var db_config = {
   host: 'localhost',
-  user: 'localUser',
-  password: 'localUser',
+  user: 'root',
+  port: 3306,
+  password: 'password',
   database: 'wingman',
   timezone: "Z",
   multipleStatements: true
@@ -21,5 +22,3 @@ connection.getConnection((err,connection)=> {
 
 
 module.exports = connection;
-var sessionStore = new MySQLStore({}, connection);
-module.exports = sessionStore;

@@ -37,23 +37,27 @@ router.get("/login", function(req, res) {
 
 
 //Register POST
+
+
  router.post("/register", function(req, res){
-      console.log(req.body);
-      Users.register(req.body, function (error, results, fields) {
-        if (error) {
-            console.log("error ocurred",error);
-            res.send({
-                "code":400,
-                "failed":"Erro no Registo"
-            })
-        } else {
-            console.log("Registo bem sucedio")
-        }
-    });
-    res.redirect("/login");
+  console.log(req.body)
+      Users.register(req.body)
+      .then(id=>{
+        console.log("Registo bem sucedio")
+        res.redirect("/login");
+      })
+      .catch(err=>{
+        console.log("error ocurred",err);
+        res.send({
+          "code":400,
+          "failed":err
+      })
+      })
 });
 
- 
+router.get("/register", function(req, res) {
+  res.render('registo-form');
+});
 
 
 module.exports = router;

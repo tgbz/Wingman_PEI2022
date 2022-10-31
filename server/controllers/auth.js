@@ -45,4 +45,14 @@ Auth.isLoggedInUser = function (req, res, next) {
         })
     })(req, res, next)
 }
-
+/*
+router.put('/:id/deactivate', Auth.isLoggedInUser, Auth.checkLevel(5,6), async (req,res) => {
+    Users.deactivate({ _id: mongoose.Types.ObjectId(req.params.id)}, (err, user) => {
+      if (err)
+        res.status(500).send("Não foi possível desativar o utilizador!")
+      if (!user)
+        res.status(500).send("Utilizador já se encontrava desativado!")
+      else 
+        res.send("Utilizador desativado com sucesso!")
+    })
+  })*/

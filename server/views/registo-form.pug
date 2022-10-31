@@ -1,12 +1,12 @@
 extends layout
 
-block content
+block content 
   .w3-container.w3-margin.w3-border
     .w3-container.w3-blue
         h3 Registo de novo utilizador:
-    form.w3-container(action='/users/registo' method='POST')
-        label Username:
-        input.w3-input(type="text" name="username")
+    form.w3-container(action='/users/register' method='POST')
+        label name:
+        input.w3-input(type="text" name="name") 
         label email:
         input.w3-input(type="text" name="email")
         label birthdate:

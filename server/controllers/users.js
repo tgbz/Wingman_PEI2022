@@ -1,48 +1,80 @@
 var sql = require('../config/database.js');
+var User = require('../models/user.js');
 var Users = module.exports;
+const salt = 14;
+var bcrypt = require('bcryptjs')
 
-Users.register = function (u) {    
-    console.log("here i am")
-    const saltHash=genPassword(req.body.password);
-    console.log(saltHash);
-    const salt = saltHash.salt;
-    const hash = saltHash.hash;
-    var parameters = [u.name, hash, u.email, u.birthDate, u.gender, u.savings]
-    console.log(parameters);
+Users.create = function(u){
+    bcrypt.genSalt(salt,function(err,salt){
+        bcrypt.hash(u.password,salt,function(err,hash){
+            let parameters = [u.name,hash,u.email,u.birthdate,u.gender,u.savings]
+            return new Promise(function(resolve, reject) {
+                sql.query("INSERT INTO user ( name, password, email, birthDate, gender, savings) VALUES ( ?, ?, ?, ?, ?, ?)", parameters, function (err, res) {
+                        if(err) {
+                            console.log("error: ", err);
+                            reject(err);
+                        }
+                        else{
+                            console.log(res)
+                            resolve(res.idUser);
+                        }
+                    });   
+                }) 
+        })
+    })
+}
+
+Users.register = function (newUser) {
     return new Promise(function(resolve, reject) {
-    sql.query("INSERT INTO users ( name, password, email , birthDate, gender, savings) VALUES ( ?, ?, ?, ?, ?, ?)", parameters, function (err, res) {
-            if(err) {
-                console.log("error: ", err);
-                reject(err);
-            }
-            else{
-                resolve(res.insertId);
-            }
-        });   
-    })       
-};
+    Users.getOne(newUser.email)
+    .then(user=>{
+        if(user==null){
+            Users.create(newUser)
+            .then(id =>{
+                resolve(id)
+            })
+            .catch(err=>{
+                reject(err)
+            })
+        }
+        else{
+            reject("Já existe uma conta associada a este utilizador")
+        }
+    })
+    .catch(err =>{
+        reject(err)
+    })
+})
+
+    /*
+    Users.getOne({email: newUser.email}, (err,user) => {
+        if (!user) {
+            bcrypt.genSalt(salt, function(err, salt) {
+                bcrypt.hash(newUser.password, salt, async function (err, hash) {
+                    newUser.password = hash
+                    try {
+                        newUser = await newUser.save()
+                        callback(null, newUser)
+                    } catch (error) {
+                        callback(error, null)
+                    }
+                })
+            })
+        }
+        else 
+            callback(null,false)
+    })*/
+}
 
 
-    
-/*User.login = function(u){
-    console.log(u)
-    return new Promise(function(resolve,reject){
-        sql.query("Select * from user where email= ?",u.email ,function(err,res){
-            if(err) {
-                console.log("error: ", err);
-                reject(err);
-            }
-            else{
-                bcrypt.compare(u.password, res.password, function (err, isMatch) {
-                    callback(null, isMatch);
-                });
-            }
-        });   
-    })       
-};*/
+
+
+
+
 
 
 Users.getOne = function(email) {
+    let user = null
     return new Promise(function(resolve,reject){
         sql.query("Select * from user where email= ?",email ,function(err,res){
             if(err) {
@@ -50,19 +82,14 @@ Users.getOne = function(email) {
                 reject(err);
             }
             else{
-                console.log(res[0]);
-                resolve(res[0]);
+                if(res[0]){
+                    user=res[0]
+                }
+                resolve(user);
             }
         });   
     })   
 }
 
-
-
-Users.comparePassword = function (candidatePassword, hash, callback) {
-	bcrypt.compare(candidatePassword, hash, function (err, isMatch) {
-		callback(null, isMatch);
-	});
-}
 
 

@@ -1,0 +1,58 @@
+{
+    "sourceFile": "server/routes/users.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 10,
+            "patches": [
+                {
+                    "date": 1667228242600,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1667228390364,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n         console.log(\"Registo bem sucedio\")\n         res.redirect(\"/login\");\n       })\n       .catch(err=>{\n-        console.log(\"error ocurred\",error);\n+        console.log(\"error ocurred\",err);\n         res.send({\n           \"code\":400,\n           \"failed\":\"Erro no Registo\"\n       })\n"
+                },
+                {
+                    "date": 1667229371652,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n       .catch(err=>{\n         console.log(\"error ocurred\",err);\n         res.send({\n           \"code\":400,\n-          \"failed\":\"Erro no Registo\"\n+          \"failed\":err\n       })\n       })\n       /*\n       Users.register(req.body, function (error, results, fields) {\n"
+                },
+                {
+                    "date": 1667229488087,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,8 @@\n //Register POST\n \n \n  router.post(\"/register\", function(req, res){\n-      console.log(req.body);\n       Users.register(req.body)\n       .then(id=>{\n         console.log(\"Registo bem sucedio\")\n         res.redirect(\"/login\");\n@@ -52,22 +51,8 @@\n           \"code\":400,\n           \"failed\":err\n       })\n       })\n-      /*\n-      Users.register(req.body, function (error, results, fields) {\n-        if (error) {\n-            console.log(\"error ocurred\",error);\n-            res.send({\n-                \"code\":400,\n-                \"failed\":\"Erro no Registo\"\n-            })\n-        } else {\n-            console.log(\"Registo bem sucedio\")\n-        }\n-    });\n-    res.redirect(\"/login\");\n-    */\n });\n \n  \n \n"
+                },
+                {
+                    "date": 1667229515349,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,8 +53,10 @@\n       })\n       })\n });\n \n- \n+router.get(\"/registo\", function(req, res) {\n+  res.render('registo-form');\n+});\n \n \n module.exports = router;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1667229609576,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,8 +39,9 @@\n //Register POST\n \n \n  router.post(\"/register\", function(req, res){\n+  console.log(req.body)\n       Users.register(req.body)\n       .then(id=>{\n         console.log(\"Registo bem sucedio\")\n         res.redirect(\"/login\");\n"
+                },
+                {
+                    "date": 1667230399833,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -54,9 +54,9 @@\n       })\n       })\n });\n \n-router.get(\"/registo\", function(req, res) {\n+router.get(\"/register\", function(req, res) {\n   res.render('registo-form');\n });\n \n \n"
+                },
+                {
+                    "date": 1667230665595,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,8 @@\n //Register POST\n \n \n  router.post(\"/register\", function(req, res){\n-  console.log(req.body)\n       Users.register(req.body)\n       .then(id=>{\n         console.log(\"Registo bem sucedio\")\n         res.redirect(\"/login\");\n"
+                },
+                {
+                    "date": 1667230691031,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,8 +39,9 @@\n //Register POST\n \n \n  router.post(\"/register\", function(req, res){\n+  console.log(req.body)\n       Users.register(req.body)\n       .then(id=>{\n         console.log(\"Registo bem sucedio\")\n         res.redirect(\"/login\");\n"
+                },
+                {
+                    "date": 1667230938084,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n         {console.log(err)\n           res.status(500).send(\"De momento não é possível processar a autenticação!\")\n         }\n       if(!user) \n-        res.status(401).send(\"Credenciais inválidas!\")\n+        res.status(401).send(err)\n       else {\n         req.login(user, () => {\n           var token = Auth.generateTokenUser(user);\n   \n"
+                },
+                {
+                    "date": 1667230957715,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n         {console.log(err)\n           res.status(500).send(\"De momento não é possível processar a autenticação!\")\n         }\n       if(!user) \n-        res.status(401).send(err)\n+        res.status(401).send(\"Credenciais inválidas!\")\n       else {\n         req.login(user, () => {\n           var token = Auth.generateTokenUser(user);\n   \n"
+                }
+            ],
+            "date": 1667228242600,
+            "name": "Commit-0",
+            "content": "var express = require('express');\nvar router = express.Router();\nvar passport = require('passport');\nvar Users = require('../controllers/users');\nvar Auth = require(\"../controllers/auth.js\");\n \n\n//LOGIN\nrouter.post(\"/login\", (req, res, next) => {\n    passport.authenticate('login', (err, user, info) => {\n      if (err)\n        {console.log(err)\n          res.status(500).send(\"De momento não é possível processar a autenticação!\")\n        }\n      if(!user) \n        res.status(401).send(\"Credenciais inválidas!\")\n      else {\n        req.login(user, () => {\n          var token = Auth.generateTokenUser(user);\n  \n          res.send({\n            token: token,\n            id: user.idUser,\n            name: user.name,\n            email: user.email,\n            level: user.level,\n          })\n        })\n      }\n    })(req, res, next);\n  })\n  \n\nrouter.get(\"/login\", function(req, res) {\n    res.render('login-form');\n});\n\n\n//Register POST\n\n\n router.post(\"/register\", function(req, res){\n      console.log(req.body);\n      Users.register(req.body)\n      .then(id=>{\n        console.log(\"Registo bem sucedio\")\n        res.redirect(\"/login\");\n      })\n      .catch(err=>{\n        console.log(\"error ocurred\",error);\n        res.send({\n          \"code\":400,\n          \"failed\":\"Erro no Registo\"\n      })\n      })\n      /*\n      Users.register(req.body, function (error, results, fields) {\n        if (error) {\n            console.log(\"error ocurred\",error);\n            res.send({\n                \"code\":400,\n                \"failed\":\"Erro no Registo\"\n            })\n        } else {\n            console.log(\"Registo bem sucedio\")\n        }\n    });\n    res.redirect(\"/login\");\n    */\n});\n\n \n\n\nmodule.exports = router;"
+        }
+    ]
+}

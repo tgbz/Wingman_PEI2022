@@ -27,7 +27,6 @@ module.exports = function (passport) {
             .catch(err =>{
                 done(err);
             })
-
             /*
             Users.getOne(email, function (err, user) {
                 if (err) done(err);

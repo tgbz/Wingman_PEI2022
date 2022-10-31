@@ -10,7 +10,7 @@ module.exports = function (passport) {
         function (email, password, done) { 
             Users.getOne(email)
             .then(user =>{
-                if (!user) {
+                if (user==null) {
                     return done(null, false, { message: 'Ocorreu um erro ao realizar o login! Por favor verifique as suas credenciais.' });
                 }
 

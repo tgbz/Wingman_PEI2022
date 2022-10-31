@@ -40,11 +40,10 @@ router.get("/login", function(req, res) {
 
 
  router.post("/register", function(req, res){
-  console.log(req.body)
       Users.register(req.body)
       .then(id=>{
         console.log("Registo bem sucedio")
-        res.redirect("/login");
+        res.redirect("/users/login");
       })
       .catch(err=>{
         console.log("error ocurred",err);

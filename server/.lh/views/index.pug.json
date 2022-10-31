@@ -1,0 +1,18 @@
+{
+    "sourceFile": "views/index.pug",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1667151478903,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1667151478903,
+            "name": "Commit-0",
+            "content": "extends layout\n\nblock content\n  .w3-container.w3-margin.w3-border\n    .w3-container.w3-blue\n      h1 Autenticação Básica com NodeJS\n    p Chegaste à homepage... \n    ul.w3-ul\n      li\n        a(href=\"/users/login\") Login\n      li\n        a(href=\"/users/registo\") Registo de Utilizador \n      li\n        a(href=\"/users/protegida\") Área Protegida \n      li \n        a(href=\"/users/logout\") Logout\n"
+        }
+    ]
+}

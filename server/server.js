@@ -9,13 +9,8 @@ var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var dataBases = require('./config/database');
-var passport = require('passport');
-const localStrategy = require('passport-local').Strategy;
-const crypto = require('crypto');
 const session = require('express-session');
-const MySQLStore = require('express-mysql-session')(session);
-
-
+//const MySQLStore = require('express-mysql-session')(session);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'));
@@ -36,9 +31,6 @@ app.use(helmet({
     }
 }))
 
-
-
-
 const corsOpts = {
     origin: '*',
     credentials: true,
@@ -49,6 +41,11 @@ app.use(cors(corsOpts))
 app.options('*', cors(corsOpts))
 
 
+
+
+var passport = require('passport');
+require('./config/passport')(passport);
+
 /* 
 Middleware
 
@@ -57,30 +54,11 @@ Quando um dado user visita o nosso site, este cria uma nova sessão para o user 
 Da próxima vez que o ser vai ao site, a cookie é verificada e a session id (que está guardara na cookie) é 
 obtida e é feita uma pesquisa na session store. Session store é um sitio onde todas as sessions são guardadas.
 Aqui estamos um sítio onde podemos guardar toda a informação respectiva à sessão. Assim, estamos 
-
 */
 
-app.use(session({
-    key: 'session_cookie_name',
-    secret: 'session_cookie_secret',
-    store: new MySQLStore({
-        host: 'localhost',
-        port: 3306,
-        user: 'root',
-        password: 'password',
-        database: "session_store"
-    }),
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
-    }
-        
-}))
+app.use(session({secret:"secret"}))
 
-/* 
-Inicializar o passport cada vez que uma rota é chamada
-*/
+//Inicializar o passport cada vez que uma rota é chamada
 app.use(passport.initialize());
 
 /* Funciona como middleware para alterar o objecto request e alterar o "user" value que é actualmente o session id (através do client cookie) */
@@ -97,20 +75,14 @@ app.use(bodyParser.urlencoded({
 }));
 
 /* É usado para servir ficheiros estáticos que se encontram na pasta public (css, imgs) */
-
-
 app.use(express.static('public'))
 
 /* Para definir que estamos a usar ejs com o nosso view engine.  */
 app.set("view engine", "pug");
 
-
 // Routes
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
-
-
-
 
 app.use(function (req, res, next) {
     var err = new Error('Not Found');

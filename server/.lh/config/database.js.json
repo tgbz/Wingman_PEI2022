@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 5,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1667065053962,
@@ -28,6 +28,18 @@
                 {
                     "date": 1667067300070,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n \n var db_config = {\n   host: 'localhost',\n   user: 'root',\n+  port: 3306,\n   password: 'password',\n   database: 'wingman',\n   timezone: \"Z\",\n   multipleStatements: true\n"
+                },
+                {
+                    "date": 1667151250627,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,13 @@\n var session = require('express-session');\n var mysql = require('mysql2/promise');\n \n var db_config = {\n-  host: 'localhost',\n-  user: 'root',\n+  host: '94.60.175.136:3306',\n+  user: 'wingman_admin',\n   port: 3306,\n   password: 'password',\n-  database: 'wingman',\n+  database: 'wingman_admin',\n   timezone: \"Z\",\n   multipleStatements: true\n }\n \n"
+                },
+                {
+                    "date": 1667151407008,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n var session = require('express-session');\n var mysql = require('mysql2/promise');\n \n var db_config = {\n-  host: '94.60.175.136:3306',\n+  host: '94.60.175.136',\n   user: 'wingman_admin',\n   port: 3306,\n   password: 'password',\n   database: 'wingman_admin',\n"
+                },
+                {
+                    "date": 1667151427058,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n   host: '94.60.175.136',\n   user: 'wingman_admin',\n   port: 3306,\n   password: 'password',\n-  database: 'wingman_admin',\n+  database: 'wingman',\n   timezone: \"Z\",\n   multipleStatements: true\n }\n \n"
                 }
             ],
             "date": 1667065053962,

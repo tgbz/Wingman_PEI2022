@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 15,
+            "activePatchIndex": 32,
             "patches": [
                 {
                     "date": 1667061766661,
@@ -68,6 +68,74 @@
                 {
                     "date": 1667066039248,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,12 +63,12 @@\n app.use(session({\n     key: 'session_cookie_name',\n     secret: 'session_cookie_secret',\n     store: new MySQLStore({\n-        host: dataBases.db_config.host,\n+        host: 'localhost',\n         port: 3306,\n-        user: dataBases.db_config.user,\n-        password: dataBases.db_config.password,\n+        user: 'root',\n+        password: 'password',\n         database: \"session_store\"\n     }),\n     resave: false,\n     saveUninitialized: false,\n"
+                },
+                {
+                    "date": 1667151290767,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,9 +63,9 @@\n app.use(session({\n     key: 'session_cookie_name',\n     secret: 'session_cookie_secret',\n     store: new MySQLStore({\n-        host: 'localhost',\n+        host: 'session_store',\n         port: 3306,\n         user: 'root',\n         password: 'password',\n         database: \"session_store\"\n"
+                },
+                {
+                    "date": 1667169845932,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,10 +8,9 @@\n var path = require('path');\n var logger = require('morgan');\n var cookieParser = require('cookie-parser');\n var dataBases = require('./config/database');\n-var passport = require('passport');\n-const localStrategy = require('passport-local').Strategy;\n+var passport = require('passport');;\n const crypto = require('crypto');\n const session = require('express-session');\n const MySQLStore = require('express-mysql-session')(session);\n \n"
+                },
+                {
+                    "date": 1667169950867,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,10 @@\n var path = require('path');\n var logger = require('morgan');\n var cookieParser = require('cookie-parser');\n var dataBases = require('./config/database');\n-var passport = require('passport');;\n+var passport = require('passport');\n+require('./config/passport')(passport);\n const crypto = require('crypto');\n const session = require('express-session');\n const MySQLStore = require('express-mysql-session')(session);\n \n"
+                },
+                {
+                    "date": 1667170040487,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,8 +10,9 @@\n var cookieParser = require('cookie-parser');\n var dataBases = require('./config/database');\n var passport = require('passport');\n require('./config/passport')(passport);\n+\n const crypto = require('crypto');\n const session = require('express-session');\n const MySQLStore = require('express-mysql-session')(session);\n \n"
+                },
+                {
+                    "date": 1667178392211,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,25 +60,9 @@\n Aqui estamos um sítio onde podemos guardar toda a informação respectiva à sessão. Assim, estamos \n \n */\n \n-app.use(session({\n-    key: 'session_cookie_name',\n-    secret: 'session_cookie_secret',\n-    store: new MySQLStore({\n-        host: 'session_store',\n-        port: 3306,\n-        user: 'root',\n-        password: 'password',\n-        database: \"session_store\"\n-    }),\n-    resave: false,\n-    saveUninitialized: false,\n-    cookie: {\n-        maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week\n-    }\n-        \n-}))\n+app.use(session({secret: \"secret\"}))\n \n /* \n Inicializar o passport cada vez que uma rota é chamada\n */\n"
+                },
+                {
+                    "date": 1667178432655,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,9 +60,24 @@\n Aqui estamos um sítio onde podemos guardar toda a informação respectiva à sessão. Assim, estamos \n \n */\n \n-app.use(session({secret: \"secret\"}))\n+app.use(session({\n+    key: 'session_cookie_name',\n+    secret: 'session_cookie_secret',\n+    store: new MySQLStore({\n+        host: 'session_store',\n+        port: 3306,\n+        user: 'root',\n+        password: 'password',\n+        database: \"session_store\"\n+    }),\n+    resave: false,\n+    saveUninitialized: false,\n+    cookie: {\n+        maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week\n+    }\n+}))\n \n /* \n Inicializar o passport cada vez que uma rota é chamada\n */\n"
+                },
+                {
+                    "date": 1667178670425,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,25 +60,10 @@\n Aqui estamos um sítio onde podemos guardar toda a informação respectiva à sessão. Assim, estamos \n \n */\n \n-app.use(session({\n-    key: 'session_cookie_name',\n-    secret: 'session_cookie_secret',\n-    store: new MySQLStore({\n-        host: 'session_store',\n-        port: 3306,\n-        user: 'root',\n-        password: 'password',\n-        database: \"session_store\"\n-    }),\n-    resave: false,\n-    saveUninitialized: false,\n-    cookie: {\n-        maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week\n-    }\n-}))\n \n+\n /* \n Inicializar o passport cada vez que uma rota é chamada\n */\n app.use(passport.initialize());\n"
+                },
+                {
+                    "date": 1667178691305,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,10 +60,25 @@\n Aqui estamos um sítio onde podemos guardar toda a informação respectiva à sessão. Assim, estamos \n \n */\n \n+app.use(session({\n+    key: 'session_cookie_name',\n+    secret: 'session_cookie_secret',\n+    store: new MySQLStore({\n+        host: 'session_store',\n+        port: 3306,\n+        user: 'root',\n+        password: 'password',\n+        database: \"session_store\"\n+    }),\n+    resave: false,\n+    saveUninitialized: false,\n+    cookie: {\n+        maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week\n+    }\n+}))\n \n-\n /* \n Inicializar o passport cada vez que uma rota é chamada\n */\n app.use(passport.initialize());\n"
+                },
+                {
+                    "date": 1667178726475,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,26 +59,10 @@\n obtida e é feita uma pesquisa na session store. Session store é um sitio onde todas as sessions são guardadas.\n Aqui estamos um sítio onde podemos guardar toda a informação respectiva à sessão. Assim, estamos \n \n */\n+app.use(session({secret:\"secret\"}))\n \n-app.use(session({\n-    key: 'session_cookie_name',\n-    secret: 'session_cookie_secret',\n-    store: new MySQLStore({\n-        host: 'session_store',\n-        port: 3306,\n-        user: 'root',\n-        password: 'password',\n-        database: \"session_store\"\n-    }),\n-    resave: false,\n-    saveUninitialized: false,\n-    cookie: {\n-        maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week\n-    }\n-}))\n-\n /* \n Inicializar o passport cada vez que uma rota é chamada\n */\n app.use(passport.initialize());\n"
+                },
+                {
+                    "date": 1667178819871,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,8 @@\n require('./config/passport')(passport);\n \n const crypto = require('crypto');\n const session = require('express-session');\n-const MySQLStore = require('express-mysql-session')(session);\n \n \n \n app.use(express.static(path.join(__dirname, 'public')));\n"
+                },
+                {
+                    "date": 1667178849620,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,8 +13,9 @@\n require('./config/passport')(passport);\n \n const crypto = require('crypto');\n const session = require('express-session');\n+//const MySQLStore = require('express-mysql-session')(session);\n \n \n \n app.use(express.static(path.join(__dirname, 'public')));\n"
+                },
+                {
+                    "date": 1667179630069,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,17 +8,16 @@\n var path = require('path');\n var logger = require('morgan');\n var cookieParser = require('cookie-parser');\n var dataBases = require('./config/database');\n+\n var passport = require('passport');\n require('./config/passport')(passport);\n \n const crypto = require('crypto');\n const session = require('express-session');\n //const MySQLStore = require('express-mysql-session')(session);\n \n-\n-\n app.use(express.static(path.join(__dirname, 'public')));\n app.use(logger('dev'));\n app.use(express.json());\n app.use(cookieParser());\n@@ -36,11 +35,8 @@\n         }\n     }\n }))\n \n-\n-\n-\n const corsOpts = {\n     origin: '*',\n     credentials: true,\n     methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],\n@@ -57,9 +53,8 @@\n Quando um dado user visita o nosso site, este cria uma nova sessão para o user e atribui-lhe uma cookie.\n Da próxima vez que o ser vai ao site, a cookie é verificada e a session id (que está guardara na cookie) é \n obtida e é feita uma pesquisa na session store. Session store é um sitio onde todas as sessions são guardadas.\n Aqui estamos um sítio onde podemos guardar toda a informação respectiva à sessão. Assim, estamos \n-\n */\n app.use(session({secret:\"secret\"}))\n \n /* \n@@ -80,23 +75,17 @@\n     parameterLimit:50000\n }));\n \n /* É usado para servir ficheiros estáticos que se encontram na pasta public (css, imgs) */\n-\n-\n app.use(express.static('public'))\n \n /* Para definir que estamos a usar ejs com o nosso view engine.  */\n app.set(\"view engine\", \"pug\");\n \n-\n // Routes\n app.use('/', require('./routes/index'));\n app.use('/users', require('./routes/users'));\n \n-\n-\n-\n app.use(function (req, res, next) {\n     var err = new Error('Not Found');\n     err.status = 404;\n     next(err);\n"
+                },
+                {
+                    "date": 1667180067344,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,8 @@\n \n var passport = require('passport');\n require('./config/passport')(passport);\n \n-const crypto = require('crypto');\n const session = require('express-session');\n //const MySQLStore = require('express-mysql-session')(session);\n \n app.use(express.static(path.join(__dirname, 'public')));\n"
+                },
+                {
+                    "date": 1667180310677,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,12 +8,8 @@\n var path = require('path');\n var logger = require('morgan');\n var cookieParser = require('cookie-parser');\n var dataBases = require('./config/database');\n-\n-var passport = require('passport');\n-require('./config/passport')(passport);\n-\n const session = require('express-session');\n //const MySQLStore = require('express-mysql-session')(session);\n \n app.use(express.static(path.join(__dirname, 'public')));\n@@ -44,22 +40,24 @@\n app.use(cors(corsOpts))\n app.options('*', cors(corsOpts))\n \n \n+\n+\n+var passport = require('passport');\n+require('./config/passport')(passport);\n+\n /* \n Middleware\n-\n Para guardar informação entre pedidos HTTP e sessões. \n Quando um dado user visita o nosso site, este cria uma nova sessão para o user e atribui-lhe uma cookie.\n Da próxima vez que o ser vai ao site, a cookie é verificada e a session id (que está guardara na cookie) é \n obtida e é feita uma pesquisa na session store. Session store é um sitio onde todas as sessions são guardadas.\n Aqui estamos um sítio onde podemos guardar toda a informação respectiva à sessão. Assim, estamos \n */\n app.use(session({secret:\"secret\"}))\n \n-/* \n-Inicializar o passport cada vez que uma rota é chamada\n-*/\n+//Inicializar o passport cada vez que uma rota é chamada\n app.use(passport.initialize());\n \n /* Funciona como middleware para alterar o objecto request e alterar o \"user\" value que é actualmente o session id (através do client cookie) */\n app.use(passport.session());\n"
+                },
+                {
+                    "date": 1667180342495,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n const session = require('express-session');\n //const MySQLStore = require('express-mysql-session')(session);\n \n app.use(express.static(path.join(__dirname, 'public')));\n-app.use(logger('dev'));\n+app.use(logger('verbose'));\n app.use(express.json());\n app.use(cookieParser());\n \n app.use(helmet({\n"
+                },
+                {
+                    "date": 1667180356119,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,14 +47,16 @@\n require('./config/passport')(passport);\n \n /* \n Middleware\n+\n Para guardar informação entre pedidos HTTP e sessões. \n Quando um dado user visita o nosso site, este cria uma nova sessão para o user e atribui-lhe uma cookie.\n Da próxima vez que o ser vai ao site, a cookie é verificada e a session id (que está guardara na cookie) é \n obtida e é feita uma pesquisa na session store. Session store é um sitio onde todas as sessions são guardadas.\n Aqui estamos um sítio onde podemos guardar toda a informação respectiva à sessão. Assim, estamos \n */\n+\n app.use(session({secret:\"secret\"}))\n \n //Inicializar o passport cada vez que uma rota é chamada\n app.use(passport.initialize());\n"
+                },
+                {
+                    "date": 1667180368734,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n const session = require('express-session');\n //const MySQLStore = require('express-mysql-session')(session);\n \n app.use(express.static(path.join(__dirname, 'public')));\n-app.use(logger('verbose'));\n+app.use(logger('dev'));\n app.use(express.json());\n app.use(cookieParser());\n \n app.use(helmet({\n@@ -57,9 +57,9 @@\n */\n \n app.use(session({secret:\"secret\"}))\n \n-//Inicializar o passport cada vez que uma rota é chamada\n+/Inicializar o passport cada vez que uma rota é chamada\n app.use(passport.initialize());\n \n /* Funciona como middleware para alterar o objecto request e alterar o \"user\" value que é actualmente o session id (através do client cookie) */\n app.use(passport.session());\n"
                 }
             ],
             "date": 1667061766661,

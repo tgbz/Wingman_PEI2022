@@ -2,8 +2,8 @@ var session = require('express-session');
 var mysql = require('mysql2/promise');
 
 var db_config = {
-  host: 'localhost',
-  user: 'root',
+  host: '94.60.175.136',
+  user: 'wingman_admin',
   port: 3306,
   password: 'password',
   database: 'wingman',

@@ -43,7 +43,6 @@ Users.register = function (u) {
 
 
 Users.getOne = function(email) {
-    console.log("TT")
     return new Promise(function(resolve,reject){
         sql.query("Select * from user where email= ?",email ,function(err,res){
             if(err) {
@@ -51,8 +50,8 @@ Users.getOne = function(email) {
                 reject(err);
             }
             else{
-                console.log(res);
-                resolve(res);
+                console.log(res[0]);
+                resolve(res[0]);
             }
         });   
     })   

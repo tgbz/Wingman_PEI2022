@@ -3,11 +3,32 @@ var JWTstrategy = require("passport-jwt").Strategy;
 var ExtractJWT = require("passport-jwt").ExtractJwt;
 var secretKey = require('../config/app');
 var Users = require('../controllers/users');
-
+var bcrypt = require('bcryptjs')
 
 module.exports = function (passport) { 
     passport.use('login', new LocalStrategy(
         function (email, password, done) { 
+            Users.getOne(email)
+            .then(user =>{
+                if (!user) {
+                    return done(null, false, { message: 'Ocorreu um erro ao realizar o login! Por favor verifique as suas credenciais.' });
+                }
+
+                bcrypt.compare(password, user.password, function (err, isMatch) {
+                    if(err) done(err);
+                    if (isMatch) {
+                        return done(null, user, { message: 'Login efetuado com sucesso.' });
+                    } else {
+                        return done(null, false, { message: 'Ocorreu um erro ao realizar o login! Por favor verifique as suas credenciais.' });
+                    }
+                })
+
+            })
+            .catch(err =>{
+                done(err);
+            })
+
+            /*
             Users.getOne(email, function (err, user) {
                 if (err) done(err);
                 if (!user) {
@@ -22,7 +43,7 @@ module.exports = function (passport) {
                         return done(null, false, { message: 'Ocorreu um erro ao realizar o login! Por favor verifique as suas credenciais.' });
                     }
                 });
-            });
+            });*/
         })
     );
 

@@ -1,5 +1,5 @@
 var session = require('express-session');
-var mysql = require('mysql2/promise');
+var mysql = require('mysql2');
 
 var db_config = {
   host: '94.60.175.136',
@@ -8,7 +8,7 @@ var db_config = {
   password: 'password',
   database: 'wingman',
   timezone: "Z",
-  multipleStatements: true
+  multipleStatements: true,
 }
 
 var connection = mysql.createPool(db_config)

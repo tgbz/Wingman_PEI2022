@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 56,
+            "activePatchIndex": 58,
             "patches": [
                 {
                     "date": 1667063247803,
@@ -232,6 +232,14 @@
                 {
                     "date": 1667181323746,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,10 +7,10 @@\n \n module.exports = function (passport) { \n     passport.use('login', new LocalStrategy(\n         function (email, password, done) { \n-            Users.getOne(email)\n-            .then(user => {\n+            Users.getOne(email, function (err, user) {\n+                if (err) done(err);\n                 if (!user) {\n                     return done(null, false, { message: 'Ocorreu um erro ao realizar o login! Por favor verifique as suas credenciais.' });\n                 }\n \n@@ -21,10 +21,9 @@\n                     } else {\n                         return done(null, false, { message: 'Ocorreu um erro ao realizar o login! Por favor verifique as suas credenciais.' });\n                     }\n                 });\n-            })\n-            .catch(err => done(err))\n+            });\n         })\n     );\n \n     passport.serializeUser(function (user, done) {\n"
+                },
+                {
+                    "date": 1667237275279,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,13 +2,33 @@\n var JWTstrategy = require(\"passport-jwt\").Strategy;\n var ExtractJWT = require(\"passport-jwt\").ExtractJwt;\n var secretKey = require('../config/app');\n var Users = require('../controllers/users');\n+var bcrypt = require('bcryptjs')\n \n-\n module.exports = function (passport) { \n     passport.use('login', new LocalStrategy(\n         function (email, password, done) { \n+            Users.getOne(email)\n+            .then(user =>{\n+                if (!user) {\n+                    return done(null, false, { message: 'Ocorreu um erro ao realizar o login! Por favor verifique as suas credenciais.' });\n+                }\n+\n+                bcrypt.compare(password, user.password, function (err, isMatch) {\n+                    if(err) done(err);\n+                    if (isMatch) {\n+                        return done(null, user, { message: 'Login efetuado com sucesso.' });\n+                    } else {\n+                        return done(null, false, { message: 'Ocorreu um erro ao realizar o login! Por favor verifique as suas credenciais.' });\n+                    }\n+                })\n+\n+            })\n+            .catch(err =>{\n+                done(err);\n+            })\n+            /*\n             Users.getOne(email, function (err, user) {\n                 if (err) done(err);\n                 if (!user) {\n                     return done(null, false, { message: 'Ocorreu um erro ao realizar o login! Por favor verifique as suas credenciais.' });\n@@ -21,9 +41,9 @@\n                     } else {\n                         return done(null, false, { message: 'Ocorreu um erro ao realizar o login! Por favor verifique as suas credenciais.' });\n                     }\n                 });\n-            });\n+            });*/\n         })\n     );\n \n     passport.serializeUser(function (user, done) {\n"
+                },
+                {
+                    "date": 1667237867186,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n var bcrypt = require('bcryptjs')\n \n module.exports = function (passport) { \n     passport.use('login', new LocalStrategy(\n-        function (email, password, done) { \n+        function (email, password, done) {\n             Users.getOne(email)\n             .then(user =>{\n                 if (!user) {\n                     return done(null, false, { message: 'Ocorreu um erro ao realizar o login! Por favor verifique as suas credenciais.' });\n"
                 }
             ],
             "date": 1667063247803,

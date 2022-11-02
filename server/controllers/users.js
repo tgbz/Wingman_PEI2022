@@ -61,6 +61,7 @@ Users.getOne = function(email) {
             }
             else{
                 if(res[0]){
+                    console.log(res[0])
                     user=res[0]
                 }
                 resolve(user);

@@ -7,10 +7,10 @@ var bcrypt = require('bcryptjs')
 
 module.exports = function (passport) { 
     passport.use('login', new LocalStrategy(
-        function (email, password, done) { 
+        function (email, password, done) {
             Users.getOne(email)
             .then(user =>{
-                if (user==null) {
+                if (!user) {
                     return done(null, false, { message: 'Ocorreu um erro ao realizar o login! Por favor verifique as suas credenciais.' });
                 }
 

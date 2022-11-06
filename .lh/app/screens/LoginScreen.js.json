@@ -1,0 +1,274 @@
+{
+    "sourceFile": "app/screens/LoginScreen.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 64,
+            "patches": [
+                {
+                    "date": 1667759438754,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1667759462017,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,12 @@\n import React from 'react';\n \n function LoginScreen(props) {\n     return (\n-        <div>\n-            \n-        </div>\n+        <View style={styles.container}>\n+      <Text>TESTE</Text>\n+      <StatusBar style=\"auto\" />\n+    </View>\n     );\n }\n \n export default LoginScreen;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1667759578646,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,11 +2,11 @@\n \n function LoginScreen(props) {\n     return (\n         <View style={styles.container}>\n-      <Text>TESTE</Text>\n-      <StatusBar style=\"auto\" />\n-    </View>\n+            <Text>TESTE</Text>\n+            <StatusBar style=\"auto\" />\n+        </View>\n     );\n }\n \n export default LoginScreen;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1667759604865,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,5 +8,14 @@\n         </View>\n     );\n }\n \n+const styles = StyleSheet.create({\n+  container: {\n+    flex: 1,\n+    backgroundColor: \"#fff\",\n+    alignItems: \"center\",\n+    justifyContent: \"center\",\n+  },\n+});\n+\n export default LoginScreen;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1667759659568,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n import React from 'react';\n+import { StyleSheet, Text, View } from \"react-native\";\n \n function LoginScreen(props) {\n     return (\n         <View style={styles.container}>\n"
+                },
+                {
+                    "date": 1667759930182,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,17 @@\n import React from 'react';\n-import { StyleSheet, Text, View } from \"react-native\";\n+import { StyleSheet, TextInput, View } from \"react-native\";\n \n function LoginScreen(props) {\n     return (\n-        <View style={styles.container}>\n-            <Text>TESTE</Text>\n-            <StatusBar style=\"auto\" />\n-        </View>\n+      <View style={styles.container}>\n+        <TextInput\n+          value={this.state.username}\n+          onChangeText={(username) => this.setState({ username })}\n+          placeholder={\"Email\"}\n+          style={styles.input}\n+        />\n+      </View>\n     );\n }\n \n const styles = StyleSheet.create({\n@@ -16,7 +20,15 @@\n     backgroundColor: \"#fff\",\n     alignItems: \"center\",\n     justifyContent: \"center\",\n   },\n+  input: {\n+    width: 200,\n+    height: 44,\n+    padding: 10,\n+    borderWidth: 1,\n+    borderColor: 'black',\n+    marginBottom: 10,\n+  },\n });\n \n export default LoginScreen;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1667760022329,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,12 +9,26 @@\n           onChangeText={(username) => this.setState({ username })}\n           placeholder={\"Email\"}\n           style={styles.input}\n         />\n+        <TextInput\n+          value={this.state.password}\n+          onChangeText={(password) => this.setState({ password })}\n+          placeholder={\"Password\"}\n+          secureTextEntry={true}\n+          style={styles.input}\n+        />\n+        <Button\n+          title={'Login'}\n+          style={styles.input}\n+          onPress={this.onLogin.bind(this)}\n+        />\n       </View>\n     );\n }\n \n+\n+\n const styles = StyleSheet.create({\n   container: {\n     flex: 1,\n     backgroundColor: \"#fff\",\n"
+                },
+                {
+                    "date": 1667760115805,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,48 +1,21 @@\n import React from 'react';\n-import { StyleSheet, TextInput, View } from \"react-native\";\n \n function LoginScreen(props) {\n     return (\n-      <View style={styles.container}>\n-        <TextInput\n-          value={this.state.username}\n-          onChangeText={(username) => this.setState({ username })}\n-          placeholder={\"Email\"}\n-          style={styles.input}\n-        />\n-        <TextInput\n-          value={this.state.password}\n-          onChangeText={(password) => this.setState({ password })}\n-          placeholder={\"Password\"}\n-          secureTextEntry={true}\n-          style={styles.input}\n-        />\n-        <Button\n-          title={'Login'}\n-          style={styles.input}\n-          onPress={this.onLogin.bind(this)}\n-        />\n-      </View>\n+        <View style={styles.container}>\n+            <Text>TESTE</Text>\n+            <StatusBar style=\"auto\" />\n+        </View>\n     );\n }\n \n-\n-\n const styles = StyleSheet.create({\n-  container: {\n+    container: {\n     flex: 1,\n-    backgroundColor: \"#fff\",\n-    alignItems: \"center\",\n-    justifyContent: \"center\",\n+    backgroundColor: '#fff',\n+    alignItems: 'center',\n+    justifyContent: 'center',\n   },\n-  input: {\n-    width: 200,\n-    height: 44,\n-    padding: 10,\n-    borderWidth: 1,\n-    borderColor: 'black',\n-    marginBottom: 10,\n-  },\n-});\n+})\n \n export default LoginScreen;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1667760121628,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \n function LoginScreen(props) {\n     return (\n         <View style={styles.container}>\n-            <Text>TESTE</Text>\n+            <Text>tst</Text>\n             <StatusBar style=\"auto\" />\n         </View>\n     );\n }\n"
+                },
+                {
+                    "date": 1667760175589,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,21 +1,22 @@\n import React from 'react';\n+import { StyleSheet, Text, View } from \"react-native\";\n \n function LoginScreen(props) {\n     return (\n         <View style={styles.container}>\n-            <Text>tst</Text>\n+            <TextI>585</TextI>\n             <StatusBar style=\"auto\" />\n         </View>\n     );\n }\n \n const styles = StyleSheet.create({\n-    container: {\n+  container: {\n     flex: 1,\n-    backgroundColor: '#fff',\n-    alignItems: 'center',\n-    justifyContent: 'center',\n+    backgroundColor: \"#fff\",\n+    alignItems: \"center\",\n+    justifyContent: \"center\",\n   },\n-})\n+});\n \n export default LoginScreen;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1667760633182,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n \n function LoginScreen(props) {\n     return (\n         <View style={styles.container}>\n-            <TextI>585</TextI>\n+            <TextI>S</TextI>\n             <StatusBar style=\"auto\" />\n         </View>\n     );\n }\n"
+                },
+                {
+                    "date": 1667760663623,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n \n function LoginScreen(props) {\n     return (\n         <View style={styles.container}>\n-            <TextI>S</TextI>\n+            <Text>S</Text>\n             <StatusBar style=\"auto\" />\n         </View>\n     );\n }\n"
+                },
+                {
+                    "date": 1667760677013,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,8 @@\n function LoginScreen(props) {\n     return (\n         <View style={styles.container}>\n             <Text>S</Text>\n-            <StatusBar style=\"auto\" />\n         </View>\n     );\n }\n \n"
+                },
+                {
+                    "date": 1667760689313,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n \n function LoginScreen(props) {\n     return (\n         <View style={styles.container}>\n-            <Text>S</Text>\n+            <Text>SIIII</Text>\n         </View>\n     );\n }\n \n"
+                },
+                {
+                    "date": 1667760720063,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,11 +2,29 @@\n import { StyleSheet, Text, View } from \"react-native\";\n \n function LoginScreen(props) {\n     return (\n-        <View style={styles.container}>\n-            <Text>SIIII</Text>\n-        </View>\n+      <View style={styles.container}>\n+        <TextInput\n+          value={this.state.username}\n+          onChangeText={(username) => this.setState({ username })}\n+          placeholder={\"Email\"}\n+          style={styles.input}\n+        />\n+        <TextInput\n+          value={this.state.password}\n+          onChangeText={(password) => this.setState({ password })}\n+          placeholder={\"Password\"}\n+          secureTextEntry={true}\n+          style={styles.input}\n+        />\n+\n+        <Button\n+          title={\"Login\"}\n+          style={styles.input}\n+          onPress={this.onLogin.bind(this)}\n+        />\n+      </View>\n     );\n }\n \n const styles = StyleSheet.create({\n"
+                },
+                {
+                    "date": 1667760726688,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,7 +33,15 @@\n     backgroundColor: \"#fff\",\n     alignItems: \"center\",\n     justifyContent: \"center\",\n   },\n+  input: {\n+    width: 200,\n+    height: 44,\n+    padding: 10,\n+    borderWidth: 1,\n+    borderColor: \"black\",\n+    marginBottom: 10,\n+  },\n });\n \n export default LoginScreen;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1667760738781,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n import React from 'react';\n-import { StyleSheet, Text, View } from \"react-native\";\n+import { StyleSheet, TextInput, View } from \"react-native\";\n \n function LoginScreen(props) {\n     return (\n       <View style={styles.container}>\n"
+                },
+                {
+                    "date": 1667760780353,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,15 +4,15 @@\n function LoginScreen(props) {\n     return (\n       <View style={styles.container}>\n         <TextInput\n-          value={this.state.username}\n+          value={}\n           onChangeText={(username) => this.setState({ username })}\n           placeholder={\"Email\"}\n           style={styles.input}\n         />\n         <TextInput\n-          value={this.state.password}\n+          value={}\n           onChangeText={(password) => this.setState({ password })}\n           placeholder={\"Password\"}\n           secureTextEntry={true}\n           style={styles.input}\n"
+                },
+                {
+                    "date": 1667760787955,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,15 +4,15 @@\n function LoginScreen(props) {\n     return (\n       <View style={styles.container}>\n         <TextInput\n-          value={}\n+          value={1}\n           onChangeText={(username) => this.setState({ username })}\n           placeholder={\"Email\"}\n           style={styles.input}\n         />\n         <TextInput\n-          value={}\n+          value={1}\n           onChangeText={(password) => this.setState({ password })}\n           placeholder={\"Password\"}\n           secureTextEntry={true}\n           style={styles.input}\n"
+                },
+                {
+                    "date": 1667760795773,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n import React from 'react';\n-import { StyleSheet, TextInput, View } from \"react-native\";\n+import { StyleSheet, TextInput, View,Button } from \"react-native\";\n \n function LoginScreen(props) {\n     return (\n       <View style={styles.container}>\n"
+                },
+                {
+                    "date": 1667760803374,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,8 @@\n \n         <Button\n           title={\"Login\"}\n           style={styles.input}\n-          onPress={this.onLogin.bind(this)}\n         />\n       </View>\n     );\n }\n"
+                },
+                {
+                    "date": 1667761046643,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,15 +4,13 @@\n function LoginScreen(props) {\n     return (\n       <View style={styles.container}>\n         <TextInput\n-          value={1}\n           onChangeText={(username) => this.setState({ username })}\n           placeholder={\"Email\"}\n           style={styles.input}\n         />\n         <TextInput\n-          value={1}\n           onChangeText={(password) => this.setState({ password })}\n           placeholder={\"Password\"}\n           secureTextEntry={true}\n           style={styles.input}\n"
+                },
+                {
+                    "date": 1667761152566,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,12 @@\n import React from 'react';\n import { StyleSheet, TextInput, View,Button } from \"react-native\";\n \n function LoginScreen(props) {\n+  this.state = {\n+    username:'',\n+    password:'',\n+  };\n     return (\n       <View style={styles.container}>\n         <TextInput\n           onChangeText={(username) => this.setState({ username })}\n"
+                },
+                {
+                    "date": 1667761212800,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,8 @@\n import React from 'react';\n import { StyleSheet, TextInput, View,Button } from \"react-native\";\n \n function LoginScreen(props) {\n-  this.state = {\n-    username:'',\n-    password:'',\n-  };\n     return (\n       <View style={styles.container}>\n         <TextInput\n           onChangeText={(username) => this.setState({ username })}\n"
+                },
+                {
+                    "date": 1667761263207,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,13 @@\n import React from 'react';\n import { StyleSheet, TextInput, View,Button } from \"react-native\";\n \n function LoginScreen(props) {\n+\n+\n+    const handleLogin = () => console.log(\"Login!!\"!)\n+\n+\n     return (\n       <View style={styles.container}>\n         <TextInput\n           onChangeText={(username) => this.setState({ username })}\n"
+                },
+                {
+                    "date": 1667761272196,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n \n function LoginScreen(props) {\n \n \n-    const handleLogin = () => console.log(\"Login!!\"!)\n+    const handleLogin = () => console.log(\"Login!!\");\n \n \n     return (\n       <View style={styles.container}>\n"
+                },
+                {
+                    "date": 1667761301207,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,28 +5,16 @@\n \n \n     const handleLogin = () => console.log(\"Login!!\");\n \n+    //login form\n \n     return (\n-      <View style={styles.container}>\n-        <TextInput\n-          onChangeText={(username) => this.setState({ username })}\n-          placeholder={\"Email\"}\n-          style={styles.input}\n-        />\n-        <TextInput\n-          onChangeText={(password) => this.setState({ password })}\n-          placeholder={\"Password\"}\n-          secureTextEntry={true}\n-          style={styles.input}\n-        />\n-\n-        <Button\n-          title={\"Login\"}\n-          style={styles.input}\n-        />\n-      </View>\n+        <View style={styles.container}>\n+            <TextInput style={styles.input} placeholder=\"Email\" />\n+            <TextInput style={styles.input} placeholder=\"Password\" />\n+            <Button title=\"Login\" onPress={handleLogin} />\n+        </View>\n     );\n }\n \n const styles = StyleSheet.create({\n"
+                },
+                {
+                    "date": 1667761399294,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n import React from 'react';\n import { StyleSheet, TextInput, View,Button } from \"react-native\";\n+import React, { useState } from 'react';\n \n function LoginScreen(props) {\n \n \n"
+                },
+                {
+                    "date": 1667761407377,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n import React from 'react';\n import { StyleSheet, TextInput, View,Button } from \"react-native\";\n-import React, { useState } from 'react';\n+import { useState } from 'react';\n \n function LoginScreen(props) {\n \n \n"
+                },
+                {
+                    "date": 1667761424363,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,8 +8,11 @@\n     const handleLogin = () => console.log(\"Login!!\");\n \n     //login form\n \n+    const [email, setEmail] = useState(\"\");\n+\n+\n     return (\n         <View style={styles.container}>\n             <TextInput style={styles.input} placeholder=\"Email\" />\n             <TextInput style={styles.input} placeholder=\"Password\" />\n"
+                },
+                {
+                    "date": 1667761462945,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,10 @@\n \n \n     return (\n         <View style={styles.container}>\n-            <TextInput style={styles.input} placeholder=\"Email\" />\n+            <TextInput style={styles.input} placeholder=\"Email\"\n+            onChangeText={(email) => setEmail(email)} />\n             <TextInput style={styles.input} placeholder=\"Password\" />\n             <Button title=\"Login\" onPress={handleLogin} />\n         </View>\n     );\n"
+                },
+                {
+                    "date": 1667761474809,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,26 +1,26 @@\n-import React from 'react';\n-import { StyleSheet, TextInput, View,Button } from \"react-native\";\n-import { useState } from 'react';\n+import React from \"react\";\n+import { StyleSheet, TextInput, View, Button } from \"react-native\";\n+import { useState } from \"react\";\n \n function LoginScreen(props) {\n+  const handleLogin = () => console.log(\"Login!!\");\n \n+  //login form\n \n-    const handleLogin = () => console.log(\"Login!!\");\n+  const [email, setEmail] = useState(\"\");\n \n-    //login form\n-\n-    const [email, setEmail] = useState(\"\");\n-\n-\n-    return (\n-        <View style={styles.container}>\n-            <TextInput style={styles.input} placeholder=\"Email\"\n-            onChangeText={(email) => setEmail(email)} />\n-            <TextInput style={styles.input} placeholder=\"Password\" />\n-            <Button title=\"Login\" onPress={handleLogin} />\n-        </View>\n-    );\n+  return (\n+    <View style={styles.container}>\n+      <TextInput\n+        style={styles.input}\n+        placeholder=\"Email\"\n+        onChangeText={(email) => setEmail(email)}\n+      />\n+      <TextInput style={styles.input} placeholder=\"Password\" />\n+      <Button title=\"Login\" onPress={handleLogin} />\n+    </View>\n+  );\n }\n \n const styles = StyleSheet.create({\n   container: {\n@@ -38,5 +38,5 @@\n     marginBottom: 10,\n   },\n });\n \n-export default LoginScreen;\n\\ No newline at end of file\n+export default LoginScreen;\n"
+                },
+                {
+                    "date": 1667761588759,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,22 +2,28 @@\n import { StyleSheet, TextInput, View, Button } from \"react-native\";\n import { useState } from \"react\";\n \n function LoginScreen(props) {\n-  const handleLogin = () => console.log(\"Login!!\");\n+  const handleLogin = () => console.log(email);\n \n   //login form\n \n   const [email, setEmail] = useState(\"\");\n+  const [password, setPassword] = useState(\"\");\n \n   return (\n     <View style={styles.container}>\n       <TextInput\n         style={styles.input}\n         placeholder=\"Email\"\n         onChangeText={(email) => setEmail(email)}\n       />\n-      <TextInput style={styles.input} placeholder=\"Password\" />\n+      <TextInput\n+        style={styles.input}\n+        placeholder=\"Password\"\n+        secureTextEntry={true}\n+        onChangeText={(password) => setPassword(password)}\n+      />\n       <Button title=\"Login\" onPress={handleLogin} />\n     </View>\n   );\n }\n"
+                },
+                {
+                    "date": 1667761717648,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n import { StyleSheet, TextInput, View, Button } from \"react-native\";\n import { useState } from \"react\";\n \n function LoginScreen(props) {\n-  const handleLogin = () => console.log(email);\n+  const handleLogin = () => console.log(email + \" \" + password);\n \n   //login form\n \n   const [email, setEmail] = useState(\"\");\n"
+                },
+                {
+                    "date": 1667761747337,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,8 @@\n import React from \"react\";\n import { StyleSheet, TextInput, View, Button } from \"react-native\";\n import { useState } from \"react\";\n+import axios from \"axios\";\n \n function LoginScreen(props) {\n   const handleLogin = () => console.log(email + \" \" + password);\n \n"
+                },
+                {
+                    "date": 1667762015596,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n import React from \"react\";\n import { StyleSheet, TextInput, View, Button } from \"react-native\";\n import { useState } from \"react\";\n import axios from \"axios\";\n+import { serverURL } from \"../config/hosts\";\n \n function LoginScreen(props) {\n   const handleLogin = () => console.log(email + \" \" + password);\n \n"
+                },
+                {
+                    "date": 1667762089688,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,8 +8,11 @@\n   const handleLogin = () => console.log(email + \" \" + password);\n \n   //login form\n \n+  const \n+\n+\n   const [email, setEmail] = useState(\"\");\n   const [password, setPassword] = useState(\"\");\n \n   return (\n"
+                },
+                {
+                    "date": 1667762139302,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,17 +2,13 @@\n import { StyleSheet, TextInput, View, Button } from \"react-native\";\n import { useState } from \"react\";\n import axios from \"axios\";\n import { serverURL } from \"../config/hosts\";\n+import AsyncStorage from \"@react-native-async-storage/async-storage\";\n \n function LoginScreen(props) {\n-  const handleLogin = () => console.log(email + \" \" + password);\n-\n   //login form\n \n-  const \n-\n-\n   const [email, setEmail] = useState(\"\");\n   const [password, setPassword] = useState(\"\");\n \n   return (\n@@ -32,8 +28,10 @@\n     </View>\n   );\n }\n \n+const handleLogin = () => console.log(email + \" \" + password);\n+\n const styles = StyleSheet.create({\n   container: {\n     flex: 1,\n     backgroundColor: \"#fff\",\n"
+                },
+                {
+                    "date": 1667762172626,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n import { StyleSheet, TextInput, View, Button } from \"react-native\";\n import { useState } from \"react\";\n import axios from \"axios\";\n import { serverURL } from \"../config/hosts\";\n-import AsyncStorage from \"@react-native-async-storage/async-storage\";\n+import { aSyncStorage } from \"react-native\";\n \n function LoginScreen(props) {\n   //login form\n \n"
+                },
+                {
+                    "date": 1667762218798,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,14 +23,14 @@\n         placeholder=\"Password\"\n         secureTextEntry={true}\n         onChangeText={(password) => setPassword(password)}\n       />\n-      <Button title=\"Login\" onPress={handleLogin} />\n+      <Button title=\"Login\" onPress={handleLogin(email, password)} />\n     </View>\n   );\n }\n \n-const handleLogin = () => console.log(email + \" \" + password);\n+const handleLogin = (email, password) => console.log(email + \" \" + password);\n \n const styles = StyleSheet.create({\n   container: {\n     flex: 1,\n"
+                },
+                {
+                    "date": 1667762253270,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n         placeholder=\"Password\"\n         secureTextEntry={true}\n         onChangeText={(password) => setPassword(password)}\n       />\n-      <Button title=\"Login\" onPress={handleLogin(email, password)} />\n+      <Button title=\"Login\" onClick={handleLogin(email, password)} />\n     </View>\n   );\n }\n \n"
+                },
+                {
+                    "date": 1667762299738,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,8 +10,10 @@\n \n   const [email, setEmail] = useState(\"\");\n   const [password, setPassword] = useState(\"\");\n \n+  const handleLogin = (email, password) => console.log(email + \" \" + password);\n+\n   return (\n     <View style={styles.container}>\n       <TextInput\n         style={styles.input}\n@@ -28,10 +30,8 @@\n     </View>\n   );\n }\n \n-const handleLogin = (email, password) => console.log(email + \" \" + password);\n-\n const styles = StyleSheet.create({\n   container: {\n     flex: 1,\n     backgroundColor: \"#fff\",\n"
+                },
+                {
+                    "date": 1667762314743,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n \n   const [email, setEmail] = useState(\"\");\n   const [password, setPassword] = useState(\"\");\n \n-  const handleLogin = (email, password) => console.log(email + \" \" + password);\n+  const handleLogin = () => console.log(email + \" \" + password);\n \n   return (\n     <View style={styles.container}>\n       <TextInput\n@@ -25,9 +25,9 @@\n         placeholder=\"Password\"\n         secureTextEntry={true}\n         onChangeText={(password) => setPassword(password)}\n       />\n-      <Button title=\"Login\" onClick={handleLogin(email, password)} />\n+      <Button title=\"Login\" onClick={handleLogin()} />\n     </View>\n   );\n }\n \n"
+                },
+                {
+                    "date": 1667762328097,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n         placeholder=\"Password\"\n         secureTextEntry={true}\n         onChangeText={(password) => setPassword(password)}\n       />\n-      <Button title=\"Login\" onClick={handleLogin()} />\n+      <Button title=\"Login\" onPress={handleLogin()} />\n     </View>\n   );\n }\n \n"
+                },
+                {
+                    "date": 1667762360386,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,13 +7,13 @@\n \n function LoginScreen(props) {\n   //login form\n \n+  const handleLogin = () => console.log(email + \" \" + password);\n+\n   const [email, setEmail] = useState(\"\");\n   const [password, setPassword] = useState(\"\");\n \n-  const handleLogin = () => console.log(email + \" \" + password);\n-\n   return (\n     <View style={styles.container}>\n       <TextInput\n         style={styles.input}\n"
+                },
+                {
+                    "date": 1667762415360,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \n function LoginScreen(props) {\n   //login form\n \n-  const handleLogin = () => console.log(email + \" \" + password);\n+  const handleLogin = (email, password) => console.log(email + \" \" + password);\n \n   const [email, setEmail] = useState(\"\");\n   const [password, setPassword] = useState(\"\");\n \n@@ -25,9 +25,9 @@\n         placeholder=\"Password\"\n         secureTextEntry={true}\n         onChangeText={(password) => setPassword(password)}\n       />\n-      <Button title=\"Login\" onPress={handleLogin()} />\n+      <Button title=\"Login\" onPress={handleLogin.bind(email, password)} />\n     </View>\n   );\n }\n \n"
+                },
+                {
+                    "date": 1667762588671,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n         placeholder=\"Password\"\n         secureTextEntry={true}\n         onChangeText={(password) => setPassword(password)}\n       />\n-      <Button title=\"Login\" onPress={handleLogin.bind(email, password)} />\n+      <Button title=\"Login\" onPress={() => handleLogin(email, password)} />\n     </View>\n   );\n }\n \n"
+                },
+                {
+                    "date": 1667762697273,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,10 +7,20 @@\n \n function LoginScreen(props) {\n   //login form\n \n-  const handleLogin = (email, password) => console.log(email + \" \" + password);\n+  const handleLogin = (email, password) => {\n \n+    await axios.post(serverURL + \"/users/login\", { email, password }).\n+    then((response) => {\n+      console.log(response);\n+      //guardar o token no async storage\n+      //redirecionar para a home\n+    }\n+\n+\n+  }\n+\n   const [email, setEmail] = useState(\"\");\n   const [password, setPassword] = useState(\"\");\n \n   return (\n"
+                },
+                {
+                    "date": 1667762941672,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,25 +2,31 @@\n import { StyleSheet, TextInput, View, Button } from \"react-native\";\n import { useState } from \"react\";\n import axios from \"axios\";\n import { serverURL } from \"../config/hosts\";\n-import { aSyncStorage } from \"react-native\";\n+import { AsyncStorage } from \"react-native\";\n \n function LoginScreen(props) {\n   //login form\n \n-  const handleLogin = (email, password) => {\n+  const handleLogin = async (email, password) => {\n+    await axios\n+      .post(serverURL + \"/users/login\", { email, password })\n+      .then((response) => {\n+        console.log(response);\n+        if (response.data.success) {\n+          AsyncStorage.setItem(\"loginToken\", response.data.token);\n+          alert(response.data.message);\n+          navigation.navigate(\"Authuser\");\n+          //guardar o token no async storage\n+          //redirecionar para a home\n+        } else {\n+          alert(response.data.message);\n+        }\n+        reset({ email: \"\", password: \"\" });\n+      });\n+  };\n \n-    await axios.post(serverURL + \"/users/login\", { email, password }).\n-    then((response) => {\n-      console.log(response);\n-      //guardar o token no async storage\n-      //redirecionar para a home\n-    }\n-\n-\n-  }\n-\n   const [email, setEmail] = useState(\"\");\n   const [password, setPassword] = useState(\"\");\n \n   return (\n"
+                },
+                {
+                    "date": 1667763080730,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,8 +22,11 @@\n         } else {\n           alert(response.data.message);\n         }\n         reset({ email: \"\", password: \"\" });\n+      })\n+      .catch((error) => {\n+        console.log(error);\n       });\n   };\n \n   const [email, setEmail] = useState(\"\");\n"
+                },
+                {
+                    "date": 1667763269926,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,8 +8,9 @@\n function LoginScreen(props) {\n   //login form\n \n   const handleLogin = async (email, password) => {\n+    console.log(serverURL);\n     await axios\n       .post(serverURL + \"/users/login\", { email, password })\n       .then((response) => {\n         console.log(response);\n"
+                },
+                {
+                    "date": 1667763509055,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,29 +8,21 @@\n function LoginScreen(props) {\n   //login form\n \n   const handleLogin = async (email, password) => {\n-    console.log(serverURL);\n-    await axios\n-      .post(serverURL + \"/users/login\", { email, password })\n-      .then((response) => {\n-        console.log(response);\n-        if (response.data.success) {\n-          AsyncStorage.setItem(\"loginToken\", response.data.token);\n-          alert(response.data.message);\n-          navigation.navigate(\"Authuser\");\n-          //guardar o token no async storage\n-          //redirecionar para a home\n-        } else {\n-          alert(response.data.message);\n-        }\n-        reset({ email: \"\", password: \"\" });\n-      })\n-      .catch((error) => {\n-        console.log(error);\n-      });\n-  };\n \n+    await axios.post(serverURL + \"users/login\", {\n+      username: email,\n+      password: password,\n+    })\n+    .then((response) => {\n+      var userdata = response.data;\n+      if (userdata) {\n+        AsyncStorage.setItem(\"userdata\", userdata);\n+        props.navigation.navigate(\"Home\");\n+      }\n+    })\n+\n   const [email, setEmail] = useState(\"\");\n   const [password, setPassword] = useState(\"\");\n \n   return (\n"
+                },
+                {
+                    "date": 1667763563907,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,8 +19,13 @@\n       if (userdata) {\n         AsyncStorage.setItem(\"userdata\", userdata);\n         props.navigation.navigate(\"Home\");\n       }\n+      else {\n+        alert(\"Credenciais inválidas!\");\n+      }\n+    }).catch(() => {\n+      alert(\"De momento não é possível processar a autenticação!\");\n     })\n \n   const [email, setEmail] = useState(\"\");\n   const [password, setPassword] = useState(\"\");\n"
+                },
+                {
+                    "date": 1667763571678,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,26 +8,27 @@\n function LoginScreen(props) {\n   //login form\n \n   const handleLogin = async (email, password) => {\n+    await axios\n+      .post(serverURL + \"users/login\", {\n+        username: email,\n+        password: password,\n+      })\n+      .then((response) => {\n+        var userdata = response.data;\n+        if (userdata) {\n+          AsyncStorage.setItem(\"userdata\", userdata);\n+          props.navigation.navigate(\"Home\");\n+        } else {\n+          alert(\"Credenciais inválidas!\");\n+        }\n+      })\n+      .catch(() => {\n+        alert(\"De momento não é possível processar a autenticação!\");\n+      });\n+  };\n \n-    await axios.post(serverURL + \"users/login\", {\n-      username: email,\n-      password: password,\n-    })\n-    .then((response) => {\n-      var userdata = response.data;\n-      if (userdata) {\n-        AsyncStorage.setItem(\"userdata\", userdata);\n-        props.navigation.navigate(\"Home\");\n-      }\n-      else {\n-        alert(\"Credenciais inválidas!\");\n-      }\n-    }).catch(() => {\n-      alert(\"De momento não é possível processar a autenticação!\");\n-    })\n-\n   const [email, setEmail] = useState(\"\");\n   const [password, setPassword] = useState(\"\");\n \n   return (\n"
+                },
+                {
+                    "date": 1667763636325,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,10 @@\n         } else {\n           alert(\"Credenciais inválidas!\");\n         }\n       })\n-      .catch(() => {\n+      .catch((error) => {\n+        console.log(error);\n         alert(\"De momento não é possível processar a autenticação!\");\n       });\n   };\n \n"
+                },
+                {
+                    "date": 1667763986472,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,10 +10,10 @@\n \n   const handleLogin = async (email, password) => {\n     await axios\n       .post(serverURL + \"users/login\", {\n-        username: email,\n-        password: password,\n+        username: \"test\",\n+        password: \"test\",\n       })\n       .then((response) => {\n         var userdata = response.data;\n         if (userdata) {\n"
+                },
+                {
+                    "date": 1667764002636,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,10 +10,10 @@\n \n   const handleLogin = async (email, password) => {\n     await axios\n       .post(serverURL + \"users/login\", {\n-        username: \"test\",\n-        password: \"test\",\n+        username: email,\n+        password: password,\n       })\n       .then((response) => {\n         var userdata = response.data;\n         if (userdata) {\n"
+                },
+                {
+                    "date": 1667764024219,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,10 +10,12 @@\n \n   const handleLogin = async (email, password) => {\n     await axios\n       .post(serverURL + \"users/login\", {\n-        username: email,\n-        password: password,\n+        params: {\n+          username: email,\n+          password: password,\n+        },\n       })\n       .then((response) => {\n         var userdata = response.data;\n         if (userdata) {\n"
+                },
+                {
+                    "date": 1667764198972,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,11 @@\n           alert(\"Credenciais inválidas!\");\n         }\n       })\n       .catch((error) => {\n+        //verbose error\n         console.log(error);\n+        console.log(error.response);\n         alert(\"De momento não é possível processar a autenticação!\");\n       });\n   };\n \n"
+                },
+                {
+                    "date": 1667764410548,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,15 +16,16 @@\n           password: password,\n         },\n       })\n       .then((response) => {\n-        var userdata = response.data;\n+        console.log(response.data);\n+        /*var userdata = response.data;\n         if (userdata) {\n           AsyncStorage.setItem(\"userdata\", userdata);\n           props.navigation.navigate(\"Home\");\n         } else {\n           alert(\"Credenciais inválidas!\");\n-        }\n+        }*/\n       })\n       .catch((error) => {\n         //verbose error\n         console.log(error);\n"
+                },
+                {
+                    "date": 1667764566585,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,8 +8,16 @@\n function LoginScreen(props) {\n   //login form\n \n   const handleLogin = async (email, password) => {\n+    fetch(serverURL + \"users/login\", {\n+      method: \"POST\",\n+      body: JSON.stringify({\n+        username: email,\n+        password: password,\n+      }),\n+    });\n+    /*\n     await axios\n       .post(serverURL + \"users/login\", {\n         params: {\n           username: email,\n@@ -23,16 +31,17 @@\n           AsyncStorage.setItem(\"userdata\", userdata);\n           props.navigation.navigate(\"Home\");\n         } else {\n           alert(\"Credenciais inválidas!\");\n-        }*/\n+        }\n       })\n       .catch((error) => {\n         //verbose error\n         console.log(error);\n         console.log(error.response);\n         alert(\"De momento não é possível processar a autenticação!\");\n       });\n+      */\n   };\n \n   const [email, setEmail] = useState(\"\");\n   const [password, setPassword] = useState(\"\");\n"
+                },
+                {
+                    "date": 1667764625656,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,15 +8,24 @@\n function LoginScreen(props) {\n   //login form\n \n   const handleLogin = async (email, password) => {\n-    fetch(serverURL + \"users/login\", {\n+\n+    return fetch(serverURL + \"users/login\", {\n       method: \"POST\",\n       body: JSON.stringify({\n         username: email,\n         password: password,\n       }),\n+    })\n+    .then((response) => response.json())\n+    .then((json) => {\n+      return json.movies;\n+    })\n+    .catch((error) => {\n+      console.error(error);\n     });\n+}\n     /*\n     await axios\n       .post(serverURL + \"users/login\", {\n         params: {\n"
+                },
+                {
+                    "date": 1667764641193,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,24 +8,22 @@\n function LoginScreen(props) {\n   //login form\n \n   const handleLogin = async (email, password) => {\n-\n     return fetch(serverURL + \"users/login\", {\n       method: \"POST\",\n       body: JSON.stringify({\n         username: email,\n         password: password,\n       }),\n     })\n-    .then((response) => response.json())\n-    .then((json) => {\n-      return json.movies;\n-    })\n-    .catch((error) => {\n-      console.error(error);\n-    });\n-}\n+      .then((response) => response.json())\n+      .then((json) => {\n+        return json.movies;\n+      })\n+      .catch((error) => {\n+        console.error(error);\n+      });\n     /*\n     await axios\n       .post(serverURL + \"users/login\", {\n         params: {\n"
+                },
+                {
+                    "date": 1667764666388,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n function LoginScreen(props) {\n   //login form\n \n   const handleLogin = async (email, password) => {\n-    return fetch(serverURL + \"users/login\", {\n+    return fetch(serverURL + \"/users/login\", {\n       method: \"POST\",\n       body: JSON.stringify({\n         username: email,\n         password: password,\n"
+                },
+                {
+                    "date": 1667764817437,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,8 +10,11 @@\n \n   const handleLogin = async (email, password) => {\n     return fetch(serverURL + \"/users/login\", {\n       method: \"POST\",\n+      headers: {\n+        \"Content-Type\": \"application/json\",\n+      },\n       body: JSON.stringify({\n         username: email,\n         password: password,\n       }),\n"
+                }
+            ],
+            "date": 1667759438754,
+            "name": "Commit-0",
+            "content": "import React from 'react';\n\nfunction LoginScreen(props) {\n    return (\n        <div>\n            \n        </div>\n    );\n}\n\nexport default LoginScreen;"
+        }
+    ]
+}

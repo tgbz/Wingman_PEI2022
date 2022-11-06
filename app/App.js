@@ -14,6 +14,7 @@ Stylesheet é um componente que serve para definir estilos para os componentes R
 */
 import { StyleSheet, Text, View } from 'react-native';
 
+import LoginScreen from "./screens/LoginScreen.js"
 
 
 
@@ -25,19 +26,5 @@ se for para Android, esta vai estar mapeada para View.
 */
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>TESTE</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+  return <LoginScreen/>;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

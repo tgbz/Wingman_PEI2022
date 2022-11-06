@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 3,
+            "activePatchIndex": 14,
             "patches": [
                 {
                     "date": 1667755497548,
@@ -20,6 +20,50 @@
                 {
                     "date": 1667757840002,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n \n export default function App() {\n   return (\n     <View style={styles.container}>\n-      <Text>A SARA ESTA MUITO CALADA;</Text>\n+      <Text>TESTE</Text>\n       <StatusBar style=\"auto\" />\n     </View>\n   );\n }\n"
+                },
+                {
+                    "date": 1667759637606,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,20 +24,6 @@\n \n */\n \n export default function App() {\n-  return (\n-    <View style={styles.container}>\n-      <Text>TESTE</Text>\n-      <StatusBar style=\"auto\" />\n-    </View>\n-  );\n+  return <LoginScreen/>;\n }\n-\n-const styles = StyleSheet.create({\n-  container: {\n-    flex: 1,\n-    backgroundColor: '#fff',\n-    alignItems: 'center',\n-    justifyContent: 'center',\n-  },\n-});\n"
+                },
+                {
+                    "date": 1667759668034,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,6 @@\n import { StatusBar } from 'expo-status-bar';\n \n-\n-\n /* \n View é um componente que serve para renderizar elementos no ecrâ, invocando outros componentes React Native.\n Text é um componente que serve para renderizar texto no ecrâ.\n TouchableOpacity é um componente que serve para renderizar um botão no ecrâ.\n@@ -11,10 +9,10 @@\n Stylesheet é um componente que serve para definir estilos para os componentes React Native.\n   \n \n */\n-import { StyleSheet, Text, View } from 'react-native';\n \n+import LoginScreen from './screens/LoginScreen';\n \n \n \n //Function Component, também podemos usar Class componentes\n"
+                },
+                {
+                    "date": 1667760137842,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,8 @@\n import { StatusBar } from 'expo-status-bar';\n \n+\n+\n /* \n View é um componente que serve para renderizar elementos no ecrâ, invocando outros componentes React Native.\n Text é um componente que serve para renderizar texto no ecrâ.\n TouchableOpacity é um componente que serve para renderizar um botão no ecrâ.\n@@ -9,10 +11,10 @@\n Stylesheet é um componente que serve para definir estilos para os componentes React Native.\n   \n \n */\n+import { StyleSheet, Text, View } from 'react-native';\n \n-import LoginScreen from './screens/LoginScreen';\n \n \n \n //Function Component, também podemos usar Class componentes\n@@ -22,6 +24,20 @@\n \n */\n \n export default function App() {\n-  return <LoginScreen/>;\n+  return (\n+    <View style={styles.container}>\n+      <Text>TESTE</Text>\n+      <StatusBar style=\"auto\" />\n+    </View>\n+  );\n }\n+\n+const styles = StyleSheet.create({\n+  container: {\n+    flex: 1,\n+    backgroundColor: '#fff',\n+    alignItems: 'center',\n+    justifyContent: 'center',\n+  },\n+});\n"
+                },
+                {
+                    "date": 1667760167621,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n \n export default function App() {\n   return (\n     <View style={styles.container}>\n-      <Text>TESTE</Text>\n+      <Text></Text>\n       <StatusBar style=\"auto\" />\n     </View>\n   );\n }\n"
+                },
+                {
+                    "date": 1667760199825,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n \n export default function App() {\n   return (\n     <View style={styles.container}>\n-      <Text></Text>\n+      <Text>PUTA</Text>\n       <StatusBar style=\"auto\" />\n     </View>\n   );\n }\n"
+                },
+                {
+                    "date": 1667760385353,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n \n export default function App() {\n   return (\n     <View style={styles.container}>\n-      <Text>PUTA</Text>\n+      <Text>PUTAS</Text>\n       <StatusBar style=\"auto\" />\n     </View>\n   );\n }\n"
+                },
+                {
+                    "date": 1667760452747,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n \n export default function App() {\n   return (\n     <View style={styles.container}>\n-      <Text>PUTAS</Text>\n+      <Text>Open up App.js to start working on your app!</Text>\n       <StatusBar style=\"auto\" />\n     </View>\n   );\n }\n"
+                },
+                {
+                    "date": 1667760540197,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n \n export default function App() {\n   return (\n     <View style={styles.container}>\n-      <Text>Open up App.js to start working on your app!</Text>\n+      <Text>TESTE</Text>\n       <StatusBar style=\"auto\" />\n     </View>\n   );\n }\n"
+                },
+                {
+                    "date": 1667760624468,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,8 +13,9 @@\n \n */\n import { StyleSheet, Text, View } from 'react-native';\n \n+import LoginScreen from (\"./screens/LoginScreen.js\")\n \n \n \n //Function Component, também podemos usar Class componentes\n@@ -24,14 +25,9 @@\n \n */\n \n export default function App() {\n-  return (\n-    <View style={styles.container}>\n-      <Text>TESTE</Text>\n-      <StatusBar style=\"auto\" />\n-    </View>\n-  );\n+  return <LoginScreen/>;\n }\n \n const styles = StyleSheet.create({\n   container: {\n"
+                },
+                {
+                    "date": 1667760652738,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n \n */\n import { StyleSheet, Text, View } from 'react-native';\n \n-import LoginScreen from (\"./screens/LoginScreen.js\")\n+import LoginScreen from \"./screens/LoginScreen.js\"\n \n \n \n //Function Component, também podemos usar Class componentes\n"
+                },
+                {
+                    "date": 1667760700302,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,13 +27,4 @@\n \n export default function App() {\n   return <LoginScreen/>;\n }\n-\n-const styles = StyleSheet.create({\n-  container: {\n-    flex: 1,\n-    backgroundColor: '#fff',\n-    alignItems: 'center',\n-    justifyContent: 'center',\n-  },\n-});\n"
                 }
             ],
             "date": 1667755497548,

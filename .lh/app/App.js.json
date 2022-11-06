@@ -1,0 +1,30 @@
+{
+    "sourceFile": "app/App.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1667755497548,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1667757815662,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n \n export default function App() {\n   return (\n     <View style={styles.container}>\n-      <Text>Open up App.js to start working on your app!</Text>\n+      <Text>TEST</Text>\n       <StatusBar style=\"auto\" />\n     </View>\n   );\n }\n"
+                },
+                {
+                    "date": 1667757833373,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n \n export default function App() {\n   return (\n     <View style={styles.container}>\n-      <Text>TEST</Text>\n+      <Text>A SARA ESTA MUITO CALADA;</Text>\n       <StatusBar style=\"auto\" />\n     </View>\n   );\n }\n"
+                },
+                {
+                    "date": 1667757840002,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n \n export default function App() {\n   return (\n     <View style={styles.container}>\n-      <Text>A SARA ESTA MUITO CALADA;</Text>\n+      <Text>TESTE</Text>\n       <StatusBar style=\"auto\" />\n     </View>\n   );\n }\n"
+                }
+            ],
+            "date": 1667755497548,
+            "name": "Commit-0",
+            "content": "import { StatusBar } from 'expo-status-bar';\n\n\n\n/* \nView é um componente que serve para renderizar elementos no ecrâ, invocando outros componentes React Native.\nText é um componente que serve para renderizar texto no ecrâ.\nTouchableOpacity é um componente que serve para renderizar um botão no ecrâ.\nTextInput é um componente que serve para renderizar um input de texto no ecrâ.\nImage é um componente que serve para renderizar uma imagem no ecrâ.\nStylesheet é um componente que serve para definir estilos para os componentes React Native.\n  \n\n*/\nimport { StyleSheet, Text, View } from 'react-native';\n\n\n\n\n//Function Component, também podemos usar Class componentes\n/* \nSe está View for para IOS, esta vai estar mapeada para UIView (NATIVO IOS),\nse for para Android, esta vai estar mapeada para View.\n\n*/\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <Text>Open up App.js to start working on your app!</Text>\n      <StatusBar style=\"auto\" />\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    backgroundColor: '#fff',\n    alignItems: 'center',\n    justifyContent: 'center',\n  },\n});\n"
+        }
+    ]
+}

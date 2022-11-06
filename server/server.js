@@ -9,7 +9,7 @@ var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var dataBases = require('./config/database');
-const session = require('express-session');
+
 //const MySQLStore = require('express-mysql-session')(session);
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -46,23 +46,12 @@ app.options('*', cors(corsOpts))
 var passport = require('passport');
 require('./config/passport')(passport);
 
-/* 
-Middleware
 
-Para guardar informação entre pedidos HTTP e sessões. 
-Quando um dado user visita o nosso site, este cria uma nova sessão para o user e atribui-lhe uma cookie.
-Da próxima vez que o ser vai ao site, a cookie é verificada e a session id (que está guardara na cookie) é 
-obtida e é feita uma pesquisa na session store. Session store é um sitio onde todas as sessions são guardadas.
-Aqui estamos um sítio onde podemos guardar toda a informação respectiva à sessão. Assim, estamos 
-*/
-
-app.use(session({secret:"secret"}))
 
 //Inicializar o passport cada vez que uma rota é chamada
 app.use(passport.initialize());
 
-/* Funciona como middleware para alterar o objecto request e alterar o "user" value que é actualmente o session id (através do client cookie) */
-app.use(passport.session());
+
 
 /* Middleware responsável por realizar o parsing dos bodys de pedidos num middlware antes de os gerirmos */
 

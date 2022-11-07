@@ -1,45 +1,22 @@
 import React from "react";
 import { StyleSheet, TextInput, View, Button } from "react-native";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { serverURL } from "../config/hosts";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AuthContext from "../context/AuthProvider";
 
-function LoginScreen() {
+function LoginScreen({ navigation }) {
   //login form
-
-  const handleLogin = async (email, password) => {
-    console.log(serverURL+"/users/login")
-    await axios
-      .post(serverURL+"/users/login", {
-          username: email,
-          password: password,
-      })
-      .then((response) => {
-        if(response.data) {
-          AsyncStorage.setItem('loginToken', response.data.token);
-          navigation.navigate('HomeScreen')
-
-        }else{
-          alert(response.status);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        alert("De momento não é possível processar a autenticação!");
-      });
-      
-  };
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { signIn } = React.useContext(AuthContext);
 
+  const register = () =>{
+    navigation.navigate("Register")
+  }
+  
   return (
     <View style={styles.container}>
       <TextInput
@@ -53,7 +30,8 @@ function LoginScreen() {
         secureTextEntry={true}
         onChangeText={(password) => setPassword(password)}
       />
-      <Button title="Login" onPress={() => handleLogin(email, password)} />
+      <Button title="Login" onPress={() => signIn(email, password)} />
+      <Button title="Regista-te" onPress={() => register(email, password)} />
     </View>
   );
 }

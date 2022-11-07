@@ -1,56 +1,40 @@
 import React from "react";
 import { StyleSheet, TextInput, View, Button } from "react-native";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { serverURL } from "../config/hosts";
-import { AsyncStorage } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-function LoginScreen(props) {
+function LoginScreen() {
   //login form
 
   const handleLogin = async (email, password) => {
-    return fetch(serverURL + "/users/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: email,
-        password: password,
-      }),
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        return json.movies;
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    /*
+    console.log(serverURL+"/users/login")
     await axios
-      .post(serverURL + "users/login", {
-        params: {
+      .post(serverURL+"/users/login", {
           username: email,
           password: password,
-        },
       })
       .then((response) => {
-        console.log(response.data);
-        /*var userdata = response.data;
-        if (userdata) {
-          AsyncStorage.setItem("userdata", userdata);
-          props.navigation.navigate("Home");
-        } else {
-          alert("Credenciais inválidas!");
+        if(response.data) {
+          AsyncStorage.setItem('loginToken', response.data.token);
+          navigation.navigate('HomeScreen')
+
+        }else{
+          alert(response.status);
         }
       })
       .catch((error) => {
-        //verbose error
         console.log(error);
-        console.log(error.response);
         alert("De momento não é possível processar a autenticação!");
       });
-      */
+      
   };
 
   const [email, setEmail] = useState("");

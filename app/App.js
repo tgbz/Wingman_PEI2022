@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 
 
 
@@ -12,9 +11,10 @@ Stylesheet é um componente que serve para definir estilos para os componentes R
   
 
 */
-import { StyleSheet, Text, View } from 'react-native';
 
-import LoginScreen from "./screens/LoginScreen.js"
+
+import LoginScreen from "./src/screens/LoginScreen.js"
+import HomeScreen from "./src/screens/HomeScreen.js"
 
 
 

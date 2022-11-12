@@ -53,7 +53,7 @@ import React, { useState, useEffect } from 'react';
 import { serverURL } from './src/config/hosts';
 import axios from 'axios';
 import AuthContext from './src/context/AuthProvider';
-
+console.log(serverURL)
 const App = () => {
   const [state, dispatch] = React.useReducer(
     (prevState, action) => {

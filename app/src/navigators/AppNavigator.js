@@ -10,7 +10,6 @@ const AppStack = (name) => {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{ title: 'Welcome' }}
         />
       </Stack.Navigator>
   );

@@ -45,8 +45,8 @@ const App = () => {
 export default App;
 */
 
-import AppStack from './src/Navigators/AppNavigator';
-import AuthStack from './src/Navigators/AuthNavigator';
+import AppStack from './src/navigators/AppNavigator';
+import AuthStack from './src/navigators/AuthNavigator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
@@ -112,7 +112,7 @@ const App = () => {
         })
         .then((response) => {
             if(response.data) {
-            console.log(response.data)
+            console.log("RECEBI O PEDIDO")
             AsyncStorage.setItem('userToken', JSON.stringify(response.data));
             dispatch({ type: 'SIGN_IN', userToken: JSON.stringify(response.data) });
 
@@ -121,6 +121,7 @@ const App = () => {
             }
         })
         .catch((error) => {
+          console.log("ERROU")
             console.log(error);
             alert("De momento não é possível processar a autenticação!");
         });

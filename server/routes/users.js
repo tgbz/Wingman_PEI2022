@@ -61,4 +61,12 @@ router.get("/userProfile/:id", function (req, res){
   .then( dados => res.jsonp(dados))
   .catch(erro => res.status(500).jsonp(erro))
 })
+
+router.put("/updateProfile/:id", function (req, res){
+  Users.updateUser(req.params.id,req.body)
+  .then(dados => res.jsonp(dados))
+  .catch(erro => res.status(500).jsonp(erro))
+})
+
+
 module.exports = router;

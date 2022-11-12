@@ -90,17 +90,6 @@ Users.getUser = function(id) {
 
 Users.updateUser = function(id,body) {
     return new Promise(function(resolve,reject){
-        /*sql.query(`Update user set name = ? , gender = ?, birthdate = ?, savings = ?
-                where idUser = ?`,
-        [body.name,body.gender,id] ,function(err,res){
-            if(err) {
-                console.log("error: ", err);
-                reject(err);
-            }
-            else{
-                resolve(res[0])
-            }
-        });*/
         sql.query(`UPDATE user u, wallet w
                     SET u.name = ? , u.gender = ?, u.birthdate = ?, u.savings = ?,
                         w.rendimento = ? , w.euro = ?
@@ -114,7 +103,5 @@ Users.updateUser = function(id,body) {
                 resolve(res[0])
             }
         }); 
-
-        
     })   
 }

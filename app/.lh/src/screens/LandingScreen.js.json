@@ -1,0 +1,710 @@
+{
+    "sourceFile": "src/screens/LandingScreen.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 173,
+            "patches": [
+                {
+                    "date": 1668269911118,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1668269918006,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,8 @@\n import React from \"react\";\n import { StyleSheet, Text, View, Button } from \"react-native\";\n \n-import AuthContext from \"../context/AuthProvider\";\n\\ No newline at end of file\n+import AuthContext from \"../context/AuthProvider\";\n+\n+\n+\n+function \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1668269932344,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,56 @@\n import React from \"react\";\n-import { StyleSheet, Text, View, Button } from \"react-native\";\n-\n+import { StyleSheet, TextInput, View, Button } from \"react-native\";\n+import { useState } from \"react\";\n+import axios from \"axios\";\n+import { serverURL } from \"../config/hosts\";\n+import AsyncStorage from '@react-native-async-storage/async-storage';\n\\ No newline at end of file\n import AuthContext from \"../context/AuthProvider\";\n \n+function LoginScreen({ navigation }) {\n+  //login form\n \n+  const [email, setEmail] = useState(\"\");\n+  const [password, setPassword] = useState(\"\");\n+  const { signIn } = React.useContext(AuthContext);\n \n-function \n+  const register = () =>{\n+    navigation.navigate(\"Register\")\n+  }\n+  \n+  return (\n+    <View style={styles.container}>\n+      <TextInput\n+        style={styles.input}\n+        placeholder=\"Email\"\n+        onChangeText={(email) => setEmail(email)}\n+      />\n+      <TextInput\n+        style={styles.input}\n+        placeholder=\"Password\"\n+        secureTextEntry={true}\n+        onChangeText={(password) => setPassword(password)}\n+      />\n+      <Button title=\"Login\" onPress={() => signIn(email, password)} />\n+      <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n+    </View>\n+  );\n+}\n+\n+const styles = StyleSheet.create({\n+  container: {\n+    flex: 1,\n+    backgroundColor: \"#fff\",\n+    alignItems: \"center\",\n+    justifyContent: \"center\",\n+  },\n+  input: {\n+    width: 200,\n+    height: 44,\n+    padding: 10,\n+    borderWidth: 1,\n+    borderColor: \"black\",\n+    marginBottom: 10,\n+  },\n+});\n+\n+export default LoginScreen;\n"
+                },
+                {
+                    "date": 1668269964410,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,38 +1,14 @@\n-import React from \"react\";\n-import { StyleSheet, TextInput, View, Button } from \"react-native\";\n-import { useState } from \"react\";\n-import axios from \"axios\";\n-import { serverURL } from \"../config/hosts\";\n-import AsyncStorage from '@react-native-async-storage/async-storage';\n+import React from 'react';\n+import { StyleSheet, Text, View, Button } from \"react-native\";\n import AuthContext from \"../context/AuthProvider\";\n \n-function LoginScreen({ navigation }) {\n-  //login form\n-\n-  const [email, setEmail] = useState(\"\");\n-  const [password, setPassword] = useState(\"\");\n-  const { signIn } = React.useContext(AuthContext);\n-\n-  const register = () =>{\n-    navigation.navigate(\"Register\")\n-  }\n-  \n-  return (\n+function HomeScreen({navigation}) {\n+  const { signOut } = React.useContext(AuthContext);\n+    return (\n     <View style={styles.container}>\n-      <TextInput\n-        style={styles.input}\n-        placeholder=\"Email\"\n-        onChangeText={(email) => setEmail(email)}\n-      />\n-      <TextInput\n-        style={styles.input}\n-        placeholder=\"Password\"\n-        secureTextEntry={true}\n-        onChangeText={(password) => setPassword(password)}\n-      />\n-      <Button title=\"Login\" onPress={() => signIn(email, password)} />\n-      <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n+      <Text>This is profile</Text>\n+      <Button title=\"Log out\" onPress={() => signOut()} />\n     </View>\n   );\n }\n \n@@ -42,15 +18,7 @@\n     backgroundColor: \"#fff\",\n     alignItems: \"center\",\n     justifyContent: \"center\",\n   },\n-  input: {\n-    width: 200,\n-    height: 44,\n-    padding: 10,\n-    borderWidth: 1,\n-    borderColor: \"black\",\n-    marginBottom: 10,\n-  },\n });\n \n-export default LoginScreen;\n\\ No newline at end of file\n+export default HomeScreen;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1668270993461,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,10 +5,10 @@\n function HomeScreen({navigation}) {\n   const { signOut } = React.useContext(AuthContext);\n     return (\n     <View style={styles.container}>\n-      <Text>This is profile</Text>\n-      <Button title=\"Log out\" onPress={() => signOut()} />\n+      <Text>This ijjfnvfadnsz </Text>\n+      <Button title=\"Log in\" onPress={() => signOut()} />\n     </View>\n   );\n }\n \n"
+                },
+                {
+                    "date": 1668271125576,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n import React from 'react';\n import { StyleSheet, Text, View, Button } from \"react-native\";\n import AuthContext from \"../context/AuthProvider\";\n \n-function HomeScreen({navigation}) {\n+function LandingScreen({navigation}) {\n   const { signOut } = React.useContext(AuthContext);\n     return (\n     <View style={styles.container}>\n       <Text>This ijjfnvfadnsz </Text>\n"
+                },
+                {
+                    "date": 1668271134428,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,5 +20,5 @@\n     justifyContent: \"center\",\n   },\n });\n \n-export default HomeScreen;\n\\ No newline at end of file\n+export default LandingScreen;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1668271938421,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n import { StyleSheet, Text, View, Button } from \"react-native\";\n import AuthContext from \"../context/AuthProvider\";\n \n function LandingScreen({navigation}) {\n-  const { signOut } = React.useContext(AuthContext);\n+  const { signIn } = React.useContext(AuthContext);\n     return (\n     <View style={styles.container}>\n       <Text>This ijjfnvfadnsz </Text>\n       <Button title=\"Log in\" onPress={() => signOut()} />\n"
+                },
+                {
+                    "date": 1668272177930,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,14 +2,23 @@\n import { StyleSheet, Text, View, Button } from \"react-native\";\n import AuthContext from \"../context/AuthProvider\";\n \n function LandingScreen({navigation}) {\n-  const { signIn } = React.useContext(AuthContext);\n+    const { signIn } = React.useContext(AuthContext);\n+\n+    const register = () =>{\n+      navigation.navigate(\"Register\")\n+    }\n     return (\n-    <View style={styles.container}>\n-      <Text>This ijjfnvfadnsz </Text>\n-      <Button title=\"Log in\" onPress={() => signOut()} />\n-    </View>\n+    <SafeAreaView>\n+        <Image style={styles.}></Image>\n+        \n+        <View style={styles.container}>\n+        <Text>This ijjfnvfadnsz </Text>\n+        <Button title=\"Login\" onPress={() => signIn(email, password)} />\n+        <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n+        </View>\n+    </SafeAreaView>\n   );\n }\n \n const styles = StyleSheet.create({\n"
+                },
+                {
+                    "date": 1668272193942,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n       navigation.navigate(\"Register\")\n     }\n     return (\n     <SafeAreaView>\n-        <Image style={styles.}></Image>\n+        <Image style={styles.logo}source={re}></Image>\n         \n         <View style={styles.container}>\n         <Text>This ijjfnvfadnsz </Text>\n         <Button title=\"Login\" onPress={() => signIn(email, password)} />\n"
+                },
+                {
+                    "date": 1668272220347,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n       navigation.navigate(\"Register\")\n     }\n     return (\n     <SafeAreaView>\n-        <Image style={styles.logo}source={re}></Image>\n+        <Image style={styles.logo}source={require('../assets/logo.png')}></Image>\n         \n         <View style={styles.container}>\n         <Text>This ijjfnvfadnsz </Text>\n         <Button title=\"Login\" onPress={() => signIn(email, password)} />\n"
+                },
+                {
+                    "date": 1668272229109,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,10 +8,10 @@\n     const register = () =>{\n       navigation.navigate(\"Register\")\n     }\n     return (\n-    <SafeAreaView>\n-        <Image style={styles.logo}source={require('../assets/logo.png')}></Image>\n+    <SafeAreaView></SafeAreaView>\n+        //<Image style={styles.logo}source={require('../assets/logo.png')}></Image></Image></Image>\n         \n         <View style={styles.container}>\n         <Text>This ijjfnvfadnsz </Text>\n         <Button title=\"Login\" onPress={() => signIn(email, password)} />\n"
+                },
+                {
+                    "date": 1668272241007,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,10 +8,10 @@\n     const register = () =>{\n       navigation.navigate(\"Register\")\n     }\n     return (\n-    <SafeAreaView></SafeAreaView>\n-        //<Image style={styles.logo}source={require('../assets/logo.png')}></Image></Image></Image>\n+    <SafeAreaView>\n+        <Image style={styles.logo} source={require('../assets/logo.png')}></Image></Image></Image>\n         \n         <View style={styles.container}>\n         <Text>This ijjfnvfadnsz </Text>\n         <Button title=\"Login\" onPress={() => signIn(email, password)} />\n"
+                },
+                {
+                    "date": 1668272254337,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n       navigation.navigate(\"Register\")\n     }\n     return (\n     <SafeAreaView>\n-        <Image style={styles.logo} source={require('../assets/logo.png')}></Image></Image></Image>\n+        <Image style={styles.logo} source={require('../assets/logo.png')}></Image>\n         \n         <View style={styles.container}>\n         <Text>This ijjfnvfadnsz </Text>\n         <Button title=\"Login\" onPress={() => signIn(email, password)} />\n"
+                },
+                {
+                    "date": 1668272280485,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n       navigation.navigate(\"Register\")\n     }\n     return (\n     <SafeAreaView>\n-        <Image style={styles.logo} source={require('../assets/logo.png')}></Image>\n+        <Image style={styles.logo} source={require('../../assets/logo.png')}></Image>\n         \n         <View style={styles.container}>\n         <Text>This ijjfnvfadnsz </Text>\n         <Button title=\"Login\" onPress={() => signIn(email, password)} />\n"
+                },
+                {
+                    "date": 1668272503620,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n import React from 'react';\n-import { StyleSheet, Text, View, Button } from \"react-native\";\n+import { SafeAreaView, StyleSheet, Text, View, Button } from \"react-native\";\n import AuthContext from \"../context/AuthProvider\";\n \n function LandingScreen({navigation}) {\n     const { signIn } = React.useContext(AuthContext);\n@@ -27,7 +27,12 @@\n     backgroundColor: \"#fff\",\n     alignItems: \"center\",\n     justifyContent: \"center\",\n   },\n+  logo: {\n+    width: '100',\n+    height: '100',\n+    resizeMode: 'contain'\n+  },\n });\n \n export default LandingScreen;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1668272886379,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,10 @@\n import React from 'react';\n import { SafeAreaView, StyleSheet, Text, View, Button } from \"react-native\";\n import AuthContext from \"../context/AuthProvider\";\n \n+import COLORS from \"../constants/theme\"\n+\n function LandingScreen({navigation}) {\n     const { signIn } = React.useContext(AuthContext);\n \n     const register = () =>{\n"
+                },
+                {
+                    "date": 1668272978696,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n import React from 'react';\n-import { SafeAreaView, StyleSheet, Text, View, Button } from \"react-native\";\n+import { SafeAreaView, StyleSheet, Text, View, Button, Image } from \"react-native\";\n import AuthContext from \"../context/AuthProvider\";\n \n import COLORS from \"../constants/theme\"\n \n@@ -11,9 +11,9 @@\n       navigation.navigate(\"Register\")\n     }\n     return (\n     <SafeAreaView>\n-        <Image style={styles.logo} source={require('../../assets/logo.png')}></Image>\n+        <Image style={styles.logo}source={require('../../assets/logo.png')}></Image>\n         \n         <View style={styles.container}>\n         <Text>This ijjfnvfadnsz </Text>\n         <Button title=\"Login\" onPress={() => signIn(email, password)} />\n"
+                },
+                {
+                    "date": 1668273013282,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,10 +30,10 @@\n     alignItems: \"center\",\n     justifyContent: \"center\",\n   },\n   logo: {\n-    width: '100',\n-    height: '100',\n+    width: '100%',\n+    height: '100%',\n     resizeMode: 'contain'\n   },\n });\n \n"
+                },
+                {
+                    "date": 1668273088538,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n \n const styles = StyleSheet.create({\n   container: {\n     flex: 1,\n-    backgroundColor: \"#fff\",\n+    backgroundColor: COLORS.wingblue,\n     alignItems: \"center\",\n     justifyContent: \"center\",\n   },\n   logo: {\n"
+                },
+                {
+                    "date": 1668273201429,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n import React from 'react';\n import { SafeAreaView, StyleSheet, Text, View, Button, Image } from \"react-native\";\n import AuthContext from \"../context/AuthProvider\";\n+import { assets, COLORS, FONTS, SHADOWS, SIZES } from '../constants'\n \n-import COLORS from \"../constants/theme\"\n \n function LandingScreen({navigation}) {\n     const { signIn } = React.useContext(AuthContext);\n \n"
+                },
+                {
+                    "date": 1668273403166,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,9 @@\n import { SafeAreaView, StyleSheet, Text, View, Button, Image } from \"react-native\";\n import AuthContext from \"../context/AuthProvider\";\n import { assets, COLORS, FONTS, SHADOWS, SIZES } from '../constants'\n \n+import COLORS from \"../constants/theme\"\n \n function LandingScreen({navigation}) {\n     const { signIn } = React.useContext(AuthContext);\n \n@@ -25,9 +26,9 @@\n \n const styles = StyleSheet.create({\n   container: {\n     flex: 1,\n-    backgroundColor: COLORS.wingblue,\n+    backgroundColor: \"white\",\n     alignItems: \"center\",\n     justifyContent: \"center\",\n   },\n   logo: {\n"
+                },
+                {
+                    "date": 1668273448467,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,10 +2,8 @@\n import { SafeAreaView, StyleSheet, Text, View, Button, Image } from \"react-native\";\n import AuthContext from \"../context/AuthProvider\";\n import { assets, COLORS, FONTS, SHADOWS, SIZES } from '../constants'\n \n-import COLORS from \"../constants/theme\"\n-\n function LandingScreen({navigation}) {\n     const { signIn } = React.useContext(AuthContext);\n \n     const register = () =>{\n"
+                },
+                {
+                    "date": 1668273643274,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,9 @@\n import { SafeAreaView, StyleSheet, Text, View, Button, Image } from \"react-native\";\n import AuthContext from \"../context/AuthProvider\";\n import { assets, COLORS, FONTS, SHADOWS, SIZES } from '../constants'\n \n+\n function LandingScreen({navigation}) {\n     const { signIn } = React.useContext(AuthContext);\n \n     const register = () =>{\n@@ -24,9 +25,9 @@\n \n const styles = StyleSheet.create({\n   container: {\n     flex: 1,\n-    backgroundColor: \"white\",\n+    backgroundColor: \"#7A97C2\",\n     alignItems: \"center\",\n     justifyContent: \"center\",\n   },\n   logo: {\n"
+                },
+                {
+                    "date": 1668273873360,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n import React from 'react';\n import { SafeAreaView, StyleSheet, Text, View, Button, Image } from \"react-native\";\n import AuthContext from \"../context/AuthProvider\";\n-import { assets, COLORS, FONTS, SHADOWS, SIZES } from '../constants'\n+import {COLORS, FONTS, SHADOWS, SIZES } from '../constants'\n \n \n function LandingScreen({navigation}) {\n     const { signIn } = React.useContext(AuthContext);\n"
+                },
+                {
+                    "date": 1668273952883,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n import React from 'react';\n import { SafeAreaView, StyleSheet, Text, View, Button, Image } from \"react-native\";\n import AuthContext from \"../context/AuthProvider\";\n-import {COLORS, FONTS, SHADOWS, SIZES } from '../constants'\n+import {COLORS, SHADOWS, SIZES } from '../constants'\n \n \n function LandingScreen({navigation}) {\n     const { signIn } = React.useContext(AuthContext);\n"
+                },
+                {
+                    "date": 1668274217871,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n     const register = () =>{\n       navigation.navigate(\"Register\")\n     }\n     return (\n-    <SafeAreaView>\n+    <SafeAreaView style={styles.container}>\n         <Image style={styles.logo}source={require('../../assets/logo.png')}></Image>\n         \n         <View style={styles.container}>\n         <Text>This ijjfnvfadnsz </Text>\n"
+                },
+                {
+                    "date": 1668274231850,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,10 +30,10 @@\n     alignItems: \"center\",\n     justifyContent: \"center\",\n   },\n   logo: {\n-    width: '100%',\n-    height: '100%',\n+    width: '100',\n+    height: '100',\n     resizeMode: 'contain'\n   },\n });\n \n"
+                },
+                {
+                    "date": 1668274244390,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n \n const styles = StyleSheet.create({\n   container: {\n     flex: 1,\n-    backgroundColor: \"#7A97C2\",\n+    backgroundColor: COLORS.wingblue,\n     alignItems: \"center\",\n     justifyContent: \"center\",\n   },\n   logo: {\n"
+                },
+                {
+                    "date": 1668274256084,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,10 +30,10 @@\n     alignItems: \"center\",\n     justifyContent: \"center\",\n   },\n   logo: {\n-    width: '100',\n-    height: '100',\n+    width: '50%',\n+    height: '50%',\n     resizeMode: 'contain'\n   },\n });\n \n"
+                },
+                {
+                    "date": 1668274286715,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,10 +30,10 @@\n     alignItems: \"center\",\n     justifyContent: \"center\",\n   },\n   logo: {\n-    width: '50%',\n-    height: '50%',\n+    width: '100',\n+    height: '1',\n     resizeMode: 'contain'\n   },\n });\n \n"
+                },
+                {
+                    "date": 1668274453721,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     <SafeAreaView style={styles.container}>\n         <Image style={styles.logo}source={require('../../assets/logo.png')}></Image>\n         \n         <View style={styles.container}>\n-        <Text>This ijjfnvfadnsz </Text>\n+        <Text style={styles.text}>This ijjfnvfadnsz </Text>\n         <Button title=\"Login\" onPress={() => signIn(email, password)} />\n         <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n         </View>\n     </SafeAreaView>\n@@ -31,10 +31,13 @@\n     justifyContent: \"center\",\n   },\n   logo: {\n     width: '100',\n-    height: '1',\n+    height: '100',\n     resizeMode: 'contain'\n   },\n+  text: {\n+    fontFamily: FONTS.bold\n+  }\n });\n \n export default LandingScreen;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1668274466427,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n import React from 'react';\n import { SafeAreaView, StyleSheet, Text, View, Button, Image } from \"react-native\";\n import AuthContext from \"../context/AuthProvider\";\n-import {COLORS, SHADOWS, SIZES } from '../constants'\n+import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'\n \n \n function LandingScreen({navigation}) {\n     const { signIn } = React.useContext(AuthContext);\n"
+                },
+                {
+                    "date": 1668274509319,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,14 +30,14 @@\n     alignItems: \"center\",\n     justifyContent: \"center\",\n   },\n   logo: {\n-    width: '100',\n-    height: '100',\n+    width: 100,\n+    height: 100,\n     resizeMode: 'contain'\n   },\n   text: {\n-    fontFamily: FONTS.bold\n+    fontFamily: \"Roboto\",\n   }\n });\n \n export default LandingScreen;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1668274519373,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n     height: 100,\n     resizeMode: 'contain'\n   },\n   text: {\n-    fontFamily: \"Roboto\",\n+    fontFamily: \"Times New Roman\",\n   }\n });\n \n export default LandingScreen;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1668274528624,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n     height: 100,\n     resizeMode: 'contain'\n   },\n   text: {\n-    fontFamily: \"Times New Roman\",\n+    fontFamily: \"Roboto\",\n   }\n });\n \n export default LandingScreen;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1668274547760,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,8 +36,9 @@\n     resizeMode: 'contain'\n   },\n   text: {\n     fontFamily: \"Roboto\",\n+    fontSize: 40,\n   }\n });\n \n export default LandingScreen;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1668274562058,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n     height: 100,\n     resizeMode: 'contain'\n   },\n   text: {\n-    fontFamily: \"Roboto\",\n+    fontFamily: \"Times New Roman\",\n     fontSize: 40,\n   }\n });\n \n"
+                },
+                {
+                    "date": 1668274573792,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n     height: 100,\n     resizeMode: 'contain'\n   },\n   text: {\n-    fontFamily: \"Times New Roman\",\n+    fontFamily: \"Sora-Regular\",\n     fontSize: 40,\n   }\n });\n \n"
+                },
+                {
+                    "date": 1668274590404,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n     height: 100,\n     resizeMode: 'contain'\n   },\n   text: {\n-    fontFamily: \"Sora-Regular\",\n+    fontFamily: \"Montserrat\",\n     fontSize: 40,\n   }\n });\n \n"
+                },
+                {
+                    "date": 1668274599026,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n     height: 100,\n     resizeMode: 'contain'\n   },\n   text: {\n-    fontFamily: \"Montserrat\",\n+    fontFamily: \"Noto Sans Lao Looped\",\n     fontSize: 40,\n   }\n });\n \n"
+                },
+                {
+                    "date": 1668274666265,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,14 +30,15 @@\n     alignItems: \"center\",\n     justifyContent: \"center\",\n   },\n   logo: {\n-    width: 100,\n-    height: 100,\n-    resizeMode: 'contain'\n+    width: 80,\n+    height: 80,\n+    resizeMode: 'contain',\n+    top: 10,\n   },\n   text: {\n-    fontFamily: \"Noto Sans Lao Looped\",\n+    fontFamily: \"Roboto\",\n     fontSize: 40,\n   }\n });\n \n"
+                },
+                {
+                    "date": 1668274679040,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,10 +36,10 @@\n     resizeMode: 'contain',\n     top: 10,\n   },\n   text: {\n-    fontFamily: \"Roboto\",\n-    fontSize: 40,\n+    fontFamily: \"Times New Roman\",\n+    fontSize: 90,\n   }\n });\n \n export default LandingScreen;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1668274688029,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n     resizeMode: 'contain',\n     top: 10,\n   },\n   text: {\n-    fontFamily: \"Times New Roman\",\n+    fontFamily: \"Robot\",\n     fontSize: 90,\n   }\n });\n \n"
+                },
+                {
+                    "date": 1668274693604,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n     resizeMode: 'contain',\n     top: 10,\n   },\n   text: {\n-    fontFamily: \"Robot\",\n+    fontFamily: \"Roboto\",\n     fontSize: 90,\n   }\n });\n \n"
+                },
+                {
+                    "date": 1668274713330,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n     resizeMode: 'contain',\n     top: 10,\n   },\n   text: {\n-    fontFamily: \"Roboto\",\n+    fontFamily: \"Times New Roman\",\n     fontSize: 90,\n   }\n });\n \n"
+                },
+                {
+                    "date": 1668274724875,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n     resizeMode: 'contain',\n     top: 10,\n   },\n   text: {\n-    fontFamily: \"Times New Roman\",\n+    fontFamily: \"Robot\",\n     fontSize: 90,\n   }\n });\n \n"
+                },
+                {
+                    "date": 1668274746637,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n     resizeMode: 'contain',\n     top: 10,\n   },\n   text: {\n-    fontFamily: \"Robot\",\n+    fontFamily: \"Times New Roman\",\n     fontSize: 90,\n   }\n });\n \n"
+                },
+                {
+                    "date": 1668274780304,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n     resizeMode: 'contain',\n     top: 10,\n   },\n   text: {\n-    fontFamily: \"Times New Roman\",\n+    fontFamily: FONTS.bold,\n     fontSize: 90,\n   }\n });\n \n"
+                },
+                {
+                    "date": 1668274789663,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n     resizeMode: 'contain',\n     top: 10,\n   },\n   text: {\n-    fontFamily: FONTS.bold,\n+    fontFamily: FONTS.light,\n     fontSize: 90,\n   }\n });\n \n"
+                },
+                {
+                    "date": 1668274797575,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n     resizeMode: 'contain',\n     top: 10,\n   },\n   text: {\n-    fontFamily: FONTS.light,\n+    fontFamily: FONTS.bold,\n     fontSize: 90,\n   }\n });\n \n"
+                },
+                {
+                    "date": 1668274890831,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,10 +30,10 @@\n     alignItems: \"center\",\n     justifyContent: \"center\",\n   },\n   logo: {\n-    width: 80,\n-    height: 80,\n+    width: 100,\n+    height: 100,\n     resizeMode: 'contain',\n     top: 10,\n   },\n   text: {\n"
+                },
+                {
+                    "date": 1668275554572,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n     resizeMode: 'contain',\n     top: 10,\n   },\n   text: {\n-    fontFamily: FONTS.bold,\n+    fontFamily: \"roboto\",\n     fontSize: 90,\n   }\n });\n \n"
+                },
+                {
+                    "date": 1668275639478,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     <SafeAreaView style={styles.container}>\n         <Image style={styles.logo}source={require('../../assets/logo.png')}></Image>\n         \n         <View style={styles.container}>\n-        <Text style={styles.text}>This ijjfnvfadnsz </Text>\n+        <Text style={styles.text}>Ganha controlo  </Text>\n         <Button title=\"Login\" onPress={() => signIn(email, password)} />\n         <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n         </View>\n     </SafeAreaView>\n@@ -32,9 +32,8 @@\n   },\n   logo: {\n     width: 100,\n     height: 100,\n-    resizeMode: 'contain',\n     top: 10,\n   },\n   text: {\n     fontFamily: \"roboto\",\n"
+                },
+                {
+                    "date": 1668275659203,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,10 +31,9 @@\n     justifyContent: \"center\",\n   },\n   logo: {\n     width: 100,\n-    height: 100,\n-    top: 10,\n+    height: 100\n   },\n   text: {\n     fontFamily: \"roboto\",\n     fontSize: 90,\n"
+                },
+                {
+                    "date": 1668275696174,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,10 +11,11 @@\n       navigation.navigate(\"Register\")\n     }\n     return (\n     <SafeAreaView style={styles.container}>\n-        <Image style={styles.logo}source={require('../../assets/logo.png')}></Image>\n-        \n+        <View>       \n+            <Image style={styles.logo}source={require('../../assets/logo.png')}></Image>\n+        </View>        \n         <View style={styles.container}>\n         <Text style={styles.text}>Ganha controlo  </Text>\n         <Button title=\"Login\" onPress={() => signIn(email, password)} />\n         <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n"
+                },
+                {
+                    "date": 1668275712845,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,8 +31,9 @@\n     alignItems: \"center\",\n     justifyContent: \"center\",\n   },\n   logo: {\n+    flex:1,\n     width: 100,\n     height: 100\n   },\n   text: {\n"
+                },
+                {
+                    "date": 1668275720797,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,8 +13,9 @@\n     return (\n     <SafeAreaView style={styles.container}>\n         <View>       \n             <Image style={styles.logo}source={require('../../assets/logo.png')}></Image>\n+            <Text style={styles.text}>Wing</Text>\n         </View>        \n         <View style={styles.container}>\n         <Text style={styles.text}>Ganha controlo  </Text>\n         <Button title=\"Login\" onPress={() => signIn(email, password)} />\n@@ -31,9 +32,8 @@\n     alignItems: \"center\",\n     justifyContent: \"center\",\n   },\n   logo: {\n-    flex:1,\n     width: 100,\n     height: 100\n   },\n   text: {\n"
+                },
+                {
+                    "date": 1668275727644,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     return (\n     <SafeAreaView style={styles.container}>\n         <View>       \n             <Image style={styles.logo}source={require('../../assets/logo.png')}></Image>\n-            <Text style={styles.text}>Wing</Text>\n+            <Text>Wingman</Text>\n         </View>        \n         <View style={styles.container}>\n         <Text style={styles.text}>Ganha controlo  </Text>\n         <Button title=\"Login\" onPress={() => signIn(email, password)} />\n"
+                },
+                {
+                    "date": 1668275753052,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,12 +13,12 @@\n     return (\n     <SafeAreaView style={styles.container}>\n         <View>       \n             <Image style={styles.logo}source={require('../../assets/logo.png')}></Image>\n-            <Text>Wingman</Text>\n+            <Text style={styles.wingman}>Wingman</Text>\n         </View>        \n         <View style={styles.container}>\n-        <Text style={styles.text}>Ganha controlo  </Text>\n+        <Text style={styles.text}>Ganha controlo sobre as tuas  </Text>\n         <Button title=\"Login\" onPress={() => signIn(email, password)} />\n         <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n         </View>\n     </SafeAreaView>\n"
+                },
+                {
+                    "date": 1668275819068,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,8 +38,13 @@\n   },\n   text: {\n     fontFamily: \"roboto\",\n     fontSize: 90,\n+  },\n+  wingman: {\n+    color: 'white',\n+    fontFamily: \"roboto\",\n+    fontSize: 90,\n   }\n });\n \n export default LandingScreen;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1668275855636,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,9 +37,9 @@\n     height: 100\n   },\n   text: {\n     fontFamily: \"roboto\",\n-    fontSize: 90,\n+    fontSize: 30,\n   },\n   wingman: {\n     color: 'white',\n     fontFamily: \"roboto\",\n"
+                },
+                {
+                    "date": 1668275866642,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n       navigation.navigate(\"Register\")\n     }\n     return (\n     <SafeAreaView style={styles.container}>\n-        <View>       \n+        <View style={styles.container}>       \n             <Image style={styles.logo}source={require('../../assets/logo.png')}></Image>\n             <Text style={styles.wingman}>Wingman</Text>\n         </View>        \n         <View style={styles.container}>\n@@ -42,9 +42,9 @@\n   },\n   wingman: {\n     color: 'white',\n     fontFamily: \"roboto\",\n-    fontSize: 90,\n+    fontSize: 20,\n   }\n });\n \n export default LandingScreen;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1668275874293,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n   },\n   wingman: {\n     color: 'white',\n     fontFamily: \"roboto\",\n-    fontSize: 20,\n+    fontSize: 30,\n   }\n });\n \n export default LandingScreen;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1668275923730,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,9 +37,9 @@\n     height: 100\n   },\n   text: {\n     fontFamily: \"roboto\",\n-    fontSize: 30,\n+    fontSize: 20\n   },\n   wingman: {\n     color: 'white',\n     fontFamily: \"roboto\",\n"
+                },
+                {
+                    "date": 1668275945357,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,9 +37,10 @@\n     height: 100\n   },\n   text: {\n     fontFamily: \"roboto\",\n-    fontSize: 20\n+    fontSize: 20,\n+    color: COLORS.white\n   },\n   wingman: {\n     color: 'white',\n     fontFamily: \"roboto\",\n"
+                },
+                {
+                    "date": 1668276152037,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,14 +11,15 @@\n       navigation.navigate(\"Register\")\n     }\n     return (\n     <SafeAreaView style={styles.container}>\n-        <View style={styles.container}>       \n+        <View style={styles.containerLogo}>       \n             <Image style={styles.logo}source={require('../../assets/logo.png')}></Image>\n             <Text style={styles.wingman}>Wingman</Text>\n         </View>        \n         <View style={styles.container}>\n-        <Text style={styles.text}>Ganha controlo sobre as tuas  </Text>\n+        <Text style={styles.text}>Ganha controlo sobre as tuas </Text>\n+        <Text style={styles.text}>finanças  </Text>\n         <Button title=\"Login\" onPress={() => signIn(email, password)} />\n         <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n         </View>\n     </SafeAreaView>\n@@ -31,8 +32,13 @@\n     backgroundColor: COLORS.wingblue,\n     alignItems: \"center\",\n     justifyContent: \"center\",\n   },\n+  containerLogo: {\n+    alignItems: \"center\",\n+    justifyContent: \"center\",\n+    top:10\n+  },\n   logo: {\n     width: 100,\n     height: 100\n   },\n"
+                },
+                {
+                    "date": 1668276163960,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n             <Text style={styles.wingman}>Wingman</Text>\n         </View>        \n         <View style={styles.container}>\n         <Text style={styles.text}>Ganha controlo sobre as tuas </Text>\n-        <Text style={styles.text}>finanças  </Text>\n+        <Text style={styles.text}>Ganha controlo sobre as tuas finanças, potencia as tuas poupanças e melhora a alocação dos teus recursos  </Text>\n         <Button title=\"Login\" onPress={() => signIn(email, password)} />\n         <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n         </View>\n     </SafeAreaView>\n@@ -35,9 +35,9 @@\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    top:10\n+    top:30\n   },\n   logo: {\n     width: 100,\n     height: 100\n"
+                },
+                {
+                    "date": 1668276193727,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,10 @@\n             <Text style={styles.wingman}>Wingman</Text>\n         </View>        \n         <View style={styles.container}>\n         <Text style={styles.text}>Ganha controlo sobre as tuas </Text>\n-        <Text style={styles.text}>Ganha controlo sobre as tuas finanças, potencia as tuas poupanças e melhora a alocação dos teus recursos  </Text>\n+        <Text style={styles.text}>finanças, potencia as tuas</Text>\n+        <Text style={styles.text}>poupanças e melhora a alocação dos teus recursos</Text>\n         <Button title=\"Login\" onPress={() => signIn(email, password)} />\n         <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n         </View>\n     </SafeAreaView>\n@@ -35,9 +36,9 @@\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    top:30\n+    position: 'absolute'\n   },\n   logo: {\n     width: 100,\n     height: 100\n"
+                },
+                {
+                    "date": 1668276202882,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,10 @@\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    position: 'absolute'\n+    position: 'absolute',\n+    top: 20\n   },\n   logo: {\n     width: 100,\n     height: 100\n"
+                },
+                {
+                    "date": 1668276218423,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,10 @@\n         </View>        \n         <View style={styles.container}>\n         <Text style={styles.text}>Ganha controlo sobre as tuas </Text>\n         <Text style={styles.text}>finanças, potencia as tuas</Text>\n-        <Text style={styles.text}>poupanças e melhora a alocação dos teus recursos</Text>\n+        <Text style={styles.text}>poupanças e melhora a</Text>\n+        <Text style={styles.text}>alocação dos teus recursos</Text>\n         <Button title=\"Login\" onPress={() => signIn(email, password)} />\n         <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n         </View>\n     </SafeAreaView>\n"
+                },
+                {
+                    "date": 1668276250700,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,9 +47,11 @@\n   },\n   text: {\n     fontFamily: \"roboto\",\n     fontSize: 20,\n-    color: COLORS.white\n+    color: COLORS.white,\n+    alignItems: \"center\",\n+\n   },\n   wingman: {\n     color: 'white',\n     fontFamily: \"roboto\",\n"
+                },
+                {
+                    "date": 1668276269243,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,10 +31,9 @@\n const styles = StyleSheet.create({\n   container: {\n     flex: 1,\n     backgroundColor: COLORS.wingblue,\n-    alignItems: \"center\",\n-    justifyContent: \"center\",\n+    \n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n@@ -49,8 +48,9 @@\n     fontFamily: \"roboto\",\n     fontSize: 20,\n     color: COLORS.white,\n     alignItems: \"center\",\n+    justifyContent: \"center\",\n \n   },\n   wingman: {\n     color: 'white',\n"
+                },
+                {
+                    "date": 1668276299166,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,9 +31,10 @@\n const styles = StyleSheet.create({\n   container: {\n     flex: 1,\n     backgroundColor: COLORS.wingblue,\n-    \n+    alignItems: \"center\",\n+    justifyContent: \"center\",\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n"
+                },
+                {
+                    "date": 1668276311362,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,10 +37,8 @@\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    position: 'absolute',\n-    top: 20\n   },\n   logo: {\n     width: 100,\n     height: 100\n"
+                },
+                {
+                    "date": 1668276458994,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n     const register = () =>{\n       navigation.navigate(\"Register\")\n     }\n     return (\n-    <SafeAreaView style={styles.container}>\n+    <SafeAreaView style={styles.containerF}>\n         <View style={styles.containerLogo}>       \n             <Image style={styles.logo}source={require('../../assets/logo.png')}></Image>\n             <Text style={styles.wingman}>Wingman</Text>\n         </View>        \n@@ -28,14 +28,18 @@\n   );\n }\n \n const styles = StyleSheet.create({\n-  container: {\n+  containerF: {\n     flex: 1,\n     backgroundColor: COLORS.wingblue,\n     alignItems: \"center\",\n     justifyContent: \"center\",\n   },\n+  container: {\n+    alignItems: \"center\",\n+    justifyContent: \"center\",\n+  },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n   },\n"
+                },
+                {
+                    "date": 1668276513669,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,8 +41,9 @@\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n+    position: 'absolute'\n   },\n   logo: {\n     width: 100,\n     height: 100\n@@ -58,8 +59,13 @@\n   wingman: {\n     color: 'white',\n     fontFamily: \"roboto\",\n     fontSize: 30,\n+  },\n+  button: {\n+    color: 'white',\n+    fontFamily: \"roboto\",\n+    fontSize: 30,\n   }\n });\n \n export default LandingScreen;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1668276532283,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,8 +20,9 @@\n         <Text style={styles.text}>Ganha controlo sobre as tuas </Text>\n         <Text style={styles.text}>finanças, potencia as tuas</Text>\n         <Text style={styles.text}>poupanças e melhora a</Text>\n         <Text style={styles.text}>alocação dos teus recursos</Text>\n+        <Image style={styles.logo}source={require('../../assets/logo.png')}></Image>\n         <Button title=\"Login\" onPress={() => signIn(email, password)} />\n         <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n         </View>\n     </SafeAreaView>\n@@ -41,9 +42,11 @@\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    position: 'absolute'\n+    position: 'absolute',\n+    top: 20,\n+    right: 30\n   },\n   logo: {\n     width: 100,\n     height: 100\n"
+                },
+                {
+                    "date": 1668276546685,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n         <Text style={styles.text}>Ganha controlo sobre as tuas </Text>\n         <Text style={styles.text}>finanças, potencia as tuas</Text>\n         <Text style={styles.text}>poupanças e melhora a</Text>\n         <Text style={styles.text}>alocação dos teus recursos</Text>\n-        <Image style={styles.logo}source={require('../../assets/logo.png')}></Image>\n+        <Image style={styles.preview}source={require('../../assets/im')}></Image>\n         <Button title=\"Login\" onPress={() => signIn(email, password)} />\n         <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n         </View>\n     </SafeAreaView>\n@@ -44,9 +44,9 @@\n     alignItems: \"center\",\n     justifyContent: \"center\",\n     position: 'absolute',\n     top: 20,\n-    right: 30\n+    left: 30\n   },\n   logo: {\n     width: 100,\n     height: 100\n"
+                },
+                {
+                    "date": 1668276562027,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,11 @@\n import React from 'react';\n import { SafeAreaView, StyleSheet, Text, View, Button, Image } from \"react-native\";\n import AuthContext from \"../context/AuthProvider\";\n import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'\n+~\n+import { View, Button, StyleSheet, TouchableOpacity, Text } from \"react-native\";\n \n-\n function LandingScreen({navigation}) {\n     const { signIn } = React.useContext(AuthContext);\n \n     const register = () =>{\n@@ -20,9 +21,9 @@\n         <Text style={styles.text}>Ganha controlo sobre as tuas </Text>\n         <Text style={styles.text}>finanças, potencia as tuas</Text>\n         <Text style={styles.text}>poupanças e melhora a</Text>\n         <Text style={styles.text}>alocação dos teus recursos</Text>\n-        <Image style={styles.preview}source={require('../../assets/im')}></Image>\n+        <Image style={styles.preview}source={require('../../assets/images/preview-home.png')}></Image>\n         <Button title=\"Login\" onPress={() => signIn(email, password)} />\n         <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n         </View>\n     </SafeAreaView>\n"
+                },
+                {
+                    "date": 1668276572247,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,8 @@\n import React from 'react';\n-import { SafeAreaView, StyleSheet, Text, View, Button, Image } from \"react-native\";\n+import { SafeAreaView, StyleSheet, Text, View, Button, Image, TouchableOpacity } from \"react-native\";\n import AuthContext from \"../context/AuthProvider\";\n import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'\n-~\n-import { View, Button, StyleSheet, TouchableOpacity, Text } from \"react-native\";\n \n function LandingScreen({navigation}) {\n     const { signIn } = React.useContext(AuthContext);\n \n@@ -21,9 +19,9 @@\n         <Text style={styles.text}>Ganha controlo sobre as tuas </Text>\n         <Text style={styles.text}>finanças, potencia as tuas</Text>\n         <Text style={styles.text}>poupanças e melhora a</Text>\n         <Text style={styles.text}>alocação dos teus recursos</Text>\n-        <Image style={styles.preview}source={require('../../assets/images/preview-home.png')}></Image>\n+        <Image style={styles.logo}source={require('../../assets/images/preview-home.png')}></Image>\n         <Button title=\"Login\" onPress={() => signIn(email, password)} />\n         <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n         </View>\n     </SafeAreaView>\n"
+                },
+                {
+                    "date": 1668276602517,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n         <Text style={styles.text}>Ganha controlo sobre as tuas </Text>\n         <Text style={styles.text}>finanças, potencia as tuas</Text>\n         <Text style={styles.text}>poupanças e melhora a</Text>\n         <Text style={styles.text}>alocação dos teus recursos</Text>\n-        <Image style={styles.logo}source={require('../../assets/images/preview-home.png')}></Image>\n+        <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n         <Button title=\"Login\" onPress={() => signIn(email, password)} />\n         <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n         </View>\n     </SafeAreaView>\n"
+                },
+                {
+                    "date": 1668276644267,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,16 +19,27 @@\n         <Text style={styles.text}>Ganha controlo sobre as tuas </Text>\n         <Text style={styles.text}>finanças, potencia as tuas</Text>\n         <Text style={styles.text}>poupanças e melhora a</Text>\n         <Text style={styles.text}>alocação dos teus recursos</Text>\n-        <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n+        <Image style={styles.preview} source={require('../../assets/images/preview-home.png')}></Image>\n         <Button title=\"Login\" onPress={() => signIn(email, password)} />\n         <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n         </View>\n     </SafeAreaView>\n   );\n }\n \n+const AppButton = ({ onPress, title }) => (\n+    <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>\n+      <Text style={styles.appButtonText}>{title}</Text>\n+    </TouchableOpacity>\n+  );\n+\n+  const styles = StyleSheet.create({\n+    // ...\n+    \n+  });\n+  \n const styles = StyleSheet.create({\n   containerF: {\n     flex: 1,\n     backgroundColor: COLORS.wingblue,\n@@ -66,8 +77,12 @@\n   button: {\n     color: 'white',\n     fontFamily: \"roboto\",\n     fontSize: 30,\n+  },\n+  preview:{\n+    width: 50,\n+    height:50\n   }\n });\n \n export default LandingScreen;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1668276662872,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,13 +32,8 @@\n     <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>\n       <Text style={styles.appButtonText}>{title}</Text>\n     </TouchableOpacity>\n   );\n-\n-  const styles = StyleSheet.create({\n-    // ...\n-    \n-  });\n   \n const styles = StyleSheet.create({\n   containerF: {\n     flex: 1,\n@@ -73,13 +68,22 @@\n     color: 'white',\n     fontFamily: \"roboto\",\n     fontSize: 30,\n   },\n-  button: {\n-    color: 'white',\n-    fontFamily: \"roboto\",\n-    fontSize: 30,\n+  appButtonContainer: {\n+    elevation: 8,\n+    backgroundColor: \"#009688\",\n+    borderRadius: 10,\n+    paddingVertical: 10,\n+    paddingHorizontal: 12\n   },\n+  appButtonText: {\n+    fontSize: 18,\n+    color: \"#fff\",\n+    fontWeight: \"bold\",\n+    alignSelf: \"center\",\n+    textTransform: \"uppercase\"\n+  },\n   preview:{\n     width: 50,\n     height:50\n   }\n"
+                },
+                {
+                    "date": 1668276693952,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n     alignItems: \"center\",\n     justifyContent: \"center\",\n     position: 'absolute',\n     top: 20,\n-    left: 30\n+    left: 50\n   },\n   logo: {\n     width: 100,\n     height: 100\n"
+                },
+                {
+                    "date": 1668276710750,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,9 +31,9 @@\n const AppButton = ({ onPress, title }) => (\n     <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>\n       <Text style={styles.appButtonText}>{title}</Text>\n     </TouchableOpacity>\n-  );\n+);\n   \n const styles = StyleSheet.create({\n   containerF: {\n     flex: 1,\n"
+                },
+                {
+                    "date": 1668276845354,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,10 +20,8 @@\n         <Text style={styles.text}>finanças, potencia as tuas</Text>\n         <Text style={styles.text}>poupanças e melhora a</Text>\n         <Text style={styles.text}>alocação dos teus recursos</Text>\n         <Image style={styles.preview} source={require('../../assets/images/preview-home.png')}></Image>\n-        <Button title=\"Login\" onPress={() => signIn(email, password)} />\n-        <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n         </View>\n     </SafeAreaView>\n   );\n }\n"
+                },
+                {
+                    "date": 1668276879437,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,15 +13,19 @@\n     <SafeAreaView style={styles.containerF}>\n         <View style={styles.containerLogo}>       \n             <Image style={styles.logo}source={require('../../assets/logo.png')}></Image>\n             <Text style={styles.wingman}>Wingman</Text>\n+            <Image style={styles.preview} source={require('../../assets/images/preview-home.png')}></Image>\n+\n         </View>        \n         <View style={styles.container}>\n         <Text style={styles.text}>Ganha controlo sobre as tuas </Text>\n         <Text style={styles.text}>finanças, potencia as tuas</Text>\n         <Text style={styles.text}>poupanças e melhora a</Text>\n         <Text style={styles.text}>alocação dos teus recursos</Text>\n-        <Image style={styles.preview} source={require('../../assets/images/preview-home.png')}></Image>\n+        <Button title=\"Login\" onPress={() => signIn(email, password)} /> \n+        <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n+    \n         </View>\n     </SafeAreaView>\n   );\n }\n"
+                },
+                {
+                    "date": 1668276886796,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     <SafeAreaView style={styles.containerF}>\n         <View style={styles.containerLogo}>       \n             <Image style={styles.logo}source={require('../../assets/logo.png')}></Image>\n             <Text style={styles.wingman}>Wingman</Text>\n-            <Image style={styles.preview} source={require('../../assets/images/preview-home.png')}></Image>\n+            <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n \n         </View>        \n         <View style={styles.container}>\n         <Text style={styles.text}>Ganha controlo sobre as tuas </Text>\n"
+                },
+                {
+                    "date": 1668276974015,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -86,9 +86,10 @@\n     textTransform: \"uppercase\"\n   },\n   preview:{\n     width: 50,\n-    height:50\n+    height:50,\n+    color: 'pink'\n   }\n });\n \n export default LandingScreen;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1668277009063,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -86,10 +86,9 @@\n     textTransform: \"uppercase\"\n   },\n   preview:{\n     width: 50,\n-    height:50,\n-    color: 'pink'\n+    height:50\n   }\n });\n \n export default LandingScreen;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1668277026144,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n     }\n     return (\n     <SafeAreaView style={styles.containerF}>\n         <View style={styles.containerLogo}>       \n-            <Image style={styles.logo}source={require('../../assets/logo.png')}></Image>\n+            <Image style={styles.logo}source={require('../../assets/images/preview-home.png')}></Image>\n             <Text style={styles.wingman}>Wingman</Text>\n             <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n \n         </View>        \n"
+                },
+                {
+                    "date": 1668277038054,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     <SafeAreaView style={styles.containerF}>\n         <View style={styles.containerLogo}>       \n             <Image style={styles.logo}source={require('../../assets/images/preview-home.png')}></Image>\n             <Text style={styles.wingman}>Wingman</Text>\n-            <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n+            <Image style={styles.preview} source={require('../../assets/images/preview-home.png')}></Image>\n \n         </View>        \n         <View style={styles.container}>\n         <Text style={styles.text}>Ganha controlo sobre as tuas </Text>\n"
+                },
+                {
+                    "date": 1668277092614,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,11 +11,11 @@\n     }\n     return (\n     <SafeAreaView style={styles.containerF}>\n         <View style={styles.containerLogo}>       \n-            <Image style={styles.logo}source={require('../../assets/images/preview-home.png')}></Image>\n+            <Image style={styles.logo}source={require('../../assets/logo.png')}></Image>\n             <Text style={styles.wingman}>Wingman</Text>\n-            <Image style={styles.preview} source={require('../../assets/images/preview-home.png')}></Image>\n+            <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n \n         </View>        \n         <View style={styles.container}>\n         <Text style={styles.text}>Ganha controlo sobre as tuas </Text>\n@@ -25,8 +25,10 @@\n         <Button title=\"Login\" onPress={() => signIn(email, password)} /> \n         <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n     \n         </View>\n+\n+        </View>\n     </SafeAreaView>\n   );\n }\n \n"
+                },
+                {
+                    "date": 1668277105256,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     <SafeAreaView style={styles.containerF}>\n         <View style={styles.containerLogo}>       \n             <Image style={styles.logo}source={require('../../assets/logo.png')}></Image>\n             <Text style={styles.wingman}>Wingman</Text>\n-            <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n+            <Image style={styles.logo} source={require('../../assets/images/logo2.png')}></Image>\n \n         </View>        \n         <View style={styles.container}>\n         <Text style={styles.text}>Ganha controlo sobre as tuas </Text>\n@@ -26,9 +26,10 @@\n         <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n     \n         </View>\n \n-        </View>\n+        <View>\n+        <View>\n     </SafeAreaView>\n   );\n }\n \n"
+                },
+                {
+                    "date": 1668277127191,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,15 +21,16 @@\n         <Text style={styles.text}>Ganha controlo sobre as tuas </Text>\n         <Text style={styles.text}>finanças, potencia as tuas</Text>\n         <Text style={styles.text}>poupanças e melhora a</Text>\n         <Text style={styles.text}>alocação dos teus recursos</Text>\n-        <Button title=\"Login\" onPress={() => signIn(email, password)} /> \n-        <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n+        \n     \n         </View>\n \n         <View>\n-        <View>\n+            <Button title=\"Login\" onPress={() => signIn(email, password)} /> \n+            <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n+        </View>\n     </SafeAreaView>\n   );\n }\n \n"
+                },
+                {
+                    "date": 1668277292816,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,15 +16,13 @@\n             <Text style={styles.wingman}>Wingman</Text>\n             <Image style={styles.logo} source={require('../../assets/images/logo2.png')}></Image>\n \n         </View>        \n-        <View style={styles.container}>\n-        <Text style={styles.text}>Ganha controlo sobre as tuas </Text>\n-        <Text style={styles.text}>finanças, potencia as tuas</Text>\n-        <Text style={styles.text}>poupanças e melhora a</Text>\n-        <Text style={styles.text}>alocação dos teus recursos</Text>\n-        \n-    \n+            <View style={styles.container}>\n+            <Text style={styles.text}>Ganha controlo sobre as tuas </Text>\n+            <Text style={styles.text}>finanças, potencia as tuas</Text>\n+            <Text style={styles.text}>poupanças e melhora a</Text>\n+            <Text style={styles.text}>alocação dos teus recursos</Text>\n         </View>\n \n         <View>\n             <Button title=\"Login\" onPress={() => signIn(email, password)} /> \n@@ -55,9 +53,9 @@\n     alignItems: \"center\",\n     justifyContent: \"center\",\n     position: 'absolute',\n     top: 20,\n-    left: 50\n+    left: 40\n   },\n   logo: {\n     width: 100,\n     height: 100\n"
+                },
+                {
+                    "date": 1668277318376,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,8 @@\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    position: 'absolute',\n     top: 20,\n     left: 40\n   },\n   logo: {\n"
+                },
+                {
+                    "date": 1668277506549,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,11 +23,14 @@\n             <Text style={styles.text}>poupanças e melhora a</Text>\n             <Text style={styles.text}>alocação dos teus recursos</Text>\n         </View>\n \n-        <View>\n+        <View styles={styles.containerBTN}>\n             <Button title=\"Login\" onPress={() => signIn(email, password)} /> \n             <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n+            <TouchableOpacity onPress={onPress} style={styles.button}>\n+                <Text style={styles.buttonText}>Click Me</Text>\n+          </TouchableOpacity>\n         </View>\n     </SafeAreaView>\n   );\n }\n"
+                },
+                {
+                    "date": 1668277552596,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     <SafeAreaView style={styles.containerF}>\n         <View style={styles.containerLogo}>       \n             <Image style={styles.logo}source={require('../../assets/logo.png')}></Image>\n             <Text style={styles.wingman}>Wingman</Text>\n-            <Image style={styles.logo} source={require('../../assets/images/logo2.png')}></Image>\n+            <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n \n         </View>        \n             <View style={styles.container}>\n             <Text style={styles.text}>Ganha controlo sobre as tuas </Text>\n@@ -74,9 +74,9 @@\n     color: 'white',\n     fontFamily: \"roboto\",\n     fontSize: 30,\n   },\n-  appButtonContainer: {\n+  button: {\n     elevation: 8,\n     backgroundColor: \"#009688\",\n     borderRadius: 10,\n     paddingVertical: 10,\n"
+                },
+                {
+                    "date": 1668277578444,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n \n         <View styles={styles.containerBTN}>\n             <Button title=\"Login\" onPress={() => signIn(email, password)} /> \n             <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n-            <TouchableOpacity onPress={onPress} style={styles.button}>\n+            <TouchableOpacity onPress={() => signIn(email, password)} style={styles.button}>\n                 <Text style={styles.buttonText}>Click Me</Text>\n           </TouchableOpacity>\n         </View>\n     </SafeAreaView>\n"
+                },
+                {
+                    "date": 1668277599742,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,20 +75,14 @@\n     fontFamily: \"roboto\",\n     fontSize: 30,\n   },\n   button: {\n-    elevation: 8,\n-    backgroundColor: \"#009688\",\n+    backgroundColor: \"gray\",\n+    padding: 20,\n     borderRadius: 10,\n-    paddingVertical: 10,\n-    paddingHorizontal: 12\n   },\n-  appButtonText: {\n-    fontSize: 18,\n-    color: \"#fff\",\n-    fontWeight: \"bold\",\n-    alignSelf: \"center\",\n-    textTransform: \"uppercase\"\n+  buttonText: {\n+    color: \"white\",\n   },\n   preview:{\n     width: 50,\n     height:50\n"
+                },
+                {
+                    "date": 1668277650980,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,16 +13,16 @@\n     <SafeAreaView style={styles.containerF}>\n         <View style={styles.containerLogo}>       \n             <Image style={styles.logo}source={require('../../assets/logo.png')}></Image>\n             <Text style={styles.wingman}>Wingman</Text>\n-            <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n \n         </View>        \n             <View style={styles.container}>\n             <Text style={styles.text}>Ganha controlo sobre as tuas </Text>\n             <Text style={styles.text}>finanças, potencia as tuas</Text>\n             <Text style={styles.text}>poupanças e melhora a</Text>\n             <Text style={styles.text}>alocação dos teus recursos</Text>\n+            <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n         </View>\n \n         <View styles={styles.containerBTN}>\n             <Button title=\"Login\" onPress={() => signIn(email, password)} /> \n@@ -54,10 +54,10 @@\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    top: 20,\n-    left: 40\n+    top: 40,\n+    left: 50\n   },\n   logo: {\n     width: 100,\n     height: 100\n"
+                },
+                {
+                    "date": 1668277679176,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -54,9 +54,9 @@\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    top: 40,\n+    top: 100,\n     left: 50\n   },\n   logo: {\n     width: 100,\n"
+                },
+                {
+                    "date": 1668277704384,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n         <View styles={styles.containerBTN}>\n             <Button title=\"Login\" onPress={() => signIn(email, password)} /> \n             <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n             <TouchableOpacity onPress={() => signIn(email, password)} style={styles.button}>\n-                <Text style={styles.buttonText}>Click Me</Text>\n+                <Text style={styles.buttonText}>Entrar</Text>\n           </TouchableOpacity>\n         </View>\n     </SafeAreaView>\n   );\n"
+                },
+                {
+                    "date": 1668277770812,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,13 +24,14 @@\n             <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n         </View>\n \n         <View styles={styles.containerBTN}>\n-            <Button title=\"Login\" onPress={() => signIn(email, password)} /> \n-            <Button title=\"Regista-te\" onPress={() => register(email, password)} />\n             <TouchableOpacity onPress={() => signIn(email, password)} style={styles.button}>\n                 <Text style={styles.buttonText}>Entrar</Text>\n-          </TouchableOpacity>\n+            </TouchableOpacity>\n+            <TouchableOpacity onPress={() => register(email, password)} style={styles.button}>\n+                <Text style={styles.buttonText}>Entrar</Text>\n+            </TouchableOpacity>\n         </View>\n     </SafeAreaView>\n   );\n }\n@@ -54,9 +55,8 @@\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    top: 100,\n     left: 50\n   },\n   logo: {\n     width: 100,\n"
+                },
+                {
+                    "date": 1668277785349,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,9 +55,9 @@\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    left: 50\n+    left: 150\n   },\n   logo: {\n     width: 100,\n     height: 100\n"
+                },
+                {
+                    "date": 1668277801738,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,10 +55,9 @@\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    left: 150\n-  },\n+bottom:30  },\n   logo: {\n     width: 100,\n     height: 100\n   },\n"
+                },
+                {
+                    "date": 1668277821383,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,9 +55,10 @@\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-bottom:30  },\n+    bottom:80  \n+},\n   logo: {\n     width: 100,\n     height: 100\n   },\n@@ -76,9 +77,9 @@\n   },\n   button: {\n     backgroundColor: \"gray\",\n     padding: 20,\n-    borderRadius: 10,\n+    borderRadius: SIZES.small,\n   },\n   buttonText: {\n     color: \"white\",\n   },\n"
+                },
+                {
+                    "date": 1668277830834,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,9 +55,9 @@\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    bottom:80  \n+    bottom:180  \n },\n   logo: {\n     width: 100,\n     height: 100\n"
+                },
+                {
+                    "date": 1668277952281,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,11 +75,12 @@\n     fontFamily: \"roboto\",\n     fontSize: 30,\n   },\n   button: {\n-    backgroundColor: \"gray\",\n+    backgroundColor: COLORS.wingDarkBlue,\n     padding: 20,\n     borderRadius: SIZES.small,\n+\n   },\n   buttonText: {\n     color: \"white\",\n   },\n"
+                },
+                {
+                    "date": 1668277995684,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n             <TouchableOpacity onPress={() => signIn(email, password)} style={styles.button}>\n                 <Text style={styles.buttonText}>Entrar</Text>\n             </TouchableOpacity>\n             <TouchableOpacity onPress={() => register(email, password)} style={styles.button}>\n-                <Text style={styles.buttonText}>Entrar</Text>\n+                <Text style={styles.buttonText}>Registe-se Já!</Text>\n             </TouchableOpacity>\n         </View>\n     </SafeAreaView>\n   );\n"
+                },
+                {
+                    "date": 1668278027519,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -78,9 +78,10 @@\n   button: {\n     backgroundColor: COLORS.wingDarkBlue,\n     padding: 20,\n     borderRadius: SIZES.small,\n-\n+    alignItems: \"center\",\n+    justifyContent: \"center\",\n   },\n   buttonText: {\n     color: \"white\",\n   },\n"
+                },
+                {
+                    "date": 1668278085437,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,18 +63,18 @@\n     height: 100\n   },\n   text: {\n     fontFamily: \"roboto\",\n-    fontSize: 20,\n+    fontSize: SIZES.large,\n     color: COLORS.white,\n     alignItems: \"center\",\n     justifyContent: \"center\",\n \n   },\n   wingman: {\n     color: 'white',\n     fontFamily: \"roboto\",\n-    fontSize: 30,\n+    fontSize: SIZES.extraLarge,\n   },\n   button: {\n     backgroundColor: COLORS.wingDarkBlue,\n     padding: 20,\n"
+                },
+                {
+                    "date": 1668278151461,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -80,11 +80,13 @@\n     padding: 20,\n     borderRadius: SIZES.small,\n     alignItems: \"center\",\n     justifyContent: \"center\",\n+    marginBottom: SIZES.base\n   },\n   buttonText: {\n     color: \"white\",\n+    fontSize: SIZES.large,\n   },\n   preview:{\n     width: 50,\n     height:50\n"
+                },
+                {
+                    "date": 1668278365905,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,8 +23,10 @@\n             <Text style={styles.text}>alocação dos teus recursos</Text>\n             <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n         </View>\n \n+        <View style={{backgroundColor:'grey', width:100, height:200, position:'absolute', bottom:1, left: 80}}></View>\n+\n         <View styles={styles.containerBTN}>\n             <TouchableOpacity onPress={() => signIn(email, password)} style={styles.button}>\n                 <Text style={styles.buttonText}>Entrar</Text>\n             </TouchableOpacity>\n"
+                },
+                {
+                    "date": 1668278372201,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n             <Text style={styles.text}>alocação dos teus recursos</Text>\n             <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n         </View>\n \n-        <View style={{backgroundColor:'grey', width:100, height:200, position:'absolute', bottom:1, left: 80}}></View>\n+        <View style={{backgroundColor:'grey', width:100, height:200, position:'absolute', bottom:1, left: 80, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n \n         <View styles={styles.containerBTN}>\n             <TouchableOpacity onPress={() => signIn(email, password)} style={styles.button}>\n                 <Text style={styles.buttonText}>Entrar</Text>\n"
+                },
+                {
+                    "date": 1668278380047,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n             <Text style={styles.text}>alocação dos teus recursos</Text>\n             <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n         </View>\n \n-        <View style={{backgroundColor:'grey', width:100, height:200, position:'absolute', bottom:1, left: 80, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n+        <View style={{backgroundColor:'grey', width:200, height:400, position:'absolute', bottom:1, left: 80, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n \n         <View styles={styles.containerBTN}>\n             <TouchableOpacity onPress={() => signIn(email, password)} style={styles.button}>\n                 <Text style={styles.buttonText}>Entrar</Text>\n"
+                },
+                {
+                    "date": 1668278391698,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n             <Text style={styles.text}>alocação dos teus recursos</Text>\n             <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n         </View>\n \n-        <View style={{backgroundColor:'grey', width:200, height:400, position:'absolute', bottom:1, left: 80, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n+        <View style={{backgroundColor:'grey', width:280, height:400, position:'absolute', bottom:1, left: 80, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n \n         <View styles={styles.containerBTN}>\n             <TouchableOpacity onPress={() => signIn(email, password)} style={styles.button}>\n                 <Text style={styles.buttonText}>Entrar</Text>\n"
+                },
+                {
+                    "date": 1668278401333,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n             <Text style={styles.text}>alocação dos teus recursos</Text>\n             <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n         </View>\n \n-        <View style={{backgroundColor:'grey', width:280, height:400, position:'absolute', bottom:1, left: 80, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n+        <View style={{backgroundColor:'grey', width:260, height:400, position:'absolute', bottom:0, left: 80, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n \n         <View styles={styles.containerBTN}>\n             <TouchableOpacity onPress={() => signIn(email, password)} style={styles.button}>\n                 <Text style={styles.buttonText}>Entrar</Text>\n"
+                },
+                {
+                    "date": 1668278409243,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -87,8 +87,9 @@\n   },\n   buttonText: {\n     color: \"white\",\n     fontSize: SIZES.large,\n+    fontFamily: \"roboto-bold\",\n   },\n   preview:{\n     width: 50,\n     height:50\n"
+                },
+                {
+                    "date": 1668278423427,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n             <Text style={styles.text}>alocação dos teus recursos</Text>\n             <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n         </View>\n \n-        <View style={{backgroundColor:'grey', width:260, height:400, position:'absolute', bottom:0, left: 80, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n+        <View style={{backgroundColor:'grey', width:240, height:400, position:'absolute', bottom:0, left: 80, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n \n         <View styles={styles.containerBTN}>\n             <TouchableOpacity onPress={() => signIn(email, password)} style={styles.button}>\n                 <Text style={styles.buttonText}>Entrar</Text>\n"
+                },
+                {
+                    "date": 1668278434559,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n             <Text style={styles.text}>alocação dos teus recursos</Text>\n             <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n         </View>\n \n-        <View style={{backgroundColor:'grey', width:240, height:400, position:'absolute', bottom:0, left: 80, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n+        <View style={{backgroundColor:'lightgrey', width:240, height:400, position:'absolute', bottom:0, left: 80, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n \n         <View styles={styles.containerBTN}>\n             <TouchableOpacity onPress={() => signIn(email, password)} style={styles.button}>\n                 <Text style={styles.buttonText}>Entrar</Text>\n@@ -87,9 +87,9 @@\n   },\n   buttonText: {\n     color: \"white\",\n     fontSize: SIZES.large,\n-    fontFamily: \"roboto-bold\",\n+    fontFamily: \"roboto\"\n   },\n   preview:{\n     width: 50,\n     height:50\n"
+                },
+                {
+                    "date": 1668278489549,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n             <Text style={styles.text}>alocação dos teus recursos</Text>\n             <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n         </View>\n \n-        <View style={{backgroundColor:'lightgrey', width:240, height:400, position:'absolute', bottom:0, left: 80, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n+        <View style={{backgroundColor:'grey', width:240, height:400, position:'absolute', bottom:0, left: 80, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n \n         <View styles={styles.containerBTN}>\n             <TouchableOpacity onPress={() => signIn(email, password)} style={styles.button}>\n                 <Text style={styles.buttonText}>Entrar</Text>\n@@ -60,8 +60,9 @@\n     justifyContent: \"center\",\n     bottom:180  \n },\n   logo: {\n+    marginTop:10,\n     width: 100,\n     height: 100\n   },\n   text: {\n"
+                },
+                {
+                    "date": 1668278549587,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -83,9 +83,10 @@\n     padding: 20,\n     borderRadius: SIZES.small,\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    marginBottom: SIZES.base\n+    marginBottom: SIZES.base,\n+    paddingHorizontal: 12\n   },\n   buttonText: {\n     color: \"white\",\n     fontSize: SIZES.large,\n"
+                },
+                {
+                    "date": 1668278569304,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,9 +60,9 @@\n     justifyContent: \"center\",\n     bottom:180  \n },\n   logo: {\n-    marginTop:10,\n+    marginTop:50,\n     width: 100,\n     height: 100\n   },\n   text: {\n"
+                },
+                {
+                    "date": 1668278604791,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n             <Text style={styles.text}>alocação dos teus recursos</Text>\n             <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n         </View>\n \n-        <View style={{backgroundColor:'grey', width:240, height:400, position:'absolute', bottom:0, left: 80, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n+        <View style={{backgroundColor:'#D3D3D3', width:240, height:400, position:'absolute', bottom:0, left: 80, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n \n         <View styles={styles.containerBTN}>\n             <TouchableOpacity onPress={() => signIn(email, password)} style={styles.button}>\n                 <Text style={styles.buttonText}>Entrar</Text>\n@@ -60,9 +60,9 @@\n     justifyContent: \"center\",\n     bottom:180  \n },\n   logo: {\n-    marginTop:50,\n+    marginTop:10,\n     width: 100,\n     height: 100\n   },\n   text: {\n"
+                },
+                {
+                    "date": 1668278628175,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,9 +57,9 @@\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    bottom:180  \n+    bottom:160  \n },\n   logo: {\n     marginTop:10,\n     width: 100,\n@@ -85,8 +85,10 @@\n     alignItems: \"center\",\n     justifyContent: \"center\",\n     marginBottom: SIZES.base,\n     paddingHorizontal: 12\n+    borderRadius: 10,\n+    paddingVertical: 10,\n   },\n   buttonText: {\n     color: \"white\",\n     fontSize: SIZES.large,\n"
+                },
+                {
+                    "date": 1668278642636,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,9 +60,8 @@\n     justifyContent: \"center\",\n     bottom:160  \n },\n   logo: {\n-    marginTop:10,\n     width: 100,\n     height: 100\n   },\n   text: {\n@@ -79,16 +78,16 @@\n     fontSize: SIZES.extraLarge,\n   },\n   button: {\n     backgroundColor: COLORS.wingDarkBlue,\n-    padding: 20,\n+    \n     borderRadius: SIZES.small,\n     alignItems: \"center\",\n     justifyContent: \"center\",\n     marginBottom: SIZES.base,\n-    paddingHorizontal: 12\n+    paddingHorizontal: 12,\n     borderRadius: 10,\n-    paddingVertical: 10,\n+    paddingVertical: 10\n   },\n   buttonText: {\n     color: \"white\",\n     fontSize: SIZES.large,\n"
+                },
+                {
+                    "date": 1668278650661,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,9 +57,9 @@\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    bottom:160  \n+    bottom:60  \n },\n   logo: {\n     width: 100,\n     height: 100\n"
+                },
+                {
+                    "date": 1668278656950,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,9 +57,9 @@\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    bottom:60  \n+    bottom:160  \n },\n   logo: {\n     width: 100,\n     height: 100\n"
+                },
+                {
+                    "date": 1668278689015,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -78,9 +78,9 @@\n     fontSize: SIZES.extraLarge,\n   },\n   button: {\n     backgroundColor: COLORS.wingDarkBlue,\n-    \n+    padding: 20,\n     borderRadius: SIZES.small,\n     alignItems: \"center\",\n     justifyContent: \"center\",\n     marginBottom: SIZES.base,\n"
+                },
+                {
+                    "date": 1668278706181,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -82,12 +82,9 @@\n     padding: 20,\n     borderRadius: SIZES.small,\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    marginBottom: SIZES.base,\n-    paddingHorizontal: 12,\n-    borderRadius: 10,\n-    paddingVertical: 10\n+    marginBottom: SIZES.base\n   },\n   buttonText: {\n     color: \"white\",\n     fontSize: SIZES.large,\n"
+                },
+                {
+                    "date": 1668278747600,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,9 +57,9 @@\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    bottom:160  \n+    bottom:180  \n },\n   logo: {\n     width: 100,\n     height: 100\n@@ -82,9 +82,13 @@\n     padding: 20,\n     borderRadius: SIZES.small,\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    marginBottom: SIZES.base\n+    marginBottom: SIZES.base,\n+    paddingHorizontal: 12,\n+    paddingVertical: 10,\n+    borderRadius: 10\n+\n   },\n   buttonText: {\n     color: \"white\",\n     fontSize: SIZES.large,\n"
+                },
+                {
+                    "date": 1668278772369,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -88,8 +88,11 @@\n     paddingVertical: 10,\n     borderRadius: 10\n \n   },\n+  containerBTN:{\n+    top: 150\n+  },\n   buttonText: {\n     color: \"white\",\n     fontSize: SIZES.large,\n     fontFamily: \"roboto\"\n"
+                },
+                {
+                    "date": 1668278779301,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,9 +57,9 @@\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    bottom:180  \n+    bottom:200  \n },\n   logo: {\n     width: 100,\n     height: 100\n@@ -89,9 +89,9 @@\n     borderRadius: 10\n \n   },\n   containerBTN:{\n-    top: 150\n+    top: 30\n   },\n   buttonText: {\n     color: \"white\",\n     fontSize: SIZES.large,\n"
+                },
+                {
+                    "date": 1668278788460,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,9 +57,9 @@\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    bottom:200  \n+    bottom:100 \n },\n   logo: {\n     width: 100,\n     height: 100\n@@ -83,15 +83,13 @@\n     borderRadius: SIZES.small,\n     alignItems: \"center\",\n     justifyContent: \"center\",\n     marginBottom: SIZES.base,\n-    paddingHorizontal: 12,\n-    paddingVertical: 10,\n     borderRadius: 10\n \n   },\n   containerBTN:{\n-    top: 30\n+    top: 300\n   },\n   buttonText: {\n     color: \"white\",\n     fontSize: SIZES.large,\n"
+                },
+                {
+                    "date": 1668278801960,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,9 +57,9 @@\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    bottom:100 \n+    bottom:130 \n },\n   logo: {\n     width: 100,\n     height: 100\n"
+                },
+                {
+                    "date": 1668278809813,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -87,9 +87,9 @@\n     borderRadius: 10\n \n   },\n   containerBTN:{\n-    top: 300\n+    bottom: 300\n   },\n   buttonText: {\n     color: \"white\",\n     fontSize: SIZES.large,\n"
+                },
+                {
+                    "date": 1668278826694,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -82,10 +82,9 @@\n     padding: 20,\n     borderRadius: SIZES.small,\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    marginBottom: SIZES.base,\n-    borderRadius: 10\n+    marginBottom: SIZES.base\n \n   },\n   containerBTN:{\n     bottom: 300\n"
+                },
+                {
+                    "date": 1668278908685,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -86,9 +86,9 @@\n     marginBottom: SIZES.base\n \n   },\n   containerBTN:{\n-    bottom: 300\n+   top: 0\n   },\n   buttonText: {\n     color: \"white\",\n     fontSize: SIZES.large,\n"
+                },
+                {
+                    "date": 1668278919370,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -86,9 +86,9 @@\n     marginBottom: SIZES.base\n \n   },\n   containerBTN:{\n-   top: 0\n+   top: 1000\n   },\n   buttonText: {\n     color: \"white\",\n     fontSize: SIZES.large,\n"
+                },
+                {
+                    "date": 1668278932416,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,9 +58,9 @@\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n     bottom:130 \n-},\n+  },\n   logo: {\n     width: 100,\n     height: 100\n   },\n@@ -86,9 +86,9 @@\n     marginBottom: SIZES.base\n \n   },\n   containerBTN:{\n-   top: 1000\n+   bottol: 1000\n   },\n   buttonText: {\n     color: \"white\",\n     fontSize: SIZES.large,\n"
+                },
+                {
+                    "date": 1668278961231,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n         </View>\n \n         <View style={{backgroundColor:'#D3D3D3', width:240, height:400, position:'absolute', bottom:0, left: 80, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n \n-        <View styles={styles.containerBTN}>\n+        <View style={styles.containerBTN}>\n             <TouchableOpacity onPress={() => signIn(email, password)} style={styles.button}>\n                 <Text style={styles.buttonText}>Entrar</Text>\n             </TouchableOpacity>\n             <TouchableOpacity onPress={() => register(email, password)} style={styles.button}>\n@@ -86,9 +86,9 @@\n     marginBottom: SIZES.base\n \n   },\n   containerBTN:{\n-   bottol: 1000\n+   bottom: 1000\n   },\n   buttonText: {\n     color: \"white\",\n     fontSize: SIZES.large,\n"
+                },
+                {
+                    "date": 1668278982247,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -86,9 +86,9 @@\n     marginBottom: SIZES.base\n \n   },\n   containerBTN:{\n-   bottom: 1000\n+   top: 150\n   },\n   buttonText: {\n     color: \"white\",\n     fontSize: SIZES.large,\n"
+                },
+                {
+                    "date": 1668278990707,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -86,9 +86,9 @@\n     marginBottom: SIZES.base\n \n   },\n   containerBTN:{\n-   top: 150\n+   top: 160\n   },\n   buttonText: {\n     color: \"white\",\n     fontSize: SIZES.large,\n"
+                },
+                {
+                    "date": 1668279068681,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,8 +51,9 @@\n     alignItems: \"center\",\n     justifyContent: \"center\",\n   },\n   container: {\n+    top: 20,\n     alignItems: \"center\",\n     justifyContent: \"center\",\n   },\n   containerLogo: {\n"
+                },
+                {
+                    "date": 1668279075983,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,8 @@\n     alignItems: \"center\",\n     justifyContent: \"center\",\n   },\n   container: {\n-    top: 20,\n     alignItems: \"center\",\n     justifyContent: \"center\",\n   },\n   containerLogo: {\n"
+                },
+                {
+                    "date": 1668279114116,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,8 +53,9 @@\n   },\n   container: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n+    bottom:20\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n"
+                },
+                {
+                    "date": 1668279120844,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,9 +53,9 @@\n   },\n   container: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    bottom:20\n+    bottom:30\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n"
+                },
+                {
+                    "date": 1668279126438,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,9 +53,9 @@\n   },\n   container: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    bottom:30\n+    bottom:100\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n"
+                },
+                {
+                    "date": 1668279132647,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,9 +53,9 @@\n   },\n   container: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    bottom:100\n+    bottom:50\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n"
+                },
+                {
+                    "date": 1668279138646,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,9 +53,9 @@\n   },\n   container: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    bottom:50\n+    bottom:60\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n"
+                },
+                {
+                    "date": 1668279151872,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,9 +75,9 @@\n   },\n   wingman: {\n     color: 'white',\n     fontFamily: \"roboto\",\n-    fontSize: SIZES.extraLarge,\n+    fontSize: 34,\n   },\n   button: {\n     backgroundColor: COLORS.wingDarkBlue,\n     padding: 20,\n"
+                },
+                {
+                    "date": 1668279158863,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,9 +75,9 @@\n   },\n   wingman: {\n     color: 'white',\n     fontFamily: \"roboto\",\n-    fontSize: 34,\n+    fontSize: 40,\n   },\n   button: {\n     backgroundColor: COLORS.wingDarkBlue,\n     padding: 20,\n"
+                },
+                {
+                    "date": 1668279167928,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,9 +75,9 @@\n   },\n   wingman: {\n     color: 'white',\n     fontFamily: \"roboto\",\n-    fontSize: 40,\n+    fontSize: 44,\n   },\n   button: {\n     backgroundColor: COLORS.wingDarkBlue,\n     padding: 20,\n"
+                },
+                {
+                    "date": 1668279203895,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,9 +53,9 @@\n   },\n   container: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    bottom:60\n+    bottom:70\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n"
+                },
+                {
+                    "date": 1668279214392,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n             <Text style={styles.text}>alocação dos teus recursos</Text>\n             <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n         </View>\n \n-        <View style={{backgroundColor:'#D3D3D3', width:240, height:400, position:'absolute', bottom:0, left: 80, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n+        <View style={{backgroundColor:'#D3D3D3', width:240, height:400, top:0, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n \n         <View style={styles.containerBTN}>\n             <TouchableOpacity onPress={() => signIn(email, password)} style={styles.button}>\n                 <Text style={styles.buttonText}>Entrar</Text>\n"
+                },
+                {
+                    "date": 1668279260915,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n             <Text style={styles.text}>alocação dos teus recursos</Text>\n             <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n         </View>\n \n-        <View style={{backgroundColor:'#D3D3D3', width:240, height:400, top:0, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n+        <View style={{backgroundColor:'#D3D3D3', width:240, height:400, top:110, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n \n         <View style={styles.containerBTN}>\n             <TouchableOpacity onPress={() => signIn(email, password)} style={styles.button}>\n                 <Text style={styles.buttonText}>Entrar</Text>\n"
+                },
+                {
+                    "date": 1668279283247,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n             <Text style={styles.text}>alocação dos teus recursos</Text>\n             <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n         </View>\n \n-        <View style={{backgroundColor:'#D3D3D3', width:240, height:400, top:110, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n+        <View style={{backgroundColor:'#D3D3D3', width:240, height:400, top:0, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n \n         <View style={styles.containerBTN}>\n             <TouchableOpacity onPress={() => signIn(email, password)} style={styles.button}>\n                 <Text style={styles.buttonText}>Entrar</Text>\n"
+                },
+                {
+                    "date": 1668279290880,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n             <Text style={styles.text}>alocação dos teus recursos</Text>\n             <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n         </View>\n \n-        <View style={{backgroundColor:'#D3D3D3', width:240, height:400, top:0, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n+        <View style={{backgroundColor:'#D3D3D3', width:240, height:400, position:'absolute', bottom:0, left: 80, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n \n         <View style={styles.containerBTN}>\n             <TouchableOpacity onPress={() => signIn(email, password)} style={styles.button}>\n                 <Text style={styles.buttonText}>Entrar</Text>\n@@ -53,9 +53,9 @@\n   },\n   container: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n-    bottom:70\n+    bottom:60\n   },\n   containerLogo: {\n     alignItems: \"center\",\n     justifyContent: \"center\",\n"
+                },
+                {
+                    "date": 1668279345106,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n             <Text style={styles.text}>alocação dos teus recursos</Text>\n             <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n         </View>\n \n-        <View style={{backgroundColor:'#D3D3D3', width:240, height:400, position:'absolute', bottom:0, left: 80, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n+        <View style={{backgroundColor:'#D3D3D3', width:240, height:400, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n \n         <View style={styles.containerBTN}>\n             <TouchableOpacity onPress={() => signIn(email, password)} style={styles.button}>\n                 <Text style={styles.buttonText}>Entrar</Text>\n"
+                },
+                {
+                    "date": 1668279366147,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n             <Text style={styles.text}>alocação dos teus recursos</Text>\n             <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n         </View>\n \n-        <View style={{backgroundColor:'#D3D3D3', width:240, height:400, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n+        <View style={{backgroundColor:'#D3D3D3', width:240, height:400, bottom: 200 borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n \n         <View style={styles.containerBTN}>\n             <TouchableOpacity onPress={() => signIn(email, password)} style={styles.button}>\n                 <Text style={styles.buttonText}>Entrar</Text>\n"
+                },
+                {
+                    "date": 1668279375567,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n             <Text style={styles.text}>alocação dos teus recursos</Text>\n             <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n         </View>\n \n-        <View style={{backgroundColor:'#D3D3D3', width:240, height:400, bottom: 200 borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n+        <View style={{backgroundColor:'#D3D3D3', width:240, height:400, top: 200, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n \n         <View style={styles.containerBTN}>\n             <TouchableOpacity onPress={() => signIn(email, password)} style={styles.button}>\n                 <Text style={styles.buttonText}>Entrar</Text>\n"
+                },
+                {
+                    "date": 1668279396461,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n             <Text style={styles.text}>alocação dos teus recursos</Text>\n             <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n         </View>\n \n-        <View style={{backgroundColor:'#D3D3D3', width:240, height:400, top: 200, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n+        <View style={{backgroundColor:'#D3D3D3', width:240, height:400, top: 200, }}></View>\n \n         <View style={styles.containerBTN}>\n             <TouchableOpacity onPress={() => signIn(email, password)} style={styles.button}>\n                 <Text style={styles.buttonText}>Entrar</Text>\n"
+                },
+                {
+                    "date": 1668279420920,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n             <Text style={styles.text}>alocação dos teus recursos</Text>\n             <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n         </View>\n \n-        <View style={{backgroundColor:'#D3D3D3', width:240, height:400, top: 200, }}></View>\n+        <View style={{backgroundColor:'#D3D3D3', width:240, height:400, position:'absolute', bottom:0, left: 80, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n \n         <View style={styles.containerBTN}>\n             <TouchableOpacity onPress={() => signIn(email, password)} style={styles.button}>\n                 <Text style={styles.buttonText}>Entrar</Text>\n"
+                },
+                {
+                    "date": 1668279473845,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n             <Text style={styles.text}>alocação dos teus recursos</Text>\n             <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>\n         </View>\n \n-        <View style={{backgroundColor:'#D3D3D3', width:240, height:400, position:'absolute', bottom:0, left: 80, borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n+        <View style={{backgroundColor:'#D3D3D3', width:240, height:400, position:'absolute', bottom:0, alignContent:'center', borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>\n \n         <View style={styles.containerBTN}>\n             <TouchableOpacity onPress={() => signIn(email, password)} style={styles.button}>\n                 <Text style={styles.buttonText}>Entrar</Text>\n"
+                },
+                {
+                    "date": 1668279619994,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,9 @@\n         <View style={styles.containerBTN}>\n             <TouchableOpacity onPress={() => signIn(email, password)} style={styles.button}>\n                 <Text style={styles.buttonText}>Entrar</Text>\n             </TouchableOpacity>\n-            <TouchableOpacity onPress={() => register(email, password)} style={styles.button}>\n+            <TouchableOpacity onPress={() => navigation.navigate(\"Register\")} style={styles.button}>\n                 <Text style={styles.buttonText}>Registe-se Já!</Text>\n             </TouchableOpacity>\n         </View>\n     </SafeAreaView>\n"
+                },
+                {
+                    "date": 1668279742409,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,11 @@\n import { SafeAreaView, StyleSheet, Text, View, Button, Image, TouchableOpacity } from \"react-native\";\n import AuthContext from \"../context/AuthProvider\";\n import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'\n \n+import { NavigationContainer } from '@react-navigation/native';\n+import { createNativeStackNavigator } from '@react-navigation/native-stack';\n+\n function LandingScreen({navigation}) {\n     const { signIn } = React.useContext(AuthContext);\n \n     const register = () =>{\n"
+                },
+                {
+                    "date": 1668279780704,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,11 +8,8 @@\n \n function LandingScreen({navigation}) {\n     const { signIn } = React.useContext(AuthContext);\n \n-    const register = () =>{\n-      navigation.navigate(\"Register\")\n-    }\n     return (\n     <SafeAreaView style={styles.containerF}>\n         <View style={styles.containerLogo}>       \n             <Image style={styles.logo}source={require('../../assets/logo.png')}></Image>\n"
+                },
+                {
+                    "date": 1668279802920,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n import { createNativeStackNavigator } from '@react-navigation/native-stack';\n \n function LandingScreen({navigation}) {\n     const { signIn } = React.useContext(AuthContext);\n-\n+    console.log(navigation)\n     return (\n     <SafeAreaView style={styles.containerF}>\n         <View style={styles.containerLogo}>       \n             <Image style={styles.logo}source={require('../../assets/logo.png')}></Image>\n"
+                },
+                {
+                    "date": 1668279823888,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n import { createNativeStackNavigator } from '@react-navigation/native-stack';\n \n function LandingScreen({navigation}) {\n     const { signIn } = React.useContext(AuthContext);\n-    console.log(navigation)\n+    console.log(\"oiiiiii\"+navigation)\n     return (\n     <SafeAreaView style={styles.containerF}>\n         <View style={styles.containerLogo}>       \n             <Image style={styles.logo}source={require('../../assets/logo.png')}></Image>\n"
+                },
+                {
+                    "date": 1668280259930,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,11 +2,10 @@\n import { SafeAreaView, StyleSheet, Text, View, Button, Image, TouchableOpacity } from \"react-native\";\n import AuthContext from \"../context/AuthProvider\";\n import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'\n \n-import { NavigationContainer } from '@react-navigation/native';\n-import { createNativeStackNavigator } from '@react-navigation/native-stack';\n \n+\n function LandingScreen({navigation}) {\n     const { signIn } = React.useContext(AuthContext);\n     console.log(\"oiiiiii\"+navigation)\n     return (\n"
+                },
+                {
+                    "date": 1668370606581,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,12 +2,13 @@\n import { SafeAreaView, StyleSheet, Text, View, Button, Image, TouchableOpacity } from \"react-native\";\n import AuthContext from \"../context/AuthProvider\";\n import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'\n \n+import { NavigationContainer } from '@react-navigation/native';\n+import { createNativeStackNavigator } from '@react-navigation/native-stack';\n \n-\n function LandingScreen({navigation}) {\n-    const { signIn } = React.useContext(AuthContext);\n+    /const { signIn } = React.useContext(AuthContext);\n     console.log(\"oiiiiii\"+navigation)\n     return (\n     <SafeAreaView style={styles.containerF}>\n         <View style={styles.containerLogo}>       \n"
+                }
+            ],
+            "date": 1668269911118,
+            "name": "Commit-0",
+            "content": "import React from \"react\";\nimport { StyleSheet, Text, View, Button } from \"react-native\";\n\nimport AuthContext from \"../context/AuthProvider\";"
+        }
+    ]
+}

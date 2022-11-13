@@ -35,6 +35,7 @@ router.get("/login", function (req, res) {
   res.render("login-form");
 });
 
+
 //Register POST
 
 router.post("/register", function (req, res) {

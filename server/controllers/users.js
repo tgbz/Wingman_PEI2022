@@ -72,3 +72,36 @@ Users.getOne = function(email) {
 
 
 
+Users.getUser = function(id) {
+    return new Promise(function(resolve,reject){
+        sql.query(`Select user.name,user.password,email,birthdate,gender,savings,user.idWallet,rendimento,euro from user 
+                    inner join wallet on user.idWallet = wallet.idWallet where idUser=?`,
+        id ,function(err,res){
+            if(err) {
+                console.log("error: ", err);
+                reject(err);
+            }
+            else{
+                resolve(res[0])
+            }
+        });   
+    })   
+}
+
+Users.updateUser = function(id,body) {
+    return new Promise(function(resolve,reject){
+        sql.query(`UPDATE user u, wallet w
+                    SET u.name = ? , u.gender = ?, u.birthdate = ?, u.savings = ?,
+                        w.rendimento = ? , w.euro = ?
+                    WHERE u.idUser = ? AND u.idWallet = w.idWallet;`,
+            [body.name,body.gender,body.birthdate,body.savings,body.rendimento,body.euro,id] ,function(err,res){
+            if(err) {
+                console.log("error: ", err);
+                reject(err);
+            }
+            else{
+                resolve(res[0])
+            }
+        }); 
+    })   
+}

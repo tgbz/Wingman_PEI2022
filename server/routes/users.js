@@ -57,4 +57,17 @@ router.get("/register", function (req, res) {
   res.render("registo-form");
 });
 
+router.get("/userProfile/:id", function (req, res){
+  Users.getUser(req.params.id)
+  .then( dados => res.jsonp(dados))
+  .catch(erro => res.status(500).jsonp(erro))
+})
+
+router.put("/updateProfile/:id", function (req, res){
+  Users.updateUser(req.params.id,req.body)
+  .then(dados => res.jsonp(dados))
+  .catch(erro => res.status(500).jsonp(erro))
+})
+
+
 module.exports = router;

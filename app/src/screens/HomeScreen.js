@@ -1,21 +1,38 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from "react-native";
+import { useState,useEffect } from "react";
 import AuthContext from "../context/AuthProvider";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
 
-function HomeScreen({navigation}) {
+ function HomeScreen({navigation}) {
+  const [token,setToken] = useState("");
   const { signOut } = React.useContext(AuthContext);
+
+  useEffect(() => {
+       AsyncStorage.getItem('userToken')
+       .then(userToken => setToken(JSON.parse(userToken)))
+       .catch(err => console.log(err))
+  }, [])
     return (
     <View style={styles.container}>
-      <Text>This is profile</Text>
-      <Button title="Log out" onPress={() => signOut()} />
+      <View style >
+        <Text>Welcome {token.name}</Text>
+      </View>
+      <View>
+        <Button title="Log out" onPress={() => signOut()} />
+      </View>
+      
     </View>
   );
 }
 
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.wingblue,
     alignItems: "center",
     justifyContent: "center",
   },

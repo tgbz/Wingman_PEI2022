@@ -16,8 +16,8 @@ Users.create = function(u){
                             reject(err);
                         }
                         else{
-                            console.log(res)
-                            resolve(res.idUser);
+                            console.log(res.insertId)
+                            resolve(res.insertId);
                         }
                     });   
                 }) 
@@ -89,6 +89,7 @@ Users.getUser = function(id) {
 }
 
 Users.updateUser = function(id,body) {
+    console.log(body)
     return new Promise(function(resolve,reject){
         sql.query(`UPDATE user u, wallet w
                     SET u.name = ? , u.gender = ?, u.birthdate = ?, u.savings = ?,

@@ -7,7 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 function LandingScreen({navigation}) {
-    /const { signIn } = React.useContext(AuthContext);
+    const { signIn } = React.useContext(AuthContext);
     console.log("oiiiiii"+navigation)
     return (
     <SafeAreaView style={styles.containerF}>
@@ -21,13 +21,15 @@ function LandingScreen({navigation}) {
             <Text style={styles.text}>finanças, potencia as tuas</Text>
             <Text style={styles.text}>poupanças e melhora a</Text>
             <Text style={styles.text}>alocação dos teus recursos</Text>
-            <Image style={styles.logo} source={require('../../assets/images/preview-home.png')}></Image>
+          
         </View>
 
-        <View style={{backgroundColor:'#D3D3D3', width:240, height:400, position:'absolute', bottom:0, alignContent:'center', borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}></View>
+        <View style={{backgroundColor:'#D3D3D3', width:240, height:430, position:'absolute', bottom:0, alignContent:'center', borderTopLeftRadius: SIZES.font, borderTopRightRadius: SIZES.font}}>
+            <Image style={{width:240, height:400}} source={require('../../assets/images/preview-home.png')}></Image>
+        </View>
 
         <View style={styles.containerBTN}>
-            <TouchableOpacity onPress={() => signIn(email, password)} style={styles.button}>
+            <TouchableOpacity onPress={() => navigation.navigate("Login")} style={styles.button}>
                 <Text style={styles.buttonText}>Entrar</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate("Register")} style={styles.button}>
@@ -54,12 +56,12 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    bottom:60
+    bottom:120
   },
   containerLogo: {
     alignItems: "center",
     justifyContent: "center",
-    bottom:130 
+    bottom:130
   },
   logo: {
     width: 100,
@@ -77,23 +79,26 @@ const styles = StyleSheet.create({
     color: 'white',
     fontFamily: "roboto",
     fontSize: 44,
+    
   },
   button: {
     backgroundColor: COLORS.wingDarkBlue,
-    padding: 20,
     borderRadius: SIZES.small,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: SIZES.base
+    marginBottom: SIZES.base,
+    width:150,
+    height:50
 
   },
   containerBTN:{
-   top: 160
+   top: 185,
   },
   buttonText: {
     color: "white",
-    fontSize: SIZES.large,
+    fontSize: SIZES.small,
     fontFamily: "roboto"
+
   },
   preview:{
     width: 50,

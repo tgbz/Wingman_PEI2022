@@ -7,6 +7,7 @@ var Auth = require("../controllers/auth.js");
 //LOGIN
 router.post("/login", (req, res, next) => {
   console.log("IN LOGIN");
+  console.log(req.body)
   passport.authenticate("login", (err, user, info) => {
     if (err) {
       console.log(err);
@@ -39,17 +40,15 @@ router.get("/login", function (req, res) {
 //Register POST
 
 router.post("/register", function (req, res) {
+
   Users.register(req.body)
     .then((id) => {
       console.log("Registo bem sucedio");
-      res.redirect("/users/login");
+      res.jsonp(id)
     })
     .catch((err) => {
       console.log("error ocurred", err);
-      res.send({
-        code: 400,
-        failed: err,
-      });
+      res.status(500).jsonp(err)
     });
 });
 

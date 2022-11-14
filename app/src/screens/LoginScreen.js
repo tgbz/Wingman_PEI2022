@@ -1,9 +1,6 @@
 import React from "react";
 import { StyleSheet, TextInput, View, Button } from "react-native";
 import { useState } from "react";
-import axios from "axios";
-import { serverURL } from "../config/hosts";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthContext from "../context/AuthProvider";
 
 function LoginScreen({ navigation }) {
@@ -12,10 +9,6 @@ function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { signIn } = React.useContext(AuthContext);
-
-  const register = () =>{
-    navigation.navigate("Register")
-  }
   
   return (
     <View style={styles.container}>
@@ -31,7 +24,7 @@ function LoginScreen({ navigation }) {
         onChangeText={(password) => setPassword(password)}
       />
       <Button title="Login" onPress={() => signIn(email, password)} />
-      <Button title="Regista-te" onPress={() => register(email, password)} />
+      <Button title="Back" onPress={() => navigation.goBack()}></Button>
     </View>
   );
 }

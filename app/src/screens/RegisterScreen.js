@@ -2,9 +2,6 @@ import React from "react";
 import { StyleSheet, TextInput, View, Button } from "react-native";
 import { RadioButton,Text } from 'react-native-paper';
 import { useState } from "react";
-import axios from "axios";
-import { serverURL } from "../config/hosts";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthContext from "../context/AuthProvider";
 
 function RegisterScreen({ navigation }) {
@@ -12,11 +9,20 @@ function RegisterScreen({ navigation }) {
   const [name,setName] = useState("");
   const [email, setEmail] = useState("");
   const [birthdate,setBirthdate] = useState("");
-  const [gender,setGender] = useState('first');
+  const [gender,setGender] = useState("0");
   const [savings,setSavings] = useState("");
   const [password, setPassword] = useState("");
   const { signUp } = React.useContext(AuthContext);
-  
+   const registo = async () =>{
+   const params = {name,email,birthdate,gender,savings,password}
+   signUp(params)
+   .then(dados => {
+    console.log(dados)
+    navigation.navigate("Login")
+  })
+   .catch(err => console.log(err))
+   console.log(params) 
+  }
   return (
     <View style={styles.container}>
       <TextInput
@@ -34,16 +40,22 @@ function RegisterScreen({ navigation }) {
         placeholder="Data de Nascimento"
         onChangeText={(birthdate) => setBirthdate(birthdate)}
       />
-       <RadioButton.Group onValueChange={newGender => setGender(newGender)} gender={gender}>
-        <View style={{flexDirection:'row',alignItems:"center"}}>
-            <Text>Rent</Text>
-            <RadioButton gender="first" />
-        </View>
-        <View style={{flexDirection:'row',alignItems:"center"}}>
-            <Text>Other</Text>
-            <RadioButton gender="second" />
-        </View>
-        </RadioButton.Group>
+      <View style={{flexDirection:'row',alignItems:"center"}}>
+      <RadioButton
+        value="first"
+        status={ gender === 0 ? 'checked' : 'unchecked' }
+        onPress={() => setGender(0)}
+      />
+      <Text>Male</Text>
+      </View>
+      <View style={{flexDirection:'row',alignItems:"center"}}>
+      <RadioButton
+        value="second"
+        status={ gender === 1 ? 'checked' : 'unchecked' }
+        onPress={() => setGender(1)}
+      />
+      <Text>Female</Text>
+    </View>
       <TextInput
         style={styles.input}
         placeholder="Poupanças"
@@ -55,7 +67,8 @@ function RegisterScreen({ navigation }) {
         secureTextEntry={true}
         onChangeText={(password) => setPassword(password)}
       />
-      <Button title="Login" onPress={() => signUp(email, password)} />
+      <Button title="Login" onPress={() => registo()} />
+      <Button title="Back" onPress={() => navigation.goBack()}></Button>
     </View>
   );
 }

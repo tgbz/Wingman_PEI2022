@@ -8,9 +8,8 @@ import React, { useState, useEffect } from "react";
 import { serverURL } from "./src/config/hosts";
 import axios from "axios";
 import AuthContext from "./src/context/AuthProvider";
-import LandingScreen from "./src/screens/LandingScreen";
 import { createStackNavigator } from "@react-navigation/stack";
-import {useFonts} from 'expo-font';
+
 
 
 const Stack = createStackNavigator();
@@ -60,8 +59,7 @@ const App = () => {
       try {
         const jsonValue = await AsyncStorage.getItem("userToken");
         if (jsonValue != null) {
-          console.log(JSON.parse(jsonValue));
-          dispatch({ type: "RESTORE_TOKEN", token: JSON.parse(jsonValue) });
+          dispatch({ type: "RESTORE_TOKEN", userToken: JSON.parse(jsonValue) });
         }
       } catch (e) {
         console.log(e);
@@ -69,48 +67,51 @@ const App = () => {
       //dispatch({ type: "RESTORE_TOKEN", userToken: userToken });
     };
     getToken();
-    console.log(state);
   }, []);
 
   const authContext = React.useMemo(
     () => ({
       signIn: async (email, password) => {
-        console.log(serverURL + "/users/login");
-        //sign in request with fetch,
-        //if success, save token in async storage and dispatch SIGN_IN action
-        //if error, show error message
-        try {
-          const response = await axios.post(serverURL + "/users/login", {
-            email: email,
+        console.log(serverURL+"/users/login")
+        await axios
+        .post(serverURL+"/users/login", {
+            username: email,
             password: password,
-          });
-          console.log(response.data);
-          
-          if (response.data.success) {
-            await AsyncStorage.setItem(
-              "userToken",
-              JSON.stringify(response.data.token)
-            );
-            dispatch({ type: "SIGN_IN", token: response.data.token });
-          } else {
-            alert(response.data.message);
-          }
-        } catch (e) {
-          // print full error
-          console.log(e)
-        }
+        })
+        .then((response) => {
+            if(response.data) {
+            AsyncStorage.setItem('userToken', JSON.stringify(response.data));
+            dispatch({ type: 'SIGN_IN', userToken: JSON.stringify(response.data) });
+
+            }else{
+            alert(response.status);
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+            alert("De momento não é possível processar a autenticação!");
+        });
       },
       signOut: () => {
         AsyncStorage.removeItem("userToken");
         dispatch({ type: "SIGN_OUT" });
       },
       signUp: async (data) => {
-        // In a production app, we need to send user data to server and get a token
-        // We will also need to handle errors if sign up failed
-        // After getting token, we need to persist the token using `SecureStore`
-        // In the example, we'll use a dummy token
-
-        dispatch({ type: "SIGN_IN", token: "dummy-auth-token" });
+        console.log(serverURL+"/users/register")
+        await axios
+        .post(serverURL+"/users/register", data)
+        .then((response) => {
+          console.log(response)
+            if(response.data) {
+            console.log(response.data)
+            }else{
+            alert(response.status);
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+            alert("Erro ao registar!");
+        });
       },
     }),
     []

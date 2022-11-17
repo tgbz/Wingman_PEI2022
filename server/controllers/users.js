@@ -27,6 +27,9 @@ Users.create = function(u){
 
 Users.register = function (newUser) {
     return new Promise(function(resolve, reject) {
+    if(!isEmailValid(newUser.email))
+        reject("Email invalido")
+    
     Users.getOne(newUser.email)
     .then(user=>{
         if(user==null){
@@ -52,7 +55,6 @@ Users.register = function (newUser) {
 
 Users.getOne = function(email) {
     let user = null
-    console.log("Ola " + email)
     return new Promise(function(resolve,reject){
         sql.query("Select * from user where email= ?",email ,function(err,res){
             if(err) {
@@ -89,7 +91,6 @@ Users.getUser = function(id) {
 }
 
 Users.updateUser = function(id,body) {
-    console.log(body)
     return new Promise(function(resolve,reject){
         sql.query(`UPDATE user u, wallet w
                     SET u.name = ? , u.gender = ?, u.birthdate = ?, u.savings = ?,
@@ -105,4 +106,30 @@ Users.updateUser = function(id,body) {
             }
         }); 
     })   
+}
+
+
+var emailRegex = /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
+
+function isEmailValid(email) {
+    if (!email)
+        return false;
+
+    if(email.length>254)
+        return false;
+
+    var valid = emailRegex.test(email);
+    if(!valid)
+        return false;
+
+    // Further checking of some things regex can't handle
+    var parts = email.split("@");
+    if(parts[0].length>64)
+        return false;
+
+    var domainParts = parts[1].split(".");
+    if(domainParts.some(function(part) { return part.length>63; }))
+        return false;
+
+    return true;
 }

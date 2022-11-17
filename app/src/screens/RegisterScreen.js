@@ -13,16 +13,15 @@ function RegisterScreen({ navigation }) {
   const [savings,setSavings] = useState("");
   const [password, setPassword] = useState("");
   const { signUp } = React.useContext(AuthContext);
-   const registo = async () =>{
-   const params = {name,email,birthdate,gender,savings,password}
-   signUp(params)
-   .then(dados => {
-    console.log(dados)
-    navigation.navigate("Login")
-  })
-   .catch(err => console.log(err))
-   console.log(params) 
+  const registo = async () =>{
+    const params = {name,email,birthdate,gender,savings,password}
+    const response = await signUp(params)
+    if(!isNaN(+response)){
+      navigation.navigate("Login")
+    }
   }
+  
+  
   return (
     <View style={styles.container}>
       <TextInput

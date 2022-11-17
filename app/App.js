@@ -8,11 +8,8 @@ import React, { useState, useEffect } from "react";
 import { serverURL } from "./src/config/hosts";
 import axios from "axios";
 import AuthContext from "./src/context/AuthProvider";
-import { createStackNavigator } from "@react-navigation/stack";
 
 
-
-const Stack = createStackNavigator();
 const App = () => {
   /*
   const [loaded] = useFonts({
@@ -24,7 +21,6 @@ const App = () => {
   if(!loaded){
     return null;
   }*/
-
   const [state, dispatch] = React.useReducer(
     (prevState, action) => {
       switch (action.type) {
@@ -97,13 +93,11 @@ const App = () => {
         dispatch({ type: "SIGN_OUT" });
       },
       signUp: async (data) => {
-        console.log(serverURL+"/users/register")
-        await axios
+        const id =  await axios
         .post(serverURL+"/users/register", data)
         .then((response) => {
-          console.log(response)
             if(response.data) {
-            console.log(response.data)
+            return response.data
             }else{
             alert(response.status);
             }
@@ -112,6 +106,7 @@ const App = () => {
             console.log(error);
             alert("Erro ao registar!");
         });
+        return  id
       },
     }),
     []

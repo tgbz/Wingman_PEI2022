@@ -29,10 +29,10 @@ function LandingScreen({navigation}) {
 
         <View style={styles.containerBTN}>
             <TouchableOpacity onPress={() => navigation.navigate("Login")} style={styles.button}>
-                <Text style={styles.buttonText}>Entrar</Text>
+                <Text style={styles.buttonText}>Entrar  ➜</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate("Register")} style={styles.button}>
-                <Text style={styles.buttonText}>Registe-se Já!</Text>
+                <Text style={styles.buttonText}>Registe-se Já!  ➜</Text>
             </TouchableOpacity>
         </View>
     </SafeAreaView>
@@ -46,6 +46,9 @@ const AppButton = ({ onPress, title }) => (
 );
   
 const styles = StyleSheet.create({
+  bgImage: {
+    position: 'absolute',
+  },
   containerF: {
     flex: 1,
     backgroundColor: COLORS.wingblue,
@@ -55,12 +58,12 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    bottom:120
+    bottom:150
   },
   containerLogo: {
     alignItems: "center",
     justifyContent: "center",
-    bottom:130
+    bottom:200
   },
   logo: {
     width: 100,

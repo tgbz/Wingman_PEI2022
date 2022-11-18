@@ -2,6 +2,8 @@ import React from "react";
 import { StyleSheet, TextInput, View, Button } from "react-native";
 import { useState } from "react";
 import AuthContext from "../context/AuthProvider";
+import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
+
 
 function LoginScreen({ navigation }) {
   //login form
@@ -32,7 +34,7 @@ function LoginScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.wingblue,
     alignItems: "center",
     justifyContent: "center",
   },

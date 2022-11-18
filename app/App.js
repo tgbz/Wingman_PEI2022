@@ -9,18 +9,23 @@ import { serverURL } from "./src/config/hosts";
 import axios from "axios";
 import AuthContext from "./src/context/AuthProvider";
 
+import { useCallback } from 'react';
+//import {useFonts} from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+import {
+  useFonts,
+  Sora_100Thin,
+  Sora_200ExtraLight,
+  Sora_300Light,
+  Sora_400Regular,
+  Sora_500Medium,
+  Sora_600SemiBold,
+  Sora_700Bold,
+  Sora_800ExtraBold,
+} from '@expo-google-fonts/sora';
 
 const App = () => {
-  /*
-  const [loaded] = useFonts({
-    SoraMedium: require('./assets/fonts/Sora-Medium.ttf'),
-    SoraBold: require('./assets/fonts/Sora-Bold.ttf'),
-    SoraLight: require('./assets/fonts/Sora-Light.ttf'),
-  });
 
-  if(!loaded){
-    return null;
-  }*/
   const [state, dispatch] = React.useReducer(
     (prevState, action) => {
       switch (action.type) {
@@ -49,6 +54,7 @@ const App = () => {
     }
   );
 
+  
   React.useEffect(() => {
     // Fetch the token from storage then navigate to our appropriate place
     const getToken = async () => {
@@ -65,6 +71,8 @@ const App = () => {
     getToken();
   }, []);
 
+
+  
   const authContext = React.useMemo(
     () => ({
       signIn: async (email, password) => {
@@ -112,10 +120,34 @@ const App = () => {
     []
   );
 
+  let [fontsLoaded,error] = useFonts({
+    SoraThin:Sora_100Thin,
+    SoraExtraLight:Sora_200ExtraLight,
+    SoraLight:Sora_300Light,
+    SoraRegular:Sora_400Regular,
+    SoraMedium:Sora_500Medium,
+    SoraSemiBold:Sora_600SemiBold,
+    SoraBold:Sora_700Bold,
+    SoraExtraBold:Sora_800ExtraBold,
+  });
+  SplashScreen.hideAsync();
+  useEffect(() => {
+    async function prepare() {
+      await SplashScreen.preventAutoHideAsync();
+    }
+    prepare();
+  }, []);
+
+  if (!fontsLoaded) {
+    return undefined;
+  } else {
+    SplashScreen.hideAsync();
+  }
+
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-        {state.userToken == null ? <AuthStack/> : <AppStack />}
+        {state.userToken == null ? <AuthStack /> : <AppStack />}
       </NavigationContainer>
     </AuthContext.Provider>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View, Button, Image, TouchableOpacity } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View, Button, Image, TouchableOpacity, useWindowDimensions } from "react-native";
 import AuthContext from "../context/AuthProvider";
 import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
 
@@ -8,33 +8,33 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 function LandingScreen({navigation}) {
     const { signIn } = React.useContext(AuthContext);
+    const { height } = useWindowDimensions();
     return (
-    <SafeAreaView style={styles.containerF}>
+    <SafeAreaView style={styles.root}>
         <View style={styles.containerLogo}>       
-            <Image style={styles.logo}source={require('../../assets/images/logo-white.png')}></Image>
+            <Image style={[styles.logo,{height: height*0.14}]} resizeMode="contain" source={require('../../assets/images/logo-white.png')}></Image>
             <Text style={styles.wingman}>Wingman</Text>
-
         </View>        
             <View style={styles.container}>
             <Text style={styles.text}>Ganha controlo sobre as tuas </Text>
             <Text style={styles.text}>finanças, potencia as tuas</Text>
             <Text style={styles.text}>poupanças e melhora a</Text>
-            <Text style={styles.text}>alocação dos teus recursos</Text>
+            <Text style={styles.text}>alocação dos teus recursos!</Text>
           
         </View>
 
         
-        <Image style={styles.preview} source={require('../../assets/images/preview-home.png')}></Image>
+        <Image style={[styles.preview,{height: height*0.82}]} source={require('../../assets/images/preview-home.png')}></Image>
         
-
         <View style={styles.containerBTN}>
             <TouchableOpacity onPress={() => navigation.navigate("Login")} style={styles.button}>
-                <Text style={styles.buttonText}>Entrar  ➜</Text>
+                <Text style={[styles.buttonText,{height: height*0.02}]}>Entrar</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate("Register")} style={styles.button}>
-                <Text style={styles.buttonText}>Registe-se Já!  ➜</Text>
+                <Text style={[styles.buttonText,{height: height*0.02}]}>Registe-se Já!</Text>
             </TouchableOpacity>
         </View>
+        
     </SafeAreaView>
   );
 }
@@ -49,25 +49,26 @@ const styles = StyleSheet.create({
   bgImage: {
     position: 'absolute',
   },
-  containerF: {
+  root: {
     flex: 1,
     backgroundColor: COLORS.wingblue,
     alignItems: "center",
     justifyContent: "center",
+    padding: 20
   },
   container: {
     alignItems: "center",
     justifyContent: "center",
-    bottom:150
+    bottom:"27%"
   },
   containerLogo: {
     alignItems: "center",
     justifyContent: "center",
-    bottom:200
+    bottom:"30%"
   },
   logo: {
-    width: 100,
-    height: 100
+    width: 200,
+    maxHeight:200
   },
   text: {
     fontFamily: "SoraRegular",
@@ -89,26 +90,38 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginBottom: SIZES.base,
-    width:150,
-    height:50
-
+    // space between buttons
+    width:"40%", 
+    height:"80%",
+    //width:150, 
+    //height:40
   },
   containerBTN:{
-   top: 185,
+    // put the buttons after the text
+    //bottom: 200,
+    // Put the buttons at the bottom of the screen
+    position: 'absolute',
+    bottom: "8%",
+    //row align items
+    //flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    // margin horizontal
+    //justifyContent: 'space-evenly',
+    width: '100%'
   },
   buttonText: {
     color: "white",
     fontSize: SIZES.small,
-    fontFamily: "SoraRegular"
+    fontFamily: "SoraBold",
 
   },
   preview:{
-    width: "160%",
-    height: 500,
+    width: "150%",
+    maxHeight: 700,
     position: "absolute",
-    bottom: 0
-  
-  }
+    bottom: "-16%",
+    }
 });
 
 export default LandingScreen;

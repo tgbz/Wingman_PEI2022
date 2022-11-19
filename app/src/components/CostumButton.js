@@ -1,22 +1,24 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, TextInput , Pressable} from "react-native";
+import { StyleSheet, Text, View, Button, TextInput , Pressable,  useWindowDimensions} from "react-native";
 import { useState } from "react";
 import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const CostumInput = ({onPress, text, type = "PRIMARY"}) => {
+    const {width} = useWindowDimensions();
     return (
-    <Pressable onPress={onPress} style={[styles.container, styles[`container_${type}`]]}>
+    <TouchableOpacity onPress={onPress} style={[styles.container, {width: width *0.85 }, styles[`container_${type}`]]}>
         <Text style={[styles.text, styles[`text_${type}`]]}>{text}</Text>
-    </Pressable>
+    </TouchableOpacity>
 );
 };
 
 
 const styles = StyleSheet.create({
     container:{
-        width: "90%",
+        width: 350,
         padding: 15,
-        borderRadius: 5,
+        borderRadius: SIZES.small,
         marginVertical: 10,
         alignItems: 'center',
 

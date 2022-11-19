@@ -5,9 +5,9 @@ import AuthContext from "../context/AuthProvider";
 import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
 import CostumInput from "../components/CostumInput";
 import CostumButton from "../components/CostumButton";
+import CostumTextButton from "../components/CostumTextButton";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Icon } from '@rneui/themed';
-
+import CostumBackButton from "../components/CostumBackButton";
 
 function LoginScreen({ navigation }) {
   //login form
@@ -19,22 +19,23 @@ function LoginScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.containerLogo}>
-        <Image source={require('../../assets/images/logo-white.png')} resizeMode='contain' style={[styles.logo, {height: height * 0.15}]}></Image>
+        <CostumBackButton onPress={() => navigation.navigate("Landing")}></CostumBackButton>
+        <Image source={require('../../assets/images/logo_azul_escuro.png')} resizeMode='contain' style={[styles.logo, {height: height * 0.15}]}></Image>
         <Text style={styles.wingman}>Login</Text>
      </View>
 
-    <View style={[styles.placeInput]}>
-      <Text style={styles.text}>Email</Text>
-      <CostumInput placeholder={"joao@email.com"} value={email} setValue={setEmail}/>
-      <Text style={styles.text}>Password</Text>
-      <CostumInput placeholder={"*******"} value={password} setValue={setPassword} secureTextEntry isPassword={true}/>
-
-    </View>
-    <View style={styles.placeButtons}>
-    <CostumButton onPress={() => {email!='' && password!='' ? signIn(email, password) : alert("Necessita de introduzir credenciais!")}} text="Entrar"></CostumButton>
-    <CostumButton onPress={() => navigation.goBack()} text="Voltar"></CostumButton>
-    <CostumButton onPress={() => alert("Não está feito")} text="Esqueceu-se da password? Carregue aqui" type='TERTIARY'></CostumButton>
-    </View>
+      <View style={[styles.placeInput]}>
+      
+        <Text style={styles.text}>Email</Text>
+        <CostumInput placeholder={"joao@email.com"} value={email} setValue={setEmail}/>
+        <Text style={styles.text}>Password</Text>
+        <CostumInput placeholder={"*******"} value={password} setValue={setPassword} secureTextEntry isPassword={true}/>
+        <CostumTextButton onPress={() => alert("Não está feito")} textNormal="Esqueceu-se da password? " textButton="Carregue aqui!" textSize={12}></CostumTextButton>
+      </View>
+      <View style={styles.placeButtons}>
+        <CostumButton onPress={() => {email!='' && password!='' ? signIn(email, password) : alert("Necessita de introduzir credenciais!")}} text="Entrar"></CostumButton>
+        <CostumTextButton onPress={() => navigation.navigate("Register")} textNormal="Não tem conta? " textButton="Registe-se!" textSize={16}></CostumTextButton>
+      </View>
     </View>
   );
 }
@@ -42,7 +43,7 @@ function LoginScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.wingblue,
+    backgroundColor: COLORS.eggshell,
     
   },
   containerLogo: {
@@ -59,15 +60,16 @@ const styles = StyleSheet.create({
     paddingVertical:40
   },
   placeInput:{
-    alignItems: 'center',
+    alignItems: 'left',
     top: 30,
     width: "100%",
+    alignItems: 'center',
 
   },
   wingman:{
     fontFamily: 'SoraBold',
     fontSize: 50,
-    color: 'white',
+    color: COLORS.wingDarkBlue,
     paddingVertical:40
   },
 
@@ -75,9 +77,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     top: 260,
     width: "100%",
+    alignContent: 'space-between'
   },
   text:{
-    color:'white',
+    color: COLORS.wingDarkBlue,
     fontFamily:"SoraLight",
     fontSize: 20,
     alignSelf: 'flex-start',

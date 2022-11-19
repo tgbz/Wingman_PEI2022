@@ -8,8 +8,8 @@ import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
 import CostumInput from "../components/CostumInput";
 import CostumButton from "../components/CostumButton";
 import { ScrollView } from "react-native-gesture-handler";
-import { Icon } from '@rneui/themed';
-
+import CostumTextButton from "../components/CostumTextButton";
+import CostumBackButton from "../components/CostumBackButton";
 
 
 function RegisterScreen({ navigation }) {
@@ -39,7 +39,9 @@ function RegisterScreen({ navigation }) {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.containerLogo}>
-        <Image source={require('../../assets/images/logo-white.png')} resizeMode='contain' style={[styles.logo, {height: height * 0.15}]}></Image>
+      <CostumBackButton onPress={() => navigation.navigate("Landing")}></CostumBackButton>
+
+        <Image source={require('../../assets/images/logo_azul_escuro.png')} resizeMode='contain' style={[styles.logo, {height: height * 0.15}]}></Image>
         <Text style={styles.wingman}>Registo</Text>
      </View>
      
@@ -52,7 +54,7 @@ function RegisterScreen({ navigation }) {
       <CostumInput placeholder={"joao@email.com"} value={email} setValue={setEmail}/>
       <Text style={styles.text}>Data de Nascimento</Text>
       <CostumInput placeholder={"aaaa-mm-dd"} value={birthdate} setValue={setBirthdate}/>
-      <Text style={styles.text}>Sexo</Text>
+      <Text style={styles.text}>Género</Text>
       <SelectList 
         setSelected={(val) => {val === 'Feminino'? setSelected('1') : val === 'Masculino'? setSelected('0') :setSelected('2') }} 
         data={data} 
@@ -72,8 +74,9 @@ function RegisterScreen({ navigation }) {
 
     </View>
     <View style={styles.placeButtons}>
-    <CostumButton onPress={() => {email!='' && password!='' ? registo() : alert("Todos os campos são obrigatórios!")}} text="Entrar"></CostumButton>
-    <CostumButton onPress={() => navigation.goBack()} text="Voltar"></CostumButton>
+    <CostumButton onPress={() => {email!='' && password!='' && birthdate!='' && name!='' && savings!=''? registo() : alert("Todos os campos são obrigatórios!")}} text="Registar"></CostumButton>
+    <CostumTextButton onPress={() => navigation.navigate("Login")} textNormal="Já tem conta? " textButton="Login!" textSize={16}></CostumTextButton>
+
     </View>     
     
     </ScrollView>
@@ -83,7 +86,7 @@ function RegisterScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.wingblue,
+    backgroundColor: COLORS.eggshell,
     
   },
   containerLogo: {
@@ -112,11 +115,11 @@ const styles = StyleSheet.create({
   wingman:{
     fontFamily: 'SoraBold',
     fontSize: 50,
-    color: 'white',
+    color: COLORS.wingDarkBlue,
     paddingVertical:40
   },
   text:{
-    color:'white',
+    color: COLORS.wingDarkBlue,
     fontFamily:"SoraLight",
     fontSize: 15,
     alignSelf: 'flex-start',
@@ -124,7 +127,7 @@ const styles = StyleSheet.create({
   },
   selectList:{
     backgroundColor: 'white',
-    borderColor: 'white',
+    borderColor: COLORS.wingblue,
   },
   dropdownStyles:{
     maxHeight: 120,

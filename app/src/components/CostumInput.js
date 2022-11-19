@@ -6,7 +6,7 @@ import { Icon } from '@rneui/themed';
 
 
 
-const CostumInput = ({value, setValue, placeholder, secureTextEntry , isPassword}) => {
+const CostumInput = ({value, setValue, placeholder, secureTextEntry}) => {
     const {width} = useWindowDimensions();
     const [passwordVisible, setPasswordVisible] = useState(secureTextEntry);
     return (
@@ -27,14 +27,15 @@ const CostumInput = ({value, setValue, placeholder, secureTextEntry , isPassword
 
 const styles = StyleSheet.create({
     container:{
-        backgroundColor: COLORS.white,
+        backgroundColor: COLORS.eggshell,
         borderRadius: 5,
         paddingHorizontal: 10,
         paddingVertical: 15,
         marginVertical: 12,
         borderWidth: 1,
-        borderColor: COLORS.white,
-        flexDirection: 'row'
+        borderColor: COLORS.wingblue,
+        flexDirection: 'row',
+        alignSelf: 'center'
         
     },
     input: {
@@ -42,7 +43,8 @@ const styles = StyleSheet.create({
     },
 
     icon:{
-        alignContent: 'flex-end'
+        alignContent: 'flex-end',
+        color: COLORS.wingDarkBlue
     }
    
 })

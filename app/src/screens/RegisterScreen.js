@@ -1,15 +1,20 @@
 import React from "react";
-import { StyleSheet, TextInput, View, Button } from "react-native";
+import { StyleSheet, TextInput, View, Button, Image,useWindowDimensions } from "react-native";
 import { RadioButton,Text } from 'react-native-paper';
 import { useState } from "react";
 import AuthContext from "../context/AuthProvider";
+import { SelectList } from 'react-native-dropdown-select-list'
+import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
+import CostumInput from "../components/CostumInput";
+import CostumButton from "../components/CostumButton";
+import { ScrollView } from "react-native-gesture-handler";
+
 
 function RegisterScreen({ navigation }) {
   //login form
   const [name,setName] = useState("");
   const [email, setEmail] = useState("");
   const [birthdate,setBirthdate] = useState("");
-  const [gender,setGender] = useState("0");
   const [savings,setSavings] = useState("");
   const [password, setPassword] = useState("");
   const { signUp } = React.useContext(AuthContext);
@@ -20,73 +25,111 @@ function RegisterScreen({ navigation }) {
       navigation.navigate("Login")
     }
   }
-  
+  const {height, width} = useWindowDimensions();
+
+  const data = [
+      {key:"0", value:'Masculino'},
+      {key:"1", value:'Feminino'},
+      {key:"2", value:'Outro'},
+  ]
+  const [gender, setSelected] = React.useState("2");
   
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Nome"
-        onChangeText={(name) => setName(name)}
+    <ScrollView style={styles.container}>
+      <View style={styles.containerLogo}>
+        <Image source={require('../../assets/images/logo-white.png')} resizeMode='contain' style={[styles.logo, {height: height * 0.15}]}></Image>
+        <Text style={styles.wingman}>Registo</Text>
+     </View>
+     
+
+
+     <View style={styles.placeInput}>
+     <Text style={styles.text}>Nome</Text>
+      <CostumInput placeholder={"p.e.: João Miguel Silva"} value={name} setValue={setName}/>
+      <Text style={styles.text}>Email</Text>
+      <CostumInput placeholder={"joao@email.com"} value={email} setValue={setEmail}/>
+      <Text style={styles.text}>Data de Nascimento</Text>
+      <CostumInput placeholder={"aaaa-mm-dd"} value={birthdate} setValue={setBirthdate}/>
+      <Text style={styles.text}>Sexo</Text>
+      <SelectList 
+        setSelected={(val) => {val === 'Feminino'? setSelected('1') : val === 'Masculino'? setSelected('0') :setSelected('2') }} 
+        data={data} 
+        save="value"
+        search={false}
+        defaultOption={{key: "0", value: 'Masculino'}}
+        fontFamily="SoraLight"
+        boxStyles={styles.selectList}
+        inputStyles={[styles.text, {color:'black'}]}
+        dropdownStyles={styles.dropdownStyles}
+        
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        onChangeText={(email) => setEmail(email)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Data de Nascimento"
-        onChangeText={(birthdate) => setBirthdate(birthdate)}
-      />
-      <View style={{flexDirection:'row',alignItems:"center"}}>
-      <RadioButton
-        value="first"
-        status={ gender === 0 ? 'checked' : 'unchecked' }
-        onPress={() => setGender(0)}
-      />
-      <Text>Male</Text>
-      </View>
-      <View style={{flexDirection:'row',alignItems:"center"}}>
-      <RadioButton
-        value="second"
-        status={ gender === 1 ? 'checked' : 'unchecked' }
-        onPress={() => setGender(1)}
-      />
-      <Text>Female</Text>
+      <Text style={styles.text}>Poupanças</Text>
+      <CostumInput placeholder={"100€"} value={savings} setValue={setSavings}/>
+      <Text style={styles.text}>Password</Text>
+      <CostumInput placeholder={"*******"} value={password} setValue={setPassword} secureTextEntry/>
+
     </View>
-      <TextInput
-        style={styles.input}
-        placeholder="Poupanças"
-        onChangeText={(savings) => setSavings(savings)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry={true}
-        onChangeText={(password) => setPassword(password)}
-      />
-      <Button title="Login" onPress={() => registo()} />
-      <Button title="Back" onPress={() => navigation.goBack()}></Button>
-    </View>
+    <View style={styles.placeButtons}>
+    <CostumButton onPress={() => {email!='' && password!='' ? registo() : alert("Todos os campos são obrigatórios!")}} text="Entrar"></CostumButton>
+    <CostumButton onPress={() => navigation.goBack()} text="Voltar"></CostumButton>
+    </View>     
+    
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: COLORS.wingblue,
+    
   },
-  input: {
-    width: 200,
-    height: 44,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: "black",
-    marginBottom: 10,
+  containerLogo: {
+    flexDirection: 'row',
+    top: 40,
+    paddingVertical: 30,
+    padding: 20
   },
+  placeButtons:{
+    alignItems: 'center',
+    top: 20,
+    width: "100%",
+  },
+  placeInput:{
+    alignItems: 'center',
+    width: "100%",
+
+  },
+  logo: {
+    flex:0.7,
+    width: "80%",
+    maxWidth: 300,
+    maxHeight: 120,
+    paddingVertical:40
+  },
+  wingman:{
+    fontFamily: 'SoraBold',
+    fontSize: 50,
+    color: 'white',
+    paddingVertical:40
+  },
+  text:{
+    color:'white',
+    fontFamily:"SoraLight",
+    fontSize: 15,
+    alignSelf: 'flex-start',
+    paddingHorizontal:30,
+  },
+  selectList:{
+    backgroundColor: 'white',
+    borderColor: 'white',
+  },
+  dropdownStyles:{
+    maxHeight: 120,
+    backgroundColor: 'white',
+    borderColor:'white'
+  },
+  
 });
 
 export default RegisterScreen;

@@ -8,14 +8,13 @@ import CostumButton from "../components/CostumButton";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 
-
 function LoginScreen({ navigation }) {
   //login form
-
+  const [isSecureEntry, setIsSecureEntry]=useState(true)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { signIn } = React.useContext(AuthContext);
-  const {height} = useWindowDimensions();
+  const {height, width} = useWindowDimensions();
   return (
     <View style={styles.container}>
       <View style={styles.containerLogo}>
@@ -23,15 +22,15 @@ function LoginScreen({ navigation }) {
         <Text style={styles.wingman}>Login</Text>
      </View>
 
-    <View style={styles.placeInput}>
+    <View style={[styles.placeInput]}>
       <Text style={styles.text}>Email</Text>
       <CostumInput placeholder={"joao@email.com"} value={email} setValue={setEmail}/>
       <Text style={styles.text}>Password</Text>
-      <CostumInput placeholder={"*******"} value={password} setValue={setPassword} secureTextEntry/>
+      <CostumInput placeholder={"*******"} value={password} setValue={setPassword} secureTextEntry />
 
     </View>
     <View style={styles.placeButtons}>
-    <CostumButton onPress={() => signIn(email, password)} text="Entrar"></CostumButton>
+    <CostumButton onPress={() => {email!='' && password!='' ? signIn(email, password) : alert("Necessita de introduzir credenciais!")}} text="Entrar"></CostumButton>
     <CostumButton onPress={() => navigation.goBack()} text="Voltar"></CostumButton>
     <CostumButton onPress={() => alert("Não está feito")} text="Esqueceu-se da password? Carregue aqui" type='TERTIARY'></CostumButton>
     </View>
@@ -43,12 +42,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.wingblue,
-    paddingVertical: 50,
-    padding: 20
+    
   },
   containerLogo: {
     flexDirection: 'row',
-    top: 40
+    top: 40,
+    paddingVertical: 30,
+    padding: 20
   },
   logo: {
     flex:0.5,
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   },
   placeInput:{
     alignItems: 'center',
-    top: 50,
+    top: 30,
     width: "100%",
 
   },
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     fontFamily:"SoraLight",
     fontSize: 20,
     alignSelf: 'flex-start',
-    paddingHorizontal:20
+    paddingHorizontal:30,
   }
 });
 

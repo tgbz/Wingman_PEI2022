@@ -10,7 +10,7 @@ import { SafeAreaView } from 'react-native'
 import { serverURL } from '../config/hosts'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 
-export default function ProfileScreen({ navigation }) {
+export default function ProfileEditScreen({ navigation }) {
   const { height } = useWindowDimensions();
   const [token, setToken] = useState('')
 
@@ -42,22 +42,6 @@ export default function ProfileScreen({ navigation }) {
   foto,
   profissão
    */
-  
-  function getMonthName(month){
-    const d = new Date();
-    d.setMonth(month-1);
-    const monthName = d.toLocaleString("pt-PT", {month: "long"});
-    return monthName;
-  }
-  // handleData that converts 1990-10-12T00:00:00.000Z to 12 de Outubro de 1990
-  function handleData(data){
-    const date = new Date(data);
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    const newDate = day + " de " + getMonthName(month) + " de " + year;
-    return newDate;
-  }
 
   return (
     console.log(token),
@@ -71,7 +55,7 @@ export default function ProfileScreen({ navigation }) {
               color={COLORS.wingDarkBlue}
               onPress={() => navigation.navigate('Home')}
             />
-            <Text style={styles.pageTitle}>Meu Perfil</Text>
+            <Text style={styles.pageTitle}>Editar Perfil</Text>
           </View>
 
           <View style={{ alignSelf: 'center' }}>
@@ -104,23 +88,14 @@ export default function ProfileScreen({ navigation }) {
 
           <View style={styles.infoContainer}>
             <View style={styles.infoLine}>
-              <View style={styles.col1}><Text style={styles.textTag}>Email</Text></View>
-              <View style={styles.col2}><Text style={styles.textInfo}>{data ? data.email : 'Loading...'}</Text></View>
-
               <View style={styles.col1}><Text style={styles.textTag}>Password</Text></View>
-              <View style={styles.col2}><Text style={styles.textInfo}>{data ? "........." : 'Loading...'}</Text></View>
-
-              <View style={styles.col1}><Text style={styles.textTag}>Aniversário</Text></View>
-              <View style={styles.col2}><Text style={styles.textInfo}>{data ? handleData(data.birthdate) : 'Loading...'}</Text></View>
-              
-              <View style={styles.col1}><Text style={styles.textTag}>Género</Text></View>
-              <View style={styles.col2}><Text style={styles.textInfo}>{data ? data.gender == 0 ? "Masculino" : "Feminino" : 'Loading...'}</Text></View>
+              <View style={styles.col2}><Text style={styles.textInfo}>{data ? "pass desincriptada" : 'Loading...'}</Text></View>
             </View>
           </View>
           
           <View style={styles.containerBTN}>
             <TouchableOpacity onPress={() => navigation.navigate("ProfileEdit")} style={[styles.button,{height: height*0.05}]}>
-                <Text style={styles.buttonText}>Editar Perfil</Text>
+                <Text style={styles.buttonText}>Guardar</Text>
             </TouchableOpacity>
         </View>
 
@@ -138,15 +113,9 @@ const styles = StyleSheet.create({
   navigationBar: {
     // in case i wanto to add a button in the right side
     flexDirection: 'row',
-    justifyContent: 'space-between',
     marginTop: 10,
     marginHorizontal: 10,
     marginBottom:10
-  },
-  image: {
-    flex: 1,
-    width: undefined,
-    height: undefined,
   },
   pageTitle: {
     fontFamily: 'SoraMedium',
@@ -158,6 +127,11 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'center',
     right: 20,  
+  },
+  image: {
+    flex: 1,
+    width: undefined,
+    height: undefined,
   },
   profileImage: {
     width: 200,

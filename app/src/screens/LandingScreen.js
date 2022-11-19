@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View, Button, Image, TouchableOpacity, useWindowDimensions } from "react-native";
 import AuthContext from "../context/AuthProvider";
-import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
+import {COLORS, SHADOWS, SIZES } from '../constants'
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -113,8 +113,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontSize: SIZES.small,
-    fontFamily: "SoraBold",
-
+    fontFamily: "SoraBold"
   },
   preview:{
     width: "150%",

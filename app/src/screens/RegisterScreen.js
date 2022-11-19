@@ -8,6 +8,8 @@ import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
 import CostumInput from "../components/CostumInput";
 import CostumButton from "../components/CostumButton";
 import { ScrollView } from "react-native-gesture-handler";
+import { Icon } from '@rneui/themed';
+
 
 
 function RegisterScreen({ navigation }) {

@@ -4,7 +4,7 @@ import { useState } from "react";
 import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const CostumInput = ({onPress, text, type = "PRIMARY"}) => {
+const CostumButton = ({onPress, text, type = "PRIMARY"}) => {
     const {width} = useWindowDimensions();
     return (
     <TouchableOpacity onPress={onPress} style={[styles.container, {width: width *0.85 }, styles[`container_${type}`]]}>
@@ -40,4 +40,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default CostumInput
+export default CostumButton

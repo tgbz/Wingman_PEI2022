@@ -6,6 +6,7 @@ import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
 import CostumInput from "../components/CostumInput";
 import CostumButton from "../components/CostumButton";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { Icon } from '@rneui/themed';
 
 
 function LoginScreen({ navigation }) {
@@ -26,7 +27,7 @@ function LoginScreen({ navigation }) {
       <Text style={styles.text}>Email</Text>
       <CostumInput placeholder={"joao@email.com"} value={email} setValue={setEmail}/>
       <Text style={styles.text}>Password</Text>
-      <CostumInput placeholder={"*******"} value={password} setValue={setPassword} secureTextEntry />
+      <CostumInput placeholder={"*******"} value={password} setValue={setPassword} secureTextEntry isPassword={true}/>
 
     </View>
     <View style={styles.placeButtons}>

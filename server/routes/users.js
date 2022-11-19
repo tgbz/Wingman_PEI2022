@@ -68,5 +68,11 @@ router.put("/updateProfile/:id", function (req, res){
   .catch(erro => res.status(500).jsonp(erro))
 })
 
+router.put("/updatePassword/:id", function (req, res){
+  console.log(req.body)
+  Users.updatePassword(req.params.id,req.body.password,req.body.newpassword)
+  .then( dados => res.jsonp(dados))
+  .catch(erro => res.status(500).jsonp(erro))
+})
 
 module.exports = router;

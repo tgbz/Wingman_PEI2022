@@ -8,9 +8,9 @@ Users.create = function(u){
     return new Promise(function(resolve, reject) {
     bcrypt.genSalt(salt,function(err,salt){
         bcrypt.hash(u.password,salt,function(err,hash){
-            let parameters = [u.name,hash,u.email,u.birthdate,u.gender,u.savings]
+            let parameters = [u.name,hash,u.email,u.birthdate,u.gender,u.savings,0,new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') ]
             
-                sql.query("INSERT INTO user ( name, password, email, birthDate, gender, savings) VALUES ( ?, ?, ?, ?, ?, ?)", parameters, function (err, res) {
+                sql.query("INSERT INTO user ( name, password, email, birthDate, gender, savings,is_valid,creation_date) VALUES ( ?, ?, ?, ?, ?, ?,?,?)", parameters, function (err, res) {
                         if(err) {
                             console.log("error: ", err);
                             reject(err);
@@ -106,6 +106,61 @@ Users.updateUser = function(id,body) {
             }
         }); 
     })   
+}
+
+Users.checkPassword = function(id){
+    return new Promise(function(resolve, reject) {
+        sql.query(`SELECT u.password from user as u WHERE u.idUser = ?`,[id], function (err, res) {
+                if(err) {
+                    console.log("error: ", err);
+                    reject(err);
+                }
+                else{
+                    resolve(res[0])
+                }
+        });   
+    })
+}
+
+Users.changePassword = function(id,newpassword){
+    return new Promise(function(resolve, reject) {
+    bcrypt.genSalt(salt,function(err,salt){
+        bcrypt.hash(newpassword,salt,function(err,hash){
+                sql.query(`UPDATE user u SET  u.password = ? WHERE u.idUser = ?`,[hash,id] ,function(err,res) {
+                        if(err) {
+                            console.log("error: ", err);
+                            reject(err);
+                        }
+                        else{
+                            resolve(res);
+                        }
+                    });   
+                }) 
+        })
+    })
+}
+
+Users.updatePassword = function(id,password,newpassword){
+    return new Promise(function(resolve, reject) {
+        Users.checkPassword(id,password)
+        .then(user =>{
+            bcrypt.compare(password, user.password, function (err, isMatch) {
+                if (isMatch) {
+                    Users.changePassword(id,newpassword)
+                        .then(console.log("UPDATED!"))
+                        .catch(err =>{
+                            reject(err)
+                        })
+                } else {
+                    reject(err)
+                }
+            })
+        })
+        .catch(err =>{
+            reject(err)
+        })
+
+    })
 }
 
 

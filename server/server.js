@@ -72,6 +72,8 @@ app.set("view engine", "pug");
 // Routes
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
+app.use('/purchases', require('./routes/purchases'));
+app.use('/categories', require('./routes/categories'));
 
 app.use(function (req, res, next) {
     var err = new Error('Not Found');

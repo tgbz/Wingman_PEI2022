@@ -22,6 +22,9 @@ import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
       <View>
         <Button title="Log out" onPress={() => signOut()} />
       </View>
+      <View>
+        <Button title="Perfil" onPress={() => navigation.navigate("Perfil")} />
+      </View>
       
     </View>
   );

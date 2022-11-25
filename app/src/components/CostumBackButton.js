@@ -3,10 +3,15 @@ import { StyleSheet, Text, View, Button, TextInput , Pressable,  useWindowDimens
 import { useState } from "react";
 import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Icon } from '@rneui/themed';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
+
 const CostumBackButton = ({onPress}) => {
     return (
-        <Icon name={'arrow-back-ios'} onPress={onPress}  color={COLORS.wingDarkBlue} style={styles.icon} />
+        <Ionicons name="chevron-back"
+        size={30}
+        color={COLORS.wingDarkBlue}
+        onPress={onPress}  
+        style={styles.icon} />
 );
 };
 

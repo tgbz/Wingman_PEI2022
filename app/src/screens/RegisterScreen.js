@@ -49,11 +49,11 @@ function RegisterScreen({ navigation }) {
 
      <View style={styles.placeInput}>
      <Text style={styles.text}>Nome</Text>
-      <CostumInput placeholder={"p.e.: João Miguel Silva"} value={name} setValue={setName}/>
+      <CostumInput placeholder={"p.e.: João Miguel Silva"} value={name} setValue={setName} iconNameEntry='person'/>
       <Text style={styles.text}>Email</Text>
-      <CostumInput placeholder={"joao@email.com"} value={email} setValue={setEmail}/>
+      <CostumInput placeholder={"joao@email.com"} value={email} setValue={setEmail} iconNameEntry='email'/>
       <Text style={styles.text}>Data de Nascimento</Text>
-      <CostumInput placeholder={"aaaa-mm-dd"} value={birthdate} setValue={setBirthdate}/>
+      <CostumInput placeholder={"aaaa-mm-dd"} value={birthdate} setValue={setBirthdate}iconNameEntry='date-range'/>
       <Text style={styles.text}>Género</Text>
       <SelectList 
         setSelected={(val) => {val === 'Feminino'? setSelected('1') : val === 'Masculino'? setSelected('0') :setSelected('2') }} 
@@ -67,14 +67,12 @@ function RegisterScreen({ navigation }) {
         dropdownStyles={styles.dropdownStyles}
         
       />
-      <Text style={styles.text}>Poupanças</Text>
-      <CostumInput placeholder={"100€"} value={savings} setValue={setSavings}/>
       <Text style={styles.text}>Password</Text>
-      <CostumInput placeholder={"*******"} value={password} setValue={setPassword} secureTextEntry/>
+      <CostumInput placeholder={"*******"} value={password} setValue={setPassword} secureTextEntry iconNameEntry='form-textbox-password'/>
 
     </View>
     <View style={styles.placeButtons}>
-    <CostumButton onPress={() => {email!='' && password!='' && birthdate!='' && name!='' && savings!=''? registo() : alert("Todos os campos são obrigatórios!")}} text="Registar"></CostumButton>
+    <CostumButton onPress={() => {email!='' && password!='' && birthdate!='' && name!=''? registo() : alert("Todos os campos são obrigatórios!")}} text="Registar"></CostumButton>
     <CostumTextButton onPress={() => navigation.navigate("Login")} textNormal="Já tem conta? " textButton="Login!" textSize={16}></CostumTextButton>
 
     </View>     

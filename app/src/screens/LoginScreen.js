@@ -6,7 +6,6 @@ import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
 import CostumInput from "../components/CostumInput";
 import CostumButton from "../components/CostumButton";
 import CostumTextButton from "../components/CostumTextButton";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import CostumBackButton from "../components/CostumBackButton";
 
 function LoginScreen({ navigation }) {
@@ -27,12 +26,12 @@ function LoginScreen({ navigation }) {
       <View style={[styles.placeInput]}>
       
         <Text style={styles.text}>Email</Text>
-        <CostumInput placeholder={"joao@email.com"} value={email} setValue={setEmail}/>
+        <CostumInput placeholder={"joao@email.com"} value={email} setValue={setEmail} iconNameEntry='email'/>
         <Text style={styles.text}>Password</Text>
-        <CostumInput placeholder={"*******"} value={password} setValue={setPassword} secureTextEntry isPassword={true}/>
+        <CostumInput placeholder={"*******"} value={password} setValue={setPassword} secureTextEntry isPassword={true} iconNameEntry='form-textbox-password'/>
         <CostumTextButton onPress={() => alert("Não está feito")} textNormal="Esqueceu-se da password? " textButton="Carregue aqui!" textSize={12}></CostumTextButton>
       </View>
-      <View style={styles.placeButtons}>
+      <View style={[styles.placeButtons, {position: 'relative', bottom:-height*0.25 }]}>
         <CostumButton onPress={() => {email!='' && password!='' ? signIn(email, password) : alert("Necessita de introduzir credenciais!")}} text="Entrar"></CostumButton>
         <CostumTextButton onPress={() => navigation.navigate("Register")} textNormal="Não tem conta? " textButton="Registe-se!" textSize={16}></CostumTextButton>
       </View>
@@ -75,7 +74,6 @@ const styles = StyleSheet.create({
 
   placeButtons:{
     alignItems: 'center',
-    top: 260,
     width: "100%",
     alignContent: 'space-between'
   },

@@ -2,15 +2,20 @@ import React from 'react';
 import { StyleSheet, Text, View, Button, TextInput, useWindowDimensions } from "react-native";
 import { useState } from "react";
 import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
-import { Icon } from '@rneui/themed';
+import { Ionicons, MaterialCommunityIcons, MaterialIcons, Entypo } from '@expo/vector-icons'
 
 
 
-const CostumInput = ({value, setValue, placeholder, secureTextEntry}) => {
+const CostumInput = ({value, setValue, placeholder, secureTextEntry, iconNameEntry=''}) => {
     const {width} = useWindowDimensions();
     const [passwordVisible, setPasswordVisible] = useState(secureTextEntry);
     return (
     <View style={[styles.container,  {width: width *0.85 }]}>
+    {secureTextEntry ? <MaterialCommunityIcons name={iconNameEntry} style={styles.icon} size={18}></MaterialCommunityIcons>: 
+        iconNameEntry!='' ?  <MaterialIcons name={iconNameEntry} style={styles.icon} size={18}></MaterialIcons>: 
+        console.log("") }
+       
+
         <TextInput
         value={value}
         onChangeText={setValue}
@@ -18,8 +23,8 @@ const CostumInput = ({value, setValue, placeholder, secureTextEntry}) => {
         style={styles.input}
         secureTextEntry={passwordVisible}
         />
-        {placeholder=='*******'?(<Icon name={passwordVisible? 'visibility':'visibility-off'} onPress={
-            () => {setPasswordVisible(!passwordVisible)}} style={styles.icon}/>): <Icon style={styles.icon} name=''/>}
+        {placeholder=='*******'?(<MaterialIcons name={passwordVisible? 'visibility':'visibility-off'} onPress={
+            () => {setPasswordVisible(!passwordVisible)}} size={24} style={styles.iconPwd}/>): <MaterialIcons style={styles.icon} name=''/>}
     </View>
 );
 };
@@ -40,11 +45,18 @@ const styles = StyleSheet.create({
     },
     input: {
         flex: 0.95
+        
     },
 
-    icon:{
+    iconPwd:{
         alignContent: 'flex-end',
-        color: COLORS.wingDarkBlue
+        color: COLORS.wingDarkBlue,
+    },
+    icon:{
+        color: COLORS.wingDarkBlue,
+        flex: 0.1,
+        alignContent:'space-around',
+        padding: 3
     }
    
 })

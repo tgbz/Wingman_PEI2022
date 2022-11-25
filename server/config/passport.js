@@ -8,7 +8,7 @@ var bcrypt = require('bcryptjs')
 module.exports = function (passport) { 
     passport.use('login', new LocalStrategy(
         function (email, password, done) {
-            Users.getOne(email)
+            Users.getUserbyEmail(email)
             .then(user =>{
                 if (!user) {
                     return done(null, false, { message: 'Ocorreu um erro ao realizar o login! Por favor verifique as suas credenciais.' });
@@ -27,22 +27,6 @@ module.exports = function (passport) {
             .catch(err =>{
                 done(err);
             })
-            /*
-            Users.getOne(email, function (err, user) {
-                if (err) done(err);
-                if (!user) {
-                    return done(null, false, { message: 'Ocorreu um erro ao realizar o login! Por favor verifique as suas credenciais.' });
-                }
-
-                Users.comparePassword( password , user.password, function (err, isMatch) {
-                    if (err) done(err);
-                    if (isMatch) {
-                        return done(null, user, { message: 'Login efetuado com sucesso.' });
-                    } else {
-                        return done(null, false, { message: 'Ocorreu um erro ao realizar o login! Por favor verifique as suas credenciais.' });
-                    }
-                });
-            });*/
         })
     );
 

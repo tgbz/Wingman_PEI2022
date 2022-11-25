@@ -5,6 +5,7 @@ const salt = 14;
 var bcrypt = require('bcryptjs');
 const connection = require('../config/database.js');
 
+// Registo do Utilizador
 Users.create = function(u,conn){
     return new Promise(function(resolve, reject) {
     bcrypt.genSalt(salt,function(err,salt){
@@ -115,7 +116,6 @@ Users.register = function (newUser) {
 }
 
 
-
 Users.getOne = function(email,conn) {
     let user = null
     return new Promise(function(resolve,reject){
@@ -136,7 +136,28 @@ Users.getOne = function(email,conn) {
 }
 
 
+// Utilizado para o Login
+Users.getUserbyEmail = function(email) {
+    let user = null
+    return new Promise(function(resolve,reject){
+        sql.query("Select * from user where email= ?",email ,function(err,res){
+            if(err) {
+                console.log("error: ", err);
+                reject(err);
+            }
+            else{
+                if(res[0]){
+                    console.log(res[0])
+                    user=res[0]
+                }
+                resolve(user);
+            }
+        });   
+    })   
+}
 
+
+// Utilizado para o perfil do Utilizador
 Users.getUser = function(id) {
     return new Promise(function(resolve,reject){
         sql.query(`Select user.name,user.password,email,birthdate,gender,savings,user.idWallet,rendimento,euro from user 

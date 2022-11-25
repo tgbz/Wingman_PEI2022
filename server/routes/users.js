@@ -6,7 +6,6 @@ var Auth = require("../controllers/auth.js");
 
 //LOGIN
 router.post("/login", (req, res, next) => {
-  console.log("IN LOGIN");
   console.log(req.body)
   passport.authenticate("login", (err, user, info) => {
     if (err) {

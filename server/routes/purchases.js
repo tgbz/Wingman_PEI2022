@@ -8,4 +8,10 @@ router.get("/userPurchase/:id", function (req, res){
   .catch(erro => res.status(500).jsonp(erro))
 })
 
+router.post('/createPurchase/',function(req,res){
+  Purchases.createPurchase(req.body)
+      .then(purchase => res.jsonp(purchase))
+      .catch(erro => res.status(500).jsonp(erro))
+});
+
 module.exports = router;

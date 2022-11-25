@@ -18,3 +18,18 @@ Purchases.getPurchase = function(id) {
         });   
     })   
 }
+
+Purchases.getCategory = function(id) {
+    return new Promise(function(resolve,reject){
+        sql.query(`SELECT * FROM purchase where idUser=?`,
+        id ,function(err,res){
+            if(err) {
+                console.log("error: ", err);
+                reject(err);
+            }
+            else{
+                resolve(res)
+            }
+        });   
+    })   
+}

@@ -2,15 +2,16 @@ var sql = require('../config/database.js');
 var User = require('../models/user.js');
 var Users = module.exports;
 const salt = 14;
-var bcrypt = require('bcryptjs')
+var bcrypt = require('bcryptjs');
+const connection = require('../config/database.js');
 
-Users.create = function(u){
+Users.create = function(u,conn){
     return new Promise(function(resolve, reject) {
     bcrypt.genSalt(salt,function(err,salt){
         bcrypt.hash(u.password,salt,function(err,hash){
-            let parameters = [u.name,hash,u.email,u.birthdate,u.gender,u.savings,0,new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') ]
+            let parameters = [u.name,hash,u.email,u.birthdate,u.gender,0,new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') ]
             
-                sql.query("INSERT INTO user ( name, password, email, birthDate, gender, savings,is_valid,creation_date) VALUES ( ?, ?, ?, ?, ?, ?,?,?)", parameters, function (err, res) {
+                conn.query("INSERT INTO user ( name, password, email, birthDate, gender,is_valid,creation_date) VALUES ( ?, ?, ?, ?, ?, ?,?)", parameters, function (err, res) {
                         if(err) {
                             console.log("error: ", err);
                             reject(err);
@@ -25,38 +26,100 @@ Users.create = function(u){
     })
 }
 
+Users.initWallet = function(id,conn){
+return new Promise(function(resolve, reject) {
+        conn.query("INSERT INTO wallet (idUser) VALUES (?)", id, function (err, res) {
+                if(err) {
+                    console.log("error: ", err);
+                    reject(err);
+                }
+                else{
+                    console.log(res.insertId)
+                    resolve(res.insertId);
+                }
+            });   
+    })
+}
+
+
 Users.register = function (newUser) {
     return new Promise(function(resolve, reject) {
-    if(!isEmailValid(newUser.email))
-        reject("Email invalido")
-    
-    Users.getOne(newUser.email)
-    .then(user=>{
-        if(user==null){
-            Users.create(newUser)
-            .then(id =>{
-                resolve(id)
+        sql.getConnection(function(err,conn){
+             if (err) {
+                reject("Error occurred while getting the connection");
+            }
+             conn.beginTransaction(function(err){
+                if (err) {
+                    reject (err);
+                }
+                if(!isEmailValid(newUser.email)){
+                    conn.rollback(()=> {
+                        conn.release()
+                        reject("Email invalido")
+                    })
+                }
+                else{
+                    Users.getOne(newUser.email,conn)
+                    .then(user=>{
+                        if(user==null){
+                            Users.create(newUser,conn)
+                            .then(id =>{
+                                Users.initWallet(id,conn)
+                                .then(id=>{
+                                    conn.commit((err)=>{
+                                        if(err){
+                                            conn.rollback(()=> {
+                                                conn.release()
+                                                reject(err)
+                                            })
+                                        }
+                                        resolve(id)
+                                        conn.release()
+                                    });
+                                })
+                                .catch(err=>{
+                                    conn.rollback(() => {
+                                        conn.release();
+                                        return reject("Inserting to wallet failed");
+                                    });
+                                })
+                            })
+                            .catch(err=>{
+                                conn.rollback(() => {
+                                        conn.release();
+                                        return reject("Inserting to User failed");
+                                    });
+                            })
+                        }
+                        else{
+                            conn.commit(function(err) {
+                                if (err) {
+                                conn.rollback(() => reject(err))
+                                }
+                                reject("Já existe uma conta associada a este utilizador")
+                            })
+                                        
+                        }
+                    })
+                    .catch(err =>{
+                        conn.release();
+                        reject(err);
+                    })
+                }
+                
             })
-            .catch(err=>{
-                reject(err)
-            })
-        }
-        else{
-            reject("Já existe uma conta associada a este utilizador")
-        }
-    })
-    .catch(err =>{
-        reject(err)
-    })
+            conn.release();
+            if(err) reject(err);
+        })
     })
 }
 
 
 
-Users.getOne = function(email) {
+Users.getOne = function(email,conn) {
     let user = null
     return new Promise(function(resolve,reject){
-        sql.query("Select * from user where email= ?",email ,function(err,res){
+        conn.query("Select * from user where email= ?",email ,function(err,res){
             if(err) {
                 console.log("error: ", err);
                 reject(err);

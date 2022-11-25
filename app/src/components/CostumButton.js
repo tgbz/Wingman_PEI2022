@@ -1,8 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, TextInput , Pressable,  useWindowDimensions} from "react-native";
+import { StyleSheet, Text, View, Button, TextInput , Pressable,  useWindowDimensions, TouchableOpacity} from "react-native";
 import { useState } from "react";
 import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const CostumButton = ({onPress, text, type = "PRIMARY"}) => {
     const {width} = useWindowDimensions();

@@ -1,37 +1,40 @@
 import React from "react";
-import { StyleSheet, TextInput, View, Button } from "react-native";
+import { StyleSheet,Text, TextInput, View, Button , Image, useWindowDimensions, Pressable} from "react-native";
 import { useState } from "react";
-import axios from "axios";
-import { serverURL } from "../config/hosts";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthContext from "../context/AuthProvider";
+import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
+import CostumInput from "../components/CostumInput";
+import CostumButton from "../components/CostumButton";
+import CostumTextButton from "../components/CostumTextButton";
+import CostumBackButton from "../components/CostumBackButton";
 
 function LoginScreen({ navigation }) {
   //login form
-
+  const [isSecureEntry, setIsSecureEntry]=useState(true)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { signIn } = React.useContext(AuthContext);
-
-  const register = () =>{
-    navigation.navigate("Register")
-  }
-  
+  const {height, width} = useWindowDimensions();
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        onChangeText={(email) => setEmail(email)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry={true}
-        onChangeText={(password) => setPassword(password)}
-      />
-      <Button title="Login" onPress={() => signIn(email, password)} />
-      <Button title="Regista-te" onPress={() => register(email, password)} />
+      <View style={styles.containerLogo}>
+        <CostumBackButton onPress={() => navigation.navigate("Landing")}></CostumBackButton>
+        <Image source={require('../../assets/images/logo_azul_escuro.png')} resizeMode='contain' style={[styles.logo, {height: height * 0.15}]}></Image>
+        <Text style={styles.wingman}>Login</Text>
+     </View>
+
+      <View style={[styles.placeInput]}>
+      
+        <Text style={styles.text}>Email</Text>
+        <CostumInput placeholder={"joao@email.com"} value={email} setValue={setEmail} iconNameEntry='email'/>
+        <Text style={styles.text}>Password</Text>
+        <CostumInput placeholder={"*******"} value={password} setValue={setPassword} secureTextEntry isPassword={true} iconNameEntry='form-textbox-password'/>
+        <CostumTextButton onPress={() => alert("Não está feito")} textNormal="Esqueceu-se da password? " textButton="Carregue aqui!" textSize={12}></CostumTextButton>
+      </View>
+      <View style={[styles.placeButtons, {position: 'relative', bottom:-height*0.25 }]}>
+        <CostumButton onPress={() => {email!='' && password!='' ? signIn(email, password) : alert("Necessita de introduzir credenciais!")}} text="Entrar"></CostumButton>
+        <CostumTextButton onPress={() => navigation.navigate("Register")} textNormal="Não tem conta? " textButton="Registe-se!" textSize={16}></CostumTextButton>
+      </View>
     </View>
   );
 }
@@ -39,18 +42,48 @@ function LoginScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: COLORS.eggshell,
+    
   },
-  input: {
-    width: 200,
-    height: 44,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: "black",
-    marginBottom: 10,
+  containerLogo: {
+    flexDirection: 'row',
+    top: 40,
+    paddingVertical: 30,
+    padding: 20
   },
+  logo: {
+    flex:0.5,
+    width: "70%",
+    maxWidth: 300,
+    maxHeight: 120,
+    paddingVertical:40
+  },
+  placeInput:{
+    alignItems: 'left',
+    top: 30,
+    width: "100%",
+    alignItems: 'center',
+
+  },
+  wingman:{
+    fontFamily: 'SoraBold',
+    fontSize: 50,
+    color: COLORS.wingDarkBlue,
+    paddingVertical:40
+  },
+
+  placeButtons:{
+    alignItems: 'center',
+    width: "100%",
+    alignContent: 'space-between'
+  },
+  text:{
+    color: COLORS.wingDarkBlue,
+    fontFamily:"SoraLight",
+    fontSize: 20,
+    alignSelf: 'flex-start',
+    paddingHorizontal:30,
+  }
 });
 
 export default LoginScreen;

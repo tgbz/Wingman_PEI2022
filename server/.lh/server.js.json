@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 32,
+            "activePatchIndex": 33,
             "patches": [
                 {
                     "date": 1667061766661,
@@ -136,6 +136,10 @@
                 {
                     "date": 1667180368734,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n const session = require('express-session');\n //const MySQLStore = require('express-mysql-session')(session);\n \n app.use(express.static(path.join(__dirname, 'public')));\n-app.use(logger('verbose'));\n+app.use(logger('dev'));\n app.use(express.json());\n app.use(cookieParser());\n \n app.use(helmet({\n@@ -57,9 +57,9 @@\n */\n \n app.use(session({secret:\"secret\"}))\n \n-//Inicializar o passport cada vez que uma rota é chamada\n+/Inicializar o passport cada vez que uma rota é chamada\n app.use(passport.initialize());\n \n /* Funciona como middleware para alterar o objecto request e alterar o \"user\" value que é actualmente o session id (através do client cookie) */\n app.use(passport.session());\n"
+                },
+                {
+                    "date": 1668269806399,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n var path = require('path');\n var logger = require('morgan');\n var cookieParser = require('cookie-parser');\n var dataBases = require('./config/database');\n-const session = require('express-session');\n+\n //const MySQLStore = require('express-mysql-session')(session);\n \n app.use(express.static(path.join(__dirname, 'public')));\n app.use(logger('dev'));\n@@ -40,31 +40,20 @@\n app.use(cors(corsOpts))\n app.options('*', cors(corsOpts))\n \n \n+ds\n \n-\n var passport = require('passport');\n require('./config/passport')(passport);\n \n-/* \n-Middleware\n \n-Para guardar informação entre pedidos HTTP e sessões. \n-Quando um dado user visita o nosso site, este cria uma nova sessão para o user e atribui-lhe uma cookie.\n-Da próxima vez que o ser vai ao site, a cookie é verificada e a session id (que está guardara na cookie) é \n-obtida e é feita uma pesquisa na session store. Session store é um sitio onde todas as sessions são guardadas.\n-Aqui estamos um sítio onde podemos guardar toda a informação respectiva à sessão. Assim, estamos \n-*/\n \n-app.use(session({secret:\"secret\"}))\n-\n-/Inicializar o passport cada vez que uma rota é chamada\n+//Inicializar o passport cada vez que uma rota é chamada\n app.use(passport.initialize());\n \n-/* Funciona como middleware para alterar o objecto request e alterar o \"user\" value que é actualmente o session id (através do client cookie) */\n-app.use(passport.session());\n \n+\n /* Middleware responsável por realizar o parsing dos bodys de pedidos num middlware antes de os gerirmos */\n \n app.use(bodyParser.json({limit: '50mb'}));         // to support JSON-encoded bodies\n app.use(bodyParser.urlencoded({\n"
                 }
             ],
             "date": 1667061766661,

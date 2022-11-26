@@ -2,22 +2,24 @@ var sql = require('../config/database.js');
 var User = require('../models/user.js');
 var Users = module.exports;
 const salt = 14;
-var bcrypt = require('bcryptjs')
+var bcrypt = require('bcryptjs');
+const connection = require('../config/database.js');
 
-Users.create = function(u){
+// Registo do Utilizador
+Users.create = function(u,conn){
     return new Promise(function(resolve, reject) {
     bcrypt.genSalt(salt,function(err,salt){
         bcrypt.hash(u.password,salt,function(err,hash){
-            let parameters = [u.name,hash,u.email,u.birthdate,u.gender,u.savings]
+            let parameters = [u.name,hash,u.email,u.birthdate,u.gender,0,new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') ]
             
-                sql.query("INSERT INTO user ( name, password, email, birthDate, gender, savings) VALUES ( ?, ?, ?, ?, ?, ?)", parameters, function (err, res) {
+                conn.query("INSERT INTO user ( name, password, email, birthDate, gender,is_valid,creation_date) VALUES ( ?, ?, ?, ?, ?, ?,?)", parameters, function (err, res) {
                         if(err) {
                             console.log("error: ", err);
                             reject(err);
                         }
                         else{
-                            console.log(res)
-                            resolve(res.idUser);
+                            console.log(res.insertId)
+                            resolve(res.insertId);
                         }
                     });   
                 }) 
@@ -25,34 +27,118 @@ Users.create = function(u){
     })
 }
 
-Users.register = function (newUser) {
-    return new Promise(function(resolve, reject) {
-    Users.getOne(newUser.email)
-    .then(user=>{
-        if(user==null){
-            Users.create(newUser)
-            .then(id =>{
-                resolve(id)
-            })
-            .catch(err=>{
-                reject(err)
-            })
-        }
-        else{
-            reject("Já existe uma conta associada a este utilizador")
-        }
-    })
-    .catch(err =>{
-        reject(err)
-    })
+Users.initWallet = function(id,conn){
+return new Promise(function(resolve, reject) {
+        conn.query("INSERT INTO wallet (idUser) VALUES (?)", id, function (err, res) {
+                if(err) {
+                    console.log("error: ", err);
+                    reject(err);
+                }
+                else{
+                    console.log(res.insertId)
+                    resolve(res.insertId);
+                }
+            });   
     })
 }
 
 
+Users.register = function (newUser) {
+    return new Promise(function(resolve, reject) {
+        sql.getConnection(function(err,conn){
+             if (err) {
+                reject("Error occurred while getting the connection");
+            }
+             conn.beginTransaction(function(err){
+                if (err) {
+                    reject (err);
+                }
+                if(!isEmailValid(newUser.email)){
+                    conn.rollback(()=> {
+                        conn.release()
+                        reject("Email invalido")
+                    })
+                }
+                else{
+                    Users.getOne(newUser.email,conn)
+                    .then(user=>{
+                        if(user==null){
+                            Users.create(newUser,conn)
+                            .then(id =>{
+                                Users.initWallet(id,conn)
+                                .then(id=>{
+                                    conn.commit((err)=>{
+                                        if(err){
+                                            conn.rollback(()=> {
+                                                conn.release()
+                                                reject(err)
+                                            })
+                                        }
+                                        resolve(id)
+                                        conn.release()
+                                    });
+                                })
+                                .catch(err=>{
+                                    conn.rollback(() => {
+                                        conn.release();
+                                        return reject("Inserting to wallet failed");
+                                    });
+                                })
+                            })
+                            .catch(err=>{
+                                conn.rollback(() => {
+                                        conn.release();
+                                        return reject("Inserting to User failed");
+                                    });
+                            })
+                        }
+                        else{
+                            conn.commit(function(err) {
+                                if (err) {
+                                conn.rollback(() => reject(err))
+                                }
+                                reject("Já existe uma conta associada a este utilizador")
+                            })
+                                        
+                        }
+                    })
+                    .catch(err =>{
+                        conn.release();
+                        reject(err);
+                    })
+                }
+                
+            })
+            conn.release();
+            if(err) reject(err);
+        })
+    })
+}
 
-Users.getOne = function(email) {
+
+Users.getOne = function(email,conn) {
     let user = null
-    console.log("Ola " + email)
+    return new Promise(function(resolve,reject){
+        conn.query("Select * from user where email= ?",email ,function(err,res){
+            if(err) {
+                console.log("error: ", err);
+                reject(err);
+            }
+            else{
+                if(res[0]){
+                    console.log(res[0])
+                    user=res[0]
+                }
+                resolve(user);
+            }
+        });   
+    })   
+}
+
+
+// Utilizado para o Login
+Users.getUserbyEmail = function(email) {
+    let user = null
     return new Promise(function(resolve,reject){
         sql.query("Select * from user where email= ?",email ,function(err,res){
             if(err) {
@@ -71,11 +157,11 @@ Users.getOne = function(email) {
 }
 
 
-
+// Utilizado para o perfil do Utilizador
 Users.getUser = function(id) {
     return new Promise(function(resolve,reject){
-        sql.query(`Select user.name,user.password,email,birthdate,gender,savings,user.idWallet,rendimento,euro from user 
-                    inner join wallet on user.idWallet = wallet.idWallet where idUser=?`,
+        sql.query(`Select u.name,u.password,u.email,u.birthdate,u.gender,w.idWallet,w.savings,w.rendimento,w.euro,w.IBAN from user  as u
+                    inner join wallet as w on u.idUser = w.idUser where u.idUser=?`,
         id ,function(err,res){
             if(err) {
                 console.log("error: ", err);
@@ -91,9 +177,9 @@ Users.getUser = function(id) {
 Users.updateUser = function(id,body) {
     return new Promise(function(resolve,reject){
         sql.query(`UPDATE user u, wallet w
-                    SET u.name = ? , u.gender = ?, u.birthdate = ?, u.savings = ?,
-                        w.rendimento = ? , w.euro = ?
-                    WHERE u.idUser = ? AND u.idWallet = w.idWallet;`,
+                    SET u.name = ? , u.gender = ?, u.birthdate = ?, w.savings = ?,
+                        w.rendimento = ? , w.euro = ?, w.IBAN = ?
+                    WHERE u.idUser = ? AND u.idUser = w.idUser;`,
             [body.name,body.gender,body.birthdate,body.savings,body.rendimento,body.euro,id] ,function(err,res){
             if(err) {
                 console.log("error: ", err);
@@ -104,4 +190,85 @@ Users.updateUser = function(id,body) {
             }
         }); 
     })   
+}
+
+Users.checkPassword = function(id){
+    return new Promise(function(resolve, reject) {
+        sql.query(`SELECT u.password from user as u WHERE u.idUser = ?`,[id], function (err, res) {
+                if(err) {
+                    console.log("error: ", err);
+                    reject(err);
+                }
+                else{
+                    resolve(res[0])
+                }
+        });   
+    })
+}
+
+Users.changePassword = function(id,newpassword){
+    return new Promise(function(resolve, reject) {
+    bcrypt.genSalt(salt,function(err,salt){
+        bcrypt.hash(newpassword,salt,function(err,hash){
+                sql.query(`UPDATE user u SET  u.password = ? WHERE u.idUser = ?`,[hash,id] ,function(err,res) {
+                        if(err) {
+                            console.log("error: ", err);
+                            reject(err);
+                        }
+                        else{
+                            resolve(res);
+                        }
+                    });   
+                }) 
+        })
+    })
+}
+
+Users.updatePassword = function(id,password,newpassword){
+    return new Promise(function(resolve, reject) {
+        Users.checkPassword(id,password)
+        .then(user =>{
+            bcrypt.compare(password, user.password, function (err, isMatch) {
+                if (isMatch) {
+                    Users.changePassword(id,newpassword)
+                        .then(console.log("UPDATED!"))
+                        .catch(err =>{
+                            reject(err)
+                        })
+                } else {
+                    reject(err)
+                }
+            })
+        })
+        .catch(err =>{
+            reject(err)
+        })
+
+    })
+}
+
+
+var emailRegex = /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
+
+function isEmailValid(email) {
+    if (!email)
+        return false;
+
+    if(email.length>254)
+        return false;
+
+    var valid = emailRegex.test(email);
+    if(!valid)
+        return false;
+
+    // Further checking of some things regex can't handle
+    var parts = email.split("@");
+    if(parts[0].length>64)
+        return false;
+
+    var domainParts = parts[1].split(".");
+    if(domainParts.some(function(part) { return part.length>63; }))
+        return false;
+
+    return true;
 }

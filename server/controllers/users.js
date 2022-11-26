@@ -160,8 +160,8 @@ Users.getUserbyEmail = function(email) {
 // Utilizado para o perfil do Utilizador
 Users.getUser = function(id) {
     return new Promise(function(resolve,reject){
-        sql.query(`Select user.name,user.password,email,birthdate,gender,savings,user.idWallet,rendimento,euro from user 
-                    inner join wallet on user.idWallet = wallet.idWallet where idUser=?`,
+        sql.query(`Select u.name,u.password,u.email,u.birthdate,u.gender,w.idWallet,w.savings,w.rendimento,w.euro,w.IBAN from user  as u
+                    inner join wallet as w on u.idUser = w.idUser where u.idUser=?`,
         id ,function(err,res){
             if(err) {
                 console.log("error: ", err);
@@ -177,9 +177,9 @@ Users.getUser = function(id) {
 Users.updateUser = function(id,body) {
     return new Promise(function(resolve,reject){
         sql.query(`UPDATE user u, wallet w
-                    SET u.name = ? , u.gender = ?, u.birthdate = ?, u.savings = ?,
-                        w.rendimento = ? , w.euro = ?
-                    WHERE u.idUser = ? AND u.idWallet = w.idWallet;`,
+                    SET u.name = ? , u.gender = ?, u.birthdate = ?, w.savings = ?,
+                        w.rendimento = ? , w.euro = ?, w.IBAN = ?
+                    WHERE u.idUser = ? AND u.idUser = w.idUser;`,
             [body.name,body.gender,body.birthdate,body.savings,body.rendimento,body.euro,id] ,function(err,res){
             if(err) {
                 console.log("error: ", err);

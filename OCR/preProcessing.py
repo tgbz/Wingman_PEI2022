@@ -10,11 +10,13 @@ import itertools as it
 import jiwer
 from scipy.ndimage import interpolation as inter
 import mediapipe as mp
+import rembg 
+import imutils
 
 
 def parse():
     ap = argparse.ArgumentParser()
-    ap.add_argument("-i", "--image", required=True,
+    ap.add_argument("image",
         help="path to input receipt image")
     ap.add_argument("-d", "--debug", default=False, action='store_true',
         help="whether or not we are visualizing each step of the pipeline")
@@ -222,6 +224,95 @@ def remove_bg(image,debug = False):
     if debug: show(image) 
     return image
 
+def padding(image):
+    old_image_height, old_image_width, channels = image.shape
+    print(channels)
+
+    # create new image of desired size and color (blue) for padding
+    new_image_width = old_image_width+100
+    new_image_height = old_image_height+100
+
+    color = (0,0,0,0)
+    result = np.full((new_image_height,new_image_width, channels), color, dtype=np.uint8)
+
+    # compute center offset
+    x_center = (new_image_width - old_image_width) // 2
+    y_center = (new_image_height - old_image_height) // 2
+
+    # copy image image into center of result image
+    result[y_center:y_center+old_image_height,x_center:x_center+old_image_width] = image
+
+    return result
+
+#Removes background of an image
+def remove_bg2(image,debug = True):
+    image = rembg.remove(image)
+    image = padding(image)
+
+    print('1')
+    blurred = gaussianBlur(image)
+    show(blurred)
+    print('2')
+    edged = cv2.Canny(blurred, 75, 200)
+    show(edged) 
+    print('3')
+    cnts = cv2.findContours(edged.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
+
+
+
+    print('4')
+    cnts = imutils.grab_contours(cnts)
+    print('5')
+    #cnts = sorted(cnts, key=cv2.contourArea, reverse=True)
+    print('6')
+    '''
+
+    # initialize a contour that corresponds to the receipt outline
+    receiptCnt = None
+    # loop over the contours
+    for c in cnts:
+        # approximate the contour
+        peri = cv2.arcLength(c, True)
+        approx = cv2.approxPolyDP(c, 0.02 * peri, True)
+        # if our approximated contour has four points, then we can
+        # assume we have found the outline of the receipt
+        if len(approx) == 4:
+            receiptCnt = approx
+            break
+    print('7')
+
+    output = image.copy()
+    cv2.drawContours(output, [receiptCnt], -1, (0, 255, 0), 2)
+    
+    print('8')
+    cv2.imshow("Receipt Outline", output)
+    cv2.waitKey(0)
+    '''
+    
+    image = grayscale(image)
+    mask = np.zeros_like(image) # Create mask where white is what we want, black otherwise
+    cv2.drawContours(mask, cnts, -1, 255, -1) # Draw filled contour in mask
+    show(mask) 
+    out = np.zeros_like(image) # Extract out the object and place into output image
+    out[mask == 255] = image[mask == 255]
+
+    # Now crop
+    (y, x) = np.where(mask == 255)
+    (topy, topx) = (np.min(y), np.min(x))
+    (bottomy, bottomx) = (np.max(y), np.max(x))
+    out = out[topy:bottomy+1, topx:bottomx+1]
+
+
+    # Show the output image
+    cv2.imshow('Output', out)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
+    if debug: show(out,'abcde') 
+    cv2.imwrite("lena_centered.jpg", out)
+    return out
+
 
 
 def gen_name(name):
@@ -269,15 +360,15 @@ if __name__ == "__main__":
     if debug: show(orig,'Original')
     image = orig.copy()
 
-    availableProcesses = [normalize,remove_noise,remove_shadows]
-    #availableProcesses = [remove_bg]
+    #availableProcesses = [normalize,remove_noise,remove_shadows]
+    availableProcesses = [remove_bg2,normalize]
     #availableProcesses = [binaryAdaptative,normalize,grayscale,gaussianBlur,remove_noise,scaling,brightness_contrast]
 
     arr = [availableProcesses]
     for L in range(len(availableProcesses) + 1):
         for subset in it.combinations(availableProcesses, L):
             arr.append(subset)
-    #arr = [[],[normalize,remove_shadows]]
+    arr = [[remove_bg2]]
 
     results = {}
     #pl = (normalize,scaling,remove_noise_colored,brightness_contrast)

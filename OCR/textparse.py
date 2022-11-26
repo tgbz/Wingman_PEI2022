@@ -151,8 +151,6 @@ class Receipt():
 					continue
 		return date_str
 
-	
-
 	def parse_total_pingo_doce(self):
 		for total_key in self.info['Totals']:
 			for int_accuracy in range(10, 4, -1):

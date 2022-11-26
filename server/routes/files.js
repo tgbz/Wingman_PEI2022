@@ -10,11 +10,14 @@ const upload = multer({
 }); 
 
 router.post('/avatar/', upload.single('avatarFile'), function(req, res, next) {
-    var file = req.file  
+    console.log(req.body.user)  
     console.log(req.file)
+    console.log(__dirname)
+    let file = req.file
     let oldPath = __dirname + '/../'+file.path
     let newPath = __dirname  + '/../files/avatar/'
-    let id =  req.user.user.idUser
+    let id =  req.body.user.idUser
+    console.log(id)
 
     newPath = newPath + id;
     console.log(newPath)

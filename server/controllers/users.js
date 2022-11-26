@@ -180,7 +180,7 @@ Users.updateUser = function(id,body) {
                     SET u.name = ? , u.gender = ?, u.birthdate = ?, w.savings = ?,
                         w.rendimento = ? , w.euro = ?, w.IBAN = ?
                     WHERE u.idUser = ? AND u.idUser = w.idUser;`,
-            [body.name,body.gender,body.birthdate,body.savings,body.rendimento,body.euro,id] ,function(err,res){
+            [body.name,body.gender,body.birthdate,body.savings,body.rendimento,body.euro,body.IBAN,id] ,function(err,res){
             if(err) {
                 console.log("error: ", err);
                 reject(err);

@@ -231,7 +231,10 @@ Users.updatePassword = function(id,password,newpassword){
             bcrypt.compare(password, user.password, function (err, isMatch) {
                 if (isMatch) {
                     Users.changePassword(id,newpassword)
-                        .then(console.log("UPDATED!"))
+                        .then(res => {
+                            console.log("UPDATED!")
+                            resolve(res)
+                        })
                         .catch(err =>{
                             reject(err)
                         })

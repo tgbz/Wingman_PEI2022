@@ -19,7 +19,6 @@ const CostumBackButton = ({onPress}) => {
 const styles = StyleSheet.create({
     icon:{
         alignContent: 'flex-end',
-        
     }
 })
 

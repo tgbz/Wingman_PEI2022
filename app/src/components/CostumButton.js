@@ -3,10 +3,11 @@ import { StyleSheet, Text, View, Button, TextInput , Pressable,  useWindowDimens
 import { useState } from "react";
 import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
 
-const CostumButton = ({onPress, text, type = "PRIMARY"}) => {
+const CostumButton = ({onPress, text, type = "PRIMARY", widthScale=0.85}) => {
     const {width} = useWindowDimensions();
+
     return (
-    <TouchableOpacity onPress={onPress} style={[styles.container, {width: width *0.85 }, styles[`container_${type}`]]}>
+    <TouchableOpacity onPress={onPress} style={[styles.container, {width: width *widthScale }, styles[`container_${type}`]]}>
         <Text style={[styles.text, styles[`text_${type}`]]}>{text}</Text>
     </TouchableOpacity>
 );
@@ -26,7 +27,10 @@ const styles = StyleSheet.create({
         backgroundColor:COLORS.wingDarkBlue,
     },
 
-    container_TERTIARY:{},
+    container_TERTIARY:{
+        backgroundColor:COLORS.wingDarkBlue,
+    },
+    
     text: {
         color: 'white',
         fontFamily:'SoraBold',

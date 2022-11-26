@@ -1,4 +1,4 @@
-import { View, Text, Image,TouchableOpacity, useWindowDimensions } from 'react-native'
+import { View, Text, Image, TouchableOpacity, useWindowDimensions } from 'react-native'
 import React from 'react'
 import AuthContext from '../context/AuthProvider'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -9,10 +9,21 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native'
 import { serverURL } from '../config/hosts'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { CostumBackButton, CostumButton, CostumInput, CostumTextButton } from '../components'
+import { SelectList } from 'react-native-dropdown-select-list'
 
 export default function ProfileEditScreen({ navigation }) {
-  const { height } = useWindowDimensions();
+  const { height } = useWindowDimensions()
   const [token, setToken] = useState('')
+
+  const [name, setName] = useState('')
+  const [birthdate, setBirthdate] = useState('')
+  const data_gender = [
+    { key: '0', value: 'Masculino' },
+    { key: '1', value: 'Feminino' },
+    { key: '2', value: 'Outro' },
+  ]
+  const [selected, setSelected] = React.useState('2')
 
   useEffect(() => {
     AsyncStorage.getItem('userToken')
@@ -25,8 +36,10 @@ export default function ProfileEditScreen({ navigation }) {
     console.log(serverURL + '/users/userProfile/' + token.id)
     const resp = await fetch(`${serverURL}/users/userProfile/${token.id}`)
     const data = await resp.json()
-    console.log(data)
     setData(data)
+    setSelected(data.gender)
+    setBirthdate(data.birthdate.substring(0, 10))
+    setName(data.name)
   }
   // request data from server
   useEffect(() => {
@@ -42,64 +55,98 @@ export default function ProfileEditScreen({ navigation }) {
   foto,
   profissão
    */
+  // handleFormSubmission that sends the information to the server to update the user
+  // get user data and send it to the server updating the variables that were changed
+  // if error occurs, it will show an alert
+  // if success, it will show an alert and redirect to the profile screen
+  const handleFormSubmission = async () => {
+    // get user data object that is already in the state
+    const userData = data
+    // do an object with the new data
+    //
+    const newData = {
+      name: name,
+      gender: selected,
+      birthdate: birthdate,
+    }
+    // merge the two objects
+    const updatedData = { ...userData, ...newData }
+    console.log(updatedData)
+    const resp = await fetch(`${serverURL}/users/updateProfile/${token.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedData),
+    }).then((resp) => {
+      if (resp.status === 200) {
+        alert('Dados atualizados com sucesso!')
+        navigation.navigate('Profile')
+      } else {
+        alert('Erro ao atualizar dados!')
+      }
+    })
+  }
 
   return (
     console.log(token),
     (
       <SafeAreaView style={styles.root}>
-       
-          <View style={styles.navigationBar}>
-            <Ionicons
-              name="chevron-back"
-              size={30}
-              color={COLORS.wingDarkBlue}
-              onPress={() => navigation.navigate('Home')}
-            />
-            <Text style={styles.pageTitle}>Editar Perfil</Text>
-          </View>
+        <View style={styles.navigationBar}>
+          <CostumBackButton onPress={() => navigation.goBack()} />
+          <Text style={styles.pageTitle}>Editar Perfil</Text>
+        </View>
+        
+        <View style={styles.infoContainer}>
+          {/* Name input */}
+          <Text style={styles.textTag}>Nome</Text>
+          <CostumInput placeholder={`${data.name}`} value={name} setValue={setName} widthScale={0.8}/>
 
-          <View style={{ alignSelf: 'center' }}>
-            <View style={styles.profileImage}>
-              {data.gender == 0 ? ( // man
-                <Image
-                  source={require('../../assets/images/male-avatar.png')}
-                  style={styles.image}
-                  resizeMode="center"
-                ></Image>
-              ) : (
-                <Image
-                  source={require('../../assets/images/female-avatar.png')}
-                  style={styles.image}
-                  resizeMode="center"
-                ></Image>
-              )}
-            </View>
-            {/* TO DO EDIT PICTURE*/}
-            <View style={styles.addAvatar}>
-              <MaterialCommunityIcons name="pencil-circle" size={48} color={COLORS.wingDarkBlue} />
-            </View>
-          </View>
+          {/* Gender input */}
+          {console.log('Gender selection: ' + selected)}
+          <Text style={styles.textTag}>Género</Text>
+          <SelectList
+            setSelected={(val) => {
+              val === 'Feminino'
+                ? setSelected('1')
+                : val === 'Masculino'
+                ? setSelected('0')
+                : setSelected('2')
+            }}
+            data={data_gender}
+            save="value"
+            search={false}
+            //defaultOption={{key: data.gender, value: data_gender.find(x => x.key == data.gender).value}}
+            fontFamily="SoraLight"
+            boxStyles={styles.selectList}
+            inputStyles={[styles.text, { color: 'black' }]}
+            dropdownStyles={styles.dropdownStyles}
+          />
 
-          <View style={styles.nameContainer}>
-            <Text style={{ fontFamily: 'SoraLight', fontSize: SIZES.extraLarge }}>
-              {data ? data.name : 'Loading...'}
-            </Text>
-          </View>
+          {/* Birthdate input */}
+          <Text style={styles.textTag}>Data de Nascimento</Text>
+          <CostumInput
+            placeholder={'aaaa-mm-dd'}
+            value={birthdate}
+            setValue={setBirthdate}
+            iconNameEntry="date-range"
+            widthScale={0.8}
+          />
+        </View>
 
-          <View style={styles.infoContainer}>
-            <View style={styles.infoLine}>
-              <View style={styles.col1}><Text style={styles.textTag}>Password</Text></View>
-              <View style={styles.col2}><Text style={styles.textInfo}>{data ? "pass desincriptada" : 'Loading...'}</Text></View>
-            </View>
-          </View>
-          
-          <View style={styles.containerBTN}>
+        <View style={styles.containerBTN}>
+          {/* 
             <TouchableOpacity onPress={() => navigation.navigate("ProfileEdit")} style={[styles.button,{height: height*0.05}]}>
                 <Text style={styles.buttonText}>Guardar</Text>
             </TouchableOpacity>
+          */}
+          <CostumButton
+            onPress={() => handleFormSubmission()}
+            text="Guardar Alterações"
+            type = "TERTIARY"
+            widthScale={0.8}
+          ></CostumButton>
         </View>
-
-        
       </SafeAreaView>
     )
   )
@@ -115,18 +162,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 10,
     marginHorizontal: 10,
-    marginBottom:10
+    marginBottom: 10,
   },
   pageTitle: {
     fontFamily: 'SoraMedium',
     fontSize: SIZES.medium,
     color: COLORS.wingDarkBlue,
-    // center the text 
+    // center the text
     alignSelf: 'center',
     // center the text horizontally
     flex: 1,
     textAlign: 'center',
-    right: 20,  
+    right: 20,
   },
   image: {
     flex: 1,
@@ -158,7 +205,7 @@ const styles = StyleSheet.create({
   infoContainer: {
     marginHorizontal: 40,
     marginTop: 40,
-    marginBottom:40
+    marginBottom: 40,
   },
   textTag: {
     fontFamily: 'SoraBold',
@@ -170,44 +217,51 @@ const styles = StyleSheet.create({
     fontFamily: 'SoraLight',
     fontSize: SIZES.medium,
   },
-  infoLine: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'flex-start' // if you want to fill rows left to right
-  },
-  col1: {
-    width: '40%',
-    marginBottom:20
-  },
-  col2: {
-    width: '60%',
-    marginBottom:20
-  },
   button: {
     backgroundColor: COLORS.wingDarkBlue,
     borderRadius: SIZES.small,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: SIZES.base,
-    width:"40%", 
-    height:"80%"
+    width: '40%',
+    height: '80%',
   },
-  containerBTN:{
+  containerBTN: {
     // Put the buttons at the bottom of the screen
-   //position: 'absolute',
-   //alignItems: "center",
-   //justifyContent: "center",
-   //bottom: "10%",
-   //width: "100%",
-   //  on the vertical center
+    //position: 'absolute',
+    //alignItems: "center",
+    //justifyContent: "center",
+    //bottom: "10%",
+    //width: "100%",
+    //  on the vertical center
     flex: 1,
     //justifyContent: 'center',
     alignItems: 'flex-start',
-    marginHorizontal: 40
+    marginHorizontal: 40,
   },
   buttonText: {
-    color: "white",
+    color: 'white',
     fontSize: SIZES.small,
-    fontFamily: "SoraBold"
-  }
+    fontFamily: 'SoraBold',
+  },
+  selectList: {
+    backgroundColor: 'white',
+    borderColor: COLORS.wingblue,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 15,
+    marginVertical: 12,
+    borderWidth: 1,
+  },
+  dropdownStyles: {
+    maxHeight: 120,
+    backgroundColor: 'white',
+    borderColor: COLORS.wingblue,
+  },
+  text: {
+    color: COLORS.wingDarkBlue,
+    fontFamily: 'SoraLight',
+    fontSize: 15,
+    alignSelf: 'flex-start',
+  },
 })

@@ -1,5 +1,5 @@
 import * as React from 'react';
-//import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -9,18 +9,21 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from "../screens/HomeScreen.js"
 import ProfileScreen from "../screens/ProfileScreen.js"
 import ProfileEditScreen from "../screens/ProfileEditScreen.js"
+import PassEditScreen from '../screens/PassEditScreen.js';
 
 // Screens Names
 
-const homeName = "Home";
+const homeName = "HomeTab";
 const profileName = "Profile";
 const profileEditName = "ProfileEdit";
 
+const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-export default function MainContainer() {
-  return (
 
+
+function MainContainer() {
+  return (
       <Tab.Navigator
         initialRouteName={homeName}
         screenOptions={({route}) => ({
@@ -40,13 +43,27 @@ export default function MainContainer() {
           }
         })}>
 
-        <Tab.Screen name={homeName} component={HomeScreen}/>
-        <Tab.Screen name={profileName} component={ProfileScreen}/>
-        <Tab.Screen name={profileEditName} component={ProfileEditScreen}/>
+        <Tab.Screen name={homeName} component={HomeScreen} />
+        <Tab.Screen name={profileName} component={ProfileScreen} options={{headerShown: false}}/>
+       {/* <Tab.Screen name={profileEditName} component={ProfileEditScreen} options={{headerShown: false}}/>
+        <Tab.Screen name={" "} component={PassEditScreen} options={{headerShown: false}}/>*/}
       </Tab.Navigator>
-
   );
 }
+
+// Nest the tab navigator inside the Home Stack Screen
+// This way the bottom tab navigator will not be shown on the Profile Edit and Pass Edit Screens
+export default function HomeStack() {
+  return (
+      <Stack.Navigator >
+        <Stack.Screen name="Home" component={MainContainer} options={{headerShown: false}}/>
+        <Stack.Screen name="ProfileEdit" component={ProfileEditScreen} options={{headerShown: false}}  />
+        <Stack.Screen name="PassEdit" component={PassEditScreen} options={{headerShown: false}}  />
+      </Stack.Navigator>
+  );
+};
+
+
 
 /*
 import { createNativeStackNavigator } from '@react-navigation/native-stack';

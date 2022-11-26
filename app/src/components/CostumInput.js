@@ -6,11 +6,11 @@ import { Ionicons, MaterialCommunityIcons, MaterialIcons, Entypo } from '@expo/v
 
 
 
-const CostumInput = ({value, setValue, placeholder, secureTextEntry, iconNameEntry=''}) => {
+const CostumInput = ({value, setValue, placeholder, secureTextEntry, iconNameEntry='', widthScale=0.85}) => {
     const {width} = useWindowDimensions();
     const [passwordVisible, setPasswordVisible] = useState(secureTextEntry);
     return (
-    <View style={[styles.container,  {width: width *0.85 }]}>
+    <View style={[styles.container,  {width: width * widthScale }]}>
     {secureTextEntry ? <MaterialCommunityIcons name={iconNameEntry} style={styles.icon} size={18}></MaterialCommunityIcons>: 
         iconNameEntry!='' ?  <MaterialIcons name={iconNameEntry} style={styles.icon} size={18}></MaterialIcons>: 
         console.log("") }

@@ -9,4 +9,12 @@ router.get("/userCategory/:id", function (req, res){
     .catch(erro => res.status(500).jsonp(erro))
   }) 
 
+router.put("/changePlafond/:idUser", function (req, res){
+  console.log(req.body)
+  Categories.changePlafond(req.params.idUser,req.body.idCategory,req.body.plafond)
+  .then( dados => res.jsonp(dados))
+  .catch(erro => res.status(500).jsonp(erro))
+})
+
+
 module.exports = router;

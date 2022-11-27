@@ -40,10 +40,11 @@ export default function ProfileEditScreen({ navigation }) {
     setSelected(data.gender)
     setBirthdate(data.birthdate.substring(0, 10))
     setName(data.name)
+    console.log("User fetch data: "+JSON.stringify(data))
   }
   // request data from server
   useEffect(() => {
-    console.log('Entered useEffect' + token.id)
+    console.log('Request data ' + token.id)
     if (token.id) {
       fetchData(token)
     }
@@ -61,7 +62,7 @@ export default function ProfileEditScreen({ navigation }) {
   // if success, it will show an alert and redirect to the profile screen
   const handleFormSubmission = async () => {
     // get user data object that is already in the state
-    const userData = data
+    //const userData = data
     // do an object with the new data
     //
     const newData = {
@@ -70,14 +71,14 @@ export default function ProfileEditScreen({ navigation }) {
       birthdate: birthdate,
     }
     // merge the two objects
-    const updatedData = { ...userData, ...newData }
-    console.log(updatedData)
+    //const updatedData = { ...userData, ...newData }
+    //console.log(updatedData)
     const resp = await fetch(`${serverURL}/users/updateProfile/${token.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(updatedData),
+      body: JSON.stringify(newData),
     }).then((resp) => {
       if (resp.status === 200) {
         alert('Dados atualizados com sucesso!')
@@ -89,7 +90,7 @@ export default function ProfileEditScreen({ navigation }) {
   }
 
   return (
-    console.log(token),
+    console.log("--------------\nToken data: "+ JSON.stringify(token) + "\n--------------"),
     (
       <SafeAreaView style={styles.root}>
         <View style={styles.navigationBar}>

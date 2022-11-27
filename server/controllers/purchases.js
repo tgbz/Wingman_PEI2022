@@ -6,7 +6,10 @@ var Purchases = module.exports;
 
 Purchases.getPurchase = function(id) {
     return new Promise(function(resolve,reject){
-        sql.query(`SELECT * FROM purchase where idUser=?`,
+        sql.query(`SELECT * 
+                    FROM purchase 
+                    where purchase.idUser=?
+                    ORDER BY purchase.date desc`,
         id ,function(err,res){
             if(err) {
                 console.log("error: ", err);

@@ -1,7 +1,7 @@
 var sql = require('../config/database.js');
 var User = require('../models/user.js');
 var Users = module.exports;
-const salt = 14;
+const salt = 5;
 var bcrypt = require('bcryptjs');
 const connection = require('../config/database.js');
 
@@ -119,7 +119,7 @@ Users.register = function (newUser) {
 Users.getOne = function(email,conn) {
     let user = null
     return new Promise(function(resolve,reject){
-        conn.query("Select * from user where email= ?",email ,function(err,res){
+        conn.query("Select idUser from user where email= ?",email ,function(err,res){
             if(err) {
                 console.log("error: ", err);
                 reject(err);
@@ -160,8 +160,7 @@ Users.getUserbyEmail = function(email) {
 // Utilizado para o perfil do Utilizador
 Users.getUser = function(id) {
     return new Promise(function(resolve,reject){
-        sql.query(`Select u.name,u.password,u.email,u.birthdate,u.gender,w.idWallet,w.savings,w.rendimento,w.euro,w.IBAN from user  as u
-                    inner join wallet as w on u.idUser = w.idUser where u.idUser=?`,
+        sql.query(`Select u.name,u.email,u.birthdate,u.gender from user  as u where u.idUser=?`,
         id ,function(err,res){
             if(err) {
                 console.log("error: ", err);
@@ -176,11 +175,10 @@ Users.getUser = function(id) {
 
 Users.updateUser = function(id,body) {
     return new Promise(function(resolve,reject){
-        sql.query(`UPDATE user u, wallet w
-                    SET u.name = ? , u.gender = ?, u.birthdate = ?, w.savings = ?,
-                        w.rendimento = ? , w.euro = ?, w.IBAN = ?
-                    WHERE u.idUser = ? AND u.idUser = w.idUser;`,
-            [body.name,body.gender,body.birthdate,body.savings,body.rendimento,body.euro,body.IBAN,id] ,function(err,res){
+        sql.query(`UPDATE user u
+                    SET u.name = ? , u.gender = ?, u.birthdate = ?
+                    WHERE u.idUser = ?`,
+            [body.name,body.gender,body.birthdate,id] ,function(err,res){
             if(err) {
                 console.log("error: ", err);
                 reject(err);
@@ -192,7 +190,7 @@ Users.updateUser = function(id,body) {
     })   
 }
 
-Users.checkPassword = function(id){
+Users.getPassword = function(id){
     return new Promise(function(resolve, reject) {
         sql.query(`SELECT u.password from user as u WHERE u.idUser = ?`,[id], function (err, res) {
                 if(err) {
@@ -226,14 +224,15 @@ Users.changePassword = function(id,newpassword){
 
 Users.updatePassword = function(id,password,newpassword){
     return new Promise(function(resolve, reject) {
-        Users.checkPassword(id,password)
+        Users.getPassword(id,password)
         .then(user =>{
             bcrypt.compare(password, user.password, function (err, isMatch) {
                 if (isMatch) {
                     Users.changePassword(id,newpassword)
-                        .then(res => {
-                            console.log("UPDATED!")
+                        .then(res =>{
+                            console.log(res)
                             resolve(res)
+                            console.log("UPDATED!")
                         })
                         .catch(err =>{
                             reject(err)

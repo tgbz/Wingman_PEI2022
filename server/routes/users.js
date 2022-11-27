@@ -24,7 +24,8 @@ router.post("/login", (req, res, next) => {
           id: user.idUser,
           name: user.name,
           email: user.email,
-          level: user.level,
+          birthDate: user.birthDate,
+          gender: user.gender
         });
       });
     }

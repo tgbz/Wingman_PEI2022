@@ -9,6 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native'
 import { serverURL } from '../config/hosts'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
+import {CostumBackButton, CostumButton} from '../components'
 
 export default function ProfileScreen({ navigation }) {
   const { height } = useWindowDimensions();
@@ -65,12 +66,7 @@ export default function ProfileScreen({ navigation }) {
       <SafeAreaView style={styles.root}>
        
           <View style={styles.navigationBar}>
-            <Ionicons
-              name="chevron-back"
-              size={30}
-              color={COLORS.wingDarkBlue}
-              onPress={() => navigation.navigate('Home')}
-            />
+            <CostumBackButton  onPress={() => navigation.goBack()} />
             <Text style={styles.pageTitle}>Meu Perfil</Text>
           </View>
 
@@ -119,9 +115,13 @@ export default function ProfileScreen({ navigation }) {
           </View>
           
           <View style={styles.containerBTN}>
+            {/*
             <TouchableOpacity onPress={() => navigation.navigate("ProfileEdit")} style={[styles.button,{height: height*0.05}]}>
                 <Text style={styles.buttonText}>Editar Perfil</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> 
+            */}
+            <CostumButton onPress={() => navigation.navigate("ProfileEdit")} text="Editar Perfil" type = "TERTIARY" widthScale={0.8}></CostumButton>
+            <CostumButton onPress={() => navigation.navigate("PassEdit")} text="Alterar Password" type = "TERTIARY" widthScale={0.8}></CostumButton>
         </View>
 
         
@@ -228,8 +228,9 @@ const styles = StyleSheet.create({
    //  on the vertical center
     flex: 1,
     //justifyContent: 'center',
-    alignItems: 'flex-start',
-    marginHorizontal: 40
+    alignItems: 'center',
+    marginHorizontal: 30,
+
   },
   buttonText: {
     color: "white",

@@ -1,0 +1,30 @@
+{
+    "sourceFile": "api/routes/index.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1669630003453,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1669631581303,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,11 @@\n var express = require(\"express\");\r\n \r\n-var statementsController = \"../controllers/statementsControllers\";\r\n+var StatementsController = \"../controllers/statementsControllers\";\r\n var usersController = \"../controllers/usersControllers\";\r\n \r\n module.exports = function (app) {\r\n   app\r\n     .route(\"/statements/:iban\")\r\n-    .get(statements.getUpdatedStatement)\r\n-    .post(statements.createStatement);\r\n+    .get(StatementsController.getUpdatedStatement)\r\n+    .post(StatementsController.createStatement);\r\n };\r\n"
+                },
+                {
+                    "date": 1669631614757,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,7 +5,7 @@\n \r\n module.exports = function (app) {\r\n   app\r\n     .route(\"/statements/:iban\")\r\n-    .get(StatementsController.getUpdatedStatement)\r\n-    .post(StatementsController.createStatement);\r\n+    .get(StatementsController.getUpdatedStatement(iban));\r\n+    .post(StatementsController.createStatement(iban));\r\n };\r\n"
+                },
+                {
+                    "date": 1669631710168,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,9 @@\n var express = require(\"express\");\r\n+var router = express.Router();\r\n \r\n-var StatementsController = \"../controllers/statementsControllers\";\r\n-var usersController = \"../controllers/usersControllers\";\r\n+/* GET home page. */\r\n+router.get(\"/\", function (req, res, next) {\r\n+  res.render(\"index\", { title: \"Teste\" });\r\n+});\r\n \r\n-module.exports = function (app) {\r\n-  app\r\n-    .route(\"/statements/:iban\")\r\n-    .get(StatementsController.getUpdatedStatement(iban));\r\n-    .post(StatementsController.createStatement(iban));\r\n-};\r\n+module.exports = router;\r\n"
+                }
+            ],
+            "date": 1669630003453,
+            "name": "Commit-0",
+            "content": "var express = require(\"express\");\r\n\r\nvar statementsController = \"../controllers/statementsControllers\";\r\nvar usersController = \"../controllers/usersControllers\";\r\n\r\nmodule.exports = function (app) {\r\n  app\r\n    .route(\"/statements/:iban\")\r\n    .get(statements.getUpdatedStatement)\r\n    .post(statements.createStatement);\r\n};\r\n"
+        }
+    ]
+}

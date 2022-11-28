@@ -1,0 +1,18 @@
+{
+    "sourceFile": "app/src/config/hosts.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1669627957805,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1669627957805,
+            "name": "Commit-0",
+            "content": "import { Platform } from \"react-native\";\r\n\r\nlet serverURL = \"\";\r\n\r\nif (Platform.OS == \"android\") {\r\n  serverURL = \"http://localhost:3000\";\r\n} else if (Platform.OS == \"ios\") {\r\n  serverURL = \"https://a8c7-2001-8a0-f3f5-b100-ec93-58db-eb08-c625.ngrok.io\";\r\n} else {\r\n  serverURL = \"http://localhost:3000\";\r\n}\r\n\r\nexport { serverURL };\r\n"
+        }
+    ]
+}

@@ -1,0 +1,62 @@
+{
+    "sourceFile": "server.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 11,
+            "patches": [
+                {
+                    "date": 1669629893462,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1669629936907,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n \r\n app.use(bodyParser.urlencoded({ extended: true }));\r\n app.use(bodyParser.json());\r\n \r\n-var routes = require(\"./routes/index\");\r\n+var routes = require(\"/routes/index\");\r\n \r\n var db = require(\"./config/database\");\r\n \r\n var mongoose = require(\"mongoose\");\r\n"
+                },
+                {
+                    "date": 1669629956094,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n \r\n app.use(bodyParser.urlencoded({ extended: true }));\r\n app.use(bodyParser.json());\r\n \r\n-var routes = require(\"/routes/index\");\r\n+var routes = require(\"./api/routes/index\");\r\n \r\n var db = require(\"./config/database\");\r\n \r\n var mongoose = require(\"mongoose\");\r\n"
+                },
+                {
+                    "date": 1669629966500,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n app.use(bodyParser.json());\r\n \r\n var routes = require(\"./api/routes/index\");\r\n \r\n-var db = require(\"./config/database\");\r\n+var db = require(\"./api/config/database\");\r\n \r\n var mongoose = require(\"mongoose\");\r\n mongoose.Promise = global.Promise;\r\n \r\n"
+                },
+                {
+                    "date": 1669629979305,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n var mongoose = require(\"mongoose\");\r\n mongoose.Promise = global.Promise;\r\n \r\n mongoose\r\n-  .connect(dataBases.mongoDB, {\r\n+  .connect(db.mongoDB, {\r\n     useNewUrlParser: true,\r\n     useUnifiedTopology: true,\r\n   })\r\n   .then(async () => {\r\n"
+                },
+                {
+                    "date": 1669632313145,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,10 @@\n \r\n app.use(bodyParser.urlencoded({ extended: true }));\r\n app.use(bodyParser.json());\r\n \r\n-var routes = require(\"./api/routes/index\");\r\n+app.use(\"/\", require(\"./routes/index\"));\r\n+app.use(\"/statements\", require(\"./routes/statements\"));\r\n \r\n var db = require(\"./api/config/database\");\r\n \r\n var mongoose = require(\"mongoose\");\r\n"
+                },
+                {
+                    "date": 1669632326215,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,10 +13,10 @@\n \r\n app.use(bodyParser.urlencoded({ extended: true }));\r\n app.use(bodyParser.json());\r\n \r\n-app.use(\"/\", require(\"./routes/index\"));\r\n-app.use(\"/statements\", require(\"./routes/statements\"));\r\n+app.use(\"/\", require(\"./api/routes/index\"));\r\n+app.use(\"/statements\", require(\"./api/routes/statements\"));\r\n \r\n var db = require(\"./api/config/database\");\r\n \r\n var mongoose = require(\"mongoose\");\r\n"
+                },
+                {
+                    "date": 1669632339894,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,10 +46,8 @@\n     console.error(\"MongoDB: não foi possível aceder: \" + err);\r\n     process.exit(1);\r\n   });\r\n \r\n-routes(app);\r\n-\r\n app.use(function (err, req, res, next) {\r\n   // set locals, only providing error in development\r\n   res.locals.message = err.message;\r\n   res.locals.error = req.app.get(\"env\") === \"development\" ? err : {};\r\n"
+                },
+                {
+                    "date": 1669632523283,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,8 @@\n \r\n mongoose\r\n   .connect(db.mongoDB, {\r\n     useNewUrlParser: true,\r\n-    useUnifiedTopology: true,\r\n   })\r\n   .then(async () => {\r\n     var Mstate = mongoose.connection.readyState;\r\n     if (Mstate == 1) {\r\n"
+                },
+                {
+                    "date": 1669632593957,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,8 +24,9 @@\n \r\n mongoose\r\n   .connect(db.mongoDB, {\r\n     useNewUrlParser: true,\r\n+    useUnifiedTopology: true,\r\n   })\r\n   .then(async () => {\r\n     var Mstate = mongoose.connection.readyState;\r\n     if (Mstate == 1) {\r\n"
+                },
+                {
+                    "date": 1669632622913,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,8 +27,9 @@\n     useNewUrlParser: true,\r\n     useUnifiedTopology: true,\r\n   })\r\n   .then(async () => {\r\n+    console.log(\"TRYING TO CONNECT TO MONGODB\");\r\n     var Mstate = mongoose.connection.readyState;\r\n     if (Mstate == 1) {\r\n       mongoose.connection.on(\r\n         \"error\",\r\n"
+                },
+                {
+                    "date": 1669632926364,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,8 @@\n         console.error.bind(console, \"MongoDB: erro na conexão: \")\r\n       );\r\n       console.log(\"MongoDB: pronto. Status: \" + Mstate);\r\n       //avisa que o servidor está pronto a receber pedidos\r\n-      emit();\r\n     } else {\r\n       console.error(\"MongoDB: não foi possível aceder.\");\r\n       process.exit(1);\r\n     }\r\n"
+                }
+            ],
+            "date": 1669629893462,
+            "name": "Commit-0",
+            "content": "var express = require(\"express\");\r\nvar app = express();\r\nport = process.env.PORT || 3335;\r\n\r\nvar logger = require(\"morgan\");\r\n\r\nvar bodyParser = require(\"body-parser\");\r\n\r\napp.listen(port);\r\nconsole.log(\"Mock Bank API server started on: \" + port);\r\n\r\napp.use(logger(\"dev\"));\r\n\r\napp.use(bodyParser.urlencoded({ extended: true }));\r\napp.use(bodyParser.json());\r\n\r\nvar routes = require(\"./routes/index\");\r\n\r\nvar db = require(\"./config/database\");\r\n\r\nvar mongoose = require(\"mongoose\");\r\nmongoose.Promise = global.Promise;\r\n\r\nmongoose\r\n  .connect(dataBases.mongoDB, {\r\n    useNewUrlParser: true,\r\n    useUnifiedTopology: true,\r\n  })\r\n  .then(async () => {\r\n    var Mstate = mongoose.connection.readyState;\r\n    if (Mstate == 1) {\r\n      mongoose.connection.on(\r\n        \"error\",\r\n        console.error.bind(console, \"MongoDB: erro na conexão: \")\r\n      );\r\n      console.log(\"MongoDB: pronto. Status: \" + Mstate);\r\n      //avisa que o servidor está pronto a receber pedidos\r\n      emit();\r\n    } else {\r\n      console.error(\"MongoDB: não foi possível aceder.\");\r\n      process.exit(1);\r\n    }\r\n  })\r\n  .catch((err) => {\r\n    console.error(\"MongoDB: não foi possível aceder: \" + err);\r\n    process.exit(1);\r\n  });\r\n\r\nroutes(app);\r\n\r\napp.use(function (err, req, res, next) {\r\n  // set locals, only providing error in development\r\n  res.locals.message = err.message;\r\n  res.locals.error = req.app.get(\"env\") === \"development\" ? err : {};\r\n  res.status(err.status || 500).send(`${err.message}`);\r\n});\r\n\r\nmodule.exports = app;\r\n"
+        }
+    ]
+}

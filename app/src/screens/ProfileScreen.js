@@ -17,14 +17,15 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { CostumBackButton, CostumButton } from '../components'
 import * as ImagePicker from 'expo-image-picker'
 
-const createFormData = (photo, user) => {
-  console.log("Create form data: "+JSON.stringify(photo) + " " + JSON.stringify(user))
+const createFormData = (pickedImage, user) => {
+  console.log("Create form data: "+JSON.stringify(pickedImage) + " " + JSON.stringify(user))
   const data = new FormData()
-  photo.path = Platform.OS === 'ios' ? photo.uri.replace('file://', '') : photo.uri
-  photo.name = photo.fileName
-  data.append('avatarFile', photo)
+  console.log("plataforma: "+Platform.OS)
+  pickedImage.path = Platform.OS === 'ios' ? pickedImage.uri.replace('file://', '') : pickedImage.uri
+  pickedImage.name = pickedImage.fileName
+  data.append('avatarFile', pickedImage)
   data.append('user', user)
-   console.log("\nDATA: "+JSON.stringify(data))
+  console.log("\nDATA FORM: "+JSON.stringify(data))
   /*
   Object.keys(body).forEach((key) => {
     console.log("Create form data: "+key + " " + body[key])
@@ -85,6 +86,7 @@ export default function ProfileScreen({ navigation }) {
   const [photo, setPhoto] = React.useState(null)
   const [hasGalleryPermission, setHasGalleryPermission] = React.useState(null)
   const [toupload,setToUpload]  = React.useState(false)
+  const [pickedImage, setPickedImage] = React.useState(null)
   // use effect to get permission to access gallery
   React.useEffect(() => {
     ;(async () => {
@@ -100,11 +102,12 @@ export default function ProfileScreen({ navigation }) {
       aspect: [4, 3],
       quality: 1,
     })
-    console.log("result handleChoosePhoto: "+JSON.stringify(result))
+    console.log("Picked Image: "+JSON.stringify(result))
     if (!result.cancelled) {
       //handleUploadPhoto()
       //setToUpload(true)
-      setPhoto(result)
+      setPhoto(result.uri)
+      setPickedImage(result)
     }
   }
 
@@ -113,10 +116,10 @@ export default function ProfileScreen({ navigation }) {
   }
 
   const handleUploadPhoto = () => {
-    console.log("handleUploadPhoto "+ JSON.stringify(photo))
+    console.log("handleUploadPhoto "+ JSON.stringify(pickedImage))
     fetch(`${serverURL}/files/avatar/`, {
       method: 'POST',
-      body: createFormData(photo, token.id),
+      body: createFormData(pickedImage, token.id),
     })
       .then((response) => {
         response.json()
@@ -164,7 +167,8 @@ export default function ProfileScreen({ navigation }) {
           <CostumBackButton onPress={() => navigation.goBack()} />
           <Text style={styles.pageTitle}>Meu Perfil</Text>
         </View>
-        {photo && (
+        {console.log('FOTO FRONT: ' + JSON.stringify(pickedImage))}
+        {pickedImage && (
             <>
               <Button title="Upload Photo" onPress={() => handleUploadPhoto()} /> 
             </>
@@ -190,6 +194,7 @@ export default function ProfileScreen({ navigation }) {
         <View style={{ alignSelf: 'center' }}>
           <View style={styles.profileImage}>
             {photo ? (
+              console.log('I have photo!! ' + JSON.stringify(photo)),
               <Image source={{ uri: photo }} style={styles.profileImage} />
             ) : data.gender == 0 ? ( // man
               <Image

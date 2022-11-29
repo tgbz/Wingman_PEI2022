@@ -39,6 +39,7 @@ export default function ProfileScreen({ navigation }) {
   const { height } = useWindowDimensions()
   const [token, setToken] = useState('')
   const [initData, setInitData] = useState(false)
+
   useEffect(() => {
     AsyncStorage.getItem('userToken')
       .then((userToken) => setToken(JSON.parse(userToken)))
@@ -52,15 +53,16 @@ export default function ProfileScreen({ navigation }) {
     const data = await resp.json()
     console.log('User fetch data: ' + JSON.stringify(data))
     setData(data)
-
-    const resp_img = await fetch(`${serverURL}/files/avatar/${token.id}`)
-    const img = resp_img.url
-    console.log('User fetch img: ' + JSON.stringify(img))
-    setPhoto(img)
+    // console log time at the moment of the fetch
+    
+    const img = await fetch(`${serverURL}/files/avatar/${token.id}`)
+    console.log('Time: ' + new Date().toLocaleTimeString())
+    console.log('User fetch img: ' + JSON.stringify(img.url))
+    setPhoto(img.url)    
   }
   // request data from server
   useEffect(() => {
-    console.log('Entered useEffect' + token.id)
+    console.log('Entered useEffect: ' + JSON.stringify(token) +'\n')
     if (token.id) {
       fetchData(token)
     }
@@ -85,7 +87,6 @@ export default function ProfileScreen({ navigation }) {
 
   const [photo, setPhoto] = React.useState(null)
   const [hasGalleryPermission, setHasGalleryPermission] = React.useState(null)
-  const [toupload,setToUpload]  = React.useState(false)
   const [pickedImage, setPickedImage] = React.useState(null)
   // use effect to get permission to access gallery
   React.useEffect(() => {
@@ -132,6 +133,14 @@ export default function ProfileScreen({ navigation }) {
       })
   }
 
+  //  every time there is a picked image, upload it to the server
+  React.useEffect(() => {
+    console.log("useEffect image picked")
+    if (pickedImage) {
+      handleUploadPhoto()
+    }
+  }, [pickedImage])
+
   /* useEffect photo
   useEffect(() => {
     if (photo!=null){
@@ -152,6 +161,12 @@ export default function ProfileScreen({ navigation }) {
     console.log('Init data: ' + initData)
   }, [initData])*/
 
+  // refresh data
+  const refreshData = () => {
+    console.log('Refresh data')
+    fetchData(token)
+  }
+
   return (
     //console.log("--------------\nToken data: "+ JSON.stringify(token) + "\n--------------"),
     // if dataInit is false, show loading
@@ -161,35 +176,10 @@ export default function ProfileScreen({ navigation }) {
    //   </View>
     //) : (
       <SafeAreaView style={styles.root}>
-        {/*<Image source={{uri: 'https://reactjs.org/logo-og.png'}}
-       style={{width: 400, height: 400}} />*/}
         <View style={styles.navigationBar}>
           <CostumBackButton onPress={() => navigation.goBack()} />
           <Text style={styles.pageTitle}>Meu Perfil</Text>
         </View>
-        {console.log('FOTO FRONT: ' + JSON.stringify(pickedImage))}
-        {pickedImage && (
-            <>
-              <Button title="Upload Photo" onPress={() => handleUploadPhoto()} /> 
-            </>
-          )}
-
-        {/*
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          
-          <Button title="Choose Photo" onPress={() => handleChoosePhoto()} />
-          {photo && (
-            <>
-              {console.log(JSON.stringify(photo))}
-              
-             
-              <Image source={{ uri: photo.uri }} style={styles.profileImage} />
-               <Image source={{ uri: photo.uri }} style={{ width: 300, height: 300 }} /> 
-              <Button title="Upload Photo" onPress={() => handleUploadPhoto()} /> 
-            </>
-          )}
-        </View>
- */}
 
         <View style={{ alignSelf: 'center' }}>
           <View style={styles.profileImage}>
@@ -210,7 +200,6 @@ export default function ProfileScreen({ navigation }) {
               ></Image>
             )}
           </View>
-          {/* TO DO EDIT PICTURE*/}
           <View style={styles.addAvatar}>
             <MaterialCommunityIcons
               name="pencil-circle"
@@ -264,11 +253,6 @@ export default function ProfileScreen({ navigation }) {
         </View>
 
         <View style={styles.containerBTN}>
-          {/*
-            <TouchableOpacity onPress={() => navigation.navigate("ProfileEdit")} style={[styles.button,{height: height*0.05}]}>
-                <Text style={styles.buttonText}>Editar Perfil</Text>
-            </TouchableOpacity> 
-            */}
           <CostumButton
             onPress={() => navigation.navigate('ProfileEdit')}
             text="Editar Perfil"

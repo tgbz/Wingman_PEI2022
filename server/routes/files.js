@@ -10,19 +10,22 @@ const upload = multer({
 }); 
 
 router.post('/avatar/', upload.single('avatarFile'), function(req, res, next) {
-    var file = req.file  
+    console.log("hey")
     console.log(req.file)
+    console.log(req.body)
+    let file = req.file
     let oldPath = __dirname + '/../'+file.path
     let newPath = __dirname  + '/../files/avatar/'
-    let id =  req.user.user.idUser
+    let id =  req.body.user
+    console.log(id)
 
-    newPath = newPath + id;
+    newPath = newPath + id+'.'+file.mimetype.split('/')[1];
     console.log(newPath)
     console.log(oldPath)
 
-    if (!fs.existsSync(newPath)){
-      fs.mkdirSync(newPath);
-  }
+    //if (!fs.existsSync(newPath)){
+    //  fs.mkdirSync(newPath);
+    //}
     
     fs.copyFile(oldPath, newPath, function(err){
         if(err){ console.log("FSSSS")}
@@ -34,8 +37,9 @@ router.post('/avatar/', upload.single('avatarFile'), function(req, res, next) {
 });
 
 router.get('/avatar/:id', function(req, res, next) {
-        res.sendFile(path.resolve(__dirname  + '/../files/avatar/'+req.params.id));
- 
+  console.log(__dirname  + '/../files/avatar/'+req.params.id+'.jpeg')
+  res.sendFile(path.resolve(__dirname  + '/../files/avatar/'+req.params.id+'.jpeg')); 
+  // aqui não é só id -> id + extensão
 });
 
 module.exports = router;

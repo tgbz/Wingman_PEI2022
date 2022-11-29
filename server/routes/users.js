@@ -24,7 +24,8 @@ router.post("/login", (req, res, next) => {
           id: user.idUser,
           name: user.name,
           email: user.email,
-          level: user.level,
+          birthDate: user.birthDate,
+          gender: user.gender
         });
       });
     }
@@ -62,6 +63,7 @@ router.get("/userProfile/:id", function (req, res){
 })
 
 router.put("/updateProfile/:id", function (req, res){
+  console.log(req.params.id,req.body)
   Users.updateUser(req.params.id,req.body)
   .then(dados => res.jsonp(dados))
   .catch(erro => res.status(500).jsonp(erro))

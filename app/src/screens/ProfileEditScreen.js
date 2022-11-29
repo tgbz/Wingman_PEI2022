@@ -50,12 +50,9 @@ export default function ProfileEditScreen({ navigation }) {
     }
   }, [token])
 
-  /*
-  Campos a editar:
-  pass,
-  foto,
-  profissão
-   */
+
+
+
   // handleFormSubmission that sends the information to the server to update the user
   // get user data and send it to the server updating the variables that were changed
   // if error occurs, it will show an alert
@@ -82,7 +79,7 @@ export default function ProfileEditScreen({ navigation }) {
     }).then((resp) => {
       if (resp.status === 200) {
         alert('Dados atualizados com sucesso!')
-        navigation.navigate('Profile')
+        navigation.navigate('Profile',{refresh: true})
       } else {
         alert('Erro ao atualizar dados!')
       }
@@ -93,10 +90,12 @@ export default function ProfileEditScreen({ navigation }) {
     console.log("--------------\nToken data: "+ JSON.stringify(token) + "\n--------------"),
     (
       <SafeAreaView style={styles.root}>
+        {/* Header 
         <View style={styles.navigationBar}>
           <CostumBackButton onPress={() => navigation.goBack()} />
           <Text style={styles.pageTitle}>Editar Perfil</Text>
         </View>
+        */}
         
         <View style={styles.infoContainer}>
           {/* Name input */}

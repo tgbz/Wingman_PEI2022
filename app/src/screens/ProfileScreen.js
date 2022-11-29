@@ -16,7 +16,7 @@ import { serverURL } from '../config/hosts'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { CostumBackButton, CostumButton } from '../components'
 import * as ImagePicker from 'expo-image-picker'
-
+import {useRoute} from '@react-navigation/native'
 const createFormData = (pickedImage, user) => {
   console.log("Create form data: "+JSON.stringify(pickedImage) + " " + JSON.stringify(user))
   const data = new FormData()
@@ -56,7 +56,7 @@ export default function ProfileScreen({ navigation }) {
     // console log time at the moment of the fetch
     
     const img = await fetch(`${serverURL}/files/avatar/${token.id}`)
-    console.log('Time: ' + new Date().toLocaleTimeString())
+    //console.log('Time: ' + new Date().toLocaleTimeString())
     console.log('User fetch img: ' + JSON.stringify(img.url))
     setPhoto(img.url)    
   }
@@ -141,33 +141,25 @@ export default function ProfileScreen({ navigation }) {
     }
   }, [pickedImage])
 
-  /* useEffect photo
+  // every time route.params is true when user edits profile, refresh data
+  const route = useRoute();
   useEffect(() => {
-    if (photo!=null){
-      console.log('Entered useEffect photo')
-      setInitData(true)
+    // dont do shit if route.params is undefined
+    if (route.params) { // se nao for undefined
+      if (route.params.refresh) { // se for true
+      console.log('Entered useEffect route.params')
+      fetchData(token)
+      console.log(typeof route.params.refresh)
+      // set route.params.refresh to false
+      route.params.refresh = false
+      } 
     }
-  }, [photo])
-
-  useEffect(() => {
-    if (toupload) {
-      //handleUploadPhoto()
-      setToUpload(false)
-    }
-  }, [toupload])
-
-  // init data
-  useEffect(() => {
-    console.log('Init data: ' + initData)
-  }, [initData])*/
-
-  // refresh data
-  const refreshData = () => {
-    console.log('Refresh data')
-    fetchData(token)
-  }
+  }, [route.params])
 
   return (
+    // console log params from edit screen
+    console.log('Params: ' + JSON.stringify(route.params)),
+    
     //console.log("--------------\nToken data: "+ JSON.stringify(token) + "\n--------------"),
     // if dataInit is false, show loading
    // !initData ? (
@@ -176,11 +168,12 @@ export default function ProfileScreen({ navigation }) {
    //   </View>
     //) : (
       <SafeAreaView style={styles.root}>
+        {/* Header 
         <View style={styles.navigationBar}>
           <CostumBackButton onPress={() => navigation.goBack()} />
           <Text style={styles.pageTitle}>Meu Perfil</Text>
         </View>
-
+        */}
         <View style={{ alignSelf: 'center' }}>
           <View style={styles.profileImage}>
             {photo ? (
@@ -324,8 +317,8 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     marginHorizontal: 40,
-    marginTop: 40,
-    marginBottom: 40,
+    marginTop: "7%",
+    marginBottom: "7%",
   },
   textTag: {
     fontFamily: 'SoraBold',
@@ -360,17 +353,11 @@ const styles = StyleSheet.create({
     height: '80%',
   },
   containerBTN: {
-    // Put the buttons at the bottom of the screen
-    //position: 'absolute',
-    //alignItems: "center",
-    //justifyContent: "center",
-    //bottom: "10%",
-    //width: "100%",
-    //  on the vertical center
-    flex: 1,
-    //justifyContent: 'center',
+    // Put the buttons if there is space 2mm after infoContainer
+   
+    // center the buttons
     alignItems: 'center',
-    marginHorizontal: 30,
+    justifyContent: 'center',
   },
   buttonText: {
     color: 'white',

@@ -17,11 +17,10 @@ const CostumButton = ({onPress, text, type = "PRIMARY", widthScale=0.85}) => {
 const styles = StyleSheet.create({
     container:{
         width: 350,
-        padding: 15,
+        padding: "4%",
         borderRadius: SIZES.small,
-        marginVertical: 10,
+        marginVertical: "1%",
         alignItems: 'center',
-
     },
     container_PRIMARY:{
         backgroundColor:COLORS.wingDarkBlue,

@@ -30,6 +30,7 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "pug": "^3.0.2",
+    "react-native-image-picker": "^4.10.1",
     "stable": "^0.1.8"
   },
   "devDependencies": {

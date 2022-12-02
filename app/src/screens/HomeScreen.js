@@ -14,6 +14,7 @@ import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
        .then(userToken => setToken(JSON.parse(userToken)))
        .catch(err => console.log(err))
   }, [])
+  
     return (
     <View style={styles.container}>
       <View style >

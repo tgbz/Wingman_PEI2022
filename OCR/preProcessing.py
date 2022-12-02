@@ -300,46 +300,10 @@ def remove_bg2(image,debug = True):
     h,w,c = image.shape
     image = rembg.remove(image)
     image = padding(image)
-
-    print('1')
     blurred = gaussianBlur(image)
-    show(blurred)
-    print('2')
     edged = cv2.Canny(blurred, 75, 200)
-    show(edged) 
-    print('3')
     cnts = cv2.findContours(edged.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
-
-
-
-    print('4')
     cnts = imutils.grab_contours(cnts)
-    print('5')
-    #cnts = sorted(cnts, key=cv2.contourArea, reverse=True)
-    print('6')
-    '''
-
-    # initialize a contour that corresponds to the receipt outline
-    receiptCnt = None
-    # loop over the contours
-    for c in cnts:
-        # approximate the contour
-        peri = cv2.arcLength(c, True)
-        approx = cv2.approxPolyDP(c, 0.02 * peri, True)
-        # if our approximated contour has four points, then we can
-        # assume we have found the outline of the receipt
-        if len(approx) == 4:
-            receiptCnt = approx
-            break
-    print('7')
-
-    output = image.copy()
-    cv2.drawContours(output, [receiptCnt], -1, (0, 255, 0), 2)
-    
-    print('8')
-    cv2.imshow("Receipt Outline", output)
-    cv2.waitKey(0)
-    '''
     
     image = grayscale(image)
     mask = np.zeros_like(image) # Create mask where white is what we want, black otherwise

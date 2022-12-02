@@ -40,28 +40,26 @@ export default function ProfileEditScreen({ navigation }) {
     setSelected(data.gender)
     setBirthdate(data.birthdate.substring(0, 10))
     setName(data.name)
+    console.log("User fetch data: "+JSON.stringify(data))
   }
   // request data from server
   useEffect(() => {
-    console.log('Entered useEffect' + token.id)
+    console.log('Request data ' + token.id)
     if (token.id) {
       fetchData(token)
     }
   }, [token])
 
-  /*
-  Campos a editar:
-  pass,
-  foto,
-  profissão
-   */
+
+
+
   // handleFormSubmission that sends the information to the server to update the user
   // get user data and send it to the server updating the variables that were changed
   // if error occurs, it will show an alert
   // if success, it will show an alert and redirect to the profile screen
   const handleFormSubmission = async () => {
     // get user data object that is already in the state
-    const userData = data
+    //const userData = data
     // do an object with the new data
     //
     const newData = {
@@ -70,18 +68,18 @@ export default function ProfileEditScreen({ navigation }) {
       birthdate: birthdate,
     }
     // merge the two objects
-    const updatedData = { ...userData, ...newData }
-    console.log(updatedData)
+    //const updatedData = { ...userData, ...newData }
+    //console.log(updatedData)
     const resp = await fetch(`${serverURL}/users/updateProfile/${token.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(updatedData),
+      body: JSON.stringify(newData),
     }).then((resp) => {
       if (resp.status === 200) {
         alert('Dados atualizados com sucesso!')
-        navigation.navigate('Profile')
+        navigation.navigate('Profile',{refresh: true})
       } else {
         alert('Erro ao atualizar dados!')
       }
@@ -89,13 +87,15 @@ export default function ProfileEditScreen({ navigation }) {
   }
 
   return (
-    console.log(token),
+    console.log("--------------\nToken data: "+ JSON.stringify(token) + "\n--------------"),
     (
       <SafeAreaView style={styles.root}>
+        {/* Header 
         <View style={styles.navigationBar}>
           <CustomBackButton onPress={() => navigation.goBack()} />
           <Text style={styles.pageTitle}>Editar Perfil</Text>
         </View>
+        */}
         
         <View style={styles.infoContainer}>
           {/* Name input */}

@@ -66,11 +66,12 @@ export default function PassEditScreen({ navigation }) {
     console.log(token),
     (
       <SafeAreaView style={styles.root}>
+        {/* Header
         <View style={styles.navigationBar}>
           <CustomBackButton onPress={() => navigation.goBack()} />
           <Text style={styles.pageTitle}>Alterar Password</Text>
         </View>
-
+        */}
         <View style={styles.infoContainer}>
             <Text style={styles.textTag}>Password atual</Text>
             <CustomInput placeholder={""} value={oldPass} setValue={setOldPass} secureTextEntry iconNameEntry='form-textbox-password' widthScale={0.8}/>

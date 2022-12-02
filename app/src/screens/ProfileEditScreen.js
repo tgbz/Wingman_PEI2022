@@ -9,7 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native'
 import { serverURL } from '../config/hosts'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
-import { CostumBackButton, CostumButton, CostumInput, CostumTextButton } from '../components'
+import { CustomBackButton, CustomButton, CustomInput, CustomTextButton } from '../components'
 import { SelectList } from 'react-native-dropdown-select-list'
 
 export default function ProfileEditScreen({ navigation }) {
@@ -93,14 +93,14 @@ export default function ProfileEditScreen({ navigation }) {
     (
       <SafeAreaView style={styles.root}>
         <View style={styles.navigationBar}>
-          <CostumBackButton onPress={() => navigation.goBack()} />
+          <CustomBackButton onPress={() => navigation.goBack()} />
           <Text style={styles.pageTitle}>Editar Perfil</Text>
         </View>
         
         <View style={styles.infoContainer}>
           {/* Name input */}
           <Text style={styles.textTag}>Nome</Text>
-          <CostumInput placeholder={`${data.name}`} value={name} setValue={setName} widthScale={0.8}/>
+          <CustomInput placeholder={`${data.name}`} value={name} setValue={setName} widthScale={0.8}/>
 
           {/* Gender input */}
           {console.log('Gender selection: ' + selected)}
@@ -125,7 +125,7 @@ export default function ProfileEditScreen({ navigation }) {
 
           {/* Birthdate input */}
           <Text style={styles.textTag}>Data de Nascimento</Text>
-          <CostumInput
+          <CustomInput
             placeholder={'aaaa-mm-dd'}
             value={birthdate}
             setValue={setBirthdate}
@@ -140,12 +140,12 @@ export default function ProfileEditScreen({ navigation }) {
                 <Text style={styles.buttonText}>Guardar</Text>
             </TouchableOpacity>
           */}
-          <CostumButton
+          <CustomButton
             onPress={() => handleFormSubmission()}
             text="Guardar Alterações"
             type = "TERTIARY"
             widthScale={0.8}
-          ></CostumButton>
+          ></CustomButton>
         </View>
       </SafeAreaView>
     )

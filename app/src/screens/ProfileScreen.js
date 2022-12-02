@@ -9,7 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native'
 import { serverURL } from '../config/hosts'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
-import {CostumBackButton, CostumButton} from '../components'
+import {CustomBackButton, CustomButton} from '../components'
 
 export default function ProfileScreen({ navigation }) {
   const { height } = useWindowDimensions();
@@ -66,7 +66,7 @@ export default function ProfileScreen({ navigation }) {
       <SafeAreaView style={styles.root}>
        
           <View style={styles.navigationBar}>
-            <CostumBackButton  onPress={() => navigation.goBack()} />
+            <CustomBackButton  onPress={() => navigation.goBack()} />
             <Text style={styles.pageTitle}>Meu Perfil</Text>
           </View>
 
@@ -120,8 +120,8 @@ export default function ProfileScreen({ navigation }) {
                 <Text style={styles.buttonText}>Editar Perfil</Text>
             </TouchableOpacity> 
             */}
-            <CostumButton onPress={() => navigation.navigate("ProfileEdit")} text="Editar Perfil" type = "TERTIARY" widthScale={0.8}></CostumButton>
-            <CostumButton onPress={() => navigation.navigate("PassEdit")} text="Alterar Password" type = "TERTIARY" widthScale={0.8}></CostumButton>
+            <CustomButton onPress={() => navigation.navigate("ProfileEdit")} text="Editar Perfil" type = "TERTIARY" widthScale={0.8}></CustomButton>
+            <CustomButton onPress={() => navigation.navigate("PassEdit")} text="Alterar Password" type = "TERTIARY" widthScale={0.8}></CustomButton>
         </View>
 
         

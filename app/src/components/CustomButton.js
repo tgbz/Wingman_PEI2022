@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Button, TextInput , Pressable,  useWindowDimens
 import { useState } from "react";
 import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
 
-const CostumButton = ({onPress, text, type = "PRIMARY", widthScale=0.85}) => {
+const CustomButton = ({onPress, text, type = "PRIMARY", widthScale=0.85}) => {
     const {width} = useWindowDimensions();
 
     return (
@@ -43,4 +43,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default CostumButton
+export default CustomButton

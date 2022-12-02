@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Button, TextInput , Pressable,  useWindowDimens
 import { useState } from "react";
 import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
 
-const CostumTextButton = ({onPress, textNormal, textButton, textSize}) => {
+const CustomTextButton = ({onPress, textNormal, textButton, textSize}) => {
     const {width} = useWindowDimensions();
     return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
@@ -36,4 +36,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default CostumTextButton
+export default CustomTextButton

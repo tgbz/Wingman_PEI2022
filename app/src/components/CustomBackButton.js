@@ -5,7 +5,7 @@ import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 
-const CostumBackButton = ({onPress}) => {
+const CustomBackButton = ({onPress}) => {
     return (
         <Ionicons name="chevron-back"
         size={30}
@@ -19,7 +19,8 @@ const CostumBackButton = ({onPress}) => {
 const styles = StyleSheet.create({
     icon:{
         alignContent: 'flex-end',
+        padding: 10
     }
 })
 
-export default CostumBackButton
+export default CustomBackButton

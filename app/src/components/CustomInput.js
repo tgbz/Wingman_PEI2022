@@ -6,11 +6,11 @@ import { Ionicons, MaterialCommunityIcons, MaterialIcons, Entypo } from '@expo/v
 
 
 
-const CostumInput = ({value, setValue, placeholder, secureTextEntry, iconNameEntry='', widthScale=0.85}) => {
+const CustomInput = ({value, setValue, placeholder, secureTextEntry, iconNameEntry='', widthScale=0.85}) => {
     const {width} = useWindowDimensions();
     const [passwordVisible, setPasswordVisible] = useState(secureTextEntry);
     return (
-    <View style={[styles.container,  {width: width * widthScale }]}>
+    <View style={[styles.container,  {width: width * widthScale}]}>
     {secureTextEntry ? <MaterialCommunityIcons name={iconNameEntry} style={styles.icon} size={18}></MaterialCommunityIcons>: 
         iconNameEntry!='' ?  <MaterialIcons name={iconNameEntry} style={styles.icon} size={18}></MaterialIcons>: 
         console.log("") }
@@ -38,9 +38,9 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         marginVertical: 12,
         borderWidth: 1,
-        borderColor: COLORS.wingblue,
         flexDirection: 'row',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        borderColor: COLORS.wingblue
         
     },
     input: {
@@ -61,4 +61,4 @@ const styles = StyleSheet.create({
    
 })
 
-export default CostumInput
+export default CustomInput

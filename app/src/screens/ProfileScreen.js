@@ -14,9 +14,9 @@ import { COLORS, SHADOWS, SIZES } from '../constants'
 import { useState, useEffect } from 'react'
 import { serverURL } from '../config/hosts'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
-import { CostumBackButton, CostumButton } from '../components'
+import { CustomBackButton, CustomButton } from '../components'
 import * as ImagePicker from 'expo-image-picker'
-
+import {useRoute} from '@react-navigation/native'
 const createFormData = (pickedImage, user) => {
   console.log("Create form data: "+JSON.stringify(pickedImage) + " " + JSON.stringify(user))
   const data = new FormData()
@@ -39,6 +39,7 @@ export default function ProfileScreen({ navigation }) {
   const { height } = useWindowDimensions()
   const [token, setToken] = useState('')
   const [initData, setInitData] = useState(false)
+
   useEffect(() => {
     AsyncStorage.getItem('userToken')
       .then((userToken) => setToken(JSON.parse(userToken)))
@@ -52,15 +53,16 @@ export default function ProfileScreen({ navigation }) {
     const data = await resp.json()
     console.log('User fetch data: ' + JSON.stringify(data))
     setData(data)
-
-    const resp_img = await fetch(`${serverURL}/files/avatar/${token.id}`)
-    const img = resp_img.url
-    console.log('User fetch img: ' + JSON.stringify(img))
-    setPhoto(img)
+    // console log time at the moment of the fetch
+    
+    const img = await fetch(`${serverURL}/files/avatar/${token.id}`)
+    //console.log('Time: ' + new Date().toLocaleTimeString())
+    console.log('User fetch img: ' + JSON.stringify(img.url))
+    setPhoto(img.url)    
   }
   // request data from server
   useEffect(() => {
-    console.log('Entered useEffect' + token.id)
+    console.log('Entered useEffect: ' + JSON.stringify(token) +'\n')
     if (token.id) {
       fetchData(token)
     }
@@ -85,7 +87,6 @@ export default function ProfileScreen({ navigation }) {
 
   const [photo, setPhoto] = React.useState(null)
   const [hasGalleryPermission, setHasGalleryPermission] = React.useState(null)
-  const [toupload,setToUpload]  = React.useState(false)
   const [pickedImage, setPickedImage] = React.useState(null)
   // use effect to get permission to access gallery
   React.useEffect(() => {
@@ -132,27 +133,33 @@ export default function ProfileScreen({ navigation }) {
       })
   }
 
-  /* useEffect photo
-  useEffect(() => {
-    if (photo!=null){
-      console.log('Entered useEffect photo')
-      setInitData(true)
+  //  every time there is a picked image, upload it to the server
+  React.useEffect(() => {
+    console.log("useEffect image picked")
+    if (pickedImage) {
+      handleUploadPhoto()
     }
-  }, [photo])
+  }, [pickedImage])
 
+  // every time route.params is true when user edits profile, refresh data
+  const route = useRoute();
   useEffect(() => {
-    if (toupload) {
-      //handleUploadPhoto()
-      setToUpload(false)
+    // dont do shit if route.params is undefined
+    if (route.params) { // se nao for undefined
+      if (route.params.refresh) { // se for true
+      console.log('Entered useEffect route.params')
+      fetchData(token)
+      console.log(typeof route.params.refresh)
+      // set route.params.refresh to false
+      route.params.refresh = false
+      } 
     }
-  }, [toupload])
-
-  // init data
-  useEffect(() => {
-    console.log('Init data: ' + initData)
-  }, [initData])*/
+  }, [route.params])
 
   return (
+    // console log params from edit screen
+    console.log('Params: ' + JSON.stringify(route.params)),
+    
     //console.log("--------------\nToken data: "+ JSON.stringify(token) + "\n--------------"),
     // if dataInit is false, show loading
    // !initData ? (
@@ -161,36 +168,12 @@ export default function ProfileScreen({ navigation }) {
    //   </View>
     //) : (
       <SafeAreaView style={styles.root}>
-        {/*<Image source={{uri: 'https://reactjs.org/logo-og.png'}}
-       style={{width: 400, height: 400}} />*/}
+        {/* Header 
         <View style={styles.navigationBar}>
-          <CostumBackButton onPress={() => navigation.goBack()} />
+          <CustomBackButton onPress={() => navigation.goBack()} />
           <Text style={styles.pageTitle}>Meu Perfil</Text>
         </View>
-        {console.log('FOTO FRONT: ' + JSON.stringify(pickedImage))}
-        {pickedImage && (
-            <>
-              <Button title="Upload Photo" onPress={() => handleUploadPhoto()} /> 
-            </>
-          )}
-
-        {/*
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          
-          <Button title="Choose Photo" onPress={() => handleChoosePhoto()} />
-          {photo && (
-            <>
-              {console.log(JSON.stringify(photo))}
-              
-             
-              <Image source={{ uri: photo.uri }} style={styles.profileImage} />
-               <Image source={{ uri: photo.uri }} style={{ width: 300, height: 300 }} /> 
-              <Button title="Upload Photo" onPress={() => handleUploadPhoto()} /> 
-            </>
-          )}
-        </View>
- */}
-
+        */}
         <View style={{ alignSelf: 'center' }}>
           <View style={styles.profileImage}>
             {photo ? (
@@ -202,15 +185,20 @@ export default function ProfileScreen({ navigation }) {
                 style={styles.image}
                 resizeMode="center"
               ></Image>
-            ) : (
+            ) : data.gender == 1 ? (
               <Image
                 source={require('../../assets/images/female-avatar.png')}
                 style={styles.image}
                 resizeMode="center"
               ></Image>
-            )}
+            ):(
+              <Image
+                source={require('../../assets/images/other-avatar.png')}
+                style={styles.image}
+                resizeMode="center"
+              ></Image>)
+            } 
           </View>
-          {/* TO DO EDIT PICTURE*/}
           <View style={styles.addAvatar}>
             <MaterialCommunityIcons
               name="pencil-circle"
@@ -264,23 +252,18 @@ export default function ProfileScreen({ navigation }) {
         </View>
 
         <View style={styles.containerBTN}>
-          {/*
-            <TouchableOpacity onPress={() => navigation.navigate("ProfileEdit")} style={[styles.button,{height: height*0.05}]}>
-                <Text style={styles.buttonText}>Editar Perfil</Text>
-            </TouchableOpacity> 
-            */}
-          <CostumButton
+          <CustomButton
             onPress={() => navigation.navigate('ProfileEdit')}
             text="Editar Perfil"
             type="TERTIARY"
             widthScale={0.8}
-          ></CostumButton>
-          <CostumButton
+          ></CustomButton>
+          <CustomButton
             onPress={() => navigation.navigate('PassEdit')}
             text="Alterar Password"
             type="TERTIARY"
             widthScale={0.8}
-          ></CostumButton>
+          ></CustomButton>
         </View>
       </SafeAreaView>
     )
@@ -340,8 +323,8 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     marginHorizontal: 40,
-    marginTop: 40,
-    marginBottom: 40,
+    marginTop: "7%",
+    marginBottom: "7%",
   },
   textTag: {
     fontFamily: 'SoraBold',
@@ -376,17 +359,11 @@ const styles = StyleSheet.create({
     height: '80%',
   },
   containerBTN: {
-    // Put the buttons at the bottom of the screen
-    //position: 'absolute',
-    //alignItems: "center",
-    //justifyContent: "center",
-    //bottom: "10%",
-    //width: "100%",
-    //  on the vertical center
-    flex: 1,
-    //justifyContent: 'center',
+    // Put the buttons if there is space 2mm after infoContainer
+   
+    // center the buttons
     alignItems: 'center',
-    marginHorizontal: 30,
+    justifyContent: 'center',
   },
   buttonText: {
     color: 'white',

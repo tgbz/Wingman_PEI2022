@@ -8,12 +8,12 @@ import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
  function HomeScreen({navigation}) {
   const [token,setToken] = useState("");
   const { signOut } = React.useContext(AuthContext);
-
   useEffect(() => {
        AsyncStorage.getItem('userToken')
        .then(userToken => setToken(JSON.parse(userToken)))
        .catch(err => console.log(err))
   }, [])
+  
     return (
     <View style={styles.container}>
       <View style >

@@ -93,7 +93,7 @@ const App = () => {
         })
         .catch((error) => {
             console.log(error);
-            alert("De momento não é possível processar a autenticação!");
+            alert("Credenciais Inválidas!");
         });
       },
       signOut: () => {

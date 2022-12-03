@@ -9,7 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native'
 import { serverURL } from '../config/hosts'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
-import { CostumBackButton, CostumButton, CostumInput } from '../components'
+import { CustomBackButton, CustomButton, CustomInput } from '../components'
 
 export default function PassEditScreen({ navigation }) {
   const { height } = useWindowDimensions()
@@ -66,26 +66,32 @@ export default function PassEditScreen({ navigation }) {
     console.log(token),
     (
       <SafeAreaView style={styles.root}>
+        {/* Header
         <View style={styles.navigationBar}>
-          <CostumBackButton onPress={() => navigation.goBack()} />
+          <CustomBackButton onPress={() => navigation.goBack()} />
           <Text style={styles.pageTitle}>Alterar Password</Text>
         </View>
-
+        */}
         <View style={styles.infoContainer}>
             <Text style={styles.textTag}>Password atual</Text>
-            <CostumInput placeholder={""} value={oldPass} setValue={setOldPass} secureTextEntry iconNameEntry='form-textbox-password' widthScale={0.8}/>
+            <CustomInput placeholder={""} value={oldPass} setValue={setOldPass} secureTextEntry iconNameEntry='form-textbox-password' widthScale={0.8}/>
 
             <Text style={styles.textTag}>Password Nova</Text>
-            <CostumInput placeholder={""} value={newPass} setValue={setNewPass} secureTextEntry iconNameEntry='form-textbox-password' widthScale={0.8}/>
+            <CustomInput placeholder={""} value={newPass} setValue={setNewPass} secureTextEntry iconNameEntry='form-textbox-password' widthScale={0.8}/>
+
+            {/* Campo repetir nova password e testar se são iguais
+            <Text style={styles.textTag}> Confirmar Password</Text>
+            <CustomInput placeholder={""} value={newPassValidate} setValue={setNewPass} secureTextEntry iconNameEntry='form-textbox-password' widthScale={0.8}/>
+*/}
         </View>
 
         <View style={styles.containerBTN}>
-          <CostumButton
+          <CustomButton
             onPress={() => handlePasswordChange()}
             text="Confirmar Alteração"
             type = "TERTIARY"
             widthScale={0.8}
-          ></CostumButton>
+          ></CustomButton>
         </View>
       </SafeAreaView>
     )

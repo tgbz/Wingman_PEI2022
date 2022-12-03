@@ -3,10 +3,10 @@ import { StyleSheet,Text, TextInput, View, Button , Image, useWindowDimensions, 
 import { useState } from "react";
 import AuthContext from "../context/AuthProvider";
 import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
-import CostumInput from "../components/CostumInput";
-import CostumButton from "../components/CostumButton";
-import CostumTextButton from "../components/CostumTextButton";
-import CostumBackButton from "../components/CostumBackButton";
+import CustomInput from "../components/CustomInput";
+import CustomButton from "../components/CustomButton";
+import CustomTextButton from "../components/CustomTextButton";
+import CustomBackButton from "../components/CustomBackButton";
 
 function LoginScreen({ navigation }) {
   //login form
@@ -15,25 +15,39 @@ function LoginScreen({ navigation }) {
   const [password, setPassword] = useState("");
   const { signIn } = React.useContext(AuthContext);
   const {height, width} = useWindowDimensions();
+  const [validPassword, setValidPassword] = useState(true);
+  const [validEmail, setValidEmail] = useState(true);
+
+  function alertMessage(){
+    password=='' ? setValidPassword(false): setValidPassword(true);
+    email=='' ? setValidEmail(false):setValidEmail(true)
+    return "Campos obrigatórios não preenchidos!"
+  }
+  function showErrorField(text){
+    return(<Text style= {{alignSelf: 'flex-start', paddingHorizontal:30}}>
+              <Text style={styles.text}>{text}</Text>
+              <Text style={styles.error}> * Campo Obrigatório</Text>
+            </Text>)
+    }
   return (
     <View style={styles.container}>
       <View style={styles.containerLogo}>
-        <CostumBackButton onPress={() => navigation.navigate("Landing")}></CostumBackButton>
+        <CustomBackButton onPress={() => navigation.navigate("Landing")}></CustomBackButton>
         <Image source={require('../../assets/images/logo_azul_escuro.png')} resizeMode='contain' style={[styles.logo, {height: height * 0.15}]}></Image>
         <Text style={styles.wingman}>Login</Text>
      </View>
 
-      <View style={[styles.placeInput]}>
+      <View style={styles.placeInput}>
       
-        <Text style={styles.text}>Email</Text>
-        <CostumInput placeholder={"joao@email.com"} value={email} setValue={setEmail} iconNameEntry='email'/>
-        <Text style={styles.text}>Password</Text>
-        <CostumInput placeholder={"*******"} value={password} setValue={setPassword} secureTextEntry isPassword={true} iconNameEntry='form-textbox-password'/>
-        <CostumTextButton onPress={() => alert("Não está feito")} textNormal="Esqueceu-se da password? " textButton="Carregue aqui!" textSize={12}></CostumTextButton>
+      {validEmail? <Text style={styles.text}>Email</Text> : showErrorField("Email")}
+        <CustomInput placeholder={"joao@email.com"} value={email} setValue={setEmail} iconNameEntry='email'/>
+        {validPassword? <Text style={styles.text}>Password</Text> : showErrorField("Password")}
+        <CustomInput placeholder={"*******"} value={password} setValue={setPassword} secureTextEntry isPassword={true} iconNameEntry='form-textbox-password'/>
+        <CustomTextButton onPress={() => alert("Não está feito")} textNormal="Esqueceu-se da password? " textButton="Carregue aqui!" textSize={12}></CustomTextButton>
       </View>
-      <View style={[styles.placeButtons, {position: 'relative', bottom:-height*0.25 }]}>
-        <CostumButton onPress={() => {email!='' && password!='' ? signIn(email, password) : alert("Necessita de introduzir credenciais!")}} text="Entrar"></CostumButton>
-        <CostumTextButton onPress={() => navigation.navigate("Register")} textNormal="Não tem conta? " textButton="Registe-se!" textSize={16}></CostumTextButton>
+      <View style={[styles.placeButtons, {position: 'absolute', top: height*0.8 }]}>
+        <CustomButton onPress={() => {email!='' && password!='' ? (signIn(email, password), setValidEmail(true), setValidPassword(true)) : alert(alertMessage())}} text="Entrar"></CustomButton>
+        <CustomTextButton onPress={() => navigation.navigate("Register")} textNormal="Não tem conta? " textButton="Registe-se!" textSize={16}></CustomTextButton>
       </View>
     </View>
   );
@@ -48,15 +62,25 @@ const styles = StyleSheet.create({
   containerLogo: {
     flexDirection: 'row',
     top: 40,
-    paddingVertical: 30,
-    padding: 20
+    paddingVertical: 20,
+    alignContent: 'center',
+    alignItems: 'center'
+  },
+  error:{
+    color: 'red',
+    fontFamily:"SoraLight",
+    fontSize: SIZES.small,
+    alignSelf: 'flex-start',
+    paddingHorizontal:30,
   },
   logo: {
     flex:0.5,
     width: "70%",
+    minWidth:40,
     maxWidth: 300,
     maxHeight: 120,
-    paddingVertical:40
+    paddingVertical:0,
+    padding: -20
   },
   placeInput:{
     alignItems: 'left',
@@ -67,9 +91,10 @@ const styles = StyleSheet.create({
   },
   wingman:{
     fontFamily: 'SoraBold',
-    fontSize: 50,
+    fontSize: 40,
     color: COLORS.wingDarkBlue,
-    paddingVertical:40
+    paddingVertical:20,
+    flex:3
   },
 
   placeButtons:{

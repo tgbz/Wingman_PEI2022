@@ -1,0 +1,22 @@
+{
+    "sourceFile": "app.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1669735335760,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1669735397544,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,12 @@\n-from flask import Flask\r\n+from flask import Flask, request, jsonify\r\n+from flask_cors import CORS, cross_origin\r\n \r\n app = Flask(__name__)\r\n \r\n @app.route('/')\r\n\\ No newline at end of file\n def hello_world():\r\n-    return 'Hello, World!'\n+    return 'Hello, World!'\r\n+\r\n+CORS(app, resources={r\"/api/*\": {\"origins\": \"*\"}})\r\n+app.config['CORS_HEADERS'] = 'Content-Type'\r\n+\r\n"
+                }
+            ],
+            "date": 1669735335760,
+            "name": "Commit-0",
+            "content": "from flask import Flask\r\n\r\napp = Flask(__name__)\r\n\r\n@app.route('/')\r\ndef hello_world():\r\n    return 'Hello, World!'"
+        }
+    ]
+}

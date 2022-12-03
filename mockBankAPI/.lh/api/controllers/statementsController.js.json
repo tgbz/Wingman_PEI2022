@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 102,
+            "activePatchIndex": 112,
             "patches": [
                 {
                     "date": 1669632156261,
@@ -416,6 +416,46 @@
                 {
                     "date": 1669649420716,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,9 @@\n       }\r\n     });\r\n };\r\n \r\n-//create 1,2,3 or 4 new transactions, and update the statement\r\n+//create 1,2,3 or 4 new transactions, and update the Statement\r\n Statements.updateStatement = function (iban, callback) {\r\n   var newTransactions = [];\r\n   var newTransactionsCount = Math.floor(Math.random() * 4) + 1;\r\n   for (var i = 0; i < newTransactionsCount; i++) {\r\n@@ -46,45 +46,45 @@\n     });\r\n     Statement.findOneAndUpdate(\r\n       { IBAN: iban },\r\n       { $push: { movimentos: newTransactions[i]._id } },\r\n-      function (err, statement) {\r\n+      function (err, Statement) {\r\n         if (err) {\r\n           callback(err);\r\n         }\r\n       }\r\n     );\r\n   }\r\n-  Statements.getStatement(iban, function (err, statement) {\r\n+  Statements.getStatement(iban, function (err, Statement) {\r\n     if (err) {\r\n       callback(err);\r\n     } else {\r\n-      callback(null, statement);\r\n+      callback(null, Statement);\r\n     }\r\n   });\r\n };\r\n \r\n //Get Statement by IBAN\r\n Statements.getStatementByIBAN = function (iban, callback) {\r\n-  statement.findOne({ IBAN: iban }, function (err, statement) {\r\n+  Statement.findOne({ IBAN: iban }, function (err, Statement) {\r\n     if (err) {\r\n       callback(err, null);\r\n     } else {\r\n-      callback(null, statement);\r\n+      callback(null, Statement);\r\n     }\r\n   });\r\n };\r\n \r\n Statements.initStatement = function (iban, callback) {\r\n-  var newStatement = new statement({\r\n+  var newStatement = new Statement({\r\n     _id: new mongoose.Types.ObjectId(),\r\n     banco: BankList[Math.floor(Math.random() * BankList.length)],\r\n     IBAN: iban,\r\n     movimentos: [],\r\n     saldo: 0,\r\n   });\r\n   try {\r\n-    //Generate 10 random transactions and add them to the statement\r\n+    //Generate 10 random transactions and add them to the Statement\r\n     for (var i = 0; i < 10; i++) {\r\n       var transaction = Transactions.newTransaction(newStatement._id);\r\n       newStatement.movimentos.push(transaction._id);\r\n       if (transaction.type == \"Débito\") {\r\n@@ -105,16 +105,16 @@\n       }\r\n     }\r\n \r\n     try {\r\n-      //save the statement\r\n+      //save the Statement\r\n       newStatement.save(function (err, newStatement) {\r\n         if (err) {\r\n           console.log(err);\r\n           callback(err, null);\r\n         } else {\r\n           console.log(\"Statement created\");\r\n-          callback(null, statement);\r\n+          callback(null, Statement);\r\n         }\r\n       });\r\n     } catch (err) {\r\n       console.log(err);\r\n"
+                },
+                {
+                    "date": 1670078902447,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,19 +35,27 @@\n \r\n //create 1,2,3 or 4 new transactions, and update the Statement\r\n Statements.updateStatement = function (iban, callback) {\r\n   var newTransactions = [];\r\n+  var newBalance = 0;\r\n   var newTransactionsCount = Math.floor(Math.random() * 4) + 1;\r\n   for (var i = 0; i < newTransactionsCount; i++) {\r\n-    newTransactions.push(Transactions.newTransaction(iban));\r\n+    var tmpTransaction = Transactions.newTransaction(iban);\r\n+    if (tmpTransaction.type == \"Débito\") {\r\n+      newBalance -= tmpTransaction.value;\r\n+    } else {\r\n+      newBalance += tmpTransaction.value;\r\n+    }\r\n+    newTransactions.push(tmpTransaction);\r\n     Transactions.create(newTransactions[i], function (err, transaction) {\r\n       if (err) {\r\n         callback(err);\r\n       }\r\n     });\r\n     Statement.findOneAndUpdate(\r\n       { IBAN: iban },\r\n       { $push: { movimentos: newTransactions[i]._id } },\r\n+      { $inc: { saldo: newBalance } },\r\n       function (err, Statement) {\r\n         if (err) {\r\n           callback(err);\r\n         }\r\n"
+                },
+                {
+                    "date": 1670079053482,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,9 +53,8 @@\n     });\r\n     Statement.findOneAndUpdate(\r\n       { IBAN: iban },\r\n       { $push: { movimentos: newTransactions[i]._id } },\r\n-      { $inc: { saldo: newBalance } },\r\n       function (err, Statement) {\r\n         if (err) {\r\n           callback(err);\r\n         }\r\n"
+                },
+                {
+                    "date": 1670079149045,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,8 +60,17 @@\n         }\r\n       }\r\n     );\r\n   }\r\n+  Statement.findOneAndUpdate(\r\n+    { IBAN: iban },\r\n+    { $inc: { saldo: newBalance } },\r\n+    function (err, Statement) {\r\n+      if (err) {\r\n+        callback(err);\r\n+      }\r\n+    }\r\n+  );\r\n   Statements.getStatement(iban, function (err, Statement) {\r\n     if (err) {\r\n       callback(err);\r\n     } else {\r\n"
+                },
+                {
+                    "date": 1670079227181,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,17 +60,9 @@\n         }\r\n       }\r\n     );\r\n   }\r\n-  Statement.findOneAndUpdate(\r\n-    { IBAN: iban },\r\n-    { $inc: { saldo: newBalance } },\r\n-    function (err, Statement) {\r\n-      if (err) {\r\n-        callback(err);\r\n-      }\r\n-    }\r\n-  );\r\n+  console.log(newBalance);\r\n   Statements.getStatement(iban, function (err, Statement) {\r\n     if (err) {\r\n       callback(err);\r\n     } else {\r\n"
+                },
+                {
+                    "date": 1670079254497,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -61,8 +61,21 @@\n       }\r\n     );\r\n   }\r\n   console.log(newBalance);\r\n+\r\n+  //update the Statement balance\r\n+  Statement.findOneAndUpdate(\r\n+    { IBAN: iban },\r\n+    { $inc: { saldo: newBalance } },\r\n+    function (err, Statement) {\r\n+      if (err) {\r\n+        console.log(err);\r\n+        callback(err);\r\n+      }\r\n+    }\r\n+  );\r\n+\r\n   Statements.getStatement(iban, function (err, Statement) {\r\n     if (err) {\r\n       callback(err);\r\n     } else {\r\n"
+                },
+                {
+                    "date": 1670079306572,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n var mongoose = require(\"mongoose\");\r\n var Statement = require(\"../models/statement\");\r\n var MongoQuery = require(\"../config/query.js\");\r\n var Transactions = require(\"./transactionsController\");\r\n-\r\n+mongoose.set(\"useFindAndModify\", false);\r\n var Statements = module.exports;\r\n \r\n var BankList = [\r\n   \"Banco BPI\",\r\n"
+                },
+                {
+                    "date": 1670079459791,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -107,12 +107,12 @@\n     //Generate 10 random transactions and add them to the Statement\r\n     for (var i = 0; i < 10; i++) {\r\n       var transaction = Transactions.newTransaction(newStatement._id);\r\n       newStatement.movimentos.push(transaction._id);\r\n-      if (transaction.type == \"Débito\") {\r\n+      if (transaction.type == \"Debito\") {\r\n         newStatement.saldo -= transaction.value;\r\n       }\r\n-      if (transaction.type == \"Crédito\") {\r\n+      if (transaction.type == \"Credito\") {\r\n         newStatement.saldo += transaction.value;\r\n       }\r\n       newStatement.saldo += transaction.value;\r\n       try {\r\n"
+                },
+                {
+                    "date": 1670079468050,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n   var newBalance = 0;\r\n   var newTransactionsCount = Math.floor(Math.random() * 4) + 1;\r\n   for (var i = 0; i < newTransactionsCount; i++) {\r\n     var tmpTransaction = Transactions.newTransaction(iban);\r\n-    if (tmpTransaction.type == \"Débito\") {\r\n+    if (tmpTransaction.type == \"Debito\") {\r\n       newBalance -= tmpTransaction.value;\r\n     } else {\r\n       newBalance += tmpTransaction.value;\r\n     }\r\n"
+                },
+                {
+                    "date": 1670079488896,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -109,10 +109,9 @@\n       var transaction = Transactions.newTransaction(newStatement._id);\r\n       newStatement.movimentos.push(transaction._id);\r\n       if (transaction.type == \"Debito\") {\r\n         newStatement.saldo -= transaction.value;\r\n-      }\r\n-      if (transaction.type == \"Credito\") {\r\n+      } else if (transaction.type == \"Credito\") {\r\n         newStatement.saldo += transaction.value;\r\n       }\r\n       newStatement.saldo += transaction.value;\r\n       try {\r\n"
+                },
+                {
+                    "date": 1670079571565,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -112,9 +112,9 @@\n         newStatement.saldo -= transaction.value;\r\n       } else if (transaction.type == \"Credito\") {\r\n         newStatement.saldo += transaction.value;\r\n       }\r\n-      newStatement.saldo += transaction.value;\r\n+\r\n       try {\r\n         Transactions.create(transaction, function (err, transaction) {\r\n           if (err) {\r\n             console.log(err);\r\n"
                 }
             ],
             "date": 1669632156261,

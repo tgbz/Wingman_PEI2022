@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/api/app.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1669737924460,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1669737924460,
+            "name": "Commit-0",
+            "content": "from flask import Flask, request, jsonify\r\nfrom flask_cors import CORS, cross_origin\r\nimport os\r\nimport ocr.textparse as tp\r\n\r\n\r\n\r\napp = Flask(__name__)\r\napp.config[\"DEBUG\"] = True\r\n\r\n\r\n\r\nCORS(app, resources={r\"/api/*\": {\"origins\": \"*\"}})\r\napp.config['CORS_HEADERS'] = 'Content-Type'\r\n\r\n\r\n@app.route('/', methods=['GET'])\r\ndef home():\r\n    return \"<h1>PUTAS E VINHO verde <h1/>\"\r\n\r\n\r\n@app.route('/upload', methods=['POST'])\r\n@cross_origin(origin='*', headers=['Content-Type'])\r\ndef upload_single_image():\r\n    if request.method == \"POST\":\r\n        file = request.files['file']\r\n        try:\r\n            file.save(os.getcwd() + \"/receivedFiles/\" + file.filename)\r\n            try:\r\n                text = tp.parse(os.getcwd() + \"/receivedFiles/\" + file.filename)\r\n                return jsonify(text)\r\n            except:\r\n                return jsonify(\"Error parsing text\")\r\n         \r\n        except FileNotFoundError:\r\n            return \"Folder not on path\"\r\n        \r\nif __name__ == \"__main__\":\r\n    app.run(debug=True, port=5000, host=\"0.0.0.0\")\r\n    \r\napp.run()\r\n\r\n\r\n\r\n"
+        }
+    ]
+}

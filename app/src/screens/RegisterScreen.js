@@ -30,7 +30,7 @@ function RegisterScreen({ navigation }) {
 
   const { signUp } = React.useContext(AuthContext);
   const registo = async () =>{
-    const params = {name,email,birthdate,gender,savings,password}
+    const params = {name,email,birthdate,gender,password}
     const response = await signUp(params)
     if(!isNaN(+response)){
       navigation.navigate("Login")

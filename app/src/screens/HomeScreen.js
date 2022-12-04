@@ -26,6 +26,9 @@ import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
       <View>
         <Button title="Perfil" onPress={() => navigation.navigate("Profile")} />
       </View>
+      <View>
+        <Button title="Políticas de Consumo" onPress={() => navigation.navigate("Politics")} />
+      </View>
       
     </View>
   );

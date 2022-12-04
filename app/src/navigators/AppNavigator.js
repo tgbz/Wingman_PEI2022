@@ -9,6 +9,8 @@ import HomeScreen from "../screens/HomeScreen.js"
 import ProfileScreen from "../screens/ProfileScreen.js"
 import ProfileEditScreen from "../screens/ProfileEditScreen.js"
 import PassEditScreen from '../screens/PassEditScreen.js';
+import PoliticsScreen from '../screens/PoliticsScreen.js';
+
 import { COLORS,SIZES } from '../constants/theme.js';
 
 
@@ -16,6 +18,7 @@ import { COLORS,SIZES } from '../constants/theme.js';
 
 const homeName = "HomeTab";
 const profileName = "Profile";
+const politics = "Politics";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -55,6 +58,8 @@ function MainContainer() {
           
         <Tab.Screen name={homeName} component={HomeScreen} options={{headerShown: false}} />
         <Tab.Screen name={profileName} component={ProfileScreen} options={{title:"Meu Perfil"}}/>
+        <Tab.Screen name={politics} component={PoliticsScreen} options={{title:"Políticas de Consumo"}}/>
+
        {/* <Tab.Screen name={profileEditName} component={ProfileEditScreen} options={{headerShown: false}}/>
         <Tab.Screen name={" "} component={PassEditScreen} options={{headerShown: false}}/>*/}
       </Tab.Navigator>
@@ -81,6 +86,8 @@ export default function HomeStack() {
         <Stack.Screen name="Home" component={MainContainer} options={{headerShown: false}}/>
         <Stack.Screen name="ProfileEdit" component={ProfileEditScreen} options={{title:"Editar Perfil"}} />
         <Stack.Screen name="PassEdit" component={PassEditScreen}   options={{title:"Alterar Password"}}/>
+        <Stack.Screen name="Politics" component={PoliticsScreen} options={{title:"Políticas de Consumo"}}/>
+
       </Stack.Navigator>
   );
 };

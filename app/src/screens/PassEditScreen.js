@@ -78,6 +78,11 @@ export default function PassEditScreen({ navigation }) {
 
             <Text style={styles.textTag}>Password Nova</Text>
             <CustomInput placeholder={""} value={newPass} setValue={setNewPass} secureTextEntry iconNameEntry='form-textbox-password' widthScale={0.8}/>
+
+            {/* Campo repetir nova password e testar se são iguais
+            <Text style={styles.textTag}> Confirmar Password</Text>
+            <CustomInput placeholder={""} value={newPassValidate} setValue={setNewPass} secureTextEntry iconNameEntry='form-textbox-password' widthScale={0.8}/>
+*/}
         </View>
 
         <View style={styles.containerBTN}>

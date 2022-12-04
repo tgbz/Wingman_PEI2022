@@ -185,13 +185,19 @@ export default function ProfileScreen({ navigation }) {
                 style={styles.image}
                 resizeMode="center"
               ></Image>
-            ) : (
+            ) : data.gender == 1 ? (
               <Image
                 source={require('../../assets/images/female-avatar.png')}
                 style={styles.image}
                 resizeMode="center"
               ></Image>
-            )}
+            ):(
+              <Image
+                source={require('../../assets/images/other-avatar.png')}
+                style={styles.image}
+                resizeMode="center"
+              ></Image>)
+            } 
           </View>
           <View style={styles.addAvatar}>
             <MaterialCommunityIcons

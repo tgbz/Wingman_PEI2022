@@ -1,10 +1,8 @@
-import { color } from '@rneui/themed/dist/config';
-import React, { Component } from 'react';
-import { StyleSheet, View , Text, TouchableHighlight} from 'react-native';
-import { Table, Row, Rows , TableWrapper, Col} from 'react-native-table-component';
-import {FONTS,COLORS, SHADOWS, SIZES , CATEGORIES} from '../constants'
-import { Ionicons, MaterialCommunityIcons,Entypo, MaterialIcons, AntDesign, FontAwesome } from '@expo/vector-icons'
-import { Icon } from '@rneui/themed';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Table, Rows , TableWrapper} from 'react-native-table-component';
+import {FONTS,COLORS, SIZES , CATEGORIES} from '../constants'
+import {Entypo } from '@expo/vector-icons'
 
 const CategoryTable = () => {
     const tableData = [];

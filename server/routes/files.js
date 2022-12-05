@@ -17,6 +17,7 @@ router.post('/avatar/', upload.single('avatarFile'), function (req, res, next) {
   let newPath = __dirname + '/../files/avatar/'
   let id = req.body.user
 
+
   // verificar se já existe um ficheiro com o mesmo nome, mesmo que tenha extensões diferentes
   fs.readdir(newPath, (err, files) => {
     if (err) {

@@ -3,7 +3,7 @@ var router = express.Router();
 var Bankaccounts = require("../controllers/bankaccounts");
 
 router.post('/createBankAccount/',function(req,res){
-    Bankaccounts.addBankaccounts(req.body.accountName, req.body.NIF, req.body.IBAN, req.body.idUser)
+    Bankaccounts.addBankaccounts(req.body.accountName, req.body.NIF, req.body.IBAN, req.body.idUser,req.body.titular)
         .then(bankaccount => res.jsonp(bankaccount))
         .catch(erro => res.status(500).jsonp(erro))
 });

@@ -1,7 +1,9 @@
-version: '3'
+version: "3"
 services:
-   kc_backend:
+  kc_backend:
     build: ./server
-    image: kc_backend
-    container_name: kc_backend
+    image: wingman
+    container_name: wingman
     network_mode: kong-net
+    ports:
+      - "49160:3000"

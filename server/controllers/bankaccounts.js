@@ -33,3 +33,22 @@ Bankaccounts.deleteBankaccounts = function (idBankAccount) {
         });
        })
     };
+
+
+Bankaccounts.getBankaccounts = function(id) {
+    return new Promise(function(resolve,reject){
+        sql.query(`SELECT bankaccounts.idUser, bankaccounts.idBankAccounts, bankaccounts.accountName, bankaccounts.NIF, bankaccounts.IBAN
+                   FROM bankaccounts 
+                   where bankaccounts.idUser=?`,
+        id ,function(err,res){
+            if(err) {
+                console.log("error: ", err);
+                reject(err);
+            }
+            else{
+                resolve(res)
+            }
+        });   
+    })   
+}
+

@@ -13,4 +13,11 @@ router.put("/deleteBankAccount/:id", function (req, res){
   .then(dados => res.jsonp(dados))
   .catch(erro => res.status(500).jsonp(erro))
 })
+
+router.get("/getBankAccount/:id", function (req, res){
+  Bankaccounts.getBankaccounts(req.params.id)
+  .then( dados => res.jsonp(dados))
+  .catch(erro => res.status(500).jsonp(erro))
+})
+
 module.exports = router;

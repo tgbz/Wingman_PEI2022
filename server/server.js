@@ -19,6 +19,7 @@ app.use(cookieParser());
 
 app.use(helmet({
     //HSTS recommended config
+    crossOriginEmbedderPolicy: false,
     hsts: {
         maxAge: 31536000,
         includeSubDomains: true,
@@ -75,6 +76,7 @@ app.use('/users', require('./routes/users'));
 app.use('/purchases', require('./routes/purchases'));
 app.use('/categories', require('./routes/categories'));
 app.use('/files', require('./routes/files'));
+app.use('/bank', require('./routes/bankaccounts'));
 
 app.use(function (req, res, next) {
     var err = new Error('Not Found');

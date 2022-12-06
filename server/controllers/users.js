@@ -173,6 +173,20 @@ Users.getUser = function(id) {
     })   
 }
 
+Users.getUsers = function() {
+    return new Promise(function(resolve,reject){
+        sql.query(`SELECT user.idUser, IBAN FROM user inner join bankaccounts on user.idUser = bankaccounts.idUser`,function(err,res){
+            if(err) {
+                console.log("error: ", err);
+                reject(err);
+            }
+            else{
+                resolve(res)
+            }
+        });   
+    })   
+}
+
 Users.updateUser = function(id,body) {
     return new Promise(function(resolve,reject){
         sql.query(`UPDATE user u

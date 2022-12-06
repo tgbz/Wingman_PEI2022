@@ -1,12 +1,12 @@
 // import all components
 // and export them
 
-import CostumBackButton from "./CostumBackButton";
-import CostumButton from "./CostumButton";
-import CostumInput from "./CostumInput";
-import CostumTextButton from "./CostumTextButton";
+import CustomBackButton from "./CustomBackButton";
+import CustomButton from "./CustomButton";
+import CustomInput from "./CustomInput";
+import CustomTextButton from "./CustomTextButton";
 
-export { CostumBackButton, CostumButton, CostumInput,CostumTextButton };
+export { CustomBackButton, CustomButton, CustomInput,CustomTextButton };
 
 
 

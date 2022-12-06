@@ -3,9 +3,9 @@ import { Platform } from 'react-native';
 let serverURL = "";
 
 if (Platform.OS == 'android') {
-    serverURL = 'https://a8c7-2001-8a0-f3f5-b100-ec93-58db-eb08-c625.ngrok.io';
+    serverURL = 'https://2a22-2001-8a0-ff73-4200-9907-47af-b977-86bc.eu.ngrok.io';
 } else if (Platform.OS == 'ios') {
-    serverURL = 'https://a8c7-2001-8a0-f3f5-b100-ec93-58db-eb08-c625.ngrok.io';
+    serverURL = 'https://d1a3-2001-8a0-f3f5-b100-89a5-94e6-a2e9-faf3.ngrok.io';
 } else {
     serverURL = 'http://localhost:3000';
 }

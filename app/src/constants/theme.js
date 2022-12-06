@@ -59,3 +59,32 @@ export const SHADOWS = {
     elevation: 14,
   },
 };
+
+export const CATEGORIESCOLORS = {
+  casa: "#e72a31",
+  mobilidade: "#f26c3d",
+  impostosTaxas: "#f9f037",
+  desporto: "#96c950",
+  culturaHobbies: "#139751",
+  restaurantesCafes: "#177449",
+  saude: "#11a9a4",
+  viagens: "#5fc0eb",
+  educacao: "#0b77bf",
+  semCategoria: "#C0bdbd",
+  creditoComissoes: "#5253a5",
+  supermercadoLojas: "#743c9b",
+  seguros: "#9c3496",
+  entretenimento: "#a71c70",
+  investimentos: '#db427a'
+
+}
+
+
+
+
+
+
+
+
+
+

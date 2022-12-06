@@ -8,7 +8,6 @@ import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
  function HomeScreen({navigation}) {
   const [token,setToken] = useState("");
   const { signOut } = React.useContext(AuthContext);
-
   useEffect(() => {
        AsyncStorage.getItem('userToken')
        .then(userToken => setToken(JSON.parse(userToken)))
@@ -25,6 +24,9 @@ import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
       </View>
       <View>
         <Button title="Perfil" onPress={() => navigation.navigate("Profile")} />
+      </View>
+      <View>
+        <Button title="Políticas de Consumo" onPress={() => navigation.navigate("Politics")} />
       </View>
       
     </View>

@@ -14,7 +14,7 @@ import { COLORS, SHADOWS, SIZES } from '../constants'
 import { useState, useEffect } from 'react'
 import { serverURL } from '../config/hosts'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
-import { CostumBackButton, CostumButton } from '../components'
+import { CustomBackButton, CustomButton } from '../components'
 import * as ImagePicker from 'expo-image-picker'
 import {useRoute} from '@react-navigation/native'
 const createFormData = (pickedImage, user) => {
@@ -170,7 +170,7 @@ export default function ProfileScreen({ navigation }) {
       <SafeAreaView style={styles.root}>
         {/* Header 
         <View style={styles.navigationBar}>
-          <CostumBackButton onPress={() => navigation.goBack()} />
+          <CustomBackButton onPress={() => navigation.goBack()} />
           <Text style={styles.pageTitle}>Meu Perfil</Text>
         </View>
         */}
@@ -185,13 +185,19 @@ export default function ProfileScreen({ navigation }) {
                 style={styles.image}
                 resizeMode="center"
               ></Image>
-            ) : (
+            ) : data.gender == 1 ? (
               <Image
                 source={require('../../assets/images/female-avatar.png')}
                 style={styles.image}
                 resizeMode="center"
               ></Image>
-            )}
+            ):(
+              <Image
+                source={require('../../assets/images/other-avatar.png')}
+                style={styles.image}
+                resizeMode="center"
+              ></Image>)
+            } 
           </View>
           <View style={styles.addAvatar}>
             <MaterialCommunityIcons
@@ -239,25 +245,31 @@ export default function ProfileScreen({ navigation }) {
             </View>
             <View style={styles.col2}>
               <Text style={styles.textInfo}>
-                {data ? (data.gender == 0 ? 'Masculino' : 'Feminino') : 'Loading...'}
+                {data ? (data.gender == 0 ? 'Masculino' : data.gender == 1 ? 'Feminino' : 'Outro') : 'Loading...'}
               </Text>
             </View>
           </View>
         </View>
 
         <View style={styles.containerBTN}>
-          <CostumButton
+          <CustomButton
             onPress={() => navigation.navigate('ProfileEdit')}
             text="Editar Perfil"
             type="TERTIARY"
             widthScale={0.8}
-          ></CostumButton>
-          <CostumButton
+          ></CustomButton>
+          <CustomButton
             onPress={() => navigation.navigate('PassEdit')}
             text="Alterar Password"
             type="TERTIARY"
             widthScale={0.8}
-          ></CostumButton>
+          ></CustomButton>
+          <CustomButton
+            onPress={() => navigation.navigate('Accounts')}
+            text="Minhas Contas"
+            type="TERTIARY"
+            widthScale={0.8}
+          ></CustomButton>
         </View>
       </SafeAreaView>
     )

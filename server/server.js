@@ -19,6 +19,7 @@ app.use(cookieParser());
 
 app.use(helmet({
     //HSTS recommended config
+    crossOriginResourcePolicy: false,
     hsts: {
         maxAge: 31536000,
         includeSubDomains: true,

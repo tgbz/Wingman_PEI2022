@@ -22,6 +22,7 @@ import { useRoute } from '@react-navigation/native'
 export default function AccountsScreen({ navigation }) {
   const { height } = useWindowDimensions()
   const [token, setToken] = useState('')
+  const [contas, setContas] = useState([])
 
   useEffect(() => {
     AsyncStorage.getItem('userToken')
@@ -31,7 +32,12 @@ export default function AccountsScreen({ navigation }) {
 
   const [data, setData] = useState([])
   const fetchData = async (token) => {
-    //console.log(serverURL + '/users/userProfile/' + token.id)
+    //fetch getBankaccounts(id)
+    console.log(serverURL + '/bank/getBankAccount/' + token.id)
+    const resp = await fetch(`${serverURL}/bank/getBankAccount/${token.id}`)
+    const data = await resp.json()
+    console.log(data)
+    setContas(data)
   }
   // request data from server
   useEffect(() => {
@@ -41,7 +47,7 @@ export default function AccountsScreen({ navigation }) {
     }
   }, [token])
 
-  // every time route.params is true when user add account, refresh data
+  // every time route.params.refresh is true when user delete an account, refresh data
   const route = useRoute()
   useEffect(() => {
     // dont do shit if route.params is undefined
@@ -56,23 +62,21 @@ export default function AccountsScreen({ navigation }) {
         route.params.refresh = false
       }
     }
-  }, [route.params])
+  }, [route.params]) 
 
   return (
     <SafeAreaView style={styles.root}>
       {/* CONTAINER COM OUTLINE */}
       <View style={styles.Maincontainer}>
-        <View style={styles.container}>
-            <Text style={styles.textTag}>Conta Pessoal</Text>
-            <Text style={styles.textInfo}>Caixa Geral de Depósitos</Text>
-            <AntDesign name="rightcircleo" size={24} color="white" style={styles.iconStyle} onPress={() => navigation.navigate("Account", {name:"Conta Pessoal"})}/>
+        {/* for every account in contas make a container */}
+        {contas.map((conta) => 
+        <View style={styles.container} key={conta.idBankAccounts}>
+          <Text style={styles.textTag}>Conta {conta.idBankAccounts}</Text>
+          <Text style={styles.textInfo}>{conta.accountName}</Text>
+            {/*<Text style={styles.textInfo}>Caixa Geral de Depósitos</Text> */}
+            <AntDesign name="rightcircleo" size={24} color="white" style={styles.iconStyle} onPress={() => navigation.navigate("Account", {name:`Conta ${conta.idBankAccounts}`,conta:conta})}/>
         </View>
-
-        <View style={styles.container}>
-            <Text style={styles.textTag}>Conta Secundária</Text>
-            <Text style={styles.textInfo}>Montepio</Text>
-            <AntDesign name="rightcircleo" size={24} color="white" style={styles.iconStyle} onPress={() => navigation.navigate("AccountScreen")}/>
-        </View>
+        )}
      </View>
       <View style={styles.containerBTN}>
         <CustomButton
@@ -126,7 +130,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         //  center horizontally
         right: 30,
-        top: 32
+        top: 22
     }
 
 })

@@ -41,22 +41,35 @@ export default function AccountScreen({ navigation }) {
     }
   }, [token])
 
-  // every time route.params is true when user add account, refresh data
+  // set account that is sent from AccountsScreen
   const route = useRoute()
+  const [conta, setConta] = useState({})
   useEffect(() => {
-    // dont do shit if route.params is undefined
     if (route.params) {
-      // se nao for undefined
-      if (route.params.refresh) {
-        // se for true
-        console.log('Entered useEffect route.params')
-        fetchData(token)
-        console.log(typeof route.params.refresh)
-        // set route.params.refresh to false
-        route.params.refresh = false
-      }
+      console.log('Entered useEffect route.params: ' + JSON.stringify(route.params) + '\n')
+      setConta(route.params.conta)
     }
   }, [route.params])
+
+  // delete account -> deletes from db and refreshes data
+  const handleDeleteConta = async (id) => {
+    console.log('Entered handleDeleteConta: ' + id + '\n')
+    const resp = await fetch(`${serverURL}/bank/deleteBankAccount/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    }).then((resp) => {
+      if (resp.status === 200) {
+        alert('Conta eliminada com sucesso!')
+        navigation.navigate('Accounts',{refresh: true})
+      } else {
+        alert('Erro ao eliminar conta!')
+      }
+    })
+  }
+
+  
 
   return (
     <SafeAreaView style={styles.root}>
@@ -64,22 +77,22 @@ export default function AccountScreen({ navigation }) {
       <View style={styles.infoContainer}>
           <View style={styles.infoLine}>
               <Text style={styles.textTag}>Titular</Text>
-              <Text style={styles.textInfo}>Angélica Cunha</Text>
+              <Text style={styles.textInfo}>{conta.titular}</Text>
           </View>
 
           <View style={styles.infoLine}>
             <Text style={styles.textTag}>Contribuinte</Text>
-            <Text style={styles.textInfo}>123 456 789</Text>
+            <Text style={styles.textInfo}>{conta.NIF}</Text>
           </View>
           
           <View style={styles.infoLine}>
             <Text style={styles.textTag}>IBAN</Text>
-            <Text style={styles.textInfo}>PT50 0066 1122 3344 2233 1122 0</Text>
+            <Text style={styles.textInfo}>{conta.IBAN}</Text>
           </View>
       </View>
       <View style={styles.containerBTN}>
         <CustomButton
-          //onPress={() => navigation.navigate('Accounts')}
+          onPress={() => handleDeleteConta(conta.idBankAccounts)}
           text="Eliminar Conta"
           type="TERTIARY"
           widthScale={0.8}

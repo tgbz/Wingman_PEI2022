@@ -69,27 +69,25 @@ export default function AddAccountScreen({ navigation }) {
     console.log('iban: ' + iban)
     console.log('token: ' + token.id)
     // send data to server
-    const response = await fetch(serverURL + '/accounts/addAccount', {
+    const response = await fetch(serverURL + '/bank/createBankAccount', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        name: name,
+        accountName: name,
         titular: titular,
-        contribuinte: contribuinte,
+        NIF: contribuinte,
         IBAN: iban,
-        IdUser: token.id,
+        idUser: token.id,
       }),
     })
     const data = await response.json()
     console.log('data: ' + JSON.stringify(data))
     // if data is not empty, then account was added
     if (data) {
-      // set route.params.refresh to true
-      route.params.refresh = true
-      // go back to AccountsScreen
-      navigation.goBack()
+      // go back to AccountsScreen and refresh data
+      navigation.navigate('Accounts', { refresh: true })
     }
   }
 

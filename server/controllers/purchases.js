@@ -2,6 +2,7 @@ var sql = require('../config/database.js');
 var Purchase = require('../models/purchase.js');
 var Purchases = module.exports;
 var Users = require("../controllers/users");
+var Categories = require("../controllers/category");
 var axios = require("axios").default;
 //const salt = 14;
 //var bcrypt = require('bcryptjs')
@@ -76,7 +77,7 @@ var requestPurchases = setInterval(async function(){
   await delay(2000);
   const UserList = await Users.getUsers()
   Object.values(UserList).forEach( i => {
-    axios.get('http://94.60.175.136:3335/statements/update/'+i.IBAN)
+    axios.get('http://94.60.175.136:3335/statements/update/'+i.idUser)
   .then(async function(response){
     sql.getConnection(async function(err, connection) {
       try {
@@ -87,6 +88,8 @@ var requestPurchases = setInterval(async function(){
             console.log(movimento)
             let date = new Date(movimento.date).toISOString().replace(/T/, ' ').replace(/\..+/, '')
             queryPromises.push(Purchases.createPurchase(0,date,movimento.value,movimento.description,i.idUser,"",movimento.issuer,movimento._id,1,movimento.type,0))
+            queryPromises.push(Categories.addExpenses(movimento.category,i.idUser,movimento.value))
+            //Adicionar total spent à categoria e meter na categoria também no produto como não especificado
         })
         const results = await Promise.all(queryPromises)
         connection.commit()
@@ -103,4 +106,14 @@ var requestPurchases = setInterval(async function(){
     console.error(error);
   });
   })
-}, 86400000);
+}, 360);
+
+
+
+/*
+86400000
+INSERT INTO user_has_category (idUser,idCategory,plafond,total_spent)
+select 1,idCategory,10,100 from category where name = "Casa"
+
+*/
+

@@ -32,7 +32,7 @@ const CustomInput = ({value, setValue, placeholder, secureTextEntry, iconNameEnt
 
 const styles = StyleSheet.create({
     container:{
-        backgroundColor: COLORS.eggshell,
+        backgroundColor: "#eceffa",
         borderRadius: 5,
         paddingHorizontal: 10,
         paddingVertical: 15,

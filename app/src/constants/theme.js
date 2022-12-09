@@ -6,7 +6,7 @@ export const COLORS = {
 
   white: "#FFF",
   gray: "#74858C",
-  eggshell: "#FEFEFA"
+  eggshell: "#f3f4f6"
 };
 
 export const SIZES = {

@@ -21,9 +21,11 @@ Categories.getCategory = function(id) {
 }
 
 
+
+
 Categories.changePlafond = function (idUser,idCategory,plafond ) {
     return new Promise(function(resolve, reject) {
-      sql.query(`REPLACE INTO user_has_category (idUser,idCategory,plafond) VALUES (?, ?,?)`,[idUser,idCategory,plafond],
+      sql.query(`UPDATE user_has_category  SET plafond = ? where idUser = ? AND idcategory=?`,[plafond, idUser,idCategory],
           function (err, res) {
             if(err){
                 console.log("error: ", err);
@@ -35,3 +37,42 @@ Categories.changePlafond = function (idUser,idCategory,plafond ) {
         });
        })
     };
+
+
+
+Categories.updateSpent = function (idUser,idCategory,total_spent ) {
+    return new Promise(function(resolve, reject) {
+        sql.query(`UPDATE user_has_category  SET total_spent = ? where idUser = ? AND idcategory=?`,[total_spent, idUser,idCategory],
+            function (err, res) {
+            if(err){
+                console.log("error: ", err);
+                reject(err);
+            }
+            else{
+                resolve(res);
+            }
+        });
+        })
+    };
+
+    Categories.addExpenses = function (idUser,category,total_spent ) {
+        return new Promise(function(resolve, reject) {
+            sql.query(`UPDATE user_has_category AS cat,(SELECT idCategory FROM category WHERE name = ?) AS idCat
+            SET
+                total_spent = total_spent + ?
+            WHERE
+                idUser=? and  cat.idCategory = idCat.idCategory;`,[category, idUser,total_spent],
+                function (err, res) {
+                if(err){
+                    console.log("error: ", err);
+                    reject(err);
+                }
+                else{
+                    resolve(res);
+                }
+            });
+            })
+        };
+
+
+    

@@ -19,6 +19,7 @@ totalRE = r'\d+(\.\s?|,\s?|[^a-zA-Z\d])\d{2}'
 
 valueRE = r'(\d+[,| |.]+\d+)'
 
+debug,output = False,False
 
 class Receipt():
 	def __init__(self,raw,info_json):
@@ -37,7 +38,6 @@ class Receipt():
 	def normalize(self,raw):
 			return os.linesep.join([s for s in raw.splitlines() if s.strip()]).lower().splitlines()
 
-
 	def parse(self):
 		self.market = self.parse_market()
 		if self.market == 'Pingo Doce':
@@ -50,9 +50,8 @@ class Receipt():
 		for item in self.items.keys():
 			self.total += self.items[item]
 
-		print(self.to_json())
+		return self.to_json()
 	
-
 	def close_match(self,keyword,accuracy=0.6):
 		for line in self.lines:
 			words = line.split()
@@ -60,7 +59,6 @@ class Receipt():
 			if matches:
 				return line
 
-	
 	def parse_market(self):
 		for int_accuracy in range(10, 4, -1):
 			accuracy = int_accuracy / 10.0
@@ -75,7 +73,6 @@ class Receipt():
 
 						return market_match
 		return market_match
-
 
 	def parse_items_lidl(self):
 		for i,line in enumerate(self.lines):
@@ -104,11 +101,7 @@ class Receipt():
 				valueDecimal = float(match.group(4))*0.01
 				value = float(match.group(3))+valueDecimal
 				self.items[itemName] = round(value,2)
-				
-
-
-
-
+			
 	def parse_items_pd(self):
 		jump = False
 		for i,line in enumerate(self.lines):
@@ -131,8 +124,6 @@ class Receipt():
 				else:
 					value = float(match.group(4).replace(',','.').replace(' ',''))
 				self.items[itemName] = round(value,2)
-
-
 
 	def parse_date(self):
 		date_str = None
@@ -177,15 +168,20 @@ class Receipt():
 		return json.dumps(object_data,indent=2)
 
 
+def parseImage(files):
+	filename = files[0] #fix temporario enquanto nao se implementa o parsing de + que 1 imagem
+	image = pp.cv2.imread(filename)
+	if debug: pp.show(image,'Original')
+
+	preProc = [pp.normalize,pp.remove_noise,pp.remove_shadows]
+
+	raw = pp.generate_text('out',pp.pipeline(image,preProc),output)
+	r = Receipt(raw,'info.json')
+	return r.parse()
+
+
+
 if __name__ == '__main__':
 	filename,debug,output = pp.parse()
 
-	orig = pp.cv2.imread(filename)
-	if debug: pp.show(orig,'Original')
-	image = orig.copy()
 
-	preProc = [pp.normalize,pp.remove_noise,pp.remove_shadows]
-	raw = pp.generate_text('out',pp.pipeline(image,preProc),output)
-
-	r = Receipt(raw,'info.json')
-	r.parse()

@@ -9,13 +9,14 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native'
 import { serverURL } from '../config/hosts'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
-import { CostumBackButton, CostumButton, CostumInput } from '../components'
+import { CustomBackButton, CustomButton, CustomInput } from '../components'
 
 export default function PassEditScreen({ navigation }) {
   const { height } = useWindowDimensions()
   const [token, setToken] = useState('')
   const [newPass, setNewPass] = useState('')
   const [oldPass, setOldPass] = useState('')
+  const [confirmPass, setConfirmPass] = useState('')
 
   useEffect(() => {
     AsyncStorage.getItem('userToken')
@@ -61,31 +62,50 @@ export default function PassEditScreen({ navigation }) {
     })
   }
 
+  // validateForm that checks 
+  // if every input is filled
+  //if the new password and the confirm password are the same 
+  // And set costumize alert messages
+  const validateForm = () => {
+    if (newPass === '' || oldPass === '' || confirmPass === '') {
+      alert('Preencha todos os campos!')
+    } else if (newPass !== confirmPass) {
+      alert('As passwords não são iguais!')
+    } else {
+      handlePasswordChange()
+    }
+  }
 
   return (
     console.log(token),
     (
       <SafeAreaView style={styles.root}>
+        {/* Header
         <View style={styles.navigationBar}>
-          <CostumBackButton onPress={() => navigation.goBack()} />
+          <CustomBackButton onPress={() => navigation.goBack()} />
           <Text style={styles.pageTitle}>Alterar Password</Text>
         </View>
-
+        */}
         <View style={styles.infoContainer}>
             <Text style={styles.textTag}>Password atual</Text>
-            <CostumInput placeholder={""} value={oldPass} setValue={setOldPass} secureTextEntry iconNameEntry='form-textbox-password' widthScale={0.8}/>
+            <CustomInput placeholder={""} value={oldPass} setValue={setOldPass} secureTextEntry iconNameEntry='form-textbox-password' widthScale={0.8}/>
 
             <Text style={styles.textTag}>Password Nova</Text>
-            <CostumInput placeholder={""} value={newPass} setValue={setNewPass} secureTextEntry iconNameEntry='form-textbox-password' widthScale={0.8}/>
+            <CustomInput placeholder={""} value={newPass} setValue={setNewPass} secureTextEntry iconNameEntry='form-textbox-password' widthScale={0.8}/>
+
+            {/* Campo repetir nova password e testar se são iguais*/}
+            <Text style={styles.textTag}> Confirmar Password</Text>
+            <CustomInput placeholder={""} value={confirmPass} setValue={setConfirmPass} secureTextEntry iconNameEntry='form-textbox-password' widthScale={0.8}/>
+
         </View>
 
         <View style={styles.containerBTN}>
-          <CostumButton
-            onPress={() => handlePasswordChange()}
+          <CustomButton
+            onPress={() => validateForm()}
             text="Confirmar Alteração"
             type = "TERTIARY"
             widthScale={0.8}
-          ></CostumButton>
+          ></CustomButton>
         </View>
       </SafeAreaView>
     )

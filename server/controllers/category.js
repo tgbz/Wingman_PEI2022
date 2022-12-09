@@ -55,24 +55,21 @@ Categories.updateSpent = function (idUser,idCategory,total_spent ) {
         })
     };
 
-    Categories.addExpenses = function (idUser,category,total_spent ) {
-        return new Promise(function(resolve, reject) {
-            sql.query(`UPDATE user_has_category AS cat,(SELECT idCategory FROM category WHERE name = ?) AS idCat
-            SET
-                total_spent = total_spent + ?
-            WHERE
-                idUser=? and  cat.idCategory = idCat.idCategory;`,[category, idUser,total_spent],
-                function (err, res) {
-                if(err){
-                    console.log("error: ", err);
-                    reject(err);
-                }
-                else{
-                    resolve(res);
-                }
-            });
-            })
-        };
-
-
-    
+Categories.addExpenses = function (idUser,category,total_spent,connection ) {
+    return new Promise(function(resolve, reject) {
+        connection.query(`UPDATE user_has_category AS cat,( SELECT IFNULL( (SELECT idCategory FROM category WHERE name = ?),22) as idCategory) AS idCat
+        SET
+            total_spent = total_spent + ?
+        WHERE
+            idUser=? and  cat.idCategory = idCat.idCategory;`,[category, total_spent, idUser],
+            function (err, res) {
+            if(err){
+                console.log("error: ", err);
+                reject(err);
+            }
+            else{
+                resolve(res);
+            }
+        });
+        })
+    };

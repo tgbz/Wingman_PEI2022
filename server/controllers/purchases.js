@@ -54,21 +54,90 @@ Purchases.getRecurrent = function(id) {
     })   
 }
 
-Purchases.createPurchase = function (is_recurring, date, value, description, idUser, seller,idMovement,isFromAPI,type,verified) {
+Purchases.createPurchase = function (is_recurring, date, value, description, idUser, seller,idMovement,isFromAPI,type,verified,connection) {
     return new Promise(function(resolve, reject) {
-      sql.query(`INSERT IGNORE INTO purchase (is_recurring, date, value, description, idUser,seller,idMovement,isFromAPI,type,verified) VALUES (?,?,?,?,?,?,?,?,?,?)`,[is_recurring,date,value,description, idUser,seller,idMovement,isFromAPI,type,verified],
+      connection.query(`INSERT IGNORE INTO purchase (is_recurring, date, value, description, idUser,seller,idMovement,isFromAPI,type,verified) VALUES (?,?,?,?,?,?,?,?,?,?)`,[is_recurring,date,value,description, idUser,seller,idMovement,isFromAPI,type,verified],
           function (err, res) {
             if(err){
                 console.log("error: ", err);
                 reject(err);
             }
             else{
-                resolve(res);
+                //console.log(res)
+                resolve(res.insertId);
             }
         });
        })
     };
 
+Purchases.addSubCategoryToProduct = function (idProduct,category,connection) {
+    return new Promise(function(resolve, reject) {
+        connection.query(`INSERT IGNORE INTO product_has_subcategory
+                    SELECT ?,IFNULL( (SELECT idCategory FROM category WHERE name = ?),22) as idCategory,now(),now();`,[idProduct,category],
+            function (err, res) {
+            if(err){
+                console.log("error: ", err);
+                reject(err);
+            }
+            else{
+                //console.log(res)
+                resolve(res);
+            }
+        });
+        })
+    };
+
+Purchases.addSubCategoryToPurchase = function (idPurchase,idProduct,category,value,connection) {
+    return new Promise(function(resolve, reject) {
+        connection.query(`INSERT INTO purchase_has_subcategory
+                    SELECT ?,?,IFNULL( (SELECT idCategory FROM category WHERE name = ?),22) as idCategory , ?`,[idPurchase,idProduct,category,value],
+            function (err, res) {
+            if(err){
+                console.log("error: ", err);
+                reject(err);
+            }
+            else{
+                //console.log(res)
+                resolve(res);
+            }
+        });
+        })
+    };
+
+Purchases.uploadPurchases = function (is_recurring, date, value, description, idUser, seller,idMovement,isFromAPI,type,verified,category,connection) {
+    
+    return new Promise(function(resolve, reject) {
+        Purchases.createPurchase(is_recurring, date, value, description, idUser, seller,idMovement,isFromAPI,type,verified,connection)
+        .then(insertedID =>{
+            Purchases.addSubCategoryToProduct(1,category,connection)
+            .then(res=>{
+                if(insertedID>0){
+                    console.log(insertedID)
+                    Purchases.addSubCategoryToPurchase(insertedID,1,category,value,connection)
+                    .then(result =>{
+                        console.log("OLA  "+ result)
+                        console.log("OLEEE  "+ insertedID)
+                        resolve(result)
+                    })
+                    .catch(err =>{
+                        console.log(err)
+                        reject (err)
+                    })
+                }
+                else{
+                   resolve(res)
+                }
+                
+            })
+            .catch(err =>{
+                reject(err)
+            })
+        })
+        .catch(err =>{
+            reject(err)
+        })
+        })
+    };
 
 // Buscar as despesas dos utilizadores diariamente
 
@@ -76,8 +145,9 @@ var requestPurchases = setInterval(async function(){
   const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
   await delay(2000);
   const UserList = await Users.getUsers()
-  Object.values(UserList).forEach( i => {
-    axios.get('http://94.60.175.136:3335/statements/update/'+i.idUser)
+  console.log(UserList)
+  //Object.values(UserList).forEach( i => {
+    axios.get('http://94.60.175.136:3335/statements/1')
   .then(async function(response){
     sql.getConnection(async function(err, connection) {
       try {
@@ -85,15 +155,19 @@ var requestPurchases = setInterval(async function(){
         const queryPromises = []
         movimentos = response.data.movimentos
         Object.values(movimentos).forEach( movimento => {
-            console.log(movimento)
+            //console.log(movimento)
             let date = new Date(movimento.date).toISOString().replace(/T/, ' ').replace(/\..+/, '')
-            queryPromises.push(Purchases.createPurchase(0,date,movimento.value,movimento.description,i.idUser,"",movimento.issuer,movimento._id,1,movimento.type,0))
-            queryPromises.push(Categories.addExpenses(movimento.category,i.idUser,movimento.value))
-            //Adicionar total spent à categoria e meter na categoria também no produto como não especificado
+            //console.log(date)
+            queryPromises.push(Purchases.uploadPurchases(0,date,movimento.value,movimento.description,1,movimento.issuer,movimento._id,1,movimento.type,0,movimento.category,connection))
+            //queryPromises.push(Purchases.createPurchase(0, date, movimento.value, movimento.description, 1, movimento.issuer,movimento._id,1,movimento.type,0,connection))
+            //queryPromises.push(Purchases.addSubCategoryToProduct(1,movimento.category,connection))
+            //queryPromises.push(Purchases.addSubCategoryToPurchase(insertedID,1,movimento.category,movimento.value,connection))
+            queryPromises.push(Categories.addExpenses(1,movimento.category,movimento.value,connection))
         })
         const results = await Promise.all(queryPromises)
         connection.commit()
         connection.release()
+        console.log("Acabei")
         return results
         } catch (err) {
         console.log("error ", err);
@@ -105,15 +179,13 @@ var requestPurchases = setInterval(async function(){
   .catch(function (error) {
     console.error(error);
   });
-  })
-}, 360);
+  //})
+}, 60000);
 
 
 
 /*
 86400000
-INSERT INTO user_has_category (idUser,idCategory,plafond,total_spent)
-select 1,idCategory,10,100 from category where name = "Casa"
 
 */
 

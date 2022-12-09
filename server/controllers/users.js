@@ -43,7 +43,9 @@ return new Promise(function(resolve, reject) {
 }
 
 
-Users.register = function (newUser) {
+Users.register = function (
+    
+) {
     return new Promise(function(resolve, reject) {
         sql.getConnection(function(err,conn){
              if (err) {
@@ -168,6 +170,20 @@ Users.getUser = function(id) {
             }
             else{
                 resolve(res[0])
+            }
+        });   
+    })   
+}
+
+Users.getUsers = function() {
+    return new Promise(function(resolve,reject){
+        sql.query(`SELECT user.idUser, IBAN FROM user inner join bankaccounts on user.idUser = bankaccounts.idUser`,function(err,res){
+            if(err) {
+                console.log("error: ", err);
+                reject(err);
+            }
+            else{
+                resolve(res)
             }
         });   
     })   

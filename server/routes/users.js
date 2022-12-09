@@ -76,4 +76,10 @@ router.put("/updatePassword/:id", function (req, res){
   .catch(erro => res.status(500).jsonp(erro))
 })
 
+router.get("/users/", function (req, res){
+  Users.getUsers()
+  .then( dados => res.jsonp(dados))
+  .catch(erro => res.status(500).jsonp(erro))
+})
+
 module.exports = router;

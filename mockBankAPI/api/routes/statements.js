@@ -27,7 +27,6 @@ router.get("/update/:iban", function (req, res) {
         res.status(500).send(err.message);
       } else {
         console.log("statement updated");
-        console.log(statement);
         res.json(statement);
       }
     }

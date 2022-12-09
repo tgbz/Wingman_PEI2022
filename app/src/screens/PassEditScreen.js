@@ -16,6 +16,7 @@ export default function PassEditScreen({ navigation }) {
   const [token, setToken] = useState('')
   const [newPass, setNewPass] = useState('')
   const [oldPass, setOldPass] = useState('')
+  const [confirmPass, setConfirmPass] = useState('')
 
   useEffect(() => {
     AsyncStorage.getItem('userToken')
@@ -61,6 +62,19 @@ export default function PassEditScreen({ navigation }) {
     })
   }
 
+  // validateForm that checks 
+  // if every input is filled
+  //if the new password and the confirm password are the same 
+  // And set costumize alert messages
+  const validateForm = () => {
+    if (newPass === '' || oldPass === '' || confirmPass === '') {
+      alert('Preencha todos os campos!')
+    } else if (newPass !== confirmPass) {
+      alert('As passwords não são iguais!')
+    } else {
+      handlePasswordChange()
+    }
+  }
 
   return (
     console.log(token),
@@ -79,15 +93,15 @@ export default function PassEditScreen({ navigation }) {
             <Text style={styles.textTag}>Password Nova</Text>
             <CustomInput placeholder={""} value={newPass} setValue={setNewPass} secureTextEntry iconNameEntry='form-textbox-password' widthScale={0.8}/>
 
-            {/* Campo repetir nova password e testar se são iguais
+            {/* Campo repetir nova password e testar se são iguais*/}
             <Text style={styles.textTag}> Confirmar Password</Text>
-            <CustomInput placeholder={""} value={newPassValidate} setValue={setNewPass} secureTextEntry iconNameEntry='form-textbox-password' widthScale={0.8}/>
-*/}
+            <CustomInput placeholder={""} value={confirmPass} setValue={setConfirmPass} secureTextEntry iconNameEntry='form-textbox-password' widthScale={0.8}/>
+
         </View>
 
         <View style={styles.containerBTN}>
           <CustomButton
-            onPress={() => handlePasswordChange()}
+            onPress={() => validateForm()}
             text="Confirmar Alteração"
             type = "TERTIARY"
             widthScale={0.8}

@@ -245,7 +245,7 @@ export default function ProfileScreen({ navigation }) {
             </View>
             <View style={styles.col2}>
               <Text style={styles.textInfo}>
-                {data ? (data.gender == 0 ? 'Masculino' : 'Feminino') : 'Loading...'}
+                {data ? (data.gender == 0 ? 'Masculino' : data.gender == 1 ? 'Feminino' : 'Outro') : 'Loading...'}
               </Text>
             </View>
           </View>
@@ -261,6 +261,12 @@ export default function ProfileScreen({ navigation }) {
           <CustomButton
             onPress={() => navigation.navigate('PassEdit')}
             text="Alterar Password"
+            type="TERTIARY"
+            widthScale={0.8}
+          ></CustomButton>
+          <CustomButton
+            onPress={() => navigation.navigate('Accounts')}
+            text="Minhas Contas"
             type="TERTIARY"
             widthScale={0.8}
           ></CustomButton>

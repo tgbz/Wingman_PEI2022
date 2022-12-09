@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 22,
+            "activePatchIndex": 23,
             "patches": [
                 {
                     "date": 1669631708116,
@@ -96,6 +96,10 @@
                 {
                     "date": 1669649353779,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,23 @@\n     }\r\n   );\r\n });\r\n \r\n+router.get(\"/update/:iban\", function (req, res) {\r\n+  StatementsController.updateStatement(\r\n+    req.params.iban,\r\n+    function (err, statement) {\r\n+      if (err) {\r\n+        res.status(500).send(err.message);\r\n+      } else {\r\n+        console.log(\"statement updated\");\r\n+        console.log(statement);\r\n+        res.json(statement);\r\n+      }\r\n+    }\r\n+  );\r\n+});\r\n+\r\n //Rota para obter um dado statement baseado num IBAN\r\n router.get(\"/:iban\", function (req, res) {\r\n   StatementsController.getStatement(req.params.iban, function (err, statement) {\r\n     if (err) {\r\n"
+                },
+                {
+                    "date": 1670079101965,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,8 @@\n       if (err) {\r\n         res.status(500).send(err.message);\r\n       } else {\r\n         console.log(\"statement updated\");\r\n-        console.log(statement);\r\n         res.json(statement);\r\n       }\r\n     }\r\n   );\r\n"
                 }
             ],
             "date": 1669631708116,

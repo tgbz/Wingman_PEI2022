@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 var Statement = require("../models/statement");
 var MongoQuery = require("../config/query.js");
 var Transactions = require("./transactionsController");
-
+mongoose.set("useFindAndModify", false);
 var Statements = module.exports;
 
 var BankList = [
@@ -36,9 +36,16 @@ Statements.getStatement = function (iban, callback) {
 //create 1,2,3 or 4 new transactions, and update the Statement
 Statements.updateStatement = function (iban, callback) {
   var newTransactions = [];
+  var newBalance = 0;
   var newTransactionsCount = Math.floor(Math.random() * 4) + 1;
   for (var i = 0; i < newTransactionsCount; i++) {
-    newTransactions.push(Transactions.newTransaction(iban));
+    var tmpTransaction = Transactions.newTransaction(iban);
+    if (tmpTransaction.type == "Debito") {
+      newBalance -= tmpTransaction.value;
+    } else {
+      newBalance += tmpTransaction.value;
+    }
+    newTransactions.push(tmpTransaction);
     Transactions.create(newTransactions[i], function (err, transaction) {
       if (err) {
         callback(err);
@@ -54,6 +61,20 @@ Statements.updateStatement = function (iban, callback) {
       }
     );
   }
+  console.log(newBalance);
+
+  //update the Statement balance
+  Statement.findOneAndUpdate(
+    { IBAN: iban },
+    { $inc: { saldo: newBalance } },
+    function (err, Statement) {
+      if (err) {
+        console.log(err);
+        callback(err);
+      }
+    }
+  );
+
   Statements.getStatement(iban, function (err, Statement) {
     if (err) {
       callback(err);
@@ -87,13 +108,12 @@ Statements.initStatement = function (iban, callback) {
     for (var i = 0; i < 10; i++) {
       var transaction = Transactions.newTransaction(newStatement._id);
       newStatement.movimentos.push(transaction._id);
-      if (transaction.type == "Débito") {
+      if (transaction.type == "Debito") {
         newStatement.saldo -= transaction.value;
-      }
-      if (transaction.type == "Crédito") {
+      } else if (transaction.type == "Credito") {
         newStatement.saldo += transaction.value;
       }
-      newStatement.saldo += transaction.value;
+
       try {
         Transactions.create(transaction, function (err, transaction) {
           if (err) {

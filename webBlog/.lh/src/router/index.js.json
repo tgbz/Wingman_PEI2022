@@ -1,0 +1,54 @@
+{
+    "sourceFile": "src/router/index.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 9,
+            "patches": [
+                {
+                    "date": 1670006309429,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1670006314709,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,4 +10,12 @@\n     name: \"Login\",\r\n     component: Login,\r\n   },\r\n ];\r\n+\r\n+const router = new VueRouter({\r\n+  mode: \"history\",\r\n+  base: process.env.BASE_URL,\r\n+  routes,\r\n+});\r\n+\r\n+export default router;\r\n"
+                },
+                {
+                    "date": 1670006541613,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,5 @@\n import Vue from \"vue\";\r\n-import Vue from \"vue\";\r\n import VueRouter from \"vue-router\";\r\n import Login from \"../views/Login.vue\";\r\n Vue.use(VueRouter);\r\n \r\n"
+                },
+                {
+                    "date": 1670006717499,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n import Vue from \"vue\";\r\n import VueRouter from \"vue-router\";\r\n-import Login from \"../views/Login.vue\";\r\n+import Login from \"../views/LoginView.vue\";\r\n Vue.use(VueRouter);\r\n \r\n const routes = [\r\n   {\r\n"
+                },
+                {
+                    "date": 1670071025292,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,15 +1,21 @@\n import Vue from \"vue\";\r\n import VueRouter from \"vue-router\";\r\n-import Login from \"../views/LoginView.vue\";\r\n+import LoginView from \"../views/LoginView.vue\";\r\n+import NewOrderView from \"../views/NewOrderView.vue\";\r\n Vue.use(VueRouter);\r\n \r\n const routes = [\r\n   {\r\n     path: \"/\",\r\n     name: \"Login\",\r\n-    component: Login,\r\n+    component: LoginView,\r\n   },\r\n+  {\r\n+    path: \"/newOrder\",\r\n+    name: \"NewOrder\",\r\n+    component: NewOrderView,\r\n+  },\r\n ];\r\n \r\n const router = new VueRouter({\r\n   mode: \"history\",\r\n"
+                },
+                {
+                    "date": 1670071037253,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n import Vue from \"vue\";\r\n import VueRouter from \"vue-router\";\r\n import LoginView from \"../views/LoginView.vue\";\r\n-import NewOrderView from \"../views/NewOrderView.vue\";\r\n+import NewOrderView from \"../views/orders/NewOrderView.vue\";\r\n Vue.use(VueRouter);\r\n \r\n const routes = [\r\n   {\r\n"
+                },
+                {
+                    "date": 1670604511637,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,14 +1,15 @@\n import Vue from \"vue\";\r\n import VueRouter from \"vue-router\";\r\n import LoginView from \"../views/LoginView.vue\";\r\n import NewOrderView from \"../views/orders/NewOrderView.vue\";\r\n+import HomeView from \"../views/HomeView.vue\";\r\n Vue.use(VueRouter);\r\n \r\n const routes = [\r\n   {\r\n     path: \"/\",\r\n-    name: \"Login\",\r\n+    name: \"Home\",\r\n     component: LoginView,\r\n   },\r\n   {\r\n     path: \"/newOrder\",\r\n"
+                },
+                {
+                    "date": 1670604575195,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n const routes = [\r\n   {\r\n     path: \"/\",\r\n     name: \"Home\",\r\n-    component: LoginView,\r\n+    component: HomeView,\r\n   },\r\n   {\r\n     path: \"/newOrder\",\r\n     name: \"NewOrder\",\r\n"
+                },
+                {
+                    "date": 1670604925582,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,6 @@\n import Vue from \"vue\";\r\n import VueRouter from \"vue-router\";\r\n-import LoginView from \"../views/LoginView.vue\";\r\n-import NewOrderView from \"../views/orders/NewOrderView.vue\";\r\n import HomeView from \"../views/HomeView.vue\";\r\n Vue.use(VueRouter);\r\n \r\n const routes = [\r\n"
+                },
+                {
+                    "date": 1670604951424,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,13 +8,8 @@\n     path: \"/\",\r\n     name: \"Home\",\r\n     component: HomeView,\r\n   },\r\n-  {\r\n-    path: \"/newOrder\",\r\n-    name: \"NewOrder\",\r\n-    component: NewOrderView,\r\n-  },\r\n ];\r\n \r\n const router = new VueRouter({\r\n   mode: \"history\",\r\n"
+                }
+            ],
+            "date": 1670006309429,
+            "name": "Commit-0",
+            "content": "import Vue from \"vue\";\r\nimport Vue from \"vue\";\r\nimport VueRouter from \"vue-router\";\r\nimport Login from \"../views/Login.vue\";\r\nVue.use(VueRouter);\r\n\r\nconst routes = [\r\n  {\r\n    path: \"/\",\r\n    name: \"Login\",\r\n    component: Login,\r\n  },\r\n];\r\n"
+        }
+    ]
+}

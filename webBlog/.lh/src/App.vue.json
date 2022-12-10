@@ -1,0 +1,50 @@
+{
+    "sourceFile": "src/App.vue",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 8,
+            "patches": [
+                {
+                    "date": 1670005920814,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1670007025505,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,41 +1,8 @@\n <template>\n   <v-app>\n-    <v-app-bar app color=\"primary\" dark>\n-      <div class=\"d-flex align-center\">\n-        <v-img\n-          alt=\"Vuetify Logo\"\n-          class=\"shrink mr-2\"\n-          contain\n-          src=\"https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png\"\n-          transition=\"scale-transition\"\n-          width=\"40\"\n-        />\n-\n-        <v-img\n-          alt=\"Vuetify Name\"\n-          class=\"shrink mt-1 hidden-sm-and-down\"\n-          contain\n-          min-width=\"100\"\n-          src=\"https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png\"\n-          width=\"100\"\n-        />\n-      </div>\n-\n-      <v-spacer></v-spacer>\n-\n-      <v-btn\n-        href=\"https://github.com/vuetifyjs/vuetify/releases/latest\"\n-        target=\"_blank\"\n-        text\n-      >\n-        <span class=\"mr-2\">Latest Release</span>\n-        <v-icon>mdi-open-in-new</v-icon>\n-      </v-btn>\n-    </v-app-bar>\n-\n     <v-main>\n-      <HelloWorld />\n+      <router-view />\n     </v-main>\n   </v-app>\n </template>\n \n"
+                },
+                {
+                    "date": 1670007033943,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,12 +11,8 @@\n \n export default {\n   name: \"App\",\n \n-  components: {\n-    HelloWorld,\n-  },\n-\n   data: () => ({\n     //\n   }),\n };\n"
+                },
+                {
+                    "date": 1670009496081,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,14 +6,19 @@\n   </v-app>\n </template>\n \n <script>\n-import HelloWorld from \"./components/HelloWorld\";\n-\n export default {\n   name: \"App\",\n \n   data: () => ({\n     //\n   }),\n };\n </script>\n+<style>\n+* {\n+  padding: 0px;\n+  margin: 0px;\n+  box-sizing: border-box;\n+}\n+</style>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1670009504353,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n };\n </script>\n <style>\n * {\n-  padding: 0px;\n+  padding: 0px !important;\n   margin: 0px;\n   box-sizing: border-box;\n }\n </style>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1670009510060,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,8 +17,8 @@\n </script>\n <style>\n * {\n   padding: 0px !important;\n-  margin: 0px;\n+  margin: 0px !important;\n   box-sizing: border-box;\n }\n </style>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1670009840645,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,7 @@\n <template>\n   <v-app>\n-    <v-main>\n-      <router-view />\n-    </v-main>\n+    <router-view />\n   </v-app>\n </template>\n \n <script>\n@@ -14,11 +12,4 @@\n     //\n   }),\n };\n </script>\n-<style>\n-* {\n-  padding: 0px !important;\n-  margin: 0px !important;\n-  box-sizing: border-box;\n-}\n-</style>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1670612731318,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,4 +12,11 @@\n     //\n   }),\n };\n </script>\n+\n+<style>\n+body {\n+  background-color: #;\n+  font-family: \"Sora\", sans-serif !important;\n+}\n+</style>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1670612736913,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,8 +15,8 @@\n </script>\n \n <style>\n body {\n-  background-color: #;\n+  background-color: #f5f6fa;\n   font-family: \"Sora\", sans-serif !important;\n }\n </style>\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1670005920814,
+            "name": "Commit-0",
+            "content": "<template>\n  <v-app>\n    <v-app-bar app color=\"primary\" dark>\n      <div class=\"d-flex align-center\">\n        <v-img\n          alt=\"Vuetify Logo\"\n          class=\"shrink mr-2\"\n          contain\n          src=\"https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png\"\n          transition=\"scale-transition\"\n          width=\"40\"\n        />\n\n        <v-img\n          alt=\"Vuetify Name\"\n          class=\"shrink mt-1 hidden-sm-and-down\"\n          contain\n          min-width=\"100\"\n          src=\"https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png\"\n          width=\"100\"\n        />\n      </div>\n\n      <v-spacer></v-spacer>\n\n      <v-btn\n        href=\"https://github.com/vuetifyjs/vuetify/releases/latest\"\n        target=\"_blank\"\n        text\n      >\n        <span class=\"mr-2\">Latest Release</span>\n        <v-icon>mdi-open-in-new</v-icon>\n      </v-btn>\n    </v-app-bar>\n\n    <v-main>\n      <HelloWorld />\n    </v-main>\n  </v-app>\n</template>\n\n<script>\nimport HelloWorld from \"./components/HelloWorld\";\n\nexport default {\n  name: \"App\",\n\n  components: {\n    HelloWorld,\n  },\n\n  data: () => ({\n    //\n  }),\n};\n</script>\n"
+        }
+    ]
+}

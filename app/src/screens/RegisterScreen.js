@@ -196,12 +196,12 @@ const styles = StyleSheet.create({
     paddingHorizontal:30,
   },
   selectList:{
-    backgroundColor: COLORS.white,
+    backgroundColor: "#eceffa",
     borderColor: COLORS.wingblue,
   },
   dropdownStyles:{
     maxHeight: 120,
-    backgroundColor: COLORS.white,
+    backgroundColor: "#eceffa",
     borderColor:COLORS.wingblue
   },
   containerNovo: {

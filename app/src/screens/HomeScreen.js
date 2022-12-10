@@ -4,6 +4,7 @@ import { useState,useEffect } from "react";
 import AuthContext from "../context/AuthProvider";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
+import { serverURL } from '../config/hosts'
 
  function HomeScreen({navigation}) {
   const [token,setToken] = useState("");
@@ -13,7 +14,14 @@ import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
        .then(userToken => setToken(JSON.parse(userToken)))
        .catch(err => console.log(err))
   }, [])
-  
+
+  const getCategories = async () => {
+    // fecth data from serverURL/users/userCategory/:id and print it
+    console.log(`${serverURL}+'/categories/userCategory/'+${token.id}`)
+    const resp = await fetch(`${serverURL}/categories/userCategory/${token.id}`)
+    const data = await resp.json()
+    console.log(data)
+  }
     return (
     <View style={styles.container}>
       <View style >
@@ -26,9 +34,8 @@ import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
         <Button title="Perfil" onPress={() => navigation.navigate("Profile")} />
       </View>
       <View>
-        <Button title="Políticas de Consumo" onPress={() => navigation.navigate("Politics")} />
+        <Button title="Definir Políticas de Consumo" onPress={() => navigation.navigate("PoliticsSuggestion")} />
       </View>
-      
     </View>
   );
 }

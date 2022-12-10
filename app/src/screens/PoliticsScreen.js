@@ -14,117 +14,119 @@ export default function PoliticsScreen(){
   const data =[
     {
       category: 'Casa',
-      percentage: 1,
+      percentage: 7,
       color: '#e72a31',
       legendFontColor: 'black',
-
     },
     {
       category: 'Mobilidade',
-      percentage: 1,
+      percentage: 7,
       color: '#f26c3d',
       legendFontColor: 'black',
 
     },
     {
       category: 'Impostos e Taxas',
-      percentage: 1,
+      percentage: 7,
       color: '#f9f037',
       legendFontColor: 'black',
 
     },
     {
       category: 'Desporto',
-      percentage: 1,
+      percentage: 7,
       color: '#96c950',
       legendFontColor: 'black',
 
     },
     {
       category: 'Cultura e Hobbies',
-      percentage: 1,
+      percentage: 7,
       color: '#139751',
       legendFontColor: 'black',
 
     },
     {
       category: 'Restaurantes e Cafés',
-      percentage: 1,
+      percentage: 7,
       color: '#177449',
       legendFontColor: 'black',
 
     },
     {
       category: 'Saúde',
-      percentage: 1,
+      percentage: 7,
       color: '#11a9a4',
       legendFontColor: 'black',
 
     },
     {
       category: 'Viagens',
-      percentage: 1,
+      percentage: 7,
       color: '#5fc0eb',
       legendFontColor: 'black',
 
     },
     {
       category: 'Educação',
-      percentage: 1,
+      percentage: 7,
       color:'#0b77bf'  ,
       legendFontColor: 'black',
 
     },
     {
       category: 'Sem Categoria',
-      percentage: 1,
+      percentage: 2,
       color: '#C0bdbd',
       legendFontColor: 'black',
 
     },
     {
       category: 'Crédito e Comissões',
-      percentage: 1,
+      percentage: 7,
       color: "#5253a5",
       legendFontColor: 'black',
 
     },
     {
       category: 'Supermercado e Lojas',
-      percentage: 1,
+      percentage: 7,
       color: "#743c9b",
       legendFontColor: 'black',
 
     },
     {
       category: 'Seguros',
-      percentage: 1,
+      percentage: 7,
       color: '#9c3496',
       legendFontColor: 'black',
 
     },
     {
       category: 'Entretenimento',
-      percentage: 1,
+      percentage: 7,
       color: '#a71c70',
       legendFontColor: 'black',
 
     },
     {
       category: 'Investimentos',
-      percentage: 1,
+      percentage: 7,
       color: '#db427a',
       legendFontColor: 'black',
 
     },
   ];
+ 
   const chartConfig = {
-    backgroundColor: COLORS.eggshell,
+    backgroundColor: COLORS.white,
     decimalPlaces: 2, // optional, defaults to 2dp
     color: (opacity = 1) => `rgba(25, 95, 255, ${opacity})`,
     style: {
       borderRadius: 16,
     }};
+   
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.eggshell}}>
       <ScrollView>
@@ -144,7 +146,7 @@ export default function PoliticsScreen(){
             backgroundColor= {COLORS.eggshell}
           />
         </View>
-        <View><CategoryTable></CategoryTable></View>
+        <View><CategoryTable data={data}></CategoryTable></View>
         
       </ScrollView>
     </SafeAreaView>

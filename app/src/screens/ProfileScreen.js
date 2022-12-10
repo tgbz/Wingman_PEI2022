@@ -174,7 +174,7 @@ export default function ProfileScreen({ navigation }) {
           <Text style={styles.pageTitle}>Meu Perfil</Text>
         </View>
         */}
-        <View style={{ alignSelf: 'center' }}>
+        <View style={{ alignSelf: 'center', marginTop:10 }}>
           <View style={styles.profileImage}>
             {photo ? (
               console.log('I have photo!! ' + JSON.stringify(photo)),

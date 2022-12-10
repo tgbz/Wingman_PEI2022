@@ -15,6 +15,7 @@ import AddAccountScreen from '../screens/AddAccountScreen.js';
 import PoliticsScreen from '../screens/PoliticsScreen.js';
 
 import { COLORS,SIZES } from '../constants/theme.js';
+import PoliticsSuggestionScreen from '../screens/PoliticsSuggestionScreen.js';
 
 
 // Screens Names
@@ -94,7 +95,7 @@ export default function HomeStack() {
         <Stack.Screen name="Account" component={AccountScreen} options={({ route }) => ({ title: route.params.name })} />
         <Stack.Screen name="AddAccount" component={AddAccountScreen}   options={{title:"Adicionar Conta"}}/>
         <Stack.Screen name="Politics" component={PoliticsScreen} options={{title:"Políticas de Consumo"}}/>
-
+        <Stack.Screen name="PoliticsSuggestion" component={PoliticsSuggestionScreen} options={{title:"Sugestões de Consumo"}}/>
       </Stack.Navigator>
   );
 };

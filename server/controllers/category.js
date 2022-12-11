@@ -57,7 +57,7 @@ Categories.updateSpent = function (idUser,idCategory,total_spent ) {
 
 Categories.addExpenses = function (idUser,category,total_spent,connection ) {
     return new Promise(function(resolve, reject) {
-        connection.query(`UPDATE user_has_category AS cat,( SELECT IFNULL( (SELECT idCategory FROM category WHERE name = ?),22) as idCategory) AS idCat
+        (connection || sql).query(`UPDATE user_has_category AS cat,( SELECT IFNULL( (SELECT idCategory FROM category WHERE name = ?),22) as idCategory) AS idCat
         SET
             total_spent = total_spent + ?
         WHERE

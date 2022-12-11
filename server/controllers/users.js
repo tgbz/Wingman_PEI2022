@@ -68,7 +68,7 @@ Users.register = function (
                             Users.create(newUser,conn)
                             .then(id =>{
                                 Users.initWallet(id,conn)
-                                .then(id=>{
+                                .then(idWallet=>{
                                     conn.commit((err)=>{
                                         if(err){
                                             conn.rollback(()=> {

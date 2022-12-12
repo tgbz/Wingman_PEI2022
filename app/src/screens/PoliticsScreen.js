@@ -17,6 +17,9 @@ import { serverURL } from '../config/hosts'
 export default function PoliticsScreen(){
   const width =Dimensions.get('window').width;
   const [token, setToken] = useState('')
+  const categories = ['Casa', 'Mobilidade', 'Impostos e Taxas', 'Desporto', 'Cultura e Hobbies', 'Restaurantes e Cafés', 'Saúde', 'Viagens', 'Educação', 'Sem Categoria', 'Crédito e Comissões', 'Supermercado e Lojas', 'Seguros', 'Entretenimento', 'Investimentos']
+  const alias = ['casa', 'mobilidade', 'impostosTaxas', 'desporto', 'culturaHobbies', 'restaurantesCafes', 'saude', 'viagens', 'educacao', 'semCategoria', 'creditoComissoes', 'supermercadoLojas', 'seguros', 'entretenimento', 'investimentos']
+
   const newData = []
   useEffect(() => {
     AsyncStorage.getItem('userToken')
@@ -36,11 +39,12 @@ export default function PoliticsScreen(){
     categoryData.forEach(element => {
       if (categories.includes(element.name)) {
         let index= categories.indexOf(element.name, 0)
-        aliasCat = alias[index];      
+        let aliasCat = alias[index];      
         let obj = {category: element.name, plafond: parseInt(element.plafond), color: CATEGORIESCOLORS[aliasCat], legendFontColor: 'black'}
         newData.push(obj)
       }
     });
+    console.log(newData)
   }
 
   useEffect(() => {
@@ -48,9 +52,6 @@ export default function PoliticsScreen(){
       fetchData(token)
     }
   }, [token])
-
-  const categories = ['Casa', 'Mobilidade', 'Impostos e Taxas', 'Desporto', 'Cultura e Hobbies', 'Restaurantes e Cafés', 'Saúde', 'Viagens', 'Educação', 'Sem Categoria', 'Crédito e Comissões', 'Supermercado e Lojas', 'Seguros', 'Entretenimento', 'Investimentos']
-  const alias = ['casa', 'mobilidade', 'impostosTaxas', 'desporto', 'culturaHobbies', 'restaurantesCafes', 'saude', 'viagens', 'educacao', 'semCategoria', 'creditoComissoes', 'supermercadoLojas', 'seguros', 'entretenimento', 'investimentos']
 
 
   const data =[
@@ -166,9 +167,8 @@ export default function PoliticsScreen(){
       borderRadius: 16,
     }};
    
-  adjustData(categoryData);
+  adjustData(categoryData)
   console.log(newData)
-
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.eggshell}}>
       <ScrollView>

@@ -1,6 +1,6 @@
 import { View, Text, Image, TouchableOpacity, useWindowDimensions, Dimensions } from 'react-native'
 import React from 'react'
-import { COLORS, SHADOWS, SIZES } from '../constants'
+import { CATEGORIES, CATEGORIESCOLORS, COLORS, SHADOWS, SIZES } from '../constants'
 import { useState, useEffect } from 'react'
 import { StyleSheet } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -9,109 +9,150 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { CustomBackButton, CustomButton, CustomInput, CustomTextButton } from '../components'
 import {PieChart} from 'react-native-chart-kit';
 import CategoryTable from '../components/CategoryTable'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { serverURL } from '../config/hosts'
+
+
+
 export default function PoliticsScreen(){
   const width =Dimensions.get('window').width;
+  const [token, setToken] = useState('')
+  const categories = ['Casa', 'Mobilidade', 'Impostos e Taxas', 'Desporto', 'Cultura e Hobbies', 'Restaurantes e Cafés', 'Saúde', 'Viagens', 'Educação', 'Sem Categoria', 'Crédito e Comissões', 'Supermercado e Lojas', 'Seguros', 'Entretenimento', 'Investimentos']
+  const alias = ['casa', 'mobilidade', 'impostosTaxas', 'desporto', 'culturaHobbies', 'restaurantesCafes', 'saude', 'viagens', 'educacao', 'semCategoria', 'creditoComissoes', 'supermercadoLojas', 'seguros', 'entretenimento', 'investimentos']
+
+  const newData = []
+  useEffect(() => {
+    AsyncStorage.getItem('userToken')
+      .then((userToken) => setToken(JSON.parse(userToken)))
+      .catch((err) => console.log(err))
+  }, [])
+
+  const [categoryData, setCategoryData] = useState([])
+  const fetchData = async (token) => {
+    const resp = await fetch(`${serverURL}/categories/userCategory/${token.id}`)
+    const categoryData = await resp.json()
+    console.log('User fetch data: ' + JSON.stringify(categoryData[0]))
+    setCategoryData(categoryData)
+  }
+
+  function adjustData( categoryData) {
+    categoryData.forEach(element => {
+      if (categories.includes(element.name)) {
+        let index= categories.indexOf(element.name, 0)
+        let aliasCat = alias[index];      
+        let obj = {category: element.name, plafond: parseInt(element.plafond), color: CATEGORIESCOLORS[aliasCat], legendFontColor: 'black'}
+        newData.push(obj)
+      }
+    });
+    console.log(newData)
+  }
+
+  useEffect(() => {
+    if (token.id) {
+      fetchData(token)
+    }
+  }, [token])
+
+
   const data =[
-    {
-      category: 'Casa',
-      percentage: 7,
-      color: '#e72a31',
-      legendFontColor: 'black',
-    },
+    {category: "Casa", 
+    color: "#e72a31", 
+    legendFontColor: "black", 
+    plafond: 10}, 
     {
       category: 'Mobilidade',
-      percentage: 7,
+      plafond: 7,
       color: '#f26c3d',
       legendFontColor: 'black',
 
     },
     {
       category: 'Impostos e Taxas',
-      percentage: 7,
+      plafond: 7,
       color: '#f9f037',
       legendFontColor: 'black',
 
     },
     {
       category: 'Desporto',
-      percentage: 7,
+      plafond: 7,
       color: '#96c950',
       legendFontColor: 'black',
 
     },
     {
       category: 'Cultura e Hobbies',
-      percentage: 7,
+      plafond: 7,
       color: '#139751',
       legendFontColor: 'black',
 
     },
     {
       category: 'Restaurantes e Cafés',
-      percentage: 7,
+      plafond: 7,
       color: '#177449',
       legendFontColor: 'black',
 
     },
     {
       category: 'Saúde',
-      percentage: 7,
+      plafond: 7,
       color: '#11a9a4',
       legendFontColor: 'black',
 
     },
     {
       category: 'Viagens',
-      percentage: 7,
+      plafond: 7,
       color: '#5fc0eb',
       legendFontColor: 'black',
 
     },
     {
       category: 'Educação',
-      percentage: 7,
+      plafond: 7,
       color:'#0b77bf'  ,
       legendFontColor: 'black',
 
     },
     {
       category: 'Sem Categoria',
-      percentage: 2,
+      plafond: 2,
       color: '#C0bdbd',
       legendFontColor: 'black',
 
     },
     {
       category: 'Crédito e Comissões',
-      percentage: 7,
+      plafond: 7,
       color: "#5253a5",
       legendFontColor: 'black',
 
     },
     {
       category: 'Supermercado e Lojas',
-      percentage: 7,
+      plafond: 7,
       color: "#743c9b",
       legendFontColor: 'black',
 
     },
     {
       category: 'Seguros',
-      percentage: 7,
+      plafond: 7,
       color: '#9c3496',
       legendFontColor: 'black',
 
     },
     {
       category: 'Entretenimento',
-      percentage: 7,
+      plafond: 7,
       color: '#a71c70',
       legendFontColor: 'black',
 
     },
     {
       category: 'Investimentos',
-      percentage: 7,
+      plafond: 7,
       color: '#db427a',
       legendFontColor: 'black',
 
@@ -126,13 +167,14 @@ export default function PoliticsScreen(){
       borderRadius: 16,
     }};
    
-
+  adjustData(categoryData)
+  console.log(newData)
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.eggshell}}>
       <ScrollView>
         <View style={styles.container}>
           <PieChart
-            data={data}
+            data={newData}
             width={width - 16}
             paddingLeft={width / 4}
             height={220}
@@ -142,7 +184,7 @@ export default function PoliticsScreen(){
               marginVertical: 8,
               borderRadius: 16,
             }}
-            accessor="percentage"
+            accessor="plafond"
             backgroundColor= {COLORS.eggshell}
           />
         </View>

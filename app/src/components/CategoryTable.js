@@ -55,7 +55,7 @@ const CategoryTable = ({data}) => {
         //rowData.push(CATEGORIES[key].icon, CATEGORIES[key].name, '5%', editIcon(key));
         Object.keys(data).forEach(dataKey => {
             if (data[dataKey].category === CATEGORIES[key].name) {
-                rowData.push(CATEGORIES[key].icon, CATEGORIES[key].name,minusIcon(dataKey), data[dataKey].percentage, '%', plusIcon(dataKey));
+                rowData.push(CATEGORIES[key].icon, CATEGORIES[key].name,minusIcon(dataKey), data[dataKey].percentage, '€', plusIcon(dataKey));
             }});
        // rowData.push(CATEGORIES[key].icon, CATEGORIES[key].name,minusIcon, percentagem, '%', plusIcon);
         tableData.push(rowData);

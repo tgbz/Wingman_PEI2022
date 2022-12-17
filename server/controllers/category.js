@@ -23,6 +23,61 @@ Categories.getCategory = function(id) {
 
 
 
+Categories.changePlafonds = function (idUser,idCategory,plafond,connection ) {
+    return new Promise(function(resolve, reject) {
+      connection.query(`INSERT INTO user_has_category
+            (idUser,idCategory,plafond)
+            VALUES
+            (?,?,?)
+            as new_foo
+            on duplicate key update
+            plafond = new_foo.plafond`,[idUser,idCategory,plafond],
+          function (err, res) {
+            if(err){
+                console.log("error: ", err);
+                reject(err);
+            }
+            else{
+                resolve(res);
+            }
+        });
+       })
+    };
+
+
+Categories.changeAllPlafonds = function (idUser,categorias) {
+    return new Promise ((resolve,reject)=>{
+      sql.getConnection(async function(err, connection) {
+      try {
+        connection.beginTransaction()
+        const queryPromises = []
+        Object.values(categorias).forEach( category => {
+            queryPromises.push(Categories.changePlafonds(idUser,category.idcategory,category.plafond,connection))
+        })
+        const results = await Promise.all(queryPromises)
+        connection.commit()
+        connection.release()
+        console.log("Acabei")
+        console.log(results)
+        resolve(results)
+    } 
+    catch (err) {
+        console.log("error ", err);
+        connection.rollback()
+        connection.release()
+        reject(err)
+    }
+})
+    })
+    
+
+};
+
+
+
+      
+
+
 Categories.changePlafond = function (idUser,idCategory,plafond ) {
     return new Promise(function(resolve, reject) {
       sql.query(`UPDATE user_has_category  SET plafond = ? where idUser = ? AND idcategory=?`,[plafond, idUser,idCategory],

@@ -1,85 +1,91 @@
-import React from 'react';
-import { StyleSheet, View,Modal,Text,Button, processColor } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View,Modal,Text,Button, processColor, TextInput , TouchableOpacity} from 'react-native';
 import { Table, Rows , TableWrapper} from 'react-native-table-component';
 import {FONTS,COLORS, SIZES , CATEGORIES} from '../constants'
-import {Entypo,AntDesign } from '@expo/vector-icons'
+import {Entypo,AntDesign, FontAwesome5, MaterialIcons, Feather} from '@expo/vector-icons'
+
+
+  
 
 const CategoryTable = ({data}) => {
     const tableData = [];
-    const plusIcon =(key) => <AntDesign name="pluscircle" size={20} color={COLORS.wingDarkBlue}
-     onPress={() =>{// change percentage in data object 
-        if (data[key].percentage < 100) {
-        data[key].percentage = data[key].percentage + 1
-        // refresh the table
-        setUpdate(update => !update)
-        }
-     }
-    }/>
-    const minusIcon =(key) => <AntDesign name="minuscircle" size={20} color={COLORS.wingDarkBlue}
-    onPress={() =>{// change percentage in data object 
-        if (data[key].percentage > 0){
-        data[key].percentage = data[key].percentage - 1
-        // refresh the table
-        setUpdate(update => !update)
-        }
-     }
-    }/>
-   /* const editIcon = (key) =>  <Entypo name="edit"
-                        size={20}
-                        color={COLORS.wingDarkBlue} onPress={()=> showModal(key)} />
-
-    //  showModal that shows a modal to change the category percentage
-    const [isModalVisible, setIsModalVisible] = React.useState(false);
-
-  const handleModal = () => setIsModalVisible(() => !isModalVisible);
-
-    const showModal = (key) => {
-        // showModal that shows a modal to change the category percentage
-        setIsModalVisible(true);
-        console.log(key);
+    const [value, setValue] = useState('');
+    const [edit, setEdit] = useState(false);
+    const [categories, setCategories] = useState({"categories": [{"idcategory": 15, "plafond": 100}]})
+    const [provCat, setProvCat] = useState({"categories": [{"idcategory": 15, "plafond": 100}]})
+  
+    const category = {idcategory: 15, plafond: 105}
+   
+    function handleChanges (id, value) {
+      let algo = provCat;
+      let done = false
+      algo.categories.forEach(elem => {
+        if (elem.idcategory === id){
+            elem.plafond = value;
+            done = true }
+      })
+      if (!done) {
+        const obj = {'idcategory': id, 'plafond': value}
+        algo.categories.push(obj)
+      }
+   
+      //console.log(value, id)
+      //console.log(some_array)
+      setProvCat(algo)
+      //console.log(provCat)
     }
-    */
-   // use state to change the percentage
+  
 
-    const [update, setUpdate] = React.useState(false);
-
-    // refresh the table when the percentage changes
-    React.useEffect(() => {
-        getTable()
-    }, [update]);
-
+const inputField = (id, plafond) => {  
+  return <TextInput
+          key = {id}
+          onChangeText={(text) => handleChanges(id, text)}
+          placeholder={plafond}
+          style={[styles.text, { color: COLORS.wingDarkBlue, backgroundColor: COLORS.eggshell, fontSize: 14}]}
+/>}
     // create the table
+
+    const showValue = (idcategory, plafond) => {
+      return edit? inputField(idcategory, plafond) : plafond
+    }
     const getTable = () => {
-    Object.keys(CATEGORIES).forEach(key => {
-        const rowData = [];
-        //rowData.push(CATEGORIES[key].icon, CATEGORIES[key].name, '5%', editIcon(key));
-        Object.keys(data).forEach(dataKey => {
-            if (data[dataKey].category === CATEGORIES[key].name) {
-                rowData.push(CATEGORIES[key].icon, CATEGORIES[key].name,minusIcon(dataKey), data[dataKey].percentage, '€', plusIcon(dataKey));
-            }});
-       // rowData.push(CATEGORIES[key].icon, CATEGORIES[key].name,minusIcon, percentagem, '%', plusIcon);
-        tableData.push(rowData);
-      });  
+      data.forEach(elem => {
+          tableData.push([CATEGORIES[elem.category].icon, CATEGORIES[elem.category].name,showValue(elem.category, elem.plafond), '€']);
+        })
     }  
 
+    //Button to edit all fields of the politics
+    const editButton =  
+      <TouchableOpacity onPress={() => {edit? setEdit(false): setEdit(true)} } style={styles.bttn}>
+          <Text style={[styles.text, {color: 'white'}]}>{"Edit  "}
+            <Feather name="edit" size={20} style={{color:'white'}} />
+          </Text>
+      </TouchableOpacity>
+            
+
+    //Buttons to save or discard all changes
+    const saveCancelButtons = 
+    <View style={[ {
+      flexDirection: "row", height:34, width: 120,
+    }]}>
+        <TouchableOpacity onPress={() => {edit? (setEdit(false)): setEdit(true)} } style={[styles.bttnSaveCancel, {backgroundColor:'green'}]}>
+              {<AntDesign name="checkcircleo" size={26} style={{color:'white'}}/>}
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => {edit? setEdit(false): setEdit(true)} } style={[styles.bttnSaveCancel, {backgroundColor:'red'}]}>
+              {<MaterialIcons name="cancel" size={26} style={{color:'white'}}/>}
+        </TouchableOpacity>
+    </View>
     return (
         getTable(),
         <View style={styles.container}>
-            {/*
-            <View style={styles.centeredView}>
-            <Modal transparent={true} visible={isModalVisible}>
-                <View style={styles.modalView}>
-                <Text>Hello!</Text>
-                <Button title="Hide modal" onPress={handleModal} />
-               </View>
-             </Modal>
-             </View>
-                 */}
             {/* Button to confirm the changes , when cliked update pie chart data of parent*/}
-            <Button title="Confirm" onPress={() => {console.log("confirm")}}/>
+            <View style={{alignItems:'flex-end', paddingBottom:10}}>
+              {!edit? editButton: saveCancelButtons}
+              
+            </View>
           <Table borderStyle={{borderWidth: 0}}>
             <TableWrapper style={styles.wrapper}>
-              <Rows data={tableData} flexArr={[0.7, 4, 0.5, 0.5, 0.6]} style={styles.row} textStyle={styles.text}/>
+              <Rows data={tableData} flexArr={[0.7, 4.5, 1.5, 0.8]} style={styles.row} textStyle={styles.text}/>
             </TableWrapper>
           </Table>
           <View style={styles.container}>
@@ -97,6 +103,23 @@ const styles = StyleSheet.create({
              },
         wrapper: { 
             flexDirection: 'row' },
+        bttn:{
+            position: 'relative',
+            height:34,
+            width: 120,
+            backgroundColor: COLORS.wingDarkBlue,
+            alignItems: "center",
+            borderRadius:7,
+        },
+        bttnSaveCancel:{
+          alignItems: "center",
+          borderRadius:7,
+          flexDirection: 'column',
+          flex:0.5,
+          paddingVertical: 3,
+          borderWidth:1,
+          borderColor: COLORS.eggshell
+        },
         row: {  
             height: 45 , 
             paddingLeft: 20,

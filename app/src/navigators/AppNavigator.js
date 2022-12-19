@@ -13,6 +13,8 @@ import AccountsScreen from '../screens/AccountsScreen.js';
 import AccountScreen from '../screens/AccountScreen.js';
 import AddAccountScreen from '../screens/AddAccountScreen.js';
 import PoliticsScreen from '../screens/PoliticsScreen.js';
+import ActivitySummaryScreen from '../screens/ActivitySummaryScreen.js';
+
 
 import { COLORS,SIZES } from '../constants/theme.js';
 import PoliticsSuggestionScreen from '../screens/PoliticsSuggestionScreen.js';
@@ -96,6 +98,8 @@ export default function HomeStack() {
         <Stack.Screen name="AddAccount" component={AddAccountScreen}   options={{title:"Adicionar Conta"}}/>
         <Stack.Screen name="Politics" component={PoliticsScreen} options={{title:"Políticas de Consumo"}}/>
         <Stack.Screen name="PoliticsSuggestion" component={PoliticsSuggestionScreen} options={{title:"Sugestões de Consumo"}}/>
+        <Stack.Screen name="ActivitySummary" component={ActivitySummaryScreen} options={{title:"Resumo de Atividade"}}/>
+
       </Stack.Navigator>
   );
 };

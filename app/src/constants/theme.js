@@ -60,22 +60,43 @@ export const SHADOWS = {
   },
 };
 
+/*
+  casa: 11,
+  mobilidade: 12,
+  familia: 13,
+  impostosTaxas: 16,
+  desporto: 15,
+  culturaHobbies: 18,
+  restaurantesCafes: 19,
+  saude: 14,
+  viagens: 21,
+  educacao: 20,
+  semCategoria: 22,
+  creditoComissoes: 24,
+  supermercadoLojas: 23,
+  seguros: 25,
+  entretenimento: 26,
+  investimentos: 27
+
+*/ 
+
 export const CATEGORIESCOLORS = {
-  casa: "#e72a31",
-  mobilidade: "#f26c3d",
-  impostosTaxas: "#f9f037",
-  desporto: "#96c950",
-  culturaHobbies: "#139751",
-  restaurantesCafes: "#177449",
-  saude: "#11a9a4",
-  viagens: "#5fc0eb",
-  educacao: "#0b77bf",
-  semCategoria: "#C0bdbd",
-  creditoComissoes: "#5253a5",
-  supermercadoLojas: "#743c9b",
-  seguros: "#9c3496",
-  entretenimento: "#a71c70",
-  investimentos: '#db427a'
+  11: "#e72a31",
+  12: "#f26c3d",
+  13: "#f7a541",
+  16: "#f9f037",
+  15: "#96c950",
+  18: "#139751",
+  19: "#177449",
+  14: "#11a9a4",
+  21: "#5fc0eb",
+  20: "#0b77bf",
+  22: "#C0bdbd",
+  24: "#5253a5",
+  23: "#743c9b",
+  25: "#9c3496",
+  26: "#a71c70",
+  27: '#db427a'
 
 }
 

@@ -5,47 +5,21 @@ import { useState, useEffect } from 'react'
 import { StyleSheet } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native'
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
-import { CustomBackButton, CustomButton, CustomInput, CustomTextButton } from '../components'
 import {PieChart} from 'react-native-chart-kit';
 import CategoryTable from '../components/CategoryTable'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { serverURL } from '../config/hosts'
 
-
-
 export default function PoliticsScreen(){
   const width =Dimensions.get('window').width;
   const [token, setToken] = useState('')
-  const categories = ['Casa', 'Mobilidade', 'Impostos e Taxas', 'Desporto', 'Cultura e Hobbies', 'Restaurantes e Cafés', 'Saúde', 'Viagens', 'Educação', 'Sem Categoria', 'Crédito e Comissões', 'Supermercado e Lojas', 'Seguros', 'Entretenimento', 'Investimentos']
-  const alias = ['casa', 'mobilidade', 'impostosTaxas', 'desporto', 'culturaHobbies', 'restaurantesCafes', 'saude', 'viagens', 'educacao', 'semCategoria', 'creditoComissoes', 'supermercadoLojas', 'seguros', 'entretenimento', 'investimentos']
 
-  const newData = []
+  const finalCategoryData = []
   useEffect(() => {
     AsyncStorage.getItem('userToken')
       .then((userToken) => setToken(JSON.parse(userToken)))
       .catch((err) => console.log(err))
   }, [])
-
-  const [categoryData, setCategoryData] = useState([])
-  const fetchData = async (token) => {
-    const resp = await fetch(`${serverURL}/categories/userCategory/${token.id}`)
-    const categoryData = await resp.json()
-    console.log('User fetch data: ' + JSON.stringify(categoryData[0]))
-    setCategoryData(categoryData)
-  }
-
-  function adjustData( categoryData) {
-    categoryData.forEach(element => {
-      if (categories.includes(element.name)) {
-        let index= categories.indexOf(element.name, 0)
-        let aliasCat = alias[index];      
-        let obj = {category: element.name, plafond: parseInt(element.plafond), color: CATEGORIESCOLORS[aliasCat], legendFontColor: 'black'}
-        newData.push(obj)
-      }
-    });
-    console.log(newData)
-  }
 
   useEffect(() => {
     if (token.id) {
@@ -53,7 +27,22 @@ export default function PoliticsScreen(){
     }
   }, [token])
 
+  const [categoryData, setCategoryData] = useState([])
+  const fetchData = async (token) => {
+    const resp = await fetch(`${serverURL}/categories/userCategory/${token.id}`)
+    const categoryData = await resp.json()
+    setCategoryData(categoryData)
+  }
 
+  function adjustData( categoryData) {
+    categoryData.forEach(element => {
+        let obj = {category: element.idcategory, plafond: element.plafond}
+        finalCategoryData.push(obj)
+  
+    });
+  }
+
+ 
   const data =[
     {category: "Casa", 
     color: "#e72a31", 
@@ -63,6 +52,13 @@ export default function PoliticsScreen(){
       category: 'Mobilidade',
       plafond: 7,
       color: '#f26c3d',
+      legendFontColor: 'black',
+
+    },
+    {
+      category: 'Família',
+      plafond: 7,
+      color: '#f7a541',
       legendFontColor: 'black',
 
     },
@@ -157,6 +153,7 @@ export default function PoliticsScreen(){
       legendFontColor: 'black',
 
     },
+    
   ];
  
   const chartConfig = {
@@ -167,14 +164,13 @@ export default function PoliticsScreen(){
       borderRadius: 16,
     }};
    
-  adjustData(categoryData)
-  console.log(newData)
-  return (
+  
+  return ( adjustData(categoryData), 
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.eggshell}}>
       <ScrollView>
         <View style={styles.container}>
           <PieChart
-            data={newData}
+            data={data}
             width={width - 16}
             paddingLeft={width / 4}
             height={220}
@@ -188,7 +184,7 @@ export default function PoliticsScreen(){
             backgroundColor= {COLORS.eggshell}
           />
         </View>
-        <View><CategoryTable data={data}></CategoryTable></View>
+        <View><CategoryTable data={finalCategoryData}></CategoryTable></View>
         
       </ScrollView>
     </SafeAreaView>

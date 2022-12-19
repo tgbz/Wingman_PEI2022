@@ -17,6 +17,7 @@ import {
   import { AntDesign } from '@expo/vector-icons'
   import { CustomBackButton, CustomButton } from '../components'
   import { useRoute } from '@react-navigation/native'
+import { ScrollView } from 'react-native-gesture-handler'
   //LogBox.ignoreLogs(['Asyncstorage: ...']);
   export default function PoliticsSuggestionScreen({ navigation }) {
     const { height } = useWindowDimensions()
@@ -30,7 +31,7 @@ import {
     }, [])
   
     return (
-      <SafeAreaView style={styles.root}>
+      <ScrollView style={styles.root}>
         
         <View style={styles.Maincontainer}>
           {/* for every account in contas make a container 
@@ -60,7 +61,7 @@ import {
             widthScale={0.8}
           ></CustomButton>
         </View>
-      </SafeAreaView>
+      </ScrollView>
     )
     //)
   }

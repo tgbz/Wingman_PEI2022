@@ -3,9 +3,6 @@ import { SafeAreaView, StyleSheet, Text, View, Button, Image, TouchableOpacity, 
 import AuthContext from "../../context/AuthProvider";
 import {COLORS, SHADOWS, SIZES } from '../../constants'
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 function LandingScreen({navigation}) {
     const { signIn } = React.useContext(AuthContext);
     const { height } = useWindowDimensions();

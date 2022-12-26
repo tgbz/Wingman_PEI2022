@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Screens
@@ -14,6 +14,7 @@ import AccountScreen from '../screens/AccountScreen.js';
 import AddAccountScreen from '../screens/AddAccountScreen.js';
 import PoliticsScreen from '../screens/PoliticsScreen.js';
 import ActivitySummaryScreen from '../screens/ActivitySummaryScreen.js';
+import FilterScreen from '../screens/FilterScreen.js';
 
 
 import { COLORS,SIZES } from '../constants/theme.js';
@@ -98,7 +99,14 @@ export default function HomeStack() {
         <Stack.Screen name="AddAccount" component={AddAccountScreen}   options={{title:"Adicionar Conta"}}/>
         <Stack.Screen name="Politics" component={PoliticsScreen} options={{title:"Políticas de Consumo"}}/>
         <Stack.Screen name="PoliticsSuggestion" component={PoliticsSuggestionScreen} options={{title:"Sugestões de Consumo"}}/>
-        <Stack.Screen name="ActivitySummary" component={ActivitySummaryScreen} options={{title:"Resumo de Atividade"}}/>
+        <Stack.Screen name="ActivitySummary" component={ActivitySummaryScreen} options={({ navigation }) => ({
+                                                                                title: 'Resumo de Atividade',
+                                                                                headerRight: () => (
+                                                                                  <Ionicons name="options" size={24} onPress={() => navigation.navigate("Filter")}/>
+                                                                                )
+                                                                               
+                                                                              })}/>
+        <Stack.Screen name="Filter" component={FilterScreen} options={{title:"Filtros",  presentation: 'modal'}}/>
 
       </Stack.Navigator>
   );

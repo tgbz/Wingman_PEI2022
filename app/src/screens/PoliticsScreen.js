@@ -25,7 +25,6 @@ export default function PoliticsScreen({navigation}){
   const [changes, setChanges] = useState(true)
   
 
-  
   useEffect(() => {
     AsyncStorage.getItem('userToken')
       .then((userToken) => setToken(JSON.parse(userToken)))
@@ -66,12 +65,12 @@ function handleChanges (id, value) {
   }
 }
 
-
 const inputField = (id, plafond) => {  
 return <TextInput
       key = {id}
+      keyboardType = 'numeric'
       onChangeText={(text) => handleChanges(id, text)}
-      placeholder={plafond}
+      placeholder={plafond} placeholderTextColor={COLORS.wingDarkBlue}
       style={[styles.text, { color: COLORS.wingDarkBlue, backgroundColor: COLORS.eggshell, fontSize: 14}]}
 />}
 // create the table
@@ -80,7 +79,6 @@ const showValue = (idcategory, plafond) => {
   return edit? inputField(idcategory, plafond) : plafond
 }
 function getTable (){
-  console.log("Dentro do get Table finalCategoryTable", finalCategoryData)
   finalCategoryData.forEach(elem => {
       tableData.push([CATEGORIES[elem.idcategory].icon, CATEGORIES[elem.idcategory].name,showValue(elem.idcategory, elem.plafond), '€']);
     })

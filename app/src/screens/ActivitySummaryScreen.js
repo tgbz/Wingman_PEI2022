@@ -8,14 +8,13 @@ import { SafeAreaView } from 'react-native'
 import ActivityTable from '../components/ActivityTable'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { serverURL } from '../config/hosts'
+import {Entypo,Ionicons,Octicons } from '@expo/vector-icons'
 
 
 
-export default function PoliticsScreen(){
+export default function PoliticsScreen({navigation}){
   const width = Dimensions.get('window').width;
   const [token, setToken] = useState('')
-  const categories = ['Casa', 'Mobilidade', 'Impostos e Taxas', 'Desporto', 'Cultura e Hobbies', 'Restaurantes e Cafés', 'Saúde', 'Viagens', 'Educação', 'Sem Categoria', 'Crédito e Comissões', 'Supermercado e Lojas', 'Seguros', 'Entretenimento', 'Investimentos']
-  const alias = ['casa', 'mobilidade', 'impostosTaxas', 'desporto', 'culturaHobbies', 'restaurantesCafes', 'saude', 'viagens', 'educacao', 'semCategoria', 'creditoComissoes', 'supermercadoLojas', 'seguros', 'entretenimento', 'investimentos']
 
   useEffect(() => {
     AsyncStorage.getItem('userToken')
@@ -79,5 +78,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     padding: 10,
   },
+  item: {
+    color: COLORS.wingDarkBlue,
+    alignSelf: 'flex-end',
+    paddingRight: 15
+  }
 
 });

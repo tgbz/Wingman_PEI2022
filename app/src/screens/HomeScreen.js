@@ -36,6 +36,9 @@ import { serverURL } from '../config/hosts'
       <View>
         <Button title="Definir Políticas de Consumo" onPress={() => navigation.navigate("PoliticsSuggestion")} />
       </View>
+      <View>
+        <Button title="Resumo de Atividade" onPress={() => navigation.navigate("ActivitySummary")} />
+      </View>
     </View>
   );
 }

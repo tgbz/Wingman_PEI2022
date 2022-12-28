@@ -17,100 +17,113 @@ const styles = StyleSheet.create({
 });
 
 export const CATEGORIES = {
-  casa: 
+  11: 
     {
-      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS.casa}]}>
+      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS[11]}]}>
                     <Ionicons name="home-outline" size={20} style={styles.item} />
            </TouchableHighlight>,
       name:'Casa'
     },
-    mobilidade: 
+    12: 
     {
-      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS.mobilidade}]}>
+      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS[12]}]}>
                 <Ionicons name="bus-outline" size={20} style={styles.item} />
           </TouchableHighlight>,
       name:'Mobilidade'
     },
-    impostosTaxas: {
-      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS.impostosTaxas}]}>
+    16: {
+      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS[16]}]}>
               <FontAwesome5 name="percentage" size={20} style={styles.item} />
         </TouchableHighlight>,
       name:'Impostos e Taxas'
     },
-    desporto: {
-      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS.desporto}]}>
+    15: {
+      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS[15]}]}>
                 <MaterialIcons name="sports-tennis" size={20} style={styles.item} />
           </TouchableHighlight>,
       name:'Desporto'
     },
-    culturaHobbies: {
-      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS.culturaHobbies}]}>
+    18: {
+      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS[18]}]}>
                 <MaterialCommunityIcons name="theater" size={20} style={styles.item} />
           </TouchableHighlight>,
       name:'Cultura e Hobbies'
     },
-    restaurantesCafes: {
-      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS.restaurantesCafes}]}>
+    19: {
+      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS[19]}]}>
                 <MaterialIcons name="restaurant" size={20} style={styles.item} />
           </TouchableHighlight>,
       name:'Restaurantes e Cafés'
     },
-    saude: {
-      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS.saude}]}>
+    14: {
+      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS[14]}]}>
                 <MaterialIcons name="medical-services" size={20} style={styles.item} />
           </TouchableHighlight>,
       name:'Saúde'
     },
-    viagens: {
-      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS.viagens}]}>
+    21: {
+      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS[21]}]}>
                   <FontAwesome name="plane" size={20} style={styles.item} />
             </TouchableHighlight>,
       name:'Viagens'
     },
-    educacao: {
-      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS.educacao}]}>
+    20: {
+      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS[20]}]}>
                 <SimpleLineIcons name="graduation" size={20} style={styles.item} />
           </TouchableHighlight>,
       name:'Educação'
   },
-    semCategoria: {
-      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS.semCategoria}]}>
+    22: {
+      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS[22]}]}>
                 <MaterialCommunityIcons name="dots-grid" size={20} style={styles.item} />
           </TouchableHighlight>,
       name:'Sem Categoria'
     },
-    creditoComissoes: {
-      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS.creditoComissoes}]}>
+    24: {
+      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS[24]}]}>
                   <Entypo name="credit-card" size={20} style={styles.item} />
             </TouchableHighlight>,
       name:'Crédito e Comissões'
     },
-    supermercadoLojas: {
-      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS.supermercadoLojas}]}>
+    23: {
+      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS[23]}]}>
                 <Feather name="shopping-cart" size={20} style={styles.item} />
           </TouchableHighlight>,
       name:'Supermercado e Lojas'
     },
-    seguros: {
-      icon: <TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS.seguros}]}>
+    25: {
+      icon: <TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS[25]}]}>
                   <Ionicons name="shield-checkmark" size={20} style={styles.item} />
             </TouchableHighlight>,
       name:'Seguros'
     },
-    entretenimento: {
-      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS.entretenimento}]}>
+    26: {
+      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS[26]}]}>
                   <MaterialCommunityIcons name="party-popper" size={20} style={styles.item} />
           </TouchableHighlight>,
       name:'Entretenimento'
     },
-    investimentos: {
-      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS.investimentos}]}>
+    27: {
+      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS[27]}]}>
       <FontAwesome5 name="hand-holding-usd" size={20} style={styles.item} />
 </TouchableHighlight>,
       name:'Investimentos'
+    },
+    13: {
+      icon:<TouchableHighlight style={[styles.roundshape, {backgroundColor:  CATEGORIESCOLORS[13]}]}>
+      <MaterialIcons name="family-restroom" size={20} style={styles.item} />
+</TouchableHighlight>,
+      name:'Família'
     },
 
 }
 
 
-
+export const SIGNS = {
+  Credito: {
+    icon: <Entypo name="plus" size={18} color={'green'} />
+  },
+  Debito: {
+    icon:<Entypo name="minus" size={18} color={'red'} />,
+  },
+}

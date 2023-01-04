@@ -32,8 +32,9 @@ export default function PoliticsScreen({navigation}){
   // Put transaction data on dd/mm/aa format
   function treatDate (date) {
     //Obtain the first 10 caracteres: data
-    const newDate = date.slice(2, 10).replaceAll('-', '/').split('/').reverse().join('/')
-    return newDate; 
+    if (typeof value === 'string') {
+      return date.slice(2, 10).replaceAll('-', '/').split('/').reverse().join('/')
+  }
   }
 
   const transactionsList = []

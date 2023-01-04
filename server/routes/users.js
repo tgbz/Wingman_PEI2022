@@ -25,7 +25,8 @@ router.post("/login", (req, res, next) => {
           name: user.name,
           email: user.email,
           birthdate: user.birthDate,
-          gender: user.gender
+          gender: user.gender,
+          hascategory: user.hascategory
         });
       });
     }

@@ -4,7 +4,7 @@ var Categories = module.exports;
 // Get todas as categorias e o total gasto em cada
 Categories.getCategory = function(id) {
     return new Promise(function(resolve,reject){
-        sql.query(`select user_has_category.idUser, category.idcategory, category.name, user_has_category.plafond, user_has_category.total_spent
+        sql.query(`select user_has_category.idUser, category.idcategory, category.name, user_has_category.plafond, user_has_category.total_spent, category.is_essential
                     from category
                     inner join user_has_category on category.idcategory = user_has_category.idcategory
                     where user_has_category.idUser = ?`,

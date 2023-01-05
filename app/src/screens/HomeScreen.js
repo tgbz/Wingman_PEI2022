@@ -8,6 +8,7 @@ import { serverURL } from '../config/hosts'
 
 import {ProgressChart} from 'react-native-chart-kit';
 import * as _ from 'lodash'; //Fazer Clone dos objetos
+import { CurrentRenderContext } from '@react-navigation/native';
 
  function HomeScreen({navigation}) {
   const [token,setToken] = useState("");
@@ -35,12 +36,17 @@ const noCategoryChartDataExample = {
   labels: ["No Category"], // optional
   data: [0.4]
 };
+
 const essencial_selector = 1
 const non_essencial_selector = 2
 const investment_selector = 3
+const charts_height = 100
 
 const chartConfig = {
-  backgroundColor: COLORS.white,
+  backgroundGradientFrom: COLORS.white,
+  backgroundGradientFromOpacity: 0,
+  backgroundGradientTo: COLORS.white,
+  backgroundGradientToOpacity: 1,
   decimalPlaces: 2, // optional, defaults to 2dp
   color: (opacity = 1) => `rgba(25, 95, 255, ${opacity})`,
   style: {
@@ -91,33 +97,42 @@ function transformToNoCategoryData(selector, categoryData) {
         <Text>Welcome {token.name}</Text>
       </View>
       <View style={{ flexDirection: 'row' }}>
-        <ProgressChart
-          data={transformToNoCategoryData(essencial_selector, categoryData)}
-          width={screenWidth/3}
-          height={220}
-          strokeWidth={16}
-          radius={32}
-          chartConfig={chartConfig}
-          hideLegend={true}
-        />
-        <ProgressChart
-          data={transformToNoCategoryData(non_essencial_selector, categoryData)}
-          width={screenWidth/3}
-          height={220}
-          strokeWidth={16}
-          radius={32}
-          chartConfig={chartConfig}
-          hideLegend={true}
-        />
-        <ProgressChart
-          data={transformToNoCategoryData(investment_selector, categoryData)}
-          width={screenWidth/3}
-          height={220}
-          strokeWidth={16}
-          radius={32}
-          chartConfig={chartConfig}
-          hideLegend={true}
-        />
+        <View style={styles.charts}>
+          <ProgressChart
+            data={transformToNoCategoryData(essencial_selector, categoryData)}
+            width={screenWidth/3}
+            height={charts_height}
+            strokeWidth={16}
+            radius={32}
+            chartConfig={chartConfig}
+            hideLegend={true}
+          />
+          <Text style={styles.charts_text}>Essencias</Text>
+        </View>
+        <View style={styles.charts}>
+          <ProgressChart
+            data={transformToNoCategoryData(non_essencial_selector, categoryData)}
+            width={screenWidth/3}
+            height={charts_height}
+            strokeWidth={16}
+            radius={32}
+            chartConfig={chartConfig}
+            hideLegend={true}
+          />
+          <Text style={styles.charts_text}>Não Essencias</Text>
+        </View>
+        <View style={styles.charts}>
+          <ProgressChart
+            data={transformToNoCategoryData(investment_selector, categoryData)}
+            width={screenWidth/3}
+            height={charts_height}
+            strokeWidth={16}
+            radius={32}
+            chartConfig={chartConfig}
+            hideLegend={true}
+          />
+          <Text style={styles.charts_text}>Investimentos</Text>
+        </View>
       </View>
       <View>
         <Button title="Log out" onPress={() => signOut()} />
@@ -144,6 +159,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  charts: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  text: { 
+    padding: 5,
+    fontFamily: FONTS.medium,
+    fontSize: SIZES.medium,
+    color: COLORS.wingDarkBlue
+  },
+  charts_text: { 
+    padding: 5,
+    fontFamily: FONTS.medium,
+    fontSize: SIZES.medium,
+    color: COLORS.wingDarkBlue,
+  },
+    
 });
 
 export default HomeScreen;

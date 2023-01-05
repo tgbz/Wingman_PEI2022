@@ -93,7 +93,7 @@ function transformToNoCategoryData(selector, categoryData) {
       <View style >
         <Text>Welcome {token.name}</Text>
       </View>
-      <View>
+      <View style={{ flexDirection: 'row' }}>
         <ProgressChart
           data={transformToNoCategoryData(essencial_selector, categoryData)}
           width={screenWidth/3}

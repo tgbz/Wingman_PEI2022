@@ -59,8 +59,6 @@ const fetchData = async (token) => {
   setCategoryData(categoryData)
 }
 
-console.log(categoryData)
-
 useEffect(() => {
   if (token.id) {
     fetchData(token)
@@ -84,7 +82,6 @@ function transformToNoCategoryData(selector, categoryData) {
     data.data = [spent / total_plafond]
 
   data.labels = [selector]
-  console.log(data)
   return(data)
 }
 

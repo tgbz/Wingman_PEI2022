@@ -1,10 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View, Button, Dimensions } from "react-native";
 import { useState,useEffect } from "react";
 import AuthContext from "../context/AuthProvider";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FONTS,COLORS, SHADOWS, SIZES } from '../constants'
 import { serverURL } from '../config/hosts'
+
+import {ProgressChart} from 'react-native-chart-kit';
+import * as _ from 'lodash'; //Fazer Clone dos objetos
 
  function HomeScreen({navigation}) {
   const [token,setToken] = useState("");
@@ -22,10 +25,102 @@ import { serverURL } from '../config/hosts'
     const data = await resp.json()
     console.log(data)
   }
-    return (
+  
+// Donut Charts
+// ----------------------------------------------------------------------------------------
+
+const screenWidth = Dimensions.get("window").width;
+const [categoryData, setCategoryData] = useState([])
+const noCategoryChartDataExample = {
+  labels: ["No Category"], // optional
+  data: [0.4]
+};
+const essencial_selector = 1
+const non_essencial_selector = 2
+const investment_selector = 3
+
+const chartConfig = {
+  backgroundColor: COLORS.white,
+  decimalPlaces: 2, // optional, defaults to 2dp
+  color: (opacity = 1) => `rgba(25, 95, 255, ${opacity})`,
+  style: {
+    borderRadius: 16,
+}};
+  
+useEffect(() => {
+  AsyncStorage.getItem('userToken')
+    .then((userToken) => setToken(JSON.parse(userToken)))
+    .catch((err) => console.log(err))
+}, [])
+
+const fetchData = async (token) => {
+  const resp = await fetch(`${serverURL}/categories/userCategory/${token.id}`)
+  const categoryData = await resp.json()
+  setCategoryData(categoryData)
+}
+
+console.log(categoryData)
+
+useEffect(() => {
+  if (token.id) {
+    fetchData(token)
+  }
+}, [token])
+
+function transformToNoCategoryData(selector, categoryData) {
+  const data = {}
+  let spent = 0, total_plafond = 0
+  categoryData.forEach(element => {
+    if(parseInt(element.is_essential) == selector) {
+      total_plafond += parseInt(element.plafond)
+      spent += parseInt(element.total_spent)
+    }
+  });
+
+  if(spent >= total_plafond) {
+    data.data = [1]
+  }
+  else
+    data.data = [spent / total_plafond]
+
+  data.labels = [selector]
+  console.log(data)
+  return(data)
+}
+
+  return (
     <View style={styles.container}>
       <View style >
         <Text>Welcome {token.name}</Text>
+      </View>
+      <View>
+        <ProgressChart
+          data={transformToNoCategoryData(essencial_selector, categoryData)}
+          width={screenWidth/3}
+          height={220}
+          strokeWidth={16}
+          radius={32}
+          chartConfig={chartConfig}
+          hideLegend={true}
+        />
+        <ProgressChart
+          data={transformToNoCategoryData(non_essencial_selector, categoryData)}
+          width={screenWidth/3}
+          height={220}
+          strokeWidth={16}
+          radius={32}
+          chartConfig={chartConfig}
+          hideLegend={true}
+        />
+        <ProgressChart
+          data={transformToNoCategoryData(investment_selector, categoryData)}
+          width={screenWidth/3}
+          height={220}
+          strokeWidth={16}
+          radius={32}
+          chartConfig={chartConfig}
+          hideLegend={true}
+        />
       </View>
       <View>
         <Button title="Log out" onPress={() => signOut()} />
@@ -48,7 +143,7 @@ import { serverURL } from '../config/hosts'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.wingblue,
+    backgroundColor: COLORS.white,
     alignItems: "center",
     justifyContent: "center",
   },

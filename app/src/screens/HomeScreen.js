@@ -107,7 +107,7 @@ function transformToNoCategoryData(selector, categoryData) {
             chartConfig={chartConfig}
             hideLegend={true}
           />
-          <Text style={styles.charts_text}>Essencias</Text>
+          <Text style={styles.charts_text}>Essenciais</Text>
         </View>
         <View style={styles.charts}>
           <ProgressChart
@@ -119,7 +119,7 @@ function transformToNoCategoryData(selector, categoryData) {
             chartConfig={chartConfig}
             hideLegend={true}
           />
-          <Text style={styles.charts_text}>Não Essencias</Text>
+          <Text style={styles.charts_text}>Não Essenciais</Text>
         </View>
         <View style={styles.charts}>
           <ProgressChart

@@ -71,7 +71,7 @@
 }
 
 .rightCard {
-  background-color: #f5f6fa !important;
+  background-color: #f3deb1 !important;
   padding: 0% !important;
   margin: 0 !important;
 }

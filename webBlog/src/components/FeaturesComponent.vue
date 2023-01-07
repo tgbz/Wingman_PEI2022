@@ -9,8 +9,12 @@
           class="imgIcon"
         ></v-img>
         <v-card-text class="featureText text-center text-uppercase white--text">
-          Têm uma clara visão sobre o teu estado financeiro, minimizando os
-          desperdícios e má alocação de consumo.
+          Pequenas Ações Fazem a diferença! <br />A Wingman está atenta aos
+          detalhes.
+        </v-card-text>
+        <v-card-text class="itemDesc text-uppercase white--text text-center">
+          A Wingman não deixa que nenhum detalhe das suas finanças passe
+          despercebido.
         </v-card-text>
       </v-col>
 
@@ -22,8 +26,12 @@
           class="imgIcon"
         ></v-img>
         <v-card-text class="featureText text-center text-uppercase white--text">
-          Têm uma clara visão sobre o teu estado financeiro, minimizando os
-          desperdícios e má alocação de consumo.
+          Simplifique a sua gestão de despesas com a nossa ferramenta de scan de
+          faturas.
+        </v-card-text>
+        <v-card-text class="itemDesc text-uppercase white--text text-center">
+          Gerir despesas nunca foi tão fácil! Disfrute da nossa ferramenta de
+          scan de faturas e recibos.
         </v-card-text>
       </v-col>
 
@@ -35,8 +43,11 @@
           class="imgIcon"
         ></v-img>
         <v-card-text class="featureText text-center text-uppercase white--text">
-          Têm uma clara visão sobre o teu estado financeiro, minimizando os
-          desperdícios e má alocação de consumo.
+          Uma nova visão da sua gestão financeira! Simples, rápida e cómoda.
+        </v-card-text>
+        <v-card-text class="itemDesc text-uppercase white--text text-center">
+          Gestão financeira descomplicada! Analise os seus rendimentos e
+          despesas de forma simples, rápida e cómoda.
         </v-card-text>
       </v-col>
       <v-col cols="3">
@@ -47,8 +58,12 @@
           class="imgIcon"
         ></v-img>
         <v-card-text class="featureText text-center text-uppercase white--text">
-          Têm uma clara visão sobre o teu estado financeiro, minimizando os
-          desperdícios e má alocação de consumo.
+          Poupe para projetos futuros!
+          <br />Comece já a poupar para o seu futuro!
+        </v-card-text>
+        <v-card-text class="itemDesc text-uppercase white--text text-center">
+          Projetos futuros e viagens de sonho podem estar mais perto do que
+          imagina!
         </v-card-text>
       </v-col>
     </v-row>
@@ -69,9 +84,14 @@
 }
 
 .featureText {
-  padding: 5% !important;
   font-weight: 600;
   font-size: 14px;
+  font-family: "Sora", sans-serif !important;
+}
+
+.itemDesc {
+  font-weight: 300;
+  font-size: 11px;
   font-family: "Sora", sans-serif !important;
 }
 

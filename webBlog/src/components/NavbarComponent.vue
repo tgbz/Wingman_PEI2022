@@ -1,29 +1,29 @@
 <template>
   <v-container class="navContainer" fluid>
-    <v-row cols="12" class="navBar" align="center" justify="center">
-      <v-col>
-        <v-img
-          contain
-          max-width="230"
-          src="../../public/icons/lg.png"
-          class="logo"
-        >
-        </v-img>
+    <v-row cols="12" class="navBar" align="center">
+      <v-col cols="10'">
+        <a @click="goToHome()">
+          <v-img
+            contain
+            max-width="230"
+            src="../../public/icons/lg.png"
+            class="logo"
+          >
+          </v-img>
+        </a>
       </v-col>
 
-      <v-col
-        v-for="rota in rotas"
-        :key="rota.name"
-        :href="rota.link"
-        class="navItem"
-      >
-        <v-card-subtitle class="navItem text-center font-weight-medium">
-          <v-icon left class="navIcon">{{ rota.icon }}</v-icon>
-          <span class="navText">{{ rota.name }}</span>
-        </v-card-subtitle>
+      <v-col cols="1" class="text-right">
+        <!-- download button with icon-->
+        <v-btn color="#FFCB52">
+          <strong>Download</strong>
+          <v-icon> mdi-download </v-icon>
+        </v-btn>
       </v-col>
-      <v-col>
-        <v-btn color="#242640" dark><strong>Download App!</strong> </v-btn>
+      <v-col cols="1" class="text-right">
+        <v-btn color="#FFCB52" @click="goToBlog()"
+          ><strong>Blog</strong>
+        </v-btn>
       </v-col>
     </v-row>
   </v-container>
@@ -34,12 +34,16 @@
 export default {
   data() {
     return {
-      rotas: [
-        { name: "Home", icon: "mdi-home", link: "/home" },
-        { name: "Funcionalidades", icon: "mdi-information", link: "/sobre" },
-        { name: "Ajuda", icon: "mdi-phone", link: "/contato" },
-      ],
+      rotas: [],
     };
+  },
+  methods: {
+    goToBlog() {
+      this.$router.push("/blog");
+    },
+    goToHome() {
+      this.$router.push("/wingman");
+    },
   },
 };
 </script>

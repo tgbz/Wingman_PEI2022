@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 43,
+            "activePatchIndex": 44,
             "patches": [
                 {
                     "date": 1670630247947,
@@ -180,6 +180,10 @@
                 {
                     "date": 1670631350248,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,9 @@\n           class=\"\r\n             font-weight-bold\r\n             text-center text-h6 text-uppercase\r\n             white--text\r\n+            textY\r\n           \"\r\n         >\r\n           Torna-te um gestor financeiro mais eficiente e eficaz com a ajuda do\r\n           Wingman\r\n@@ -43,5 +44,9 @@\n .imgIcon {\r\n   text-align: center !important;\r\n   margin: auto !important;\r\n }\r\n+\r\n+.textY {\r\n+  padding-top: 5% !important;\r\n+}\r\n </style>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1673085473678,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,33 +2,25 @@\n   <div class=\"footer\">\r\n     <v-row>\r\n       <v-col cols=\"8\">\r\n         <v-card-subtitle\r\n-          class=\"\r\n-            font-weight-bold\r\n-            text-center text-h6 text-uppercase\r\n-            white--text\r\n-            textY\r\n-          \"\r\n+          class=\"font-weight-bold text-center text-uppercase white--text textY\"\r\n         >\r\n           Torna-te um gestor financeiro mais eficiente e eficaz com a ajuda do\r\n           Wingman\r\n           <br />\r\n           o teu assistente financeiro pessoal.\r\n         </v-card-subtitle>\r\n       </v-col>\r\n       <v-col cols=\"4\" class=\"bottomCol\">\r\n-        <v-card-subtitle\r\n-          class=\"font-weight-bold text-center text-uppercase white--text\"\r\n-        >\r\n-          Com o apoio:\r\n-        </v-card-subtitle>\r\n-        <v-img\r\n-          contain\r\n-          src=\"../../public/um.png\"\r\n-          max-width=\"100\"\r\n-          class=\"imgIcon\"\r\n-        ></v-img>\r\n+        <div class=\"supportDiv\">\r\n+          <v-img\r\n+            contain\r\n+            src=\"../../public/um.png\"\r\n+            max-width=\"100\"\r\n+            class=\"imgIcon\"\r\n+          ></v-img>\r\n+        </div>\r\n       </v-col>\r\n     </v-row>\r\n   </div>\r\n </template>\r\n@@ -46,7 +38,14 @@\n   margin: auto !important;\r\n }\r\n \r\n .textY {\r\n-  padding-top: 5% !important;\r\n+  margin: auto !important;\r\n+  align-items: center !important;\r\n+  text-align: center !important;\r\n+  padding-top: 3% !important;\r\n }\r\n+\r\n+.supportDiv {\r\n+  display: flex;\r\n+}\r\n </style>\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1670630247947,

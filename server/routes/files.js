@@ -47,6 +47,7 @@ router.post('/avatar/', upload.single('avatarFile'), function (req, res, next) {
     //console.log('RRR')
     fs.unlinkSync(oldPath)
     res.jsonp('Ficheiro gravado com sucesso!')
+    // Mudar para status 
   })
 })
 

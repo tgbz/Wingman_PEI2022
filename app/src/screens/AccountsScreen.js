@@ -34,7 +34,7 @@ export default function AccountsScreen({ navigation }) {
   const fetchData = async (token) => {
     //fetch getBankaccounts(id)
     console.log(serverURL + '/bank/getBankAccount/' + token.id)
-    const resp = await fetch(`${serverURL}/bank/getBankAccount/${token.id}`)
+    const resp = await fetch(`${serverURL}/bank/getBankAccounts/${token.id}`)
     const data = await resp.json()
     console.log(data)
     setContas(data)

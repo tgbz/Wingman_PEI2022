@@ -68,7 +68,7 @@ Users.register = function (
                             Users.create(newUser,conn)
                             .then(id =>{
                                 Users.initWallet(id,conn)
-                                .then(id=>{
+                                .then(idWallet=>{
                                     conn.commit((err)=>{
                                         if(err){
                                             conn.rollback(()=> {
@@ -162,7 +162,7 @@ Users.getUserbyEmail = function(email) {
 // Utilizado para o perfil do Utilizador
 Users.getUser = function(id) {
     return new Promise(function(resolve,reject){
-        sql.query(`Select u.name,u.email,u.birthdate,u.gender from user  as u where u.idUser=?`,
+        sql.query(`Select u.name,u.email,u.birthdate,u.gender,u.hascategory from user  as u where u.idUser=?`,
         id ,function(err,res){
             if(err) {
                 console.log("error: ", err);

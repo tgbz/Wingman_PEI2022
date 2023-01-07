@@ -9,10 +9,20 @@ router.get("/userCategory/:id", function (req, res){
     .catch(erro => res.status(500).jsonp(erro))
   }) 
 
-router.put("/changePlafond/:idUser", function (req, res){
+router.put("/changePlafond/:id", function (req, res){
   console.log(req.body)
-  Categories.changePlafond(req.params.idUser,req.body.idCategory,req.body.plafond)
+  Categories.changePlafond(req.params.id,req.body.idcategory,req.body.plafond)
   .then( dados => res.jsonp(dados))
+  .catch(erro => res.status(500).jsonp(erro))
+})
+
+router.post("/changeAllPlafonds/:id", function (req, res){
+  console.log(req.body)
+  Categories.changeAllPlafonds(req.params.id,req.body.categories)
+  .then( dados => {
+    console.log(dados)
+    res.jsonp(dados)
+  })
   .catch(erro => res.status(500).jsonp(erro))
 })
 

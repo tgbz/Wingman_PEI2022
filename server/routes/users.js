@@ -24,8 +24,9 @@ router.post("/login", (req, res, next) => {
           id: user.idUser,
           name: user.name,
           email: user.email,
-          birthDate: user.birthDate,
-          gender: user.gender
+          birthdate: user.birthDate,
+          gender: user.gender,
+          hascategory: user.hascategory
         });
       });
     }
@@ -62,7 +63,7 @@ router.get("/userProfile/:id", function (req, res){
   .catch(erro => res.status(500).jsonp(erro))
 })
 
-router.put("/updateProfile/:id", function (req, res){
+router.put("/userProfile/:id", function (req, res){
   console.log(req.params.id,req.body)
   Users.updateUser(req.params.id,req.body)
   .then(dados => res.jsonp(dados))
@@ -76,6 +77,7 @@ router.put("/updatePassword/:id", function (req, res){
   .catch(erro => res.status(500).jsonp(erro))
 })
 
+//Testar user
 router.get("/users/", function (req, res){
   Users.getUsers()
   .then( dados => res.jsonp(dados))

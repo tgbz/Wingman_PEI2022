@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 138,
+            "activePatchIndex": 140,
             "patches": [
                 {
                     "date": 1670006844183,
@@ -560,6 +560,14 @@
                 {
                     "date": 1670621641267,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,7 +70,7 @@\n }\r\n \r\n .navText {\r\n   font-weight: 600 !important;\r\n-  color: #fff !important;\r\n+  color: #242640 !important;\r\n }\r\n </style>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1673085438504,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,30 +1,30 @@\n <template>\r\n   <v-container class=\"navContainer\" fluid>\r\n-    <v-row cols=\"12\" class=\"navBar\" align=\"center\" justify=\"center\">\r\n-      <v-col>\r\n-        <v-img\r\n-          contain\r\n-          max-width=\"230\"\r\n-          src=\"../../public/icons/lg.png\"\r\n-          class=\"logo\"\r\n-        >\r\n-        </v-img>\r\n+    <v-row cols=\"12\" class=\"navBar\" align=\"center\">\r\n+      <v-col cols=\"10'\">\r\n+        <a @click=\"goToHome()\">\r\n+          <v-img\r\n+            contain\r\n+            max-width=\"230\"\r\n+            src=\"../../public/icons/lg.png\"\r\n+            class=\"logo\"\r\n+          >\r\n+          </v-img>\r\n+        </a>\r\n       </v-col>\r\n \r\n-      <v-col\r\n-        v-for=\"rota in rotas\"\r\n-        :key=\"rota.name\"\r\n-        :href=\"rota.link\"\r\n-        class=\"navItem\"\r\n-      >\r\n-        <v-card-subtitle class=\"navItem text-center font-weight-medium\">\r\n-          <v-icon left class=\"navIcon\">{{ rota.icon }}</v-icon>\r\n-          <span class=\"navText\">{{ rota.name }}</span>\r\n-        </v-card-subtitle>\r\n+      <v-col cols=\"1\" class=\"text-right\">\r\n+        <!-- download button with icon-->\r\n+        <v-btn color=\"#FFCB52\">\r\n+          <strong>Download</strong>\r\n+          <v-icon> mdi-download </v-icon>\r\n+        </v-btn>\r\n       </v-col>\r\n-      <v-col>\r\n-        <v-btn color=\"#242640\" dark><strong>Download App!</strong> </v-btn>\r\n+      <v-col cols=\"1\" class=\"text-right\">\r\n+        <v-btn color=\"#FFCB52\" @click=\"goToBlog()\"\r\n+          ><strong>Blog</strong>\r\n+        </v-btn>\r\n       </v-col>\r\n     </v-row>\r\n   </v-container>\r\n </template>\r\n@@ -33,15 +33,19 @@\n   <script>\r\n export default {\r\n   data() {\r\n     return {\r\n-      rotas: [\r\n-        { name: \"Home\", icon: \"mdi-home\", link: \"/home\" },\r\n-        { name: \"Funcionalidades\", icon: \"mdi-information\", link: \"/sobre\" },\r\n-        { name: \"Ajuda\", icon: \"mdi-phone\", link: \"/contato\" },\r\n-      ],\r\n+      rotas: [],\r\n     };\r\n   },\r\n+  methods: {\r\n+    goToBlog() {\r\n+      this.$router.push(\"/blog\");\r\n+    },\r\n+    goToHome() {\r\n+      this.$router.push(\"/\");\r\n+    },\r\n+  },\r\n };\r\n </script>\r\n   \r\n     <style>\r\n"
+                },
+                {
+                    "date": 1673085479849,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n     goToBlog() {\r\n       this.$router.push(\"/blog\");\r\n     },\r\n     goToHome() {\r\n-      this.$router.push(\"/\");\r\n+      this.$router.push(\"/wingman\");\r\n     },\r\n   },\r\n };\r\n </script>\r\n"
                 }
             ],
             "date": 1670006844183,

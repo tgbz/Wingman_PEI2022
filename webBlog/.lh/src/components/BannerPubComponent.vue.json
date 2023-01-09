@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 86,
+            "activePatchIndex": 90,
             "patches": [
                 {
                     "date": 1670616717179,
@@ -352,6 +352,22 @@
                 {
                     "date": 1670629333814,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,9 +60,9 @@\n   margin: 0 !important;\r\n }\r\n \r\n .cardSub {\r\n-  padding: 15% 5% 0% 5% !important;\r\n+  padding: 20% 5% 0% 5% !important;\r\n   margin: auto !important;\r\n }\r\n \r\n .leftCard {\r\n"
+                },
+                {
+                    "date": 1673085462708,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,10 +9,10 @@\n               text-left text-h4 text-uppercase\r\n               white--text\r\n               cardTitle\r\n             \"\r\n-            >Regista todas as tuas despesas,<br />\r\n-            ganha controlo sobre a tua carteira.</v-card-title\r\n+            >Revolucione a forma como encara o seu dinheiro,<br />\r\n+            tome controlo da sua carteira!</v-card-title\r\n           >\r\n \r\n           <!-- empty space 200px -->\r\n           <v-spacer></v-spacer>\r\n"
+                },
+                {
+                    "date": 1673085667156,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,9 +70,9 @@\n   padding: 5% !important;\r\n }\r\n \r\n .rightCard {\r\n-  background-color: #f5f6fa !important;\r\n+  background-color: black !important;\r\n   padding: 0% !important;\r\n   margin: 0 !important;\r\n }\r\n \r\n"
+                },
+                {
+                    "date": 1673085693157,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,9 +70,9 @@\n   padding: 5% !important;\r\n }\r\n \r\n .rightCard {\r\n-  background-color: black !important;\r\n+  background-color: #d18000 !important;\r\n   padding: 0% !important;\r\n   margin: 0 !important;\r\n }\r\n \r\n"
+                },
+                {
+                    "date": 1673085701606,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,9 +70,9 @@\n   padding: 5% !important;\r\n }\r\n \r\n .rightCard {\r\n-  background-color: #d18000 !important;\r\n+  background-color: #f3deb1 !important;\r\n   padding: 0% !important;\r\n   margin: 0 !important;\r\n }\r\n \r\n"
                 }
             ],
             "date": 1670616717179,

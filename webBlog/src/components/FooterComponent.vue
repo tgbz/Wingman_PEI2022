@@ -3,12 +3,7 @@
     <v-row>
       <v-col cols="8">
         <v-card-subtitle
-          class="
-            font-weight-bold
-            text-center text-h6 text-uppercase
-            white--text
-            textY
-          "
+          class="font-weight-bold text-center text-uppercase white--text textY"
         >
           Torna-te um gestor financeiro mais eficiente e eficaz com a ajuda do
           Wingman
@@ -17,17 +12,14 @@
         </v-card-subtitle>
       </v-col>
       <v-col cols="4" class="bottomCol">
-        <v-card-subtitle
-          class="font-weight-bold text-center text-uppercase white--text"
-        >
-          Com o apoio:
-        </v-card-subtitle>
-        <v-img
-          contain
-          src="../../public/um.png"
-          max-width="100"
-          class="imgIcon"
-        ></v-img>
+        <div class="supportDiv">
+          <v-img
+            contain
+            src="../../public/um.png"
+            max-width="100"
+            class="imgIcon"
+          ></v-img>
+        </div>
       </v-col>
     </v-row>
   </div>
@@ -47,6 +39,13 @@
 }
 
 .textY {
-  padding-top: 5% !important;
+  margin: auto !important;
+  align-items: center !important;
+  text-align: center !important;
+  padding-top: 3% !important;
+}
+
+.supportDiv {
+  display: flex;
 }
 </style>

@@ -10,8 +10,8 @@
               white--text
               cardTitle
             "
-            >Regista todas as tuas despesas,<br />
-            ganha controlo sobre a tua carteira.</v-card-title
+            >Revolucione a forma como encara o seu dinheiro,<br />
+            tome controlo da sua carteira!</v-card-title
           >
 
           <!-- empty space 200px -->
@@ -71,7 +71,7 @@
 }
 
 .rightCard {
-  background-color: #f5f6fa !important;
+  background-color: #f3deb1 !important;
   padding: 0% !important;
   margin: 0 !important;
 }

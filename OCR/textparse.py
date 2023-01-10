@@ -1,5 +1,6 @@
 import re
 from difflib import get_close_matches
+from difflib import SequenceMatcher
 import dateutil.parser
 import json
 import os
@@ -168,6 +169,31 @@ class Receipt():
 		return json.dumps(object_data,indent=2)
 
 
+def concat(r1,r2):
+	l1 = r1.lines
+	l2 = r2.lines
+
+	newlines = []
+
+	for line1 in l1:
+		for line2 in l2:
+			ratio = SequenceMatcher(None,line1,line2).ratio()
+			if ratio < 0.7:
+				newlines.append(line2)
+
+	nl = l1 + newlines
+	r1.lines = nl
+
+	return r1.parse()
+	
+				
+		
+
+
+
+
+
+
 def parseImage(files):
 	filename = files[0] #fix temporario enquanto nao se implementa o parsing de + que 1 imagem
 	image = pp.cv2.imread(filename)
@@ -177,7 +203,12 @@ def parseImage(files):
 
 	raw = pp.generate_text('out',pp.pipeline(image,preProc),output)
 	r = Receipt(raw,'info.json')
+	
 	return r.parse()
+
+	#else 
+	r3 = concat(r1,r2)
+
 
 
 

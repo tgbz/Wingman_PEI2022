@@ -5,7 +5,7 @@ import os
 import textparse as tp
 
 
-fileDir = os.getcwd() + "\\receivedFiles\\"
+fileDir = os.getcwd() + "/receivedFiles/"
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
@@ -39,7 +39,7 @@ def upload_image():
 
         files = os.listdir(fileDir)
         files = [fileDir+f for f in files if os.path.isfile(fileDir+f)]
-
+        print(files)
         #app.logger.info("Parsing image...")
         text = tp.parseImage(files)
         #app.logger.info("Done!\nCleaning up...")

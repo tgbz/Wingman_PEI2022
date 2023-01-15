@@ -174,7 +174,7 @@ export default function ProfileScreen({ navigation }) {
           <Text style={styles.pageTitle}>Meu Perfil</Text>
         </View>
         */}
-        <View style={{ alignSelf: 'center', marginTop:10 }}>
+        <View style={{ alignSelf: 'center', marginTop:30 }}>
           <View style={styles.profileImage}>
             {photo ? (
               console.log('I have photo!! ' + JSON.stringify(photo)),
@@ -279,7 +279,7 @@ export default function ProfileScreen({ navigation }) {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.eggshell,
   },
   navigationBar: {
     // in case i wanto to add a button in the right side

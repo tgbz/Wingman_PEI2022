@@ -10,11 +10,11 @@ const ActivityTable = ({data}) => {
     // create the table
     const getTable = () => {
       data.forEach(element => {
-        console.log(element.type)
+        //console.log(element.data)
         tableData.push([CATEGORIES[element.category].icon, element.transaction, element.date, SIGNS[accents.remove(element.type)].icon, element.value]);
      });
     }  
-    const headTable = ['','Transação', 'Data', 'Valor (€)']
+    const headTable = ['','Transação', 'Valor (€)']
 
     return (
         getTable(),
@@ -27,7 +27,7 @@ const ActivityTable = ({data}) => {
           </Table>
           <View style={styles.container}>
           
-      </View>
+          </View>
        </View>
       );
 };
@@ -36,27 +36,27 @@ const styles = StyleSheet.create({
         container: { 
             flex: 1, 
             padding: 16, 
-            paddingTop: 10, 
+            paddingTop: 20, 
              },
         wrapper: { 
             flexDirection: 'row' },
         row: {  
-            height: 45 , 
+            height: 50 , 
             paddingLeft: 10,
-            marginBottom: 5,
-            borderRadius: 5,
+            marginBottom: 7,
+            borderRadius: 10,
             backgroundColor: COLORS.white,
           },
         text: { 
             padding: 5,
-            fontFamily: FONTS.medium,
+            fontFamily: 'SoraSemiBold',
             fontSize: SIZES.small,
             color: COLORS.wingDarkBlue 
           },
 
         textHeaders: { 
           padding: 5,
-          fontFamily: FONTS.bold,
+          fontFamily: FONTS.medium,
           fontSize: SIZES.medium,
           color: COLORS.white,
         },
@@ -69,12 +69,12 @@ const styles = StyleSheet.create({
             },
 
         HeadStyle: { 
-            height: 50,
+            height: 40,
             alignContent: "center",
-            backgroundColor:  COLORS.wingDarkBlue,
-            borderColor: COLORS.wingDarkBlue,
+            backgroundColor:  COLORS.wingblue,
+            borderColor: COLORS.wingblue,
             borderWidth: 1,
-            borderRadius: 5,
+            borderRadius: 30,
             marginBottom: 7
             },
         item: {

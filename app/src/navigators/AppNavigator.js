@@ -52,8 +52,9 @@ function MainContainer() {
             fontFamily: 'SoraMedium',
             fontSize: SIZES.medium,
             },
+            headerShadowVisible: false, // applied here
            headerTintColor: COLORS.wingDarkBlue,
-           headerTitleAlign:"center"
+           headerTitleAlign:"center", headerTransparent: true,
            /*LEFT BUTTON Ionicons name="chevron-back to navigate back
             headerLeft: ({navigation}) => (
               <Ionicons name="chevron-back"
@@ -64,7 +65,7 @@ function MainContainer() {
         })}>
           
         <Tab.Screen name={homeName} component={HomeScreen} options={{headerShown: false}} />
-        <Tab.Screen name={profileName} component={ProfileScreen} options={{title:"Meu Perfil"}}/>
+        <Tab.Screen name={profileName} component={ProfileScreen} options={{title:"Meu Perfil",headerShown: false}}/>
         <Tab.Screen name={politics} component={PoliticsScreen} options={{title:"Políticas de Consumo"}}/>
 
        {/* <Tab.Screen name={profileEditName} component={ProfileEditScreen} options={{headerShown: false}}/>
@@ -82,7 +83,9 @@ export default function HomeStack() {
         headerTitleStyle: {
         fontFamily: 'SoraMedium',
         fontSize: SIZES.medium,
-        },headerBackTitleVisible: false, headerTintColor: COLORS.wingDarkBlue,headerTitleAlign:"center", 
+        backgroundColor: 'transparent',
+        },headerBackTitleVisible: false, headerTintColor: COLORS.wingDarkBlue,headerTitleAlign:"center",headerShadowVisible: false, headerTransparent: true,
+        // backgrond color of the header 
        /*headerLeft: () => (
         <Ionicons name="chevron-back"
         size={30}

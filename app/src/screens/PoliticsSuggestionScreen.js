@@ -97,7 +97,7 @@ import { ScrollView } from 'react-native-gesture-handler'
       },
       Maincontainer: {
           marginHorizontal: 30,
-          marginTop: "7%",
+          marginTop: 100,
           marginBottom: "7%"
       },
       iconStyle: {

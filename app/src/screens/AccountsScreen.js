@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         //  center horizontally
         right: 30,
-        top: 22
+        top: 30
     }
 
 })

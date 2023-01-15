@@ -3,13 +3,15 @@ import { StyleSheet, View,Modal,Text,Button, processColor } from 'react-native';
 import { Table, Rows , TableWrapper, Row} from 'react-native-table-component';
 import {FONTS,COLORS, SIZES , CATEGORIES, SIGNS} from '../constants'
 import {Entypo,AntDesign } from '@expo/vector-icons'
+var accents = require('remove-accents');
 
 const ActivityTable = ({data}) => {
     const tableData = [];
     // create the table
     const getTable = () => {
       data.forEach(element => {
-        tableData.push([CATEGORIES[element.category].icon, element.transaction, element.date, SIGNS[element.type].icon, element.value]);
+        console.log(element.type)
+        tableData.push([CATEGORIES[element.category].icon, element.transaction, element.date, SIGNS[accents.remove(element.type)].icon, element.value]);
      });
     }  
     const headTable = ['','Transação', 'Data', 'Valor (€)']

@@ -48,7 +48,8 @@
     "react-native-svg": "12.3.0",
     "react-native-table-component": "^1.2.2",
     "react-native-web": "~0.18.7",
-    "react-router-dom": "^6.4.3"
+    "react-router-dom": "^6.4.3",
+    "remove-accents": "^0.4.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

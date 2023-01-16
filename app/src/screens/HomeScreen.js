@@ -133,13 +133,12 @@ function HomeScreen({ navigation }) {
       <View style={styles.container}>
         <View style={styles.header}>
           <View style={styles.profileImage}>
-            {/*
+            
             {photo ? (
               (console.log('I have photo!! ' + JSON.stringify(photo)),
               (<Image source={{ uri: photo }} style={styles.profileImage} />))
-            ) :*/
-            } 
-            {userData.gender == 0 ? ( // man
+            ) :
+            userData.gender == 0 ? ( // man
               <Image
                 source={require('../../assets/images/male-avatar.png')}
                 style={styles.image}
@@ -168,7 +167,7 @@ function HomeScreen({ navigation }) {
         {/* if hascategory==0  make a card to redirect to politicsSuggestionScreen 
         ELSE NOTHING*/}
         {userData.hascategory == 1 ? (
-          <View style={[styles.card1,{backgroundColor: '#f68080'}]}>
+          <View style={[styles.card1,{backgroundColor: '#ee821a'}]}>
           <View >
             <Text style={{color: COLORS.white, fontFamily: 'SoraBold', fontSize: SIZES.medium}}>Definir Política de consumo</Text>
             <AntDesign name="rightcircleo" size={24} color="white" style={styles.iconStyle} onPress={() =>  navigation.navigate('PoliticsSuggestion')}/>
@@ -226,7 +225,7 @@ function HomeScreen({ navigation }) {
         </View> 
         </View>
         </View>
-            
+            {/*
         <View>
           <Button title="Log out" onPress={() => signOut()} />
         </View>
@@ -245,6 +244,7 @@ function HomeScreen({ navigation }) {
             onPress={() => navigation.navigate('ActivitySummary')}
           />
         </View>
+        */}
       </View>
     </SafeAreaView>
   )

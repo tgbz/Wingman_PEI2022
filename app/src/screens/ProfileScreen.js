@@ -7,6 +7,7 @@ import {
   Button,
   StyleSheet,
   Platform,
+  TouchableOpacity,
 } from 'react-native'
 import React from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -16,16 +17,17 @@ import { serverURL } from '../config/hosts'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { CustomBackButton, CustomButton } from '../components'
 import * as ImagePicker from 'expo-image-picker'
-import {useRoute} from '@react-navigation/native'
+import { useRoute } from '@react-navigation/native'
 const createFormData = (pickedImage, user) => {
-  console.log("Create form data: "+JSON.stringify(pickedImage) + " " + JSON.stringify(user))
+  console.log('Create form data: ' + JSON.stringify(pickedImage) + ' ' + JSON.stringify(user))
   const data = new FormData()
-  console.log("plataforma: "+Platform.OS)
-  pickedImage.path = Platform.OS === 'ios' ? pickedImage.uri.replace('file://', '') : pickedImage.uri
+  console.log('plataforma: ' + Platform.OS)
+  pickedImage.path =
+    Platform.OS === 'ios' ? pickedImage.uri.replace('file://', '') : pickedImage.uri
   pickedImage.name = pickedImage.fileName
   data.append('avatarFile', pickedImage)
   data.append('user', user)
-  console.log("\nDATA FORM: "+JSON.stringify(data))
+  console.log('\nDATA FORM: ' + JSON.stringify(data))
   /*
   Object.keys(body).forEach((key) => {
     console.log("Create form data: "+key + " " + body[key])
@@ -36,7 +38,7 @@ const createFormData = (pickedImage, user) => {
 }
 
 export default function ProfileScreen({ navigation }) {
-  const { height } = useWindowDimensions()
+  const { width } = useWindowDimensions()
   const [token, setToken] = useState('')
   const [initData, setInitData] = useState(false)
 
@@ -54,20 +56,19 @@ export default function ProfileScreen({ navigation }) {
     console.log('User fetch data: ' + JSON.stringify(data))
     setData(data)
     // console log time at the moment of the fetch
-    
+
     const img = await fetch(`${serverURL}/files/avatar/${token.id}`)
     //console.log('Time: ' + new Date().toLocaleTimeString())
     console.log('User fetch img: ' + JSON.stringify(img.url))
-    setPhoto(img.url)    
+    setPhoto(img.url)
   }
   // request data from server
   useEffect(() => {
-    console.log('Entered useEffect: ' + JSON.stringify(token) +'\n')
+    console.log('Entered useEffect: ' + JSON.stringify(token) + '\n')
     if (token.id) {
       fetchData(token)
     }
   }, [token])
-
 
   function getMonthName(month) {
     const d = new Date()
@@ -103,7 +104,7 @@ export default function ProfileScreen({ navigation }) {
       aspect: [4, 3],
       quality: 1,
     })
-    console.log("Picked Image: "+JSON.stringify(result))
+    console.log('Picked Image: ' + JSON.stringify(result))
     if (!result.cancelled) {
       //handleUploadPhoto()
       //setToUpload(true)
@@ -117,7 +118,7 @@ export default function ProfileScreen({ navigation }) {
   }
 
   const handleUploadPhoto = () => {
-    console.log("handleUploadPhoto "+ JSON.stringify(pickedImage))
+    console.log('handleUploadPhoto ' + JSON.stringify(pickedImage))
     fetch(`${serverURL}/files/avatar/`, {
       method: 'POST',
       body: createFormData(pickedImage, token.id),
@@ -135,38 +136,40 @@ export default function ProfileScreen({ navigation }) {
 
   //  every time there is a picked image, upload it to the server
   React.useEffect(() => {
-    console.log("useEffect image picked")
+    console.log('useEffect image picked')
     if (pickedImage) {
       handleUploadPhoto()
     }
   }, [pickedImage])
 
   // every time route.params is true when user edits profile, refresh data
-  const route = useRoute();
+  const route = useRoute()
   useEffect(() => {
     // dont do shit if route.params is undefined
-    if (route.params) { // se nao for undefined
-      if (route.params.refresh) { // se for true
-      console.log('Entered useEffect route.params')
-      fetchData(token)
-      console.log(typeof route.params.refresh)
-      // set route.params.refresh to false
-      route.params.refresh = false
-      } 
+    if (route.params) {
+      // se nao for undefined
+      if (route.params.refresh) {
+        // se for true
+        console.log('Entered useEffect route.params')
+        fetchData(token)
+        console.log(typeof route.params.refresh)
+        // set route.params.refresh to false
+        route.params.refresh = false
+      }
     }
   }, [route.params])
 
   return (
     // console log params from edit screen
     console.log('Params: ' + JSON.stringify(route.params)),
-    
-    //console.log("--------------\nToken data: "+ JSON.stringify(token) + "\n--------------"),
-    // if dataInit is false, show loading
-   // !initData ? (
-   //   <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-   //     <Text>Loading...</Text>
-   //   </View>
-    //) : (
+    (
+      //console.log("--------------\nToken data: "+ JSON.stringify(token) + "\n--------------"),
+      // if dataInit is false, show loading
+      // !initData ? (
+      //   <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      //     <Text>Loading...</Text>
+      //   </View>
+      //) : (
       <SafeAreaView style={styles.root}>
         {/* Header 
         <View style={styles.navigationBar}>
@@ -174,11 +177,11 @@ export default function ProfileScreen({ navigation }) {
           <Text style={styles.pageTitle}>Meu Perfil</Text>
         </View>
         */}
-        <View style={{ alignSelf: 'center', marginTop:30 }}>
+        <View style={{ alignSelf: 'center', marginTop: 30 }}>
           <View style={styles.profileImage}>
             {photo ? (
-              console.log('I have photo!! ' + JSON.stringify(photo)),
-              <Image source={{ uri: photo }} style={styles.profileImage} />
+              (console.log('I have photo!! ' + JSON.stringify(photo)),
+              (<Image source={{ uri: photo }} style={styles.profileImage} />))
             ) : data.gender == 0 ? ( // man
               <Image
                 source={require('../../assets/images/male-avatar.png')}
@@ -191,13 +194,13 @@ export default function ProfileScreen({ navigation }) {
                 style={styles.image}
                 resizeMode="center"
               ></Image>
-            ):(
+            ) : (
               <Image
                 source={require('../../assets/images/other-avatar.png')}
                 style={styles.image}
                 resizeMode="center"
-              ></Image>)
-            } 
+              ></Image>
+            )}
           </View>
           <View style={styles.addAvatar}>
             <MaterialCommunityIcons
@@ -245,7 +248,13 @@ export default function ProfileScreen({ navigation }) {
             </View>
             <View style={styles.col2}>
               <Text style={styles.textInfo}>
-                {data ? (data.gender == 0 ? 'Masculino' : data.gender == 1 ? 'Feminino' : 'Outro') : 'Loading...'}
+                {data
+                  ? data.gender == 0
+                    ? 'Masculino'
+                    : data.gender == 1
+                    ? 'Feminino'
+                    : 'Outro'
+                  : 'Loading...'}
               </Text>
             </View>
           </View>
@@ -270,9 +279,17 @@ export default function ProfileScreen({ navigation }) {
             type="TERTIARY"
             widthScale={0.8}
           ></CustomButton>
+          {/*Make a button with an icon for log out  */}
+          <TouchableOpacity onPress={() => signOut()}>
+            <View style={[styles.buttonContainer, { width: width * 0.8 }]}>
+              <MaterialCommunityIcons name="logout" size={16} color={COLORS.wingDarkBlue} />
+              <Text style={styles.logOutText}>Log Out</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     )
+  )
   //)
 }
 
@@ -329,8 +346,8 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     marginHorizontal: 40,
-    marginTop: "7%",
-    marginBottom: "7%",
+    marginTop: '7%',
+    marginBottom: '7%',
   },
   textTag: {
     fontFamily: 'SoraBold',
@@ -366,7 +383,7 @@ const styles = StyleSheet.create({
   },
   containerBTN: {
     // Put the buttons if there is space 2mm after infoContainer
-   
+
     // center the buttons
     alignItems: 'center',
     justifyContent: 'center',
@@ -375,5 +392,20 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: SIZES.small,
     fontFamily: 'SoraBold',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: COLORS.wingDarkBlue,
+    padding: '3.6%',
+    borderRadius: SIZES.small,
+    marginVertical: '1%',
+  },
+  logOutText: {
+    marginLeft: 8,
+    color: COLORS.wingDarkBlue,
+    fontSize: SIZES.small,
+    fontFamily: 'SoraMedium',
   },
 })

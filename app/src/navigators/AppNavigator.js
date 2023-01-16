@@ -45,7 +45,9 @@ function MainContainer() {
               iconName = focused ? 'home' : 'home-outline'
             } else if (rn == profileName) {
               iconName = focused ? 'settings' : 'settings-outline'
-            } 
+            } else if (rn == politics) {
+              iconName = focused ? 'journal' : 'journal-outline'
+            }
             return <Ionicons name={iconName} size = {size} color = {color}/>
           },
           headerTitleStyle: {

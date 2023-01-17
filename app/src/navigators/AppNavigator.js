@@ -15,7 +15,7 @@ import AddAccountScreen from '../screens/AddAccountScreen.js';
 import PoliticsScreen from '../screens/PoliticsScreen.js';
 import ActivitySummaryScreen from '../screens/ActivitySummaryScreen.js';
 import FilterScreen from '../screens/FilterScreen.js';
-
+import AddExpenseScreen from '../screens/AddExpenseScreen.js';
 
 import { COLORS,SIZES } from '../constants/theme.js';
 import PoliticsSuggestionScreen from '../screens/PoliticsSuggestionScreen.js';
@@ -91,13 +91,13 @@ function MainContainer() {
         <Tab.Screen name={politics} component={PoliticsScreen} options={{title:"Políticas"}}/>
         <Tab.Screen name={homeName} component={HomeScreen} options={{headerShown: false}} />
   {/* add screen to a new tab called add expense, no label */}
-        <Tab.Screen name=" " component={FilterScreen} options={{ 
-        tabBarIcon: ({ color, size }) => (
+        <Tab.Screen name="AddExpense" component={AddExpenseScreen} options={{ 
+        tabBarIcon: () => (
           <Ionicons name='add-circle' size = {70} color = '#ed711e'/>
         ),
+        title:"Adicionar Despesa"
       }}/>
-        
-        <Tab.Screen name="ActivitySummary" component={ActivitySummaryScreen} options={{title:"Atividade"}}/>
+        <Tab.Screen name="ActivitySummary" component={ActivitySummaryScreen} options={{title:"Atividade",headerShown: false}}/>
         <Tab.Screen name={profileName} component={ProfileScreen} options={{title:"Perfil",headerShown: false}}/>
 
        {/* <Tab.Screen name={profileEditName} component={ProfileEditScreen} options={{headerShown: false}}/>

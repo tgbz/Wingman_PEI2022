@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import { useWindowDimensions } from 'react-native';
 // Screens
 import HomeScreen from "../screens/HomeScreen.js"
 import ProfileScreen from "../screens/ProfileScreen.js"
@@ -15,7 +15,7 @@ import AddAccountScreen from '../screens/AddAccountScreen.js';
 import PoliticsScreen from '../screens/PoliticsScreen.js';
 import ActivitySummaryScreen from '../screens/ActivitySummaryScreen.js';
 import FilterScreen from '../screens/FilterScreen.js';
-
+import AddExpenseScreen from '../screens/AddExpenseScreen.js';
 
 import { COLORS,SIZES } from '../constants/theme.js';
 import PoliticsSuggestionScreen from '../screens/PoliticsSuggestionScreen.js';
@@ -30,6 +30,8 @@ const politics = "Politica";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
+// get width and height of the screen
+//const { width, height } = useWindowDimensions();
 
 
 function MainContainer() {
@@ -37,6 +39,7 @@ function MainContainer() {
       <Tab.Navigator
         initialRouteName={homeName}
         screenOptions={({route}) => ({
+          tabBarShowLabel:false,
           tabBarIcon: ({focused, color, size}) => {
             let iconName;
             let rn = route.name;
@@ -44,28 +47,58 @@ function MainContainer() {
             if (rn == homeName) {
               iconName = focused ? 'home' : 'home-outline'
             } else if (rn == profileName) {
-              iconName = focused ? 'settings' : 'settings-outline'
-            } 
+              iconName = focused ? 'person-circle' : 'person-circle-outline'
+            } else if (rn == politics) {
+              iconName = focused ? 'journal' : 'journal-outline'
+            }else if (rn == "ActivitySummary") {
+              iconName = focused ? 'bar-chart' : 'bar-chart-outline'
+            }
             return <Ionicons name={iconName} size = {size} color = {color}/>
           },
           headerTitleStyle: {
             fontFamily: 'SoraMedium',
             fontSize: SIZES.medium,
             },
-           headerTintColor: COLORS.wingDarkBlue,
-           headerTitleAlign:"center"
-           /*LEFT BUTTON Ionicons name="chevron-back to navigate back
-            headerLeft: ({navigation}) => (
-              <Ionicons name="chevron-back"
-              size={30}
-              color={COLORS.wingDarkBlue}
-              onPress={() => navigation.goBack()} />
-            ),*/
+          headerShadowVisible: false, // applied here
+          headerTintColor: COLORS.wingDarkBlue,
+          headerTitleAlign:"center",
+           headerTransparent: true,
+          tabBarActiveTintColor:'#ed711e',
+          tabBarInactiveTintColor:'#fff',
+          tabBarLabelStyle: {
+          fontSize: 12,
+          fontFamily: 'SoraMedium',
+          marginBottom: 15,
+          },
+         tabBarStyle: {
+          backgroundColor: COLORS.wingDarkBlue,
+          paddingBottom:0,
+          borderRadius: 24,
+          marginHorizontal: 10,
+          marginBottom: 10,
+          position: 'absolute',
+          overflow: 'hidden',
+          },
+         /*LEFT BUTTON Ionicons name="chevron-back to navigate back
+          headerLeft: ({navigation}) => (
+            <Ionicons name="chevron-back"
+            size={30}
+            color={COLORS.wingDarkBlue}
+            onPress={() => navigation.goBack()} />
+          ),*/
         })}>
           
+        <Tab.Screen name={politics} component={PoliticsScreen} options={{title:"Políticas"}}/>
         <Tab.Screen name={homeName} component={HomeScreen} options={{headerShown: false}} />
-        <Tab.Screen name={profileName} component={ProfileScreen} options={{title:"Meu Perfil"}}/>
-        <Tab.Screen name={politics} component={PoliticsScreen} options={{title:"Políticas de Consumo"}}/>
+  {/* add screen to a new tab called add expense, no label */}
+        <Tab.Screen name="AddExpense" component={AddExpenseScreen} options={{ 
+        tabBarIcon: () => (
+          <Ionicons name='add-circle' size = {70} color = '#ed711e'/>
+        ),
+        title:"Adicionar Despesa"
+      }}/>
+        <Tab.Screen name="ActivitySummary" component={ActivitySummaryScreen} options={{title:"Atividade",headerShown: false}}/>
+        <Tab.Screen name={profileName} component={ProfileScreen} options={{title:"Perfil",headerShown: false}}/>
 
        {/* <Tab.Screen name={profileEditName} component={ProfileEditScreen} options={{headerShown: false}}/>
         <Tab.Screen name={" "} component={PassEditScreen} options={{headerShown: false}}/>*/}
@@ -82,7 +115,9 @@ export default function HomeStack() {
         headerTitleStyle: {
         fontFamily: 'SoraMedium',
         fontSize: SIZES.medium,
-        },headerBackTitleVisible: false, headerTintColor: COLORS.wingDarkBlue,headerTitleAlign:"center", 
+        backgroundColor: 'transparent',
+        },headerBackTitleVisible: false, headerTintColor: COLORS.wingDarkBlue,headerTitleAlign:"center",headerShadowVisible: false, headerTransparent: true,
+        // backgrond color of the header 
        /*headerLeft: () => (
         <Ionicons name="chevron-back"
         size={30}

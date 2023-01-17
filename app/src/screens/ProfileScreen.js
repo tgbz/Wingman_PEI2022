@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import React from 'react'
+import AuthContext from '../context/AuthProvider'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { COLORS, SHADOWS, SIZES } from '../constants'
 import { useState, useEffect } from 'react'
@@ -18,6 +19,7 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { CustomBackButton, CustomButton } from '../components'
 import * as ImagePicker from 'expo-image-picker'
 import { useRoute } from '@react-navigation/native'
+
 const createFormData = (pickedImage, user) => {
   console.log('Create form data: ' + JSON.stringify(pickedImage) + ' ' + JSON.stringify(user))
   const data = new FormData()
@@ -38,6 +40,7 @@ const createFormData = (pickedImage, user) => {
 }
 
 export default function ProfileScreen({ navigation }) {
+  const { signOut } = React.useContext(AuthContext)
   const { width } = useWindowDimensions()
   const [token, setToken] = useState('')
   const [initData, setInitData] = useState(false)
@@ -396,6 +399,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     borderWidth: 1,
     borderColor: COLORS.wingDarkBlue,
     padding: '3.6%',

@@ -7,14 +7,12 @@ var axios = require("axios").default;
 //const salt = 14;
 //var bcrypt = require('bcryptjs')
 
-Purchases.getPurchase = function(id) {
+Purchases.getProducts = function(id) {
     return new Promise(function(resolve,reject){
-        sql.query(`SELECT p.is_recurring,p.date,p.value,p.description,p.idUser,p.seller,p.type,ps.idcategory,c.name,c.is_essential,pr.Description as product FROM purchase  as p
-                    inner join purchase_has_subcategory as ps on p.idPurchase= ps.idPurchase
+        sql.query(`SELECT pr.idProduct, pr.Description, ps.value, ps.quantity, ps.idcategory, c.name, c.is_essential as essential FROM purchase_has_subcategory  as ps
                     inner join product as pr on pr.idProduct = ps.idProduct
                     inner join category as c on ps.idCategory = c.idcategory
-                    where p.idPurchase = ?  
-                    ORDER BY p.date desc`,
+                    where ps.idPurchase = ?`,
         id ,function(err,res){
             if(err) {
                 console.log("error: ", err);
@@ -26,6 +24,45 @@ Purchases.getPurchase = function(id) {
         });   
     })   
 }
+
+Purchases.getPurchase = function(id) {
+    return new Promise(function(resolve,reject){
+        sql.query(`SELECT p.idPurchase, P.is_recurring,p.date,p.value, p.title, p.description,p.idUser,p.seller,p.type FROM purchase  as p
+                    where p.idPurchase = ? `,
+        id ,function(err,res){
+            if(err) {
+                console.log("error: ", err);
+                reject(err);
+            }
+            else{
+                resolve(res)
+            }
+        });   
+    })   
+}
+
+
+Purchases.getPurchaseProducts = function(id) {
+    return new Promise(function(resolve,reject){
+          Purchases.getPurchase(id)
+          .then(purchase =>{
+            Purchases.getProducts(id)
+            .then(product =>{
+                let aux = JSON.parse(JSON.stringify(purchase[0]));
+                aux.products = product
+                resolve(aux)
+            })
+            .catch(err =>{
+                reject(err)
+            })
+          })
+          .catch(err =>{
+            reject(err)
+          })
+    })   
+}
+
+
 
 Purchases.getAllPurchase = function(id) {
     return new Promise(function(resolve,reject){
@@ -79,9 +116,9 @@ Purchases.getRecurrent = function(id) {
 
 
 
- Purchases.addPurchase = function (is_recurring, date, value, description, idUser, seller,type,products) {
+ Purchases.addPurchase = function (is_recurring, date, value, title, description, idUser, seller,type,products) {
     return new Promise(function(resolve, reject) {
-        Purchases.createManualPurchase(is_recurring, date, value, description, idUser, seller,0,type)
+        Purchases.createManualPurchase(is_recurring, date, value,title, description, idUser, seller,0,type)
         .then(insertedID =>{
             console.log(insertedID)
             console.log(products)
@@ -135,9 +172,10 @@ Purchases.getRecurrent = function(id) {
     };
 
 
-Purchases.createManualPurchase = function (is_recurring, date, value, description, idUser, seller,isFromAPI,type) {
+Purchases.createManualPurchase = function (is_recurring, date, value, title, description, idUser, seller,isFromAPI,type) {
+    console.log(is_recurring, date, value, title, description, idUser, seller,isFromAPI,type)
     return new Promise(function(resolve, reject) {
-        sql.query(`INSERT INTO purchase (is_recurring, date, value, description, idUser,seller,idMovement,isFromAPI,type,verified) Select ?,?,?,?,?,?,(SELECT MAX(idPurchase) FROM wingman.purchase ),?,?,1`,[is_recurring,date,value,description, idUser,seller,isFromAPI,type],
+        sql.query(`INSERT INTO purchase (is_recurring, date, value, title, description, idUser,seller,idMovement,isFromAPI,type,verified) Select ?,?,?,?,?,?,?,(SELECT MAX(idPurchase) FROM wingman.purchase ),?,?,1`,[is_recurring,date,value,title,description, idUser,seller,isFromAPI,type],
             function (err, res) {
             if(err){
                 console.log("error: ", err);
@@ -202,14 +240,13 @@ Purchases.addSubCategoryToPurchasebyID = function (idPurchase,idProduct,idcatego
 // Upload de Purchases
 Purchases.createPurchase = function (is_recurring, date, value, description, idUser, seller,idMovement,isFromAPI,type,verified,connection) {
     return new Promise(function(resolve, reject) {
-      connection.query(`INSERT IGNORE INTO purchase (is_recurring, date, value, description, idUser,seller,idMovement,isFromAPI,type,verified) VALUES (?,?,?,?,?,?,?,?,?,?)`,[is_recurring,date,value,description, idUser,seller,idMovement,isFromAPI,type,verified],
+      connection.query(`INSERT IGNORE INTO purchase (is_recurring, date, value,title, description, idUser,seller,idMovement,isFromAPI,type,verified) VALUES (?,?,?,?,?,?,?,?,?,?,?)`,[is_recurring,date,value,description,"", idUser,seller,idMovement,isFromAPI,type,verified],
           function (err, res) {
             if(err){
                 console.log("error: ", err);
                 reject(err);
             }
             else{
-                console.log(res.insertId)
                 resolve(res.insertId);
             }
         });
@@ -235,7 +272,7 @@ Purchases.addSubCategoryToProduct = function (idProduct,category,connection) {
 Purchases.addSubCategoryToPurchase = function (idPurchase,idProduct,category,value,connection) {
     return new Promise(function(resolve, reject) {
         connection.query(`INSERT INTO purchase_has_subcategory
-                    SELECT ?,?,IFNULL( (SELECT idCategory FROM category WHERE name = ?),22) as idCategory , ?`,[idPurchase,idProduct,category,value],
+                    SELECT ?,?,IFNULL( (SELECT idCategory FROM category WHERE name = ?),22) as idCategory , ?,1`,[idPurchase,idProduct,category,value],
             function (err, res) {
             if(err){
                 console.log("error: ", err);
@@ -253,11 +290,9 @@ Purchases.uploadPurchases = function (is_recurring, date, value, description, id
     return new Promise(function(resolve, reject) {
         Purchases.createPurchase(is_recurring, date, value, description, idUser, seller,idMovement,isFromAPI,type,verified,connection)
         .then(insertedID =>{
-            console.log(JSON.stringify(insertedID))
             Purchases.addSubCategoryToProduct(idProduct,category,connection)
             .then(res=>{
                 if(insertedID>0){
-                    console.log(parseInt(insertedID))
                     Purchases.addSubCategoryToPurchase(insertedID,idProduct,category,value,connection)
                     .then(result =>{
                         Categories.addExpenses(idUser,category,value,connection)

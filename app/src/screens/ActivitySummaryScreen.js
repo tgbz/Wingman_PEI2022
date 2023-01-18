@@ -63,7 +63,7 @@ export default function PoliticsScreen({navigation}){
   return ( adjustData(transactionsData), 
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.eggshell}}>
       <ScrollView>
-        <View><ActivityTable data={transactionsList} headerHome={false}></ActivityTable></View>
+        <View><ActivityTable data={transactionsList} headerType={true}></ActivityTable></View>
       </ScrollView>
     </SafeAreaView>
   );

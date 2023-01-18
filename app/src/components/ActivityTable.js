@@ -1,43 +1,48 @@
 import React from 'react';
-import { StyleSheet, View,Modal,Text,Button, processColor } from 'react-native';
+import { StyleSheet, View,Modal,Text,Button,TouchableOpacity, processColor } from 'react-native';
 import { Table, Rows , TableWrapper, Row} from 'react-native-table-component';
 import {FONTS,COLORS, SIZES , CATEGORIES, SIGNS} from '../constants'
-import {Entypo,AntDesign } from '@expo/vector-icons'
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 var accents = require('remove-accents');
 
-const ActivityTable = ({data}) => {
+const ActivityTable = ({data,headerHome, navigation}) => {
     const tableData = [];
     // create the table
     const getTable = () => {
       data.forEach(element => {
         //console.log(element.data)
-        tableData.push([CATEGORIES[element.category].icon, element.transaction, element.date, SIGNS[accents.remove(element.type)].icon, element.value]);
+        let value = element.value
+        if (headerHome) value = value + '€'
+        tableData.push([CATEGORIES[element.category].icon, element.transaction, element.date, SIGNS[accents.remove(element.type)].icon, value]);
      });
     }  
-    const headTable = ['','Transação', 'Valor (€)']
-
+    const headTable = ['','Transação', 'Data', 'Valor (€)']
+    const HomeTable = ['','Resumo de Atividade', '', <TouchableOpacity onPress={() => navigation.navigate('ActivitySummary')}><MaterialCommunityIcons name="eye-plus-outline" size={24} color="#ee821a"/></TouchableOpacity>]
+  
     return (
         getTable(),
         <View style={styles.container}>
           <Table borderStyle={{borderWidth: 0}}>
-          <Row data={headTable} style={styles.HeadStyle} flexArr={[0.1,1.7, 0.7, 0.7]} textStyle={styles.textHeaders}/>
+          { headerHome ?
+                <Row data={HomeTable} style={headerHome? styles.HeadStyleHome: styles.HeadStyle} flexArr={[0.1,1.7, 0.7, 0.3]} textStyle={styles.textHeaders}/>: 
+                <Row data={headTable} style={headerHome? styles.HeadStyleHome: styles.HeadStyle} flexArr={[0.1,1.7, 0.7, 0.7]} textStyle={styles.textHeaders}/>}
             <TableWrapper style={styles.wrapper}>
               <Rows data={tableData} flexArr={[0.3,1.3, 0.6,0.1, 0.6]} style={styles.row} textStyle={styles.text}/>
             </TableWrapper>
           </Table>
-          <View style={styles.container}>
-          
-          </View>
+         
        </View>
       );
 };
 
 const styles = StyleSheet.create({
         container: { 
-            flex: 1, 
-            padding: 16, 
-            paddingTop: 20, 
+          marginHorizontal: 20,
+          marginTop: '3%',
              },
+        button:{
+          alignSelf:'flex-end'
+        },
         wrapper: { 
             flexDirection: 'row' },
         row: {  
@@ -53,6 +58,10 @@ const styles = StyleSheet.create({
             fontSize: SIZES.small,
             color: COLORS.wingDarkBlue 
           },
+        verMais: {
+          color: '#ee821a',
+          fontFamily: 'SoraBold'
+        },
 
         textHeaders: { 
           padding: 5,
@@ -68,39 +77,50 @@ const styles = StyleSheet.create({
             borderRadius: 22   // it will be height/2
             },
 
-        HeadStyle: { 
+        HeadStyleHome: { 
             height: 40,
             alignContent: "center",
-            backgroundColor:  COLORS.wingblue,
-            borderColor: COLORS.wingblue,
+            backgroundColor: COLORS.wingDarkBlue,
+            borderColor: COLORS.wingDarkBlue,
+            opacity:0.96,
             borderWidth: 1,
-            borderRadius: 30,
-            marginBottom: 7
+            borderRadius: 10,
+            marginBottom: 7,
+            height: 50 , 
             },
+        HeadStyle: { 
+          height: 40,
+          alignContent: "center",
+          backgroundColor:  COLORS.wingblue,
+          borderColor: COLORS.wingblue,
+          borderWidth: 1,
+          borderRadius: 30,
+          marginBottom: 7
+          },
         item: {
             alignSelf: "center",
             color:"white"
             },
-            centeredView: {
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              },
-              modalView: {
-                border: 1,
-                borderColor: COLORS.wingDarkBlue,
-                marginTop: 400,
-                margin: 20,
-                backgroundColor:COLORS.white,
-                borderRadius: 20,
-                padding: 35,
-                alignItems: "center",
-                shadowColor: "#000",
-                shadowOffset: {
-                  width: 0,
-                  height: 2
-                },
-            }
+        centeredView: {
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          },
+        modalView: {
+          border: 1,
+          borderColor: COLORS.wingDarkBlue,
+          marginTop: 400,
+          margin: 20,
+          backgroundColor:COLORS.white,
+          borderRadius: 20,
+          padding: 35,
+          alignItems: "center",
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 2
+          },
+        }
    
 });
   

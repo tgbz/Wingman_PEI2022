@@ -1,5 +1,7 @@
 import React from 'react'
-import { StyleSheet, Text, View, Button, Dimensions, Image, SafeAreaView } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Button, Dimensions, Image, SafeAreaView } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
+
 import { useState, useEffect } from 'react'
 import AuthContext from '../context/AuthProvider'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -8,9 +10,12 @@ import { serverURL } from '../config/hosts'
 import { AntDesign } from '@expo/vector-icons'
 import { ProgressChart } from 'react-native-chart-kit'
 import _ from 'lodash' //Fazer Clone dos objetos
+import ActivityTable from '../components/ActivityTable'
 
 function HomeScreen({ navigation }) {
   const [token, setToken] = useState('')
+  const [transactionsData,setTransactionsData] = useState([])
+
   const { signOut } = React.useContext(AuthContext)
   useEffect(() => {
     AsyncStorage.getItem('userToken')
@@ -25,6 +30,33 @@ function HomeScreen({ navigation }) {
     const data = await resp.json()
     console.log(data)
   }
+
+
+  //----------------------Resumo de Atividade--------------
+  const getActvs = async () => {
+    // fecth data from serverURL/users/userCategory/:id and print it
+    const resp = await fetch(`${serverURL}/purchases/getAllPurchase/${token.id}`)
+    const transData = await resp.json()
+    setTransactionsData(transData.slice(0,5))
+  }
+  // Put transaction data on dd/mm/aa format
+  function treatDate (date) {
+    //Obtain the first 10 caracteres: data
+    if (typeof date === 'string') {
+      return date.slice(5, 10).replaceAll('-', '/').split('/').reverse().join('/')
+  }
+  }
+
+  const transactionsList = []
+  // Extract only the wanted info from the request to api 
+  function adjustData( transData) {
+    transData.forEach(element => {
+      let obj = {date: treatDate(element.date), transaction: element.seller, value: element.value, category: element.idcategory, type: element.type}
+      transactionsList.push(obj)
+    });
+  }
+//---------------------- FimResumo de Atividade--------------
+
 
   // Donut Charts
   // ----------------------------------------------------------------------------------------
@@ -84,12 +116,12 @@ function HomeScreen({ navigation }) {
   const fetchData = async (token) => {
     const resp1 = await fetch(`${serverURL}/users/userProfile/${token.id}`)
     const userData = await resp1.json()
-    console.log('User fetch data: ' + JSON.stringify(userData))
+    //console.log('User fetch data: ' + JSON.stringify(userData))
     setUserData(userData)
 
     const resp = await fetch(`${serverURL}/categories/userCategory/${token.id}`)
     const categoryData = await resp.json()
-    console.log('User fetch categoru data: ' + JSON.stringify(categoryData))
+    //console.log('User fetch categoru data: ' + JSON.stringify(categoryData))
     setCategoryData(categoryData)
 
     const img = await fetch(`${serverURL}/files/avatar/${token.id}`)
@@ -101,6 +133,7 @@ function HomeScreen({ navigation }) {
   useEffect(() => {
     if (token.id) {
       fetchData(token)
+      getActvs(token)
     }
   }, [token])
 
@@ -108,8 +141,8 @@ function HomeScreen({ navigation }) {
     const data = {}
     let spent = 0,
       total_plafond = 0
-    console.log('-----------------')
-    console.log('selector: ' + selector)
+    //le.log('-----------------')
+    //console.log('selector: ' + selector)
     categoryData.forEach((element) => {
       if (parseInt(element.is_essential) == selector) {
         total_plafond += parseInt(element.plafond)
@@ -117,8 +150,8 @@ function HomeScreen({ navigation }) {
       }
     })
 
-    console.log('total_plafond: ' + total_plafond)
-    console.log('spent: ' + spent)
+    //console.log('total_plafond: ' + total_plafond)
+    //console.log('spent: ' + spent)
     if (spent >= total_plafond) {
       // TODO: change this to 1
       data.data = [0.5]
@@ -128,8 +161,10 @@ function HomeScreen({ navigation }) {
     return data
   }
 
-  return (
+  return (adjustData(transactionsData),
     <SafeAreaView style={styles.root}>
+        <ScrollView>
+
       <View style={styles.container}>
         <View style={styles.header}>
           <View style={styles.profileImage}>
@@ -224,6 +259,7 @@ function HomeScreen({ navigation }) {
           </View>
         </View> 
         </View>
+
         </View>
             {/*
         <View>
@@ -246,6 +282,9 @@ function HomeScreen({ navigation }) {
         </View>
         */}
       </View>
+      <ActivityTable data={transactionsList} headerHome={true} navigation={navigation}></ActivityTable>
+      </ScrollView>
+
     </SafeAreaView>
   )
 }

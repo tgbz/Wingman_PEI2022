@@ -19,6 +19,7 @@ import AddExpenseScreen from '../screens/AddExpenseScreen.js';
 
 import { COLORS,SIZES } from '../constants/theme.js';
 import PoliticsSuggestionScreen from '../screens/PoliticsSuggestionScreen.js';
+import ActivityTable from '../components/ActivityTable.js';
 
 
 // Screens Names
@@ -62,7 +63,7 @@ function MainContainer() {
           headerShadowVisible: false, // applied here
           headerTintColor: COLORS.wingDarkBlue,
           headerTitleAlign:"center",
-           headerTransparent: true,
+          headerTransparent: true,
           tabBarActiveTintColor:'#ed711e',
           tabBarInactiveTintColor:'#fff',
           tabBarLabelStyle: {

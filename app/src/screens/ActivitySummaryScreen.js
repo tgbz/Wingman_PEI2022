@@ -8,7 +8,6 @@ import { SafeAreaView } from 'react-native'
 import ActivityTable from '../components/ActivityTable'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { serverURL } from '../config/hosts'
-import {Entypo,Ionicons,Octicons } from '@expo/vector-icons'
 
 
 
@@ -32,7 +31,7 @@ export default function PoliticsScreen({navigation}){
   // Put transaction data on dd/mm/aa format
   function treatDate (date) {
     //Obtain the first 10 caracteres: data
-    if (typeof value === 'string') {
+    if (typeof date === 'string') {
       return date.slice(2, 10).replaceAll('-', '/').split('/').reverse().join('/')
   }
   }
@@ -64,7 +63,7 @@ export default function PoliticsScreen({navigation}){
   return ( adjustData(transactionsData), 
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.eggshell}}>
       <ScrollView>
-        <View><ActivityTable data={transactionsList}></ActivityTable></View>
+        <View><ActivityTable data={transactionsList} headerType={true}></ActivityTable></View>
       </ScrollView>
     </SafeAreaView>
   );

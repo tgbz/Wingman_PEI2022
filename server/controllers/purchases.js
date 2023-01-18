@@ -87,33 +87,40 @@ Purchases.getRecurrent = function(id) {
             console.log(products)
             Object.values(products).forEach( i => {
                 console.log(i)
-                Purchases.addSubCategoryToProductbyID(i.idProduct,i.idcategory)
-                .then(res=>{
-                    console.log("res: "+res)
-                    if(insertedID>0){
-                        console.log(insertedID)
-                        Purchases.addSubCategoryToPurchasebyID(insertedID,i.idProduct,i.idcategory,i.value)
-                        .then(result =>{
-                            console.log("result: "+result)
-                            Categories.addExpensesbyID(idUser,i.idcategory,i.value)
-                            .then(categoria =>{
-                                console.log("categoria: "+categoria)
-                                resolve(categoria)
+                Purchases.addProduct(i.description)
+                .then(product =>{
+                    console.log(product)
+                    Purchases.addSubCategoryToProductbyID(product,i.idcategory)
+                    .then(res=>{
+                        console.log("res: "+res)
+                        if(insertedID>0){
+                            console.log(insertedID)
+                            Purchases.addSubCategoryToPurchasebyID(insertedID,product,i.idcategory,i.value,i.quantity)
+                            .then(result =>{
+                                console.log("result: "+result)
+                                Categories.addExpensesbyID(idUser,i.idcategory,i.value)
+                                .then(categoria =>{
+                                    console.log("categoria: "+categoria)
+                                    resolve(categoria)
+                                })
+                                .catch(err =>{
+                                    console.log(err)
+                                    reject (err)
+                                })
                             })
                             .catch(err =>{
                                 console.log(err)
                                 reject (err)
                             })
-                        })
-                        .catch(err =>{
-                            console.log(err)
-                            reject (err)
-                        })
-                    }
-                    else{
-                    reject("Algo correu mal")
-                    }
-                    
+                        }
+                        else{
+                        reject("Algo correu mal")
+                        }
+                        
+                    })
+                    .catch(err =>{
+                        reject(err)
+                    })
                 })
                 .catch(err =>{
                     reject(err)
@@ -143,6 +150,21 @@ Purchases.createManualPurchase = function (is_recurring, date, value, descriptio
         })
     };
 
+    Purchases.addProduct = function (description) {
+    return new Promise(function(resolve, reject) {
+        sql.query(`INSERT INTO product (Description) VALUES(?)  ON DUPLICATE KEY UPDATE idProduct=LAST_INSERT_ID(idProduct);`,[description],
+            function (err, res) {
+            if(err){
+                console.log("error: ", err);
+                reject(err);
+            }
+            else{
+                resolve(res.insertId);
+            }
+        });
+        })
+    };
+
 
 Purchases.addSubCategoryToProductbyID = function (idProduct,idCategory) {
     return new Promise(function(resolve, reject) {
@@ -160,9 +182,10 @@ Purchases.addSubCategoryToProductbyID = function (idProduct,idCategory) {
     };
 
 
-Purchases.addSubCategoryToPurchasebyID = function (idPurchase,idProduct,idcategory,value,) {
+Purchases.addSubCategoryToPurchasebyID = function (idPurchase,idProduct,idcategory,value,quantity) {
+    console.log(idProduct)
     return new Promise(function(resolve, reject) {
-        sql.query(`INSERT INTO purchase_has_subcategory (idPurchase,idProduct,idCategory,value)  values (?,?,?,?)`,[idPurchase,idProduct,idcategory,value],
+        sql.query(`INSERT INTO purchase_has_subcategory (idPurchase,idProduct,idCategory,value,quantity)  values (?,?,?,?,?)`,[idPurchase,idProduct,idcategory,value,quantity],
             function (err, res) {
             if(err){
                 console.log("error: ", err);

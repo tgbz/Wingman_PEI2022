@@ -13,7 +13,7 @@ Purchases.getPurchase = function(id) {
                     inner join purchase_has_subcategory as ps on p.idPurchase= ps.idPurchase
                     inner join product as pr on pr.idProduct = ps.idProduct
                     inner join category as c on ps.idCategory = c.idcategory
-                    where p.idPurchase = ?
+                    where p.idPurchase = ?  
                     ORDER BY p.date desc`,
         id ,function(err,res){
             if(err) {
@@ -29,7 +29,7 @@ Purchases.getPurchase = function(id) {
 
 Purchases.getAllPurchase = function(id) {
     return new Promise(function(resolve,reject){
-        sql.query(`SELECT p.is_recurring,p.date,p.value,p.description,p.idUser,p.seller,p.type,ps.idcategory,c.name,c.is_essential,pr.Description as product FROM purchase  as p
+        sql.query(`SELECT p.idPurchase, p.is_recurring,p.date,p.value,p.description,p.idUser,p.seller,p.type,ps.idcategory,c.name,c.is_essential,pr.Description as product FROM purchase  as p
                     inner join purchase_has_subcategory as ps on p.idPurchase= ps.idPurchase
                     inner join product as pr on pr.idProduct = ps.idProduct
                     inner join category as c on ps.idCategory = c.idcategory

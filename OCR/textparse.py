@@ -166,7 +166,7 @@ class Receipt():
 			"total": self.total,
 		}
 
-		return json.dumps(object_data,indent=2)
+		return json.dumps(object_data)
 
 
 def concat(r1,r2):

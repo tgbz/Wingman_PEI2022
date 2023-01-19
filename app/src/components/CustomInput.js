@@ -7,7 +7,7 @@ import { Ionicons, MaterialCommunityIcons, MaterialIcons, Entypo } from '@expo/v
 
 
 const CustomInput = ({value, setValue, placeholder, secureTextEntry, iconNameEntry='', widthScale=0.85}) => {
-    const {width} = useWindowDimensions();
+    const {width,height} = useWindowDimensions();
     const [passwordVisible, setPasswordVisible] = useState(secureTextEntry);
     return (
     <View style={[styles.container,  {width: width * widthScale}]}>
@@ -40,8 +40,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         flexDirection: 'row',
         alignSelf: 'center',
-        borderColor: COLORS.wingblue
-        
+        borderColor: COLORS.wingblue,
+
     },
     input: {
         flex: 0.95

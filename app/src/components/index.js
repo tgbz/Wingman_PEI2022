@@ -5,8 +5,10 @@ import CustomBackButton from "./CustomBackButton";
 import CustomButton from "./CustomButton";
 import CustomInput from "./CustomInput";
 import CustomTextButton from "./CustomTextButton";
+import ChooseCategoryModal from "./ChooseCategoryModal";
+import ProductInput from "./ProductTable";
 
-export { CustomBackButton, CustomButton, CustomInput,CustomTextButton };
+export { CustomBackButton, CustomButton, CustomInput,CustomTextButton,ChooseCategoryModal,ProductInput};
 
 
 

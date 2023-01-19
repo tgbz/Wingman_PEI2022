@@ -1,24 +1,41 @@
-import { View, Text, Image, TouchableOpacity, useWindowDimensions } from 'react-native'
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  useWindowDimensions,
+  ScrollView,
+} from 'react-native'
 import React from 'react'
 import AuthContext from '../context/AuthProvider'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { CATEGORIES, COLORS, SHADOWS, SIZES } from '../constants'
 import { useState, useEffect } from 'react'
 import { StyleSheet } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
+
 import { SafeAreaView } from 'react-native'
 import { serverURL } from '../config/hosts'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { CustomBackButton, CustomButton, CustomInput, CustomTextButton } from '../components'
 import { SelectList } from 'react-native-dropdown-select-list'
+import { ListItem } from 'react-native-elements'
+import ChooseCategoryModal from '../components/ChooseCategoryModal'
+import ProductInputContainer from '../components/ProductTable'
+import ProductInputModal from '../components/ProductInputModal'
+import ProductTable from '../components/ProductTable'
 
 export default function AddExpenseScreen({ navigation }) {
   const { height } = useWindowDimensions()
   const [token, setToken] = useState('')
   const [title, setTitle] = useState('')
   const [selected, setSelected] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState(CATEGORIES[0])
+  const [selectedCategory, setSelectedCategory] = useState('Sem Categoria')
   const [value, setValue] = useState('')
+  const [description, setDescription] = useState('')
+  const [isModalVisibleCT, setisModalVisibleCT] = useState(false)
+  
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [products, setProducts] = useState([])
 
   useEffect(() => {
     AsyncStorage.getItem('userToken')
@@ -26,25 +43,53 @@ export default function AddExpenseScreen({ navigation }) {
       .catch((err) => console.log(err))
   }, [])
 
-  const CategoriesSelectList = () => {
-    return (
-      <SelectList
-        data={Object.values(CATEGORIES)}
-        keyExtractor={(item) => item.name}
-        renderItem={({ item }) => (
-          <View>
-            {item.icon}
-            <Text>{item.name}</Text>
-          </View>
-        )}
-      />
-    );
-  };
+  // type = 'expense' or 'product'
+  const toggleModalCT = () => {
+    console.log('toggleModalCT')
+    setisModalVisibleCT(!isModalVisibleCT)
+  }
+
+  const handleCategorySelection = (category) => {
+      setSelectedCategory(category)
+    
+    toggleModalCT()
+  }
+
+  const handleAddProduct = (productInfo) => {
+    setProducts([...products, productInfo])
+    setIsModalVisible(false)
+  }
+
+  const handleCancel = () => {
+    setIsModalVisible(false)
+  }
   
-  
-  const handleFormSubmission = async () => {
-    const newData = {
+  function handleDeleteProduct(index) {
+    // Delete product at the specified index
+    const newProducts = [...products];
+    newProducts.splice(index, 1);
+    setProducts(newProducts);
+  }
+
+  function getCategoryIcon(selectedCategory) {
+    console.log('get icon: ' + selectedCategory)
+    // loop through the CATEGORIES object
+    for (const [key, value] of Object.entries(CATEGORIES)) {
+      // check if the name of the current category matches the selectedCategory
+      if (value.name === selectedCategory) {
+        // return the icon for the matching category
+        return value.icon
+      }
     }
+    // if no match is found, return null
+    return null
+  }
+
+  const categoryIcon = getCategoryIcon(selectedCategory)
+  const { width } = useWindowDimensions()
+
+  const handleFormSubmission = async () => {
+    const newData = {}
     const resp = await fetch(`${serverURL}/users/updateProfile/${token.id}`, {
       method: 'PUT',
       headers: {
@@ -54,7 +99,7 @@ export default function AddExpenseScreen({ navigation }) {
     }).then((resp) => {
       if (resp.status === 200) {
         alert('Dados atualizados com sucesso!')
-        navigation.navigate('ActivitySummary',{refresh: true})
+        navigation.navigate('ActivitySummary', { refresh: true })
       } else {
         alert('Erro ao atualizar dados!')
       }
@@ -62,49 +107,113 @@ export default function AddExpenseScreen({ navigation }) {
   }
 
   return (
-    console.log("--------------\nToken data: "+ JSON.stringify(token) + "\n--------------"),
+    console.log('--------------\nToken data: ' + JSON.stringify(token) + '\n--------------'),
     (
       <SafeAreaView style={styles.root}>
-        
-        <View style={styles.infoContainer}>
-          {/* Title input */}
-          <Text style={styles.textTag}>Título</Text>
-          <CustomInput placeholder={'Café do Luís'} value={title} setValue={setTitle} widthScale={0.8}/>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.infoContainer}>
+            {/* Title input */}
+            <Text style={styles.textTag}>Título</Text>
+            <CustomInput
+              placeholder={'Café do Luís'}
+              value={title}
+              setValue={setTitle}
+              widthScale={0.8}
+            />
 
-          {/* Category input 
-          {console.log('Gender selection: ' + CATEGORIES.name)}
-          <Text style={styles.textTag}>Categoria</Text>
-           
-           <SelectList
-            items={Object.values(CATEGORIES)}
-            selected={selectedCategory}
-            onChange={item => setSelectedCategory(item)}
-            keyExtractor={item => item.name}
-            labelExtractor={item => item.name}
-          />
-          */}
+            {/* Category input */}
+            {console.log('Expense Category: ' + selectedCategory)}
+            <Text style={styles.textTag}>Categoria</Text>
 
-          {/* Value input */}
-          <Text style={styles.textTag}>Valor</Text>
-          <CustomInput
-            placeholder={'10.50'}
-            value={value}
-            setValue={setValue}
-            iconNameEntry="euro"
-            widthScale={0.8}
-          />
-        </View>
+            <TouchableOpacity
+              style={[styles.categoryButton, { width: width * 0.8 }]}
+              onPress={() => toggleModalCT()}
+            >
+              {getCategoryIcon(selectedCategory)}
+              <Text style={styles.textCategory}>{selectedCategory}</Text>
+            </TouchableOpacity>
+            <ChooseCategoryModal
+              isModalVisibleCT={isModalVisibleCT}
+              setisModalVisibleCT={setisModalVisibleCT}
+              setSelectedCategory={handleCategorySelection}
+            />
+
+            {/* call the SelectList component
+           {Object.values(CATEGORIES).map(({icon, name}, index) => (
+              <View key={index}>
+                {icon}
+                <Text>{name}</Text>
+              </View>
+            ))}
+           */}
+
+            {/* Value input */}
+            <Text style={styles.textTag}>Valor</Text>
+            <CustomInput
+              placeholder={'10.50'}
+              value={value}
+              setValue={setValue}
+              keyboardType="numeric"
+              iconNameEntry="euro"
+              widthScale={0.8}
+            />
+
+            {/* Description input */}
+            <Text style={styles.textTag}>Descrição</Text>
+
+            {console.log('Description: ' + description)}
+            <TextInput
+              multiline={true}
+              numberOfLines={2}
+              value={description}
+              onChangeText={setDescription}
+              placeholder={'Café com leite e bolo'}
+              style={[
+                {
+                  marginVertical: 12,
+                  borderRadius: 5,
+                  paddingTop: 15,
+                  padding: 15,
+                  borderWidth: 1,
+                  borderColor: COLORS.wingblue,
+                  fontFamily: 'SoraRegular',
+                  fontSize: SIZES.font,
+                  color: COLORS.wingDarkBlue,
+                  width: width * 0.8,
+                  minHeight: 100,
+                },
+              ]}
+            />
+
+            {/* Products input */}
+
+            <Text style={styles.textTag}>Produtos</Text>
+            {console.log('Input containers: ' + JSON.stringify(products))}
+
+            {/* Product table component */}
+            <ProductTable products={products} handleDeleteProduct={handleDeleteProduct} getCategoryIcon={getCategoryIcon} />
+            <TouchableOpacity
+              style={[styles.categoryButton, { width: width * 0.8 }]}
+              onPress={() => setIsModalVisible(true)}
+            >
+              <Text style={styles.textCategory}>Adicionar Produto</Text>
+            </TouchableOpacity>
+
+            <ProductInputModal
+              isModalVisible={isModalVisible}
+              toggleModalCT={toggleModalCT}
+              getCategoryIcon={getCategoryIcon}
+              onSave={handleAddProduct}
+              onCancel={handleCancel}
+            />
+          </View>
+        </ScrollView>
 
         <View style={styles.containerBTN}>
-          {/* 
-            <TouchableOpacity onPress={() => navigation.navigate("ProfileEdit")} style={[styles.button,{height: height*0.05}]}>
-                <Text style={styles.buttonText}>Guardar</Text>
-            </TouchableOpacity>
-          */}
           <CustomButton
             onPress={() => handleFormSubmission()}
             text="Guardar Alterações"
-            type = "TERTIARY"
+            type="TERTIARY"
             widthScale={0.8}
           ></CustomButton>
         </View>
@@ -224,5 +333,29 @@ const styles = StyleSheet.create({
     fontFamily: 'SoraLight',
     fontSize: 15,
     alignSelf: 'flex-start',
+  },
+  categoryButton: {
+    //backgroundColor: "#eceffa",
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 15,
+    marginVertical: 12,
+    borderWidth: 1,
+    flexDirection: 'row',
+    alignSelf: 'center',
+    borderColor: COLORS.wingblue,
+    alignItems: 'center',
+  },
+  textCategory: {
+    fontFamily: 'SoraRegular',
+    fontSize: SIZES.font,
+    color: COLORS.wingDarkBlue,
+    marginStart: 10,
+  },
+  productsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    marginVertical: 12,
   },
 })

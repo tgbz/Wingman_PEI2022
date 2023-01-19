@@ -16,6 +16,7 @@ import PoliticsScreen from '../screens/PoliticsScreen.js';
 import ActivitySummaryScreen from '../screens/ActivitySummaryScreen.js';
 import FilterScreen from '../screens/FilterScreen.js';
 import AddExpenseScreen from '../screens/AddExpenseScreen.js';
+import EditExpenseScreen from '../screens/EditExpenseScreen.js';
 
 import { COLORS,SIZES } from '../constants/theme.js';
 import PoliticsSuggestionScreen from '../screens/PoliticsSuggestionScreen.js';
@@ -143,6 +144,7 @@ export default function HomeStack() {
                                                                                
                                                                               })}/>
         <Stack.Screen name="Filter" component={FilterScreen} options={{title:"Filtros",  presentation: 'modal'}}/>
+        <Stack.Screen name="EditExpense" component={EditExpenseScreen} options={{title:"Transação"}}/>
 
       </Stack.Navigator>
   );

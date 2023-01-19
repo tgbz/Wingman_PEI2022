@@ -51,7 +51,7 @@ function HomeScreen({ navigation }) {
   // Extract only the wanted info from the request to api 
   function adjustData( transData) {
     transData.forEach(element => {
-      let obj = {date: treatDate(element.date), transaction: element.seller, value: element.value, category: element.idcategory, type: element.type}
+      let obj = {idPurchase: element.idPurchase,date: treatDate(element.date), transaction: element.seller, value: element.value, category: element.idcategory, type: element.type}
       transactionsList.push(obj)
     });
   }
@@ -306,7 +306,6 @@ const styles = StyleSheet.create({
     //backgroundColor: COLORS.white,
     //alignItems: "center",
     //justifyContent: "center",
-
     marginHorizontal: 20,
     marginTop: '3%',
   },

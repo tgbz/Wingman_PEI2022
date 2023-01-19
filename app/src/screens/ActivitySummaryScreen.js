@@ -40,7 +40,7 @@ export default function PoliticsScreen({navigation}){
   // Extract only the wanted info from the request to api 
   function adjustData( transData) {
     transData.forEach(element => {
-      let obj = {date: treatDate(element.date), transaction: element.seller, value: element.value, category: element.idcategory, type: element.type}
+      let obj = {idPurchase: element.idPurchase, date: treatDate(element.date), transaction: element.seller, value: element.value, category: element.idcategory, type: element.type}
       transactionsList.push(obj)
     });
   }
@@ -63,7 +63,7 @@ export default function PoliticsScreen({navigation}){
   return ( adjustData(transactionsData), 
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.eggshell}}>
       <ScrollView>
-        <View><ActivityTable data={transactionsList} headerType={true}></ActivityTable></View>
+        <View><ActivityTable data={transactionsList} headerType={true} navigation={navigation}></ActivityTable></View>
       </ScrollView>
     </SafeAreaView>
   );

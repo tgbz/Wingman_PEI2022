@@ -36,7 +36,7 @@ export default function EditExpenseScreen({ navigation }) {
   const fetchData = async (token) => {
     const resp = await fetch(`${serverURL}/purchases/getPurchase/${idExpense}`)
     const purchase = await resp.json()
-    setpurchaseData(purchase[0])
+    setpurchaseData(purchase)
   }
 
   function treatDate (date) {

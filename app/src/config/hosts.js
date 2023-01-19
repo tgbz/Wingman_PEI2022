@@ -1,12 +1,12 @@
-import { Platform } from 'react-native';
+import { Platform } from "react-native";
 
 let serverURL = "";
 
-if (Platform.OS == 'android') {
-    serverURL = 'https://f16a-2001-8a0-ff73-4200-b537-b54f-6b59-5acd.eu.ngrok.io';
-} else if (Platform.OS == 'ios') {
-    serverURL = 'https://f16a-2001-8a0-ff73-4200-b537-b54f-6b59-5acd.eu.ngrok.io';
+if (Platform.OS == "android") {
+  serverURL = "https://7818-2001-818-e7a8-c500-7942-e76f-4613-7738.eu.ngrok.io";
+} else if (Platform.OS == "ios") {
+  serverURL = "https://f16a-2001-8a0-ff73-4200-b537-b54f-6b59-5acd.eu.ngrok.io";
 } else {
-    serverURL = 'http://localhost:3000';
+  serverURL = "http://localhost:3000";
 }
 export { serverURL };

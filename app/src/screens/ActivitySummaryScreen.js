@@ -29,11 +29,19 @@ export default function PoliticsScreen({navigation}){
     setTransactionsData(transData)
   }
   // Put transaction data on dd/mm/aa format
-  function treatDate (date) {
+  function treatDate(date) {
     //Obtain the first 10 caracteres: data
-    if (typeof date === 'string') {
-      return date.slice(2, 10).replaceAll('-', '/').split('/').reverse().join('/')
-  }
+    if (date){
+      if (typeof date === "string") {
+        return date
+          .slice(5, 10)
+          .replaceAll("-", "/")
+          .split("/")
+          .reverse()
+          .join("/");
+      }
+    }
+    return date
   }
 
   const transactionsList = []

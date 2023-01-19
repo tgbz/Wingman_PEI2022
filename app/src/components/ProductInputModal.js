@@ -3,21 +3,19 @@ import { SIZES,COLORS } from '../constants'
 import {useWindowDimensions, Modal, Text, TextInput, TouchableOpacity, StyleSheet, View } from 'react-native'
 import ChooseCategoryModal from './ChooseCategoryModal'
 import CustomInput from './CustomInput'
-const ProductInputModal = ({ isModalVisible, toggleModalCT,getCategoryIcon,getCategoryName, onSave, onCancel }) => {
+const ProductInputModal = ({ isModalVisible,generalCategory,getCategoryIcon,getCategoryName, onSave, onCancel }) => {
   const [description, setDescription] = useState('')
   const [value, setValue] = useState('')
   const [quantity, setQuantity] = useState('')
-  const [idcategory, setIdcategory] = useState(22)
+  const [idcategory, setIdcategory] = useState(generalCategory)
   const [isCategoryModalVisible, setIsCategoryModalVisible] = useState(false);
 
 
     const { width } = useWindowDimensions()
-  // clear the input fields when the modal is opened
+  // USE EFFECT TO SET THE CATEGORY TO GENERAL CATEGORY
   useEffect(() => {
-    if (isModalVisible) {
-      handleClean()
-    }
-  }, [isModalVisible])
+    setIdcategory(generalCategory)
+  }, [generalCategory])
 
   const handleCategorySelection = (selectedCategory) => {
     setIdcategory(selectedCategory);
@@ -28,7 +26,7 @@ const ProductInputModal = ({ isModalVisible, toggleModalCT,getCategoryIcon,getCa
     setDescription('')
     setValue('')
     setQuantity('')
-    setIdcategory(22)
+    setIdcategory(generalCategory)
     
   }
 
@@ -100,7 +98,9 @@ const ProductInputModal = ({ isModalVisible, toggleModalCT,getCategoryIcon,getCa
         
             <Text style={styles.saveButtonText}>Save</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.cancelButton} onPress={onCancel}>
+          <TouchableOpacity style={styles.cancelButton} onPress={() => {
+            handleClean();
+            onCancel();}}>
             <Text style={styles.cancelButtonText}>Cancel</Text>
           </TouchableOpacity>
         </View>

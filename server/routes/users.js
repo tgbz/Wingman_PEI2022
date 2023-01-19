@@ -57,7 +57,7 @@ router.get("/register", function (req, res) {
   res.render("registo-form");
 });
 
-router.get("/userProfile/:id", function (req, res){
+router.get("/userProfile/:id",passport.authenticate('jwt', {session: false}), function (req, res){
   Users.getUser(req.params.id)
   .then( dados => res.jsonp(dados))
   .catch(erro => res.status(500).jsonp(erro))
@@ -83,5 +83,11 @@ router.get("/users/", function (req, res){
   .then( dados => res.jsonp(dados))
   .catch(erro => res.status(500).jsonp(erro))
 })
+
+/*
+router.get('/logout', function (req, res) {
+  res.clearCookie('token');
+  res.redirect('/');
+});*/
 
 module.exports = router;

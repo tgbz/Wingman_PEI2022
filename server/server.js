@@ -10,7 +10,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var dataBases = require('./config/database');
 
-//const MySQLStore = require('express-mysql-session')(session);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'));

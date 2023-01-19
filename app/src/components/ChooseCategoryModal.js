@@ -30,7 +30,7 @@ export default function ChooseCategoryModal({
                 onPress={() => {
                   setisModalVisibleCT(false)
                 
-                  setSelectedCategory(name)
+                  setSelectedCategory(key)
                 }}
                 style={styles.categoryContainer}
               >

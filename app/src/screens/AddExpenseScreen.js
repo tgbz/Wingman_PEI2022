@@ -225,8 +225,9 @@ export default function AddExpenseScreen({ navigation }) {
 
             {/* Category input */}
             {console.log('Expense Category: ' + getCategoryName(selectedCategory))}
+            {products.length == 0 ?
+            <>
             <Text style={styles.textTag}>Categoria</Text>
-
             <TouchableOpacity
               style={[styles.categoryButton, { width: width * 0.8 }]}
               onPress={() => toggleModalCT()}
@@ -239,6 +240,9 @@ export default function AddExpenseScreen({ navigation }) {
               setisModalVisibleCT={setisModalVisibleCT}
               setSelectedCategory={handleCategorySelection}
             />
+            </>
+            : null}
+
 
             {/* call the SelectList component
            {Object.values(CATEGORIES).map(({icon, name}, index) => (
@@ -320,7 +324,7 @@ export default function AddExpenseScreen({ navigation }) {
             
             <ProductInputModal
               isModalVisible={isModalVisible}
-              toggleModalCT={toggleModalCT}
+              generalCategory={selectedCategory}
               getCategoryIcon={getCategoryIcon}
               getCategoryName={getCategoryName}
               onSave={handleAddProduct}

@@ -58,6 +58,9 @@ export default function PoliticsScreen({navigation}){
     }
   }, [token])
 
+
+
+
  
   const chartConfig = {
     backgroundColor: COLORS.white,
@@ -67,6 +70,7 @@ export default function PoliticsScreen({navigation}){
       borderRadius: 16,
     }};
 
+// every time route.params is true when user edit despesa, refresh data
 
     
 

@@ -5,12 +5,6 @@ import { COLORS,FONTS,SIZES } from '../constants'
 
 import { MaterialIcons } from 'react-native-vector-icons'
 
-addCurrency = (value) => {
-  // add € symbol and 2 decimal places
-  console.log(value.toFixed(2))
-  return `${value }€ `
-}
-console.log(addCurrency(1000))
 const ProductTable = ({ products, handleDeleteProduct,getCategoryIcon }) => {
   const tableHead = ['Produto', 'Valor', 'Quant.', ' ']
   

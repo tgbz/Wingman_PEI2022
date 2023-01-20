@@ -62,7 +62,7 @@ function HomeScreen({ navigation }) {
   // Extract only the wanted info from the request to api 
   function adjustData( transData) {
     transData.forEach(element => {
-      console.log(element)
+      //console.log(element)
       let obj = {idPurchase: element.idPurchase,date: treatDate(element.date), transaction: element.title, value: element.value, category: element.idcategory, type: element.type}
       transactionsList.push(obj)
     });
@@ -211,6 +211,7 @@ function HomeScreen({ navigation }) {
   // every time route.params is true when user add despesa e edit despesa, refresh data
   const route = useRoute()
   useEffect(() => {
+    console.log('route.params: ' + JSON.stringify(route.params))
     // dont do shit if route.params is undefined
     if (route.params) {
       // se nao for undefined
@@ -218,6 +219,7 @@ function HomeScreen({ navigation }) {
         // se for true
         console.log('Refresh Home Screen')
         fetchData(token)
+        getActvs(token);
         //console.log(typeof route.params.refresh)
         // set route.params.refresh to false
         route.params.refresh = false

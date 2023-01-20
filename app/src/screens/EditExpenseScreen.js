@@ -114,7 +114,7 @@ export default function EditExpenseScreen({ navigation }) {
   }
 
   function getCategoryIcon(selectedCategory) {
-    console.log('get icon: ' + selectedCategory)
+    //console.log('get icon: ' + selectedCategory)
     // loop through the CATEGORIES object
     // get icon by key
     for (const [key, value] of Object.entries(CATEGORIES)) {
@@ -128,7 +128,6 @@ export default function EditExpenseScreen({ navigation }) {
 
   //  get category name by key
   function getCategoryName(selectedCategory) {
-    console.log('get name: ' + selectedCategory)
     // loop through the CATEGORIES object
     // get icon by key
     for (const [key, value] of Object.entries(CATEGORIES)) {
@@ -216,6 +215,8 @@ export default function EditExpenseScreen({ navigation }) {
     }).then((resp) => {
       if (resp.status === 200) {
         alert('Transação editada com sucesso!')
+        // Não dá pra usar o navigation.goBack() pq não dá pra passar o parâmetro refresh: true
+        //navigation.goBack({ refresh: true }) 
         navigation.navigate('Casa', { refresh: true })
       } else {
         alert('Erro ao editar transação!')
@@ -233,7 +234,8 @@ export default function EditExpenseScreen({ navigation }) {
     }).then((resp) => {
       if (resp.status === 200) {
         alert('Transação excluída com sucesso!')
-        navigation.navigate('Casa', { refresh: true })
+        navigation.goBack({ refresh: true }) 
+       // navigation.navigate('Casa', { refresh: true })
       } else {
         alert('Erro ao excluir transação!')
       }
@@ -241,7 +243,7 @@ export default function EditExpenseScreen({ navigation }) {
   }
 
 
-  return ( console.log(purchaseData),
+  return ( //console.log(purchaseData),
       <SafeAreaView style={styles.root}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.infoContainer}>
@@ -299,7 +301,7 @@ export default function EditExpenseScreen({ navigation }) {
             </View>
 
             {/* Category input */}
-            {console.log('Expense Category: ' + getCategoryName(selectedCategory))}
+            {/* console.log('Expense Category: ' + getCategoryName(selectedCategory))*/}
             {verificationProducts ? (
               <>
                 <Text style={styles.textTag}>Categoria</Text>
@@ -321,7 +323,7 @@ export default function EditExpenseScreen({ navigation }) {
             {/* Description input */}
             <Text style={styles.textTag}>Descrição</Text>
 
-            {console.log('Description: ' + description)}
+            {/*console.log('Description: ' + description)*/}
             <TextInput
               multiline={true}
               numberOfLines={2}
@@ -348,7 +350,7 @@ export default function EditExpenseScreen({ navigation }) {
             {/* Products input */}
 
             <Text style={[styles.textTag, { marginBottom: 12 }]}>Produtos</Text>
-            {console.log('Input containers: ' + JSON.stringify(products))}
+            {/*console.log('Input containers: ' + JSON.stringify(products))*/}
 
             {/* Product table component */}
             {!verificationProducts ? (

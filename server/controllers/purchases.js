@@ -154,13 +154,10 @@ Purchases.getRecurrent = function(id) {
     return new Promise(function(resolve, reject) {
         Purchases.createManualPurchase(is_recurring, date, value,title, description, idUser, seller,0,type)
         .then(insertedID =>{
-            console.log(insertedID)
-            console.log(products)
             Object.values(products).forEach( i => {
                 console.log(i)
                 Purchases.addProduct(i.description)
                 .then(product =>{
-                    console.log(product)
                     Purchases.addSubCategoryToProductbyID(product,i.idcategory)
                     .then(res=>{
                         console.log("res: "+res)
@@ -187,7 +184,6 @@ Purchases.getRecurrent = function(id) {
                         else{
                         reject("Algo correu mal")
                         }
-                        
                     })
                     .catch(err =>{
                         reject(err)
@@ -365,7 +361,6 @@ Purchases.uploadPurchases = function (is_recurring, date, value, description, id
 Purchases.uploadFromSibs = async function () {
     const UserList = await Users.getUsers()
     console.log(UserList)
-    
     return new Promise(function (resolve, reject) {
         Object.values(UserList).forEach( i => {
             axios.get('http://94.60.175.136:3335/statements/update/'+i.IBAN)
@@ -405,7 +400,7 @@ var requestPurchases = setInterval(async function(){
   await delay(2000);
   const UserList = await Users.getUsers()
   Purchases.uploadFromSibs()
-}, 86400000);
+}, 20000);
 
 
 

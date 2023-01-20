@@ -74,7 +74,6 @@ const ProductInputModal = ({ isModalVisible,generalCategory,getCategoryIcon,getC
             style={[styles.categoryButton, { width: width * 0.8 }]}
             onPress={() => setIsCategoryModalVisible(true)}
           >
-            {console.log("Product Category: ",idcategory)}
             {getCategoryIcon(idcategory)}
             <Text style={styles.textCategory}>{getCategoryName(idcategory)}</Text>
           </TouchableOpacity>

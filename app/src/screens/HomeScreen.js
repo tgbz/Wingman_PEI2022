@@ -10,7 +10,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-
+import { useRoute } from '@react-navigation/native'
 import { useState, useEffect } from "react";
 import AuthContext from "../context/AuthProvider";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -32,15 +32,6 @@ function HomeScreen({ navigation }) {
       .catch((err) => console.log(err));
   }, []);
 
-  const getCategories = async () => {
-    // fecth data from serverURL/users/userCategory/:id and print it
-    console.log(`${serverURL}+'/categories/userCategory/'+${token.id}`);
-    const resp = await fetch(
-      `${serverURL}/categories/userCategory/${token.id}`
-    );
-    const data = await resp.json();
-    console.log(data);
-  };
 
   //----------------------Resumo de Atividade--------------
   const getActvs = async () => {
@@ -71,6 +62,7 @@ function HomeScreen({ navigation }) {
   // Extract only the wanted info from the request to api 
   function adjustData( transData) {
     transData.forEach(element => {
+      console.log(element)
       let obj = {idPurchase: element.idPurchase,date: treatDate(element.date), transaction: element.title, value: element.value, category: element.idcategory, type: element.type}
       transactionsList.push(obj)
     });
@@ -144,7 +136,7 @@ function HomeScreen({ navigation }) {
     const categoryData = await resp.json();
     //console.log('User fetch categoru data: ' + JSON.stringify(categoryData))
     setCategoryData(categoryData);
-
+    dataCategoryPretty(categoryData);
     const img = await fetch(`${serverURL}/files/avatar/${token.id}`);
     //console.log('Time: ' + new Date().toLocaleTimeString())
     console.log("User fetch img: " + JSON.stringify(img.url));
@@ -158,29 +150,80 @@ function HomeScreen({ navigation }) {
     }
   }, [token]);
 
+
+  const [dataCPretty, setDataCPretty] = useState({});
+
+  // transform the data to the format--> is_essential: {plafond, total_spent,categorieList}
+  function dataCategoryPretty(categoryData) {
+    const data = {};
+    // add all the spent of each is_essential
+    categoryData.forEach((element) => {
+      if (data[element.is_essential]) {
+        data[element.is_essential].total_spent += parseInt(element.total_spent);
+        data[element.is_essential].plafond += parseInt(element.plafond);
+        data[element.is_essential].categorieList.push(element.idcategory);
+      } else {
+        data[element.is_essential] = {
+          spent: parseInt(element.total_spent),
+          plafond: parseInt(element.plafond),
+          categorieList: [element.idcategory],
+        };
+      }
+    });
+    //console.log('\ndataCategoryPretty: ' + JSON.stringify(data))
+    setDataCPretty(data)
+  }
+
+
+  //dataCategoryPretty(categoryData);
+
+      
   function transformToNoCategoryData(selector, categoryData) {
     const data = {};
-    let spent = 0,
+    // make it wait for the data to be fetched
+    //console.log('\n\nreformedData: ' + typeof  )
+    let spent =0,
       total_plafond = 0;
     //le.log('-----------------')
     //console.log('selector: ' + selector)
+    
     categoryData.forEach((element) => {
       if (parseInt(element.is_essential) == selector) {
         total_plafond += parseInt(element.plafond);
         spent += parseInt(element.total_spent);
       }
     });
-
+  
     //console.log('total_plafond: ' + total_plafond)
     //console.log('spent: ' + spent)
     if (spent >= total_plafond) {
       // TODO: change this to 1
-      data.data = [0.5];
-    } else data.data = [spent / total_plafond];
+      data.data = [1];
+      //console.log(selector +' :'+ Math.round(spent / total_plafond))
+      // arredonda para inteiro
+      //data.data = [Math.round(spent / total_plafond)];
+    } else data.data = [Math.round(spent / total_plafond)];
 
     data.labels = [selector];
     return data;
   }
+
+  // every time route.params is true when user add despesa e edit despesa, refresh data
+  const route = useRoute()
+  useEffect(() => {
+    // dont do shit if route.params is undefined
+    if (route.params) {
+      // se nao for undefined
+      if (route.params.refresh) {
+        // se for true
+        console.log('Refresh Home Screen')
+        fetchData(token)
+        //console.log(typeof route.params.refresh)
+        // set route.params.refresh to false
+        route.params.refresh = false
+      }
+    }
+  }, [route.params])
 
   return (
     adjustData(transactionsData),
@@ -279,6 +322,7 @@ function HomeScreen({ navigation }) {
                       hideLegend={true}
                     />
                     <Text style={styles.charts_text}>Essenciais</Text>
+                    {/* <Text style={styles.charts_text}>{JSON.stringify(dataCPretty[0].spent)} €</Text> */}
                   </View>
                   <View style={styles.charts}>
                     <ProgressChart

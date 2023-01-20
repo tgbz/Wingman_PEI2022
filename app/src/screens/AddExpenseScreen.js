@@ -30,7 +30,7 @@ export default function AddExpenseScreen({ navigation }) {
   const [isModalVisibleCT, setisModalVisibleCT] = useState(false)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [products, setProducts] = useState([])
-  const [isDebit, setIsDebit] = useState(false)
+  const [isDebit, setIsDebit] = useState(true)
   const today = new Date()
   const formattedDate = today.toISOString().slice(0, 10)
   const [date, setDate] = useState(formattedDate)
@@ -43,7 +43,6 @@ export default function AddExpenseScreen({ navigation }) {
 
   
   const toggleModalCT = () => {
-    console.log('toggleModalCT')
     setisModalVisibleCT(!isModalVisibleCT)
   }
 
@@ -70,7 +69,7 @@ export default function AddExpenseScreen({ navigation }) {
   }
 
   function getCategoryIcon(selectedCategory) {
-    console.log('get icon: ' + selectedCategory)
+    //console.log('get icon: ' + selectedCategory)
     // loop through the CATEGORIES object
     // get icon by key
     for (const [key, value] of Object.entries(CATEGORIES)) {
@@ -84,7 +83,7 @@ export default function AddExpenseScreen({ navigation }) {
 
   //  get category name by key
   function getCategoryName(selectedCategory) {
-    console.log('get name: ' + selectedCategory)
+    //console.log('get name: ' + selectedCategory)
     // loop through the CATEGORIES object
     // get icon by key
     for (const [key, value] of Object.entries(CATEGORIES)) {
@@ -162,8 +161,8 @@ export default function AddExpenseScreen({ navigation }) {
    req.body.type,
    req.body.products)
    */
+
   const handleFormSubmission = async () => {
-    console.log('handleFormSubmission')
     if(products.length == 0){
       products.push({
         quantity: 1,
@@ -201,7 +200,7 @@ export default function AddExpenseScreen({ navigation }) {
   }
 
   return (
-    console.log('--------------\nToken data: ' + JSON.stringify(token) + '\n--------------'),
+    console.log('--------------\nToken data AddExpense: ' + JSON.stringify(token) + '\n--------------'),
     (
       <SafeAreaView style={styles.root}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -260,7 +259,6 @@ export default function AddExpenseScreen({ navigation }) {
             </View>
 
             {/* Category input */}
-            {console.log('Expense Category: ' + getCategoryName(selectedCategory))}
             {products.length == 0 ? (
               <>
                 <Text style={styles.textTag}>Categoria</Text>
@@ -282,7 +280,6 @@ export default function AddExpenseScreen({ navigation }) {
             {/* Description input */}
             <Text style={styles.textTag}>Descrição</Text>
 
-            {console.log('Description: ' + description)}
             <TextInput
               multiline={true}
               numberOfLines={2}
@@ -309,7 +306,6 @@ export default function AddExpenseScreen({ navigation }) {
             {/* Products input */}
 
             <Text style={[styles.textTag, { marginBottom: 12 }]}>Produtos</Text>
-            {console.log('Input containers: ' + JSON.stringify(products))}
 
             {/* Product table component */}
             {products.length > 0 ? (

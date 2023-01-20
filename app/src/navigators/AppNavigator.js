@@ -99,7 +99,7 @@ function MainContainer() {
         ),
         title:"Adicionar Despesa"
       }}/>
-        <Tab.Screen name="ActivitySummary" component={ActivitySummaryScreen} options={{title:"Atividade",headerShown: false}}/>
+        <Tab.Screen name="ActivitySummary" component={ActivitySummaryScreen} options={{title:"Atividade",headerShown: false}} />
         <Tab.Screen name={profileName} component={ProfileScreen} options={{title:"Perfil",headerShown: false}}/>
 
        {/* <Tab.Screen name={profileEditName} component={ProfileEditScreen} options={{headerShown: false}}/>

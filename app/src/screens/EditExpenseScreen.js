@@ -30,7 +30,7 @@ export default function EditExpenseScreen({ navigation }) {
   const [isModalVisibleCT, setisModalVisibleCT] = useState(false)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [products, setProducts] = useState([])
-  const [isDebit, setIsDebit] = useState(false)
+  const [isDebit, setIsDebit] = useState(true)
   const today = new Date()
   const formattedDate = today.toISOString().slice(0, 10)
   const [date, setDate] = useState(formattedDate)
@@ -62,7 +62,11 @@ export default function EditExpenseScreen({ navigation }) {
     setDescription(purchase.description)
     setDate(treatDate(purchase.date))
     setProducts(purchase.products)
-    setIsDebit(purchase.isDebit)
+    if(purchase.type == 'Debito') {
+      setIsDebit(true)
+    } else {
+      setIsDebit(false)
+    }
     if (purchase.products.length == 1 && purchase.products[0].description == 'Não especificado') {
       setSelectedCategory(purchase.products[0].idcategory)
     }
@@ -218,6 +222,24 @@ export default function EditExpenseScreen({ navigation }) {
       }
     })
   }
+ 
+  // handleDeleteExpense()
+  const handleDeleteExpense = async () => {
+    const resp = await fetch(`${serverURL}/purchases/deletePurchase/`+idExpense, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then((resp) => {
+      if (resp.status === 200) {
+        alert('Transação excluída com sucesso!')
+        navigation.navigate('Casa', { refresh: true })
+      } else {
+        alert('Erro ao excluir transação!')
+      }
+    })
+  }
+
 
   return ( console.log(purchaseData),
       <SafeAreaView style={styles.root}>
@@ -383,6 +405,15 @@ export default function EditExpenseScreen({ navigation }) {
               type="TERTIARY"
               widthScale={0.8}
             ></CustomButton>
+            {/* Delete expense button - red */}
+            <CustomButton
+              onPress={() => handleDeleteExpense()}
+              text="Eliminar Despesa"
+              type="SECONDARY"
+              widthScale={0.8}
+            ></CustomButton>
+            
+
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -411,7 +442,7 @@ const styles = StyleSheet.create({
   containerBTN: {
     flex: 1,
     alignItems: 'flex-start',
-    marginHorizontal: 40,
+    marginHorizontal: 43,
     marginBottom: 100,
   },
   buttonText: {

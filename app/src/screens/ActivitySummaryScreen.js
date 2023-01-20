@@ -8,7 +8,7 @@ import { SafeAreaView } from 'react-native'
 import ActivityTable from '../components/ActivityTable'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { serverURL } from '../config/hosts'
-
+import { useRoute } from '@react-navigation/native'
 
 
 export default function PoliticsScreen({navigation}){
@@ -67,6 +67,8 @@ export default function PoliticsScreen({navigation}){
       borderRadius: 16,
     }};
 
+
+    
 
   return ( adjustData(transactionsData), 
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.eggshell}}>

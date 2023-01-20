@@ -400,7 +400,7 @@ var requestPurchases = setInterval(async function(){
   await delay(2000);
   const UserList = await Users.getUsers()
   Purchases.uploadFromSibs()
-}, 20000);
+}, 86400000);
 
 
 

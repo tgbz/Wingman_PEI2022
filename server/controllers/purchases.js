@@ -9,7 +9,7 @@ var axios = require("axios").default;
 
 Purchases.getProducts = function(id) {
     return new Promise(function(resolve,reject){
-        sql.query(`SELECT pr.idProduct, pr.Description, ps.value, ps.quantity, ps.idcategory, c.name, c.is_essential as essential FROM purchase_has_subcategory  as ps
+        sql.query(`SELECT pr.idProduct, pr.Description as description, ps.value, ps.quantity, ps.idcategory, c.name, c.is_essential as essential FROM purchase_has_subcategory  as ps
                     inner join product as pr on pr.idProduct = ps.idProduct
                     inner join category as c on ps.idCategory = c.idcategory
                     where ps.idPurchase = ?`,
@@ -28,7 +28,7 @@ Purchases.getProducts = function(id) {
 Purchases.getPurchase = function(id) {
     return new Promise(function(resolve,reject){
         sql.query(`SELECT p.idPurchase, P.is_recurring,p.date,p.value, p.title, p.description,p.idUser,p.seller,p.type FROM purchase  as p
-                    where p.idPurchase = ? `,
+                    where p.idPurchase = ?`,
         id ,function(err,res){
             if(err) {
                 console.log("error: ", err);
@@ -62,15 +62,49 @@ Purchases.getPurchaseProducts = function(id) {
     })   
 }
 
+Purchases.deletePurchase = function (id){
+    return new Promise(function(resolve, reject) {
+        sql.query(`UPDATE purchase SET valid = 0 WHERE idPurchase = ?`,
+        id ,function(err,res){
+            if(err) {
+                console.log("error: ", err);
+                reject(err);
+            }
+            else{
+                resolve(res)
+            }
+        });   
+    })
+}
+
+Purchases.updatePurchase = function(id,is_recurring, date, value, title, description, idUser, seller,type,products) {
+    return new Promise(function(resolve, reject) {
+        Purchases.deletePurchase(id)
+        .then(res =>{
+            Purchases.addPurchase(is_recurring, date, value, title, description, idUser, seller,type,products)
+            .then(purchase =>{
+                resolve(purchase)
+            })
+            .catch(err =>{
+                reject(err)
+            })
+        })
+        .catch(err =>{
+            reject(err)
+        })
+
+        })
+};
+
 
 
 Purchases.getAllPurchase = function(id) {
     return new Promise(function(resolve,reject){
-        sql.query(`SELECT p.idPurchase, p.is_recurring,p.date,p.value,p.description,p.idUser,p.seller,p.type,ps.idcategory,c.name,c.is_essential,pr.Description as product FROM purchase  as p
+        sql.query(`SELECT p.idPurchase, p.is_recurring,p.title,p.date,p.value,p.description,p.idUser,p.seller,p.type,ps.idcategory,c.name,c.is_essential,pr.Description as product FROM purchase  as p
                     inner join purchase_has_subcategory as ps on p.idPurchase= ps.idPurchase
                     inner join product as pr on pr.idProduct = ps.idProduct
                     inner join category as c on ps.idCategory = c.idcategory
-                    where p.idUser= ?
+                    where p.idUser= ? and p.valid = 1
                     ORDER BY p.date desc`,
         id ,function(err,res){
             if(err) {
@@ -175,7 +209,7 @@ Purchases.getRecurrent = function(id) {
 Purchases.createManualPurchase = function (is_recurring, date, value, title, description, idUser, seller,isFromAPI,type) {
     console.log(is_recurring, date, value, title, description, idUser, seller,isFromAPI,type)
     return new Promise(function(resolve, reject) {
-        sql.query(`INSERT INTO purchase (is_recurring, date, value, title, description, idUser,seller,idMovement,isFromAPI,type,verified) Select ?,?,?,?,?,?,?,(SELECT MAX(idPurchase) FROM wingman.purchase ),?,?,1`,[is_recurring,date,value,title,description, idUser,seller,isFromAPI,type],
+        sql.query(`INSERT INTO purchase (is_recurring, date, value, title, description, idUser,seller,idMovement,isFromAPI,type,verified,valid) Select ?,?,?,?,?,?,?,(SELECT MAX(idPurchase) FROM wingman.purchase ),?,?,1,1`,[is_recurring,date,value,title,description, idUser,seller,isFromAPI,type],
             function (err, res) {
             if(err){
                 console.log("error: ", err);
@@ -240,7 +274,7 @@ Purchases.addSubCategoryToPurchasebyID = function (idPurchase,idProduct,idcatego
 // Upload de Purchases
 Purchases.createPurchase = function (is_recurring, date, value, description, idUser, seller,idMovement,isFromAPI,type,verified,connection) {
     return new Promise(function(resolve, reject) {
-      connection.query(`INSERT IGNORE INTO purchase (is_recurring, date, value,title, description, idUser,seller,idMovement,isFromAPI,type,verified) VALUES (?,?,?,?,?,?,?,?,?,?,?)`,[is_recurring,date,value,description,"", idUser,seller,idMovement,isFromAPI,type,verified],
+      connection.query(`INSERT IGNORE INTO purchase (is_recurring, date, value,title, description, idUser,seller,idMovement,isFromAPI,type,verified) VALUES (?,?,?,?,?,?,?,?,?,?,?)`,[is_recurring,date,value,seller,description, idUser,seller,idMovement,isFromAPI,type,verified],
           function (err, res) {
             if(err){
                 console.log("error: ", err);
@@ -326,13 +360,50 @@ Purchases.uploadPurchases = function (is_recurring, date, value, description, id
         })
     };
 
+
+
+Purchases.uploadFromSibs = async function () {
+    const UserList = await Users.getUsers()
+    console.log(UserList)
+    
+    return new Promise(function (resolve, reject) {
+        Object.values(UserList).forEach( i => {
+            axios.get('http://94.60.175.136:3335/statements/update/'+i.IBAN)
+            .then(async function(response){
+                sql.getConnection(async function(err, connection) {
+                try {
+                    connection.beginTransaction()
+                    const queryPromises = []
+                    movimentos = response.data.movimentos
+                    Object.values(movimentos).forEach( movimento => {
+                        let date = new Date(movimento.date).toISOString().replace(/T/, ' ').replace(/\..+/, '')
+                        queryPromises.push(Purchases.uploadPurchases(0,date,movimento.value,movimento.description,i.idUser,movimento.issuer,movimento._id,1,movimento.type,0,movimento.category,1,connection))
+                    })
+                    const results = await Promise.all(queryPromises)
+                    connection.commit()
+                    connection.release()
+                    console.log(results)
+                    resolve ("Acabei com sucesso")
+                    } catch (err) {
+                    console.log("error ", err);
+                        connection.rollback()
+                        connection.release()
+                    }
+                    reject(err)
+                })
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+        })
+    })
+};
 // Buscar as despesas dos utilizadores diariamente
 
 var requestPurchases = setInterval(async function(){
   const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
   await delay(2000);
   const UserList = await Users.getUsers()
-  console.log(UserList)
   Object.values(UserList).forEach( i => {
     axios.get('http://94.60.175.136:3335/statements/update/'+i.IBAN)
   .then(async function(response){
@@ -348,13 +419,14 @@ var requestPurchases = setInterval(async function(){
         const results = await Promise.all(queryPromises)
         connection.commit()
         connection.release()
-        console.log("Acabei")
-        return results
+        console.log(results)
+        return ("Acabei com sucesso")
         } catch (err) {
         console.log("error ", err);
             connection.rollback()
             connection.release()
         }
+        reject(err)
     })
   })
   .catch(function (error) {

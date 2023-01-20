@@ -71,7 +71,7 @@ function HomeScreen({ navigation }) {
   // Extract only the wanted info from the request to api 
   function adjustData( transData) {
     transData.forEach(element => {
-      let obj = {idPurchase: element.idPurchase,date: treatDate(element.date), transaction: element.seller, value: element.value, category: element.idcategory, type: element.type}
+      let obj = {idPurchase: element.idPurchase,date: treatDate(element.date), transaction: element.title, value: element.value, category: element.idcategory, type: element.type}
       transactionsList.push(obj)
     });
   }
@@ -226,7 +226,7 @@ function HomeScreen({ navigation }) {
             <View style={styles.body}>
               {/* if hascategory==0  make a card to redirect to politicsSuggestionScreen 
         ELSE NOTHING*/}
-              {userData.hascategory == 1 ? (
+              {userData.hascategory == 0 ? (
                 <View style={[styles.card1, { backgroundColor: "#ee821a" }]}>
                   <View>
                     <Text

@@ -93,7 +93,7 @@ function MainContainer() {
         <Tab.Screen name={politics} component={PoliticsScreen} options={{title:"Políticas"}}/>
         <Tab.Screen name={homeName} component={HomeScreen} options={{headerShown: false}} />
   {/* add screen to a new tab called add expense, no label */}
-        <Tab.Screen name="AddExpense" component={AddExpenseScreen} options={{ 
+        <Tab.Screen name="AddExpense" component={AddExpenseScreen} options={{headerShown: false, 
         tabBarIcon: () => (
           <Ionicons name='add-circle' size = {70} color = '#ed711e'/>
         ),

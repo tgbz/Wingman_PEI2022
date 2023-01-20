@@ -5,7 +5,7 @@ import ChooseCategoryModal from './ChooseCategoryModal'
 import CustomInput from './CustomInput'
 const ProductInputModal = ({ isModalVisible,generalCategory,getCategoryIcon,getCategoryName, onSave, onCancel }) => {
   const [description, setDescription] = useState('')
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState(1)
   const [quantity, setQuantity] = useState('')
   const [idcategory, setIdcategory] = useState(generalCategory)
   const [isCategoryModalVisible, setIsCategoryModalVisible] = useState(false);

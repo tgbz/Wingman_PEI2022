@@ -105,7 +105,7 @@ Purchases.getAllPurchase = function(id) {
                     inner join product as pr on pr.idProduct = ps.idProduct
                     inner join category as c on ps.idCategory = c.idcategory
                     where p.idUser= ? and p.valid = 1
-                    ORDER BY p.date desc`,
+                    ORDER BY p.date desc, idPurchase desc`,
         id ,function(err,res){
             if(err) {
                 console.log("error: ", err);
@@ -404,35 +404,7 @@ var requestPurchases = setInterval(async function(){
   const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
   await delay(2000);
   const UserList = await Users.getUsers()
-  Object.values(UserList).forEach( i => {
-    axios.get('http://94.60.175.136:3335/statements/update/'+i.IBAN)
-  .then(async function(response){
-    sql.getConnection(async function(err, connection) {
-      try {
-        connection.beginTransaction()
-        const queryPromises = []
-        movimentos = response.data.movimentos
-        Object.values(movimentos).forEach( movimento => {
-            let date = new Date(movimento.date).toISOString().replace(/T/, ' ').replace(/\..+/, '')
-            queryPromises.push(Purchases.uploadPurchases(0,date,movimento.value,movimento.description,i.idUser,movimento.issuer,movimento._id,1,movimento.type,0,movimento.category,1,connection))
-        })
-        const results = await Promise.all(queryPromises)
-        connection.commit()
-        connection.release()
-        console.log(results)
-        return ("Acabei com sucesso")
-        } catch (err) {
-        console.log("error ", err);
-            connection.rollback()
-            connection.release()
-        }
-        reject(err)
-    })
-  })
-  .catch(function (error) {
-    console.error(error);
-  });
-  })
+  Purchases.uploadFromSibs()
 }, 86400000);
 
 

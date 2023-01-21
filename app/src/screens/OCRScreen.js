@@ -1,39 +1,29 @@
 import { useWindowDimensions,
-    StyleSheet, Image, Alert, Text, TouchableOpacity, View, 
+    StyleSheet, Image, Alert, Text, TouchableOpacity, View,  ActivityIndicator,
   } from 'react-native'
   import React from 'react'
   import AsyncStorage from '@react-native-async-storage/async-storage'
-  import { COLORS, FONTS, SHADOWS, SIZES } from '../constants'
+  import { COLORS, FONTS, SHADOWS, SIZES, CATEGORIES } from '../constants'
   import { useState, useEffect } from 'react'
-import { ScrollView, TextInput } from 'react-native-gesture-handler'
 import * as ImagePicker from 'expo-image-picker'
-import * as Permissions from 'expo-permissions'
-import { Button } from 'react-native-elements'
 import { SafeAreaView } from 'react-native'
-import { ScreenWidth } from 'react-native-elements/dist/helpers'
-import CompressImage from 'react-native-compress-image';
-import * as MediaLibrary from 'expo-media-library';
-import {
-  Menu,
-  MenuProvider,
-  MenuOptions,
-  MenuOption,
-  MenuTrigger,
- 
- } from "react-native-popup-menu";
- import { Entypo } from "@expo/vector-icons";
+import { color, ScreenWidth } from 'react-native-elements/dist/helpers'
+import { Ionicons,  MaterialCommunityIcons,Entypo, MaterialIcons, FontAwesome, FontAwesome5, SimpleLineIcons, Feather } from '@expo/vector-icons'
+import ProductTable from '../components/ProductTable'
+
 
 export default function PoliticsSuggestionScreen({ navigation }) {
   const { height, width } = useWindowDimensions()
-
+    const [products, setProducts] = useState([])
     const [token, setToken] = useState('')
     const [hasPermission, setPermission] = React.useState(false)
     const [photo, setPhoto] = React.useState(null)
-    const [pickedImage, setPickedImage] = React.useState(null)
+    const [pickedImage, setPickedImage] = React.useState('')
     const [pickId, setPickId] = useState(0) 
+    const [disabled, setDisabled] = useState(true)
+    const [loading, setLoading] = useState(false)
+    const [loaded, setLoaded] = useState(false)
 
-    const pick1 = {fileName:"IMG_4776.JPG","width":946,"fileSize":87414,"height":946,"cancelled":false,"uri":"file:///var/mobile/Containers/Data/Application/4B8C5572-7AA0-40AC-B017-0CD6F65DDFAC/Library/Caches/ExponentExperienceData/%2540anonymous%252Fapp-493be2c9-8eb4-4f3a-bb9e-e4de4faaee4e/ImagePicker/9CD31169-6A3F-490D-8920-742D146B1382.jpg","assetId":"8CD89C92-2B1F-4EA5-A2ED-437CFF30CC54/L0/001","type":"image"}
-    const pick2 = {"fileSize":1918411,"width":3024,"fileName":"cam0","cancelled":false,"height":3025,"type":"image","uri":"file:///var/mobile/Containers/Data/Application/4B8C5572-7AA0-40AC-B017-0CD6F65DDFAC/Library/Caches/ExponentExperienceData/%2540anonymous%252Fapp-493be2c9-8eb4-4f3a-bb9e-e4de4faaee4e/ImagePicker/89D07D6C-072F-4C7B-99C7-D62BA6C3143A.jpg","assetId":null}
     useEffect(() => {
       AsyncStorage.getItem('userToken')
         .then((userToken) => {setToken(JSON.parse(userToken))})
@@ -48,13 +38,16 @@ export default function PoliticsSuggestionScreen({ navigation }) {
   const pickFromGallery = async () =>{
     if (hasPermission){
       let data = await ImagePicker.launchImageLibraryAsync({
+        
         mediaTypes:ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [1,1],
-        quality: 0.7})
+        allowsEditing: true, 
+        aspect: [3,5] ,
+        quality: 1})
       if (!data.cancelled) {
         setPhoto(data.uri)
         setPickedImage(data)
+        setDisabled(false)
+
       }
     }else{
       askPermission();
@@ -65,151 +58,222 @@ export default function PoliticsSuggestionScreen({ navigation }) {
     if (hasPermission){
       let data = await ImagePicker.launchCameraAsync({
         mediaTypes:ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [1,1],
+        allowsEditing: true, aspect: [5,3] ,
         quality: 0.7})
       if (!data.cancelled) {
         setPhoto(data.uri)
         data.name = "Cam".concat(String(pickId))
+        data.fileName = "Cam".concat(String(pickId))
         setPickId(pickId+1)
         setPickedImage(data)
+        setDisabled(false)
       }
     }else{
       Alert.alert("Permita o acesso à galeria!")
     }
   }
 
-  
-  
 
-
-  //send Post request with all imagens inside 
-  const sendPost = () => {
-    //console.log('handleUploadPhoto ' + JSON.stringify(pickedImage))
-    fetch(`http://94.60.175.136:8000/ocr/upload`, {
-      method: 'POST',
-      body: createFormData(),
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-      /*.then((response) => {
-        response.json()
-      })
-      .then((response) => {
-        console.log('response', response)
-      })*/
-      .catch((error) => {
-        console.log('error', error)
-      })
-
-  }
-
-  
 
   const createFormData = () => {
     //console.log('Create form data: ' + JSON.stringify(pickedImage) + ' ' + JSON.stringify(user))
     const data = new FormData()
     //for each image, do this 
-    pick1.path = Platform.OS === 'ios' ? pick1.uri.replace('file://', '') : pick1.uri
-    pick1.name = pick1.fileName
-    data.append(pick1.fileName, pick1);
-    pick2.path = Platform.OS === 'ios' ? pick2.uri.replace('file://', '') : pick2.uri
-    pick2.name = pick2.fileName
-    data.append(pick2.fileName, pick2);
-
+    pickedImage.path = Platform.OS === 'ios' ? pickedImage.uri.replace('file://', '') : pickedImage.uri
+    pickedImage.name = pickedImage.fileName
+    data.append(pickedImage.fileName, pickedImage);
     console.log('\nDATA FORM: ' + JSON.stringify(data))
-   
     return data
   }
 
+  //send Post request with all imagens inside 
+  const sendPost = async () => {
+    setLoading(true)
+    //console.log('handleUploadPhoto ' + JSON.stringify(pickedImage))
+    const resp = await fetch(`https://1c3d-2001-818-dafd-2100-205f-1bd6-b32e-859c.eu.ngrok.io/upload`, {
+      method: 'POST',
+      body: createFormData(),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    const transData = await resp.json()
+    //console.log(transData)
+    setLoading(false)
+    setLoaded(true)
+    transfData(transData)
+
+  }
+
+  const transfData = (transData) => {      
+      var purchase = JSON.parse(transData);
+      console.log(purchase.items)
+      let products = []
+      Object.keys(purchase.items).forEach((key, index) => {
+        console.log(`${key}: ${purchase.items[key]}`);
+        products.push({
+          idcategory: 22,
+          value:purchase.items[key],
+          quantity: 1,
+          description: key         
+        })
+        });
+      setProducts(products);
+  }
+
+  function getCategoryIcon(selectedCategory) {
+    //console.log('get icon: ' + selectedCategory)
+    // loop through the CATEGORIES object
+    // get icon by key
+    for (const [key, value] of Object.entries(CATEGORIES)) {
+      if (key == selectedCategory) {
+        return value.icon
+      }
+    }
+    // if no match is found, return null
+    return null
+  }
+
+
     return ( askPermission(),
       <SafeAreaView style={styles.root}>
-     <Text style={styles.text}>Carrega a(s) fotografia(s) da tua(s) fatura(s):</Text>
-        
-    <View style={{
-        backgroundColor: COLORS.white,
-        width: width*0.7,
-        height: height*0.45,
-        borderColor: COLORS.wingDarkBlue,
-        borderWidth: 3,
-        justifyContent: 'center',
-        borderStyle: 'dotted',
-        alignContent: 'center',
-        alignItems: 'center',
-        alignSelf: 'center',  
-        marginVertical: 30,
+             <Text style={styles.textInicial}>Carrega a fotografia da tua fatura:</Text>
 
-             
-      }}>
-        <View style={styles.bt}>
-            <TouchableOpacity onPress={()  => pickFromCamera()} style={styles.button}>
-            <Text >Camera</Text>
-             </TouchableOpacity>
-        </View>
-        <View style={styles.bt}>
-    <TouchableOpacity onPress={()  => pickFromGallery()} style={styles.button}>
-        <Text>Galeria</Text>
-    </TouchableOpacity>
-    </View>
-    </View>
-    <View style={[{borderStyle: 'dotted',
-        alignContent: 'center',
-        alignItems: 'center',
-        alignSelf: 'center',
-        marginVertical: 20,
-      }]}>
-    <TouchableOpacity onPress={()  => sendPost()} style={styles.button}>
-        <Text>Continuar</Text>
-    </TouchableOpacity>
-    </View>
-    <MenuProvider style={styles.container}>
-        <View>
-          <Menu>
-            <MenuTrigger text="Open menu" />
+      {pickedImage== '' &&
+      <View style={{
+          backgroundColor: COLORS.eggshell,
+          width: width*0.7,
+          height: height*0.45,
+          borderColor: COLORS.wingblue,
+          borderWidth: 3,
+          justifyContent: 'center',
+          borderStyle: 'dashed',
+          alignSelf: 'center',  
+          alignItems: 'center',
+          marginVertical: 30,   
+        }}>
+          <View style={{ flexDirection:"row", flexWrap:'wrap', justifyContent:'space-around', width: width*0.60}}>
+            <View style={styles.bt}>
+                <TouchableOpacity onPress={()  => pickFromCamera()} style={[styles.roundshape, {backgroundColor:  COLORS.wingblue}]}>
+                <FontAwesome5 name="camera" size={25} style={styles.item} />
+                </TouchableOpacity>
+                <Text style={{fontFamily:FONTS.light}}>Câmara</Text>
+            </View>
+            <View style={styles.bt}>
+            <TouchableOpacity  onPress={()  => pickFromGallery()} style={[styles.roundshape, {backgroundColor:  COLORS.wingblue}]}>
+                  <Entypo name="images" size={25} style={styles.item} />
+            </TouchableOpacity>
+            <Text style={{fontFamily:FONTS.light}}>Galeria</Text>
+              
+            </View>
+          </View>
+      </View>
+    }
+    {pickedImage!= '' &&
+      <View style={{
+          backgroundColor: COLORS.eggshell,
+          width: (pickedImage.width > width*0.7?width*0.7:pickedImage.width)+5,
+          height: pickedImage.height*0.40+5,
+          borderColor: COLORS.wingblue,
+          borderWidth: 3,
+          justifyContent: 'center',
+          borderStyle: 'dashed',
+          alignSelf: 'center',  
+          alignItems: 'center',
+          marginVertical: 30,   
+        }}>
+         <Image
+              source={{ uri: pickedImage.uri}}
+              style={[styles.image, { width: (pickedImage.width > width*0.7?width*0.7:pickedImage.width),
+        height: pickedImage.height*0.40}]}
+              
+            />
+      </View>
+    }
+      <View style={[{
+          alignContent: 'center',
+          alignItems: 'center',
+          alignSelf: 'center',
+          marginVertical: 20,
+        }]}>
 
-            <MenuOptions>
-              <MenuOption onSelect={() => alert(`Save`)} text="Save" />
-              <MenuOption onSelect={() => alert(`Delete`)}>
-              <TouchableOpacity onPress={()  => pickFromGallery()} style={styles.button}>
-            <Text >Camera</Text>
-             </TouchableOpacity>
-              </MenuOption>
-              <MenuOption
-                onSelect={() => alert(`Not called`)}
-                disabled={true}
-                text="Disabled"
+      {!loaded &&
+          <TouchableOpacity onPress={()  => sendPost()} style={[styles.button, { width: width*0.50, backgroundColor: disabled? '#E8E8E8': COLORS.wingblue}]} disabled={disabled}>
+              <Text style={[styles.text , {color: disabled? '#C0C0C0': COLORS.white}]}>Continuar   <Entypo name="arrow-right" size={25} style={styles.item} color={COLORS.wingDarkBlue}/>
+              </Text>
+          </TouchableOpacity>
+      }
+      {loading && <ActivityIndicator size="large" color={COLORS.wingDarkBlue}/>}
+      
+        {loaded && 
+              <ProductTable
+                products={products}
+                handleDeleteProduct={console.log("Não há delete ")}
+                getCategoryIcon={getCategoryIcon}
               />
-            </MenuOptions>
-          </Menu>
-        </View>
-      </MenuProvider>
-      </SafeAreaView>
-    )
-    //)
+            
+          }
+      
+
+
+
+      </View>
+    
+    
+        </SafeAreaView>
+      )
+      //)
   }
   
   const styles = StyleSheet.create({
     root: {
-      backgroundColor: COLORS.eggshell,
+      backgroundColor: COLORS.white,
       padding: 50,
       flex: 1
 
     },
     button:{
-      height: 60,
       backgroundColor:COLORS.wingblue,
-      width: ScreenWidth/3,
-      padding: 20,
+      justifyContent:'center',
+      height: 45,
+      borderRadius:15,
+      marginBottom: 10,
+      alignContent: 'center',
+      alignItems: 'center',
+      alignSelf: 'center'
     },
     bt: {
-      paddingVertical: 10
+      paddingVertical: 10,
     },
-    text: {
+    textInicial: {
       padding: 20,
       fontFamily: FONTS.medium,
-      fontSize: SIZES.medium
-    }
+      fontSize: SIZES.medium,
+      justifyContent: 'center'
+    },
+    text: {
+      fontFamily: FONTS.medium,
+      fontSize: SIZES.medium,
+      justifyContent: 'center'
+    },
+    roundshape:  {
+      height: 50, //any of height
+      width: 50, //any of width
+      justifyContent:"center",
+      borderRadius: 22   // it will be height/2
+      },
+    item: {
+      alignSelf: "center",
+      color:'white',
+      },
+      imageContainer: {
+        padding: 30
+      },
+      image: {
+       
+        resizeMode: 'cover'
+      }
 
   })
   

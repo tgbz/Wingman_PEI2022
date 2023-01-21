@@ -30,11 +30,7 @@ const createFormData = (pickedImage, user) => {
   data.append('avatarFile', pickedImage)
   data.append('user', user)
   console.log('\nDATA FORM: ' + JSON.stringify(data))
-  /*
-  Object.keys(body).forEach((key) => {
-    console.log("Create form data: "+key + " " + body[key])
-    data.append(key, body[key]);
-  });*/
+
 
   return data
 }

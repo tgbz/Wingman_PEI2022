@@ -44,17 +44,10 @@ function HomeScreen({ navigation }) {
   };
   // Put transaction data on dd/mm/aa format
   function treatDate(date) {
-    //Obtain the first 10 caracteres: data
-    /*if (date){
-      if (typeof date === "string") {
-        return date
-          .slice(5, 10)
-          .replaceAll("-", "/")
-          .split("/")
-          .reverse()
-          .join("/");
-      }
-    }*/
+    date = date.split("T")[0];
+    date = date.split("-").reverse().join("/");
+    date = date.split("/").slice(0,2).join("/")
+   
     return date
   }
 

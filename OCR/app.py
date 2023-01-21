@@ -11,7 +11,6 @@ app = Flask(__name__)
 app.config["DEBUG"] = True
 
 
-
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 
@@ -25,38 +24,34 @@ def home():
 @cross_origin(origin='*', headers=['Content-Type'])
 def upload_image():
     if request.method == "POST":
-        file = request.files['file']
-        zipFilePath = fileDir + file.filename
-        try:
-            file.save(zipFilePath)
-        except FileNotFoundError:
-            #app.logger.warning("Folder not on path, creating")
+
+        if not os.path.exists(fileDir):
             os.makedirs(fileDir)
-            file.save(zipFilePath)
-        #try:
-        unpack_archive(zipFilePath, fileDir)
-        os.remove(fileDir+file.filename)
 
-        files = os.listdir(fileDir)
-        files = [fileDir+f for f in files if os.path.isfile(fileDir+f)]
-        print(files)
-        #app.logger.info("Parsing image...")
-        text = tp.parseImage(files)
-        #app.logger.info("Done!\nCleaning up...")
+        print("Request received...")
+        fpaths = []
+        fnames = []
+        for k in request.files.keys():
+            file = request.files[k]
+            filePath = fileDir + file.filename
+            fnames.append(file.filename)
+            file.save(filePath)
+            fpaths.append(filePath)
 
-        for f in files:
+        print("Parsing images (" + ', '.join(str(x) for x in fnames)+')...')
+        text = tp.parseImage(fpaths)
+        print("Done!\nCleaning up...")
+
+        for f in fpaths:
             os.remove(f)
         os.rmdir(fileDir)
 
-        #app.logger.info("Done!")
-        return jsonify(text)
-        #except:
-         #   return jsonify("Error parsing text")
+        print("Done!")
+        ret = jsonify(text)
+        print(text)
+        print(ret)
+        return ret
 
-        
+
 if __name__ == "__main__":
-    app.run(debug=False, port=5000, host="0.0.0.0")
-    
-
-
-
+    app.run(debug=False, port=5003, host="0.0.0.0")

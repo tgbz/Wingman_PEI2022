@@ -195,19 +195,30 @@ def concat(r1,r2):
 
 
 def parseImage(files):
-	filename = files[0] #fix temporario enquanto nao se implementa o parsing de + que 1 imagem
-	image = pp.cv2.imread(filename)
-	if debug: pp.show(image,'Original')
+	preProc = [pp.scaling,pp.normalize,pp.remove_noise,pp.remove_shadows]
 
-	preProc = [pp.normalize,pp.remove_noise,pp.remove_shadows]
+	if len(files) == 1:
+		filename = files[0] #fix temporario enquanto nao se implementa o parsing de + que 1 imagem
+		image = pp.cv2.imread(filename)
+		if debug: pp.show(image,'Original')
 
-	raw = pp.generate_text('out',pp.pipeline(image,preProc),output)
-	r = Receipt(raw,'info.json')
+
+		raw = pp.generate_text('out',pp.pipeline(image,preProc),output)
+		r = Receipt(raw,'info.json')
 	
-	return r.parse()
+		return r.parse()
 
-	#else 
-	r3 = concat(r1,r2)
+	else:
+		filename0 = files[0] 
+		image0 = pp.cv2.imread(filename0)
+		filename1 = files[1] 
+		image1 = pp.cv2.imread(filename1)
+		raw0 = pp.generate_text('out',pp.pipeline(image0,preProc),output)
+		r0 = Receipt(raw0,'info.json')
+		raw1 = pp.generate_text('out',pp.pipeline(image1,preProc),output)
+		r1 = Receipt(raw1,'info.json')
+		return concat(r0,r1)
+
 
 
 

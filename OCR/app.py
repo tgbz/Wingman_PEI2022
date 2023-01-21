@@ -29,7 +29,7 @@ def upload_image():
             os.makedirs(fileDir)
                 
         
-        print("Request received ...")
+        print("Request received...")
         fpaths = []
         fnames = []
         for k in request.files.keys():
@@ -49,7 +49,10 @@ def upload_image():
         os.rmdir(fileDir)
 
         print("Done!")
-        return jsonify(text)
+        ret = jsonify(text)
+        print(text)
+        print(ret)
+        return ret
 
 
       

@@ -3,6 +3,7 @@ var Purchase = require('../models/purchase.js');
 var Purchases = module.exports;
 var Users = require("../controllers/users");
 var Categories = require("../controllers/category");
+const { query, rollback } = require('../config/database.js');
 var axios = require("axios").default;
 //const salt = 14;
 //var bcrypt = require('bcryptjs')
@@ -205,7 +206,7 @@ Purchases.getRecurrent = function(id) {
 Purchases.createManualPurchase = function (is_recurring, date, value, title, description, idUser, seller,isFromAPI,type) {
     console.log(is_recurring, date, value, title, description, idUser, seller,isFromAPI,type)
     return new Promise(function(resolve, reject) {
-        sql.query(`INSERT INTO purchase (is_recurring, date, value, title, description, idUser,seller,idMovement,isFromAPI,type,verified,valid) Select ?,?,?,?,?,?,?,(SELECT MAX(idPurchase) FROM wingman.purchase ),?,?,1,1`,[is_recurring,date,value,title,description, idUser,seller,isFromAPI,type],
+        sql.query(`INSERT INTO purchase (is_recurring, date, value, title, description, idUser,seller,isFromAPI,type,verified,valid) values (?,?,?,?,?,?,?,?,?,1,1)`,[is_recurring,date,value,title,description, idUser,seller,isFromAPI,type],
             function (err, res) {
             if(err){
                 console.log("error: ", err);
@@ -315,21 +316,54 @@ Purchases.addSubCategoryToPurchase = function (idPurchase,idProduct,category,val
         })
     };
 
-Purchases.uploadPurchases = function (is_recurring, date, value, description, idUser, seller,idMovement,isFromAPI,type,verified,category,idProduct,connection) {
     
+Purchases.teste = function (is_recurring, date, value, description, idUser, seller,idMovement,isFromAPI,type,verified,category,idProduct,connection) {
+    return new Promise(function(resolve, reject) {
+        Purchases.createPurchase(is_recurring, date, value, description, idUser, seller,idMovement,isFromAPI,type,verified,connection)
+        .then(insertedID =>{
+            if(insertedID>0){
+                console.log("AM I in ?! " + insertedID)
+                resolve(insertedID)
+                /*
+                Purchases.addSubCategoryToPurchase(insertedID,idProduct,category,value,connection)
+                .then(result =>{
+                    resolve(result)
+                })
+                .catch(err =>{
+                    console.log(err)
+                    reject (err)
+                })*/
+            }
+            else{
+                resolve("Duplicated Entry")
+            }
+        })
+        .catch(err =>{
+            console.log(err)
+            reject (err)
+        })
+    })
+}
+
+
+Purchases.uploadPurchases = function (is_recurring, date, value, description, idUser, seller,idMovement,isFromAPI,type,verified,category,idProduct,connection) {
     return new Promise(function(resolve, reject) {
         Purchases.createPurchase(is_recurring, date, value, description, idUser, seller,idMovement,isFromAPI,type,verified,connection)
         .then(insertedID =>{
             Purchases.addSubCategoryToProduct(idProduct,category,connection)
             .then(res=>{
                 if(insertedID>0){
+                    console.log(insertedID)
                     Purchases.addSubCategoryToPurchase(insertedID,idProduct,category,value,connection)
                     .then(result =>{
+                        console.log(result)
                         Categories.addExpenses(idUser,category,value,connection)
                         .then(categoria =>{
+                            console.log(categoria)
                             resolve(categoria)
                         })
                         .catch(err =>{
+                            connection.rollback()
                             console.log(err)
                             reject (err)
                         })
@@ -337,20 +371,23 @@ Purchases.uploadPurchases = function (is_recurring, date, value, description, id
                         
                     })
                     .catch(err =>{
+                        connection.rollback()
                         console.log(err)
                         reject (err)
                     })
                 }
                 else{
-                   resolve()
+                    resolve()
                 }
                 
             })
             .catch(err =>{
+                connection.rollback()
                 reject(err)
             })
         })
         .catch(err =>{
+            connection.rollback()
             reject(err)
         })
         })
@@ -360,37 +397,27 @@ Purchases.uploadPurchases = function (is_recurring, date, value, description, id
 
 Purchases.uploadFromSibs = async function () {
     const UserList = await Users.getUsers()
-    console.log(UserList)
-    return new Promise(function (resolve, reject) {
-        Object.values(UserList).forEach( i => {
-            axios.get('http://94.60.175.136:3335/statements/update/'+i.IBAN)
-            .then(async function(response){
+    Object.values(UserList).forEach( i => {
+        axios.get('http://94.60.175.136:3335/statements/'+i.IBAN)
+        .then(async function(response){
                 sql.getConnection(async function(err, connection) {
-                try {
-                    connection.beginTransaction()
-                    const queryPromises = []
-                    movimentos = response.data.movimentos
-                    Object.values(movimentos).forEach( movimento => {
-                        let date = new Date(movimento.date).toISOString().replace(/T/, ' ').replace(/\..+/, '')
-                        queryPromises.push(Purchases.uploadPurchases(0,date,movimento.value,movimento.description,i.idUser,movimento.issuer,movimento._id,1,movimento.type,0,movimento.category,1,connection))
+                movimentos = response.data.movimentos
+                Object.values(movimentos).forEach( movimento => { 
+                    let date = new Date(movimento.date).toISOString().replace(/T/, ' ').replace(/\..+/, '')
+                    Purchases.uploadPurchases(0,date,movimento.value,movimento.description,i.idUser,movimento.issuer,movimento._id,1,movimento.type,0,movimento.category,1,connection)
+                    .then(()=>{
                     })
-                    const results = await Promise.all(queryPromises)
-                    connection.commit()
-                    connection.release()
-                    console.log(results)
-                    resolve ("Acabei com sucesso")
-                    } catch (err) {
-                    console.log("error ", err);
+                    .catch(err=>{
                         connection.rollback()
-                        connection.release()
-                    }
-                    reject(err)
+                        console.log(err)
+                    })
                 })
+                console.log("No erros YEY!")
             })
-            .catch(function (error) {
-                console.error(error);
-            });
         })
+        .catch(function (error) {
+            console.error(error);
+        });
     })
 };
 // Buscar as despesas dos utilizadores diariamente

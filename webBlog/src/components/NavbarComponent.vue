@@ -35,7 +35,7 @@ export default {
       this.$router.push("/blog");
     },
     goToHome() {
-      this.$router.push("/wingman");
+      this.$router.replace("/wingman");
     },
   },
 };

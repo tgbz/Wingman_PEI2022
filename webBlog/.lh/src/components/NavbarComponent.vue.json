@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 152,
+            "activePatchIndex": 153,
             "patches": [
                 {
                     "date": 1670006844183,
@@ -616,6 +616,10 @@
                 {
                     "date": 1674257022377,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n <template>\n   <v-container class=\"navContainer\" fluid>\n     <v-row cols=\"12\" lg=\"6\" class=\"navBar\" align=\"center\">\n-      <v-col cols=\"6\" lg=\"8\">\n+      <v-col cols=\"6\" lg=\"10\">\n         <a @click=\"goToHome()\">\n           <v-img\n             contain\n             max-width=\"230\"\n@@ -12,9 +12,9 @@\n           </v-img>\n         </a>\n       </v-col>\n \n-      <v-col cols=\"6\" lg=\"4\" class=\"text-center\">\n+      <v-col cols=\"6\" lg=\"2\" class=\"text-center\">\n         <v-btn color=\"#FFCB52\" @click=\"goToBlog()\"\n           ><strong>Blog</strong>\n         </v-btn>\n       </v-col>\n"
+                },
+                {
+                    "date": 1674290545230,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,9 +34,9 @@\n     goToBlog() {\n       this.$router.push(\"/blog\");\n     },\n     goToHome() {\n-      this.$router.push(\"/wingman\");\n+      this.$router.replace(\"/wingman\");\n     },\n   },\n };\n </script>\n"
                 }
             ],
             "date": 1670006844183,

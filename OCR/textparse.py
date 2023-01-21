@@ -210,14 +210,16 @@ def parseImage(files):
 
 	else:
 		filename0 = files[0] 
-		image0 = pp.cv2.imread(filename)
+		image0 = pp.cv2.imread(filename0)
 		filename1 = files[1] 
-		image1 = pp.cv2.imread(filename)
-		raw0 = pp.generate_text('out',pp.pipeline(image,preProc),output)
-		r0 = Receipt(raw,'info.json')
-		raw1 = pp.generate_text('out',pp.pipeline(image,preProc),output)
-		r1 = Receipt(raw,'info.json')
+		image1 = pp.cv2.imread(filename1)
+		raw0 = pp.generate_text('out',pp.pipeline(image0,preProc),output)
+		r0 = Receipt(raw0,'info.json')
+		raw1 = pp.generate_text('out',pp.pipeline(image1,preProc),output)
+		r1 = Receipt(raw1,'info.json')
 		r3 = concat(r0,r1)
+
+		return r3.parse()
 
 
 

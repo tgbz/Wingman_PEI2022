@@ -7,7 +7,7 @@ import { MaterialIcons } from 'react-native-vector-icons'
 
 const ProductTable = ({ products, handleDeleteProduct,getCategoryIcon }) => {
   const tableHead = ['Produto', 'Valor', 'Quant.', ' ']
-
+  
   return (
     <Table>
       <Row
@@ -20,9 +20,9 @@ const ProductTable = ({ products, handleDeleteProduct,getCategoryIcon }) => {
         <Row
           key={index}
           data={[
-            getCategoryIcon(product.prodCategory),
-            product.name,
-            product.value,
+            getCategoryIcon(product.idcategory),
+            product.description,
+            `${product.value} €`,
             product.quantity,
             <MaterialIcons
               name="delete"
@@ -44,11 +44,12 @@ const styles = StyleSheet.create({
   header: {
     height: 40,
           
-          backgroundColor:  COLORS.wingblue,
+          backgroundColor:  COLORS.wingDarkBlue,
           borderColor: COLORS.wingblue,
           borderWidth: 1,
-          borderRadius: 10,
-          marginBottom: 7
+          borderRadius: 30,
+          marginBottom: 7,
+          paddingLeft: 10
   },
   headerText: {
     padding: 5,

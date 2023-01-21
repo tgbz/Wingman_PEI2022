@@ -84,4 +84,10 @@ router.get("/users/", function (req, res){
   .catch(erro => res.status(500).jsonp(erro))
 })
 
+/*
+router.get('/logout', function (req, res) {
+  res.clearCookie('token');
+  res.redirect('/');
+});*/
+
 module.exports = router;

@@ -3,12 +3,10 @@
     <v-row>
       <v-col cols="8">
         <v-card-subtitle
-          class="font-weight-bold text-center text-uppercase white--text textY"
+          class=" text-center text-uppercase white--text textY"
         >
           Torna-te um gestor financeiro mais eficiente e eficaz com a ajuda do
-          Wingman
-          <br />
-          o teu assistente financeiro pessoal.
+          Wingman, o teu assistente financeiro pessoal.
         </v-card-subtitle>
       </v-col>
       <v-col cols="4" class="bottomCol">
@@ -42,6 +40,7 @@
   margin: auto !important;
   align-items: center !important;
   text-align: center !important;
+  font-size: 14px!important;
   padding-top: 3% !important;
 }
 

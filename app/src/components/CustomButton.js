@@ -25,6 +25,9 @@ const styles = StyleSheet.create({
     container_PRIMARY:{
         backgroundColor:COLORS.wingDarkBlue,
     },
+    container_SECONDARY:{
+        backgroundColor:'#ed711e',
+    },
 
     container_TERTIARY:{
         backgroundColor:COLORS.wingDarkBlue,
@@ -34,6 +37,11 @@ const styles = StyleSheet.create({
         color: 'white',
         fontFamily:'SoraBold',
         fontSize: 15
+    },
+    text_SECONDARY: {
+        color: 'white',
+        fontFamily:'SoraBold',
+        fontSize: 12
     },
     text_TERTIARY: {
         color: 'white',

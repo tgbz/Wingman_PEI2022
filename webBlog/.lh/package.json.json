@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1670005973431,
@@ -16,6 +16,10 @@
                 {
                     "date": 1670006088484,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,8 +26,9 @@\n     \"vue-template-compiler\": \"^2.6.14\",\n     \"vue-router\": \"^3.2.0\",\n     \"vuetify-loader\": \"^1.7.0\",\n     \"vuex\": \"^3.4.0\"\n+    \"vuex-persistedstate\": \"^4.1.0\"\n   },\n   \"eslintConfig\": {\n     \"root\": true,\n     \"env\": {\n"
+                },
+                {
+                    "date": 1674290611781,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,10 @@\n   \"private\": true,\n   \"scripts\": {\n     \"serve\": \"vue-cli-service serve\",\n     \"build\": \"vue-cli-service build\",\n-    \"lint\": \"vue-cli-service lint\"\n+    \"lint\": \"vue-cli-service lint\",\n+    \"deploy\": \"node scripts/gh-pages-deploy.js\"\n   },\n   \"dependencies\": {\n     \"core-js\": \"^3.8.3\",\n     \"vue\": \"^2.6.14\",\n@@ -25,10 +26,11 @@\n     \"vue-cli-plugin-vuetify\": \"~2.5.8\",\n     \"vue-template-compiler\": \"^2.6.14\",\n     \"vue-router\": \"^3.2.0\",\n     \"vuetify-loader\": \"^1.7.0\",\n-    \"vuex\": \"^3.4.0\"\n-    \"vuex-persistedstate\": \"^4.1.0\"\n+    \"vuex\": \"^3.4.0\",\n+    \"vuex-persistedstate\": \"^4.1.0\",\n+    \"execa\": \"latest\"\n   },\n   \"eslintConfig\": {\n     \"root\": true,\n     \"env\": {\n"
                 }
             ],
             "date": 1670005973431,

@@ -1,32 +1,32 @@
 import React, { useState, useEffect } from 'react'
+import { SIZES,COLORS } from '../constants'
 import {useWindowDimensions, Modal, Text, TextInput, TouchableOpacity, StyleSheet, View } from 'react-native'
 import ChooseCategoryModal from './ChooseCategoryModal'
-const ProductInputModal = ({ isModalVisible, toggleModalCT,getCategoryIcon, onSave, onCancel }) => {
-  const [name, setName] = useState('')
-  const [value, setValue] = useState('')
+import CustomInput from './CustomInput'
+const ProductInputModal = ({ isModalVisible,generalCategory,getCategoryIcon,getCategoryName, onSave, onCancel }) => {
+  const [description, setDescription] = useState('')
+  const [value, setValue] = useState(1)
   const [quantity, setQuantity] = useState('')
-  const [prodCategory, setProdCategory] = useState('Sem Categoria')
+  const [idcategory, setIdcategory] = useState(generalCategory)
   const [isCategoryModalVisible, setIsCategoryModalVisible] = useState(false);
 
 
     const { width } = useWindowDimensions()
-  // clear the input fields when the modal is opened
+  // USE EFFECT TO SET THE CATEGORY TO GENERAL CATEGORY
   useEffect(() => {
-    if (isModalVisible) {
-      handleClean()
-    }
-  }, [isModalVisible])
+    setIdcategory(generalCategory)
+  }, [generalCategory])
 
   const handleCategorySelection = (selectedCategory) => {
-    setProdCategory(selectedCategory);
+    setIdcategory(selectedCategory);
     setIsCategoryModalVisible(false);
   }
 
   const handleClean = () => {
-    setName('')
+    setDescription('')
     setValue('')
     setQuantity('')
-    setProdCategory('Sem Categoria')
+    setIdcategory(generalCategory)
     
   }
 
@@ -39,69 +39,67 @@ const ProductInputModal = ({ isModalVisible, toggleModalCT,getCategoryIcon, onSa
       <View style={styles.modalContainer}>
         <Text style={styles.modalTitle}>Adicionar Produto</Text>
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Produto:</Text>
-          <TextInput
-            placeholder="Produto"
-            value={name}
-            onChangeText={(text) => setName(text)}
-            style={styles.input}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Valor:</Text>
-          <TextInput
-            placeholder="Valor"
-            value={value}
-            onChangeText={(text) => setValue(text)}
-            style={styles.input}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Quantidade:</Text>
-          <TextInput
-            placeholder="Quantidade"
-            value={quantity}
-            onChangeText={(text) => setQuantity(text)}
-            style={styles.input}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Categoria:</Text>
+          <Text style={styles.textTag}>Produto:</Text>
+          <CustomInput 
+              placeholder={'Queijo'}
+              value={description}
+              setValue={setDescription}
+              widthScale={0.8}
+            />
+
+
+          <Text style={styles.textTag}>Valor:</Text>
+          <CustomInput
+              placeholder={'10.50'}
+              value={value}
+              setValue={setValue}
+              keyboardType="numeric"
+              icondescriptionEntry="euro"
+              widthScale={0.8}
+            />
+
+
+          <Text style={styles.textTag}>Quantidade:</Text>
+          <CustomInput
+              placeholder={'2'}
+              value={quantity}
+              setValue={setQuantity}
+              keyboardType="numeric"
+              widthScale={0.8}
+            />
+
+
+          <Text style={styles.textTag}>Categoria:</Text>
           <TouchableOpacity
             style={[styles.categoryButton, { width: width * 0.8 }]}
             onPress={() => setIsCategoryModalVisible(true)}
           >
-            {console.log("Product Category: ",prodCategory)}
-            {getCategoryIcon(prodCategory)}
-            <Text style={styles.textCategory}>{prodCategory}</Text>
+            {getCategoryIcon(idcategory)}
+            <Text style={styles.textCategory}>{getCategoryName(idcategory)}</Text>
           </TouchableOpacity>
           <ChooseCategoryModal
                   isModalVisibleCT={isCategoryModalVisible}
                   setisModalVisibleCT={setIsCategoryModalVisible}
                   setSelectedCategory={handleCategorySelection}
                 />
-          {/*           
-    <TextInput
-    placeholder="Categoria"
-    value={prodCategory}
-    onPress={() => setisModalVisibleCT(true)}
-    //onChangeText={(text) => setProdCategory(text)}
-    style={styles.input}
-    />
-    */}
+
         </View>
+
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.saveButton}
             onPress={() => {
-                onSave({ name, value, quantity, prodCategory });
+                onSave({ description, value, quantity, idcategory });
                 handleClean();
                 setIsCategoryModalVisible(false);
                 }}
           >
+        
             <Text style={styles.saveButtonText}>Save</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.cancelButton} onPress={onCancel}>
+          <TouchableOpacity style={styles.cancelButton} onPress={() => {
+            handleClean();
+            onCancel();}}>
             <Text style={styles.cancelButtonText}>Cancel</Text>
           </TouchableOpacity>
         </View>
@@ -114,38 +112,73 @@ const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    //justifyContent: 'center',
+    marginTop: 50,
     backgroundColor: 'white',
     padding: 30,
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
     marginBottom: 10,
+
+    fontFamily: 'SoraBold',
+    fontSize: SIZES.medium,
+    color: COLORS.wingDarkBlue,
   },
   inputContainer: {
+    marginHorizontal: 40,
+    marginTop: 20,
+    marginBottom: 40,
+  },
+    buttonContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
-    alignItems: 'center',
     justifyContent: 'center',
-    margin: 10,
-  },
-  input: {
-    height: 40,
-    width: '80%',
-    borderColor: 'gray',
-    borderWidth: 1,
-    padding: 10,
-    margin: 10,
-  },
-  deleteButton: {
+    width: '100%',
+    },
+  cancelButton: {
     backgroundColor: 'red',
     padding: 10,
     margin: 10,
+    borderRadius: 5,
+    paddingHorizontal: 20,
   },
-  deleteButtonText: {
+  cancelButtonText: {
     color: 'white',
     fontWeight: 'bold',
+  },
+  saveButton: {
+    backgroundColor: COLORS.wingDarkBlue,
+    padding: 10,
+    paddingHorizontal: 20,
+    margin: 10,
+    borderRadius: 5,
+
+    },
+    saveButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    },
+  textTag: {
+    fontFamily: 'SoraBold',
+    fontSize: SIZES.medium,
+    color: COLORS.wingDarkBlue,
+  },
+  categoryButton: {
+    //backgroundColor: "#eceffa",
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 15,
+    marginVertical: 12,
+    borderWidth: 1,
+    flexDirection: 'row',
+    alignSelf: 'center',
+    borderColor: COLORS.wingblue,
+    alignItems: 'center',
+  },
+  textCategory: {
+    fontFamily: 'SoraRegular',
+    fontSize: SIZES.font,
+    color: COLORS.wingDarkBlue,
+    marginStart: 10,
   },
 })
 

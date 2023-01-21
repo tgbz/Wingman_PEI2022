@@ -8,7 +8,7 @@ import { SafeAreaView } from 'react-native'
 import ActivityTable from '../components/ActivityTable'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { serverURL } from '../config/hosts'
-
+import { useRoute } from '@react-navigation/native'
 
 
 export default function PoliticsScreen({navigation}){
@@ -48,7 +48,7 @@ export default function PoliticsScreen({navigation}){
   // Extract only the wanted info from the request to api 
   function adjustData( transData) {
     transData.forEach(element => {
-      let obj = {idPurchase: element.idPurchase, date: treatDate(element.date), transaction: element.seller, value: element.value, category: element.idcategory, type: element.type}
+      let obj = {idPurchase: element.idPurchase, date: treatDate(element.date), transaction: element.title, value: element.value, category: element.idcategory, type: element.type}
       transactionsList.push(obj)
     });
   }
@@ -57,6 +57,9 @@ export default function PoliticsScreen({navigation}){
       fetchData(token)
     }
   }, [token])
+
+
+
 
  
   const chartConfig = {
@@ -67,6 +70,9 @@ export default function PoliticsScreen({navigation}){
       borderRadius: 16,
     }};
 
+// every time route.params is true when user edit despesa, refresh data
+
+    
 
   return ( adjustData(transactionsData), 
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.eggshell}}>

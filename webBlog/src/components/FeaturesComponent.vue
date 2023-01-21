@@ -1,7 +1,7 @@
 <template>
   <div class="featuresRow">
     <v-row class="fRow">
-      <v-col cols="3">
+      <v-col cols="12" lg="6">
         <v-img
           contain
           src="../../public/icons/poor.png"
@@ -18,7 +18,7 @@
         </v-card-text>
       </v-col>
 
-      <v-col cols="3">
+      <v-col cols="12" lg="6">
         <v-img
           contain
           src="../../public/icons/scan.png"
@@ -35,7 +35,7 @@
         </v-card-text>
       </v-col>
 
-      <v-col cols="3">
+      <v-col cols="12" lg="6">
         <v-img
           contain
           src="../../public/icons/investing.png"
@@ -50,7 +50,7 @@
           despesas de forma simples, rápida e cómoda.
         </v-card-text>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="12" lg="6">
         <v-img
           contain
           src="../../public/icons/piggy-bank.png"

@@ -23,6 +23,9 @@ import {
   Sora_700Bold,
   Sora_800ExtraBold,
 } from '@expo-google-fonts/sora';
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 
 const App = () => {
 

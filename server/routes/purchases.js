@@ -33,12 +33,23 @@ router.put("/cancelRecurrent/:id", function (req, res){
 })
 
 
-router.get('/teste/:id',function(req,res){
-  console.log("Caralho"+req.params.id)
-  Purchases.getPurchaseProducts(req.params.id)
+router.put('/editPurchase/:id',function(req,res){
+  Purchases.updatePurchase(req.params.id,req.body.is_recurring, req.body.date, req.body.value,req.body.title, req.body.description, req.body.idUser, req.body.seller,req.body.type,req.body.products)
       .then(purchase => res.jsonp(purchase))
       .catch(erro => res.status(500).jsonp(erro))
 });
 
+router.delete('/deletePurchase/:id',function(req,res){
+  Purchases.deletePurchase(req.params.id,req.body.is_recurring, req.body.date, req.body.value,req.body.title, req.body.description, req.body.idUser, req.body.seller,req.body.type,req.body.products)
+      .then(purchase => res.jsonp(purchase))
+      .catch(erro => res.status(500).jsonp(erro))
+});
+
+router.get('/teste/',function(req,res){
+  console.log("Caralho")
+  Purchases.uploadFromSibs()
+      .then(purchase => res.jsonp(purchase))
+      .catch(erro => res.status(500).jsonp(erro))
+});
 
 module.exports = router;

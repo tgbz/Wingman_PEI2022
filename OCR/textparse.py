@@ -217,9 +217,8 @@ def parseImage(files):
 		r0 = Receipt(raw0,'info.json')
 		raw1 = pp.generate_text('out',pp.pipeline(image1,preProc),output)
 		r1 = Receipt(raw1,'info.json')
-		r3 = concat(r0,r1)
+		return concat(r0,r1)
 
-		return r3.parse()
 
 
 

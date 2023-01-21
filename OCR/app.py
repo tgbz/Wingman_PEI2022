@@ -27,8 +27,7 @@ def upload_image():
 
         if not os.path.exists(fileDir):
             os.makedirs(fileDir)
-                
-        
+
         print("Request received...")
         fpaths = []
         fnames = []
@@ -38,7 +37,6 @@ def upload_image():
             fnames.append(file.filename)
             file.save(filePath)
             fpaths.append(filePath)
-
 
         print("Parsing images (" + ', '.join(str(x) for x in fnames)+')...')
         text = tp.parseImage(fpaths)
@@ -55,6 +53,5 @@ def upload_image():
         return ret
 
 
-      
 if __name__ == "__main__":
     app.run(debug=False, port=5003, host="0.0.0.0")

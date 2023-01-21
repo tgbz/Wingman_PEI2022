@@ -49,12 +49,12 @@ function HomeScreen({ navigation }) {
       `${serverURL}/purchases/getAllPurchase/${token.id}`
     );
     const transData = await resp.json();
-    setTransactionsData(transData.slice(0, 5));
+    setTransactionsData(transData.slice(0,5))
   };
   // Put transaction data on dd/mm/aa format
   function treatDate(date) {
     //Obtain the first 10 caracteres: data
-    if (date){
+    /*if (date){
       if (typeof date === "string") {
         return date
           .slice(5, 10)
@@ -63,7 +63,7 @@ function HomeScreen({ navigation }) {
           .reverse()
           .join("/");
       }
-    }
+    }*/
     return date
   }
 
@@ -147,7 +147,7 @@ function HomeScreen({ navigation }) {
 
     const img = await fetch(`${serverURL}/files/avatar/${token.id}`);
     //console.log('Time: ' + new Date().toLocaleTimeString())
-    console.log("User fetch img: " + JSON.stringify(img.url));
+    //console.log("User fetch img: " + JSON.stringify(img.url));
     setPhoto(img.url);
   };
 
@@ -251,20 +251,12 @@ function HomeScreen({ navigation }) {
                 <View></View>
               )}
               <View style={[styles.card1, { backgroundColor: COLORS.white }]}>
-                {/* 
-            <View style={{ justifyContent: 'space-between'}}>
-              <Text style={{color: COLORS.white, fontFamily: 'SoraLight', fontSize: SIZES.large}}>Saldo</Text>
-              <Text style={{color: COLORS.white, fontFamily: 'SoraBold', fontSize:22}}>1.200 €</Text>
-              <Text style={{color: COLORS.white, fontFamily: 'SoraLight', fontSize: 22}}>550€</Text>
-          </View>
-          */}
                 {/* Donut Charts with space between */}
                 <View
                   style={{
                     flexDirection: "row",
                     justifyContent: "space-between",
-                  }}
-                >
+                  }}>
                   <View style={styles.charts}>
                     <ProgressChart
                       data={transformToNoCategoryData(
@@ -336,9 +328,10 @@ function HomeScreen({ navigation }) {
           </View>
           <ActivityTable
             data={transactionsList}
-            headerHome={true}
+            headerHome={true} 
             navigation={navigation}
           ></ActivityTable>
+          <TouchableOpacity onPress={() => navigation.navigate('OCR')}><Text>OCR</Text></TouchableOpacity>
         </ScrollView>
       </SafeAreaView>
     )
@@ -426,5 +419,7 @@ const styles = StyleSheet.create({
     right: 0,
   },
 });
+
+
 
 export default HomeScreen;

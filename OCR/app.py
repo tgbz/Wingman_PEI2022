@@ -11,7 +11,6 @@ app = Flask(__name__)
 app.config["DEBUG"] = True
 
 
-
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 
@@ -24,6 +23,7 @@ def home():
 @app.route('/upload', methods=['POST'])
 @cross_origin(origin='*', headers=['Content-Type'])
 def upload_image():
+    print("oi\n")
     if request.method == "POST":
         file = request.files['file']
         zipFilePath = fileDir + file.filename
@@ -33,7 +33,7 @@ def upload_image():
             #app.logger.warning("Folder not on path, creating")
             os.makedirs(fileDir)
             file.save(zipFilePath)
-        #try:
+        # try:
         unpack_archive(zipFilePath, fileDir)
         os.remove(fileDir+file.filename)
 
@@ -46,17 +46,13 @@ def upload_image():
 
         for f in files:
             os.remove(f)
-        os.rmdir(fileDir)
+        # os.rmdir(fileDir)
 
-        #app.logger.info("Done!")
+        # app.logger.info("Done!")
         return jsonify(text)
-        #except:
-         #   return jsonify("Error parsing text")
+        # except:
+        #   return jsonify("Error parsing text")
 
-        
+
 if __name__ == "__main__":
-    app.run(debug=False, port=5000, host="0.0.0.0")
-    
-
-
-
+    app.run(debug=False, port=5003, host="0.0.0.0")

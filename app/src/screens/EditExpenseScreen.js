@@ -12,12 +12,14 @@ import { CustomBackButton, CustomButton, CustomInput, CustomTextButton } from '.
 import { SelectList } from 'react-native-dropdown-select-list'
 import { useRoute } from "@react-navigation/native"
 
-export default function EditExpenseScreen({ navigation }) {
+
+export default function EditExpenseScreen({ navigation}) {
   const { height } = useWindowDimensions()
   const [token, setToken] = useState('')
   const route = useRoute()
   const idExpense = route.params?.idExpense;
   let modoEdicao = false;
+  console.log("params", route.params)
 
   useEffect(() => {
     AsyncStorage.getItem('userToken')
@@ -42,10 +44,11 @@ export default function EditExpenseScreen({ navigation }) {
   function treatDate (date) {
     //Obtain the first 10 caracteres: data
     if (typeof date === 'string') {
-      return date.slice(0, 10).replaceAll('-', '/').split('/').reverse().join('/')
+      return date.slice(0, 10).replaceAll('-', '/').split('/').reverse().join('/')} 
   }
-  }
-  return ( console.log(purchaseData),
+  let categoria = CATEGORIES[route.params?.idCategory] 
+
+  return ( 
       <SafeAreaView style={styles.root}>
         <View style={styles.infoContainer}>
           <Text style={styles.textTitulos}>Título</Text>
@@ -63,7 +66,7 @@ export default function EditExpenseScreen({ navigation }) {
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.textTitulos}>Categoria</Text>
-          <Text style={styles.textComum}>{purchaseData.name}</Text>
+          <Text style={styles.textComum}>{CATEGORIES[route.params?.idCategory].icon}</Text>
         </View>
       </SafeAreaView>
     )

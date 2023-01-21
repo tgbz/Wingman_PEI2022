@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 44,
+            "activePatchIndex": 50,
             "patches": [
                 {
                     "date": 1670630247947,
@@ -184,6 +184,30 @@
                 {
                     "date": 1673085473678,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,33 +2,25 @@\n   <div class=\"footer\">\r\n     <v-row>\r\n       <v-col cols=\"8\">\r\n         <v-card-subtitle\r\n-          class=\"\r\n-            font-weight-bold\r\n-            text-center text-h6 text-uppercase\r\n-            white--text\r\n-            textY\r\n-          \"\r\n+          class=\"font-weight-bold text-center text-uppercase white--text textY\"\r\n         >\r\n           Torna-te um gestor financeiro mais eficiente e eficaz com a ajuda do\r\n           Wingman\r\n           <br />\r\n           o teu assistente financeiro pessoal.\r\n         </v-card-subtitle>\r\n       </v-col>\r\n       <v-col cols=\"4\" class=\"bottomCol\">\r\n-        <v-card-subtitle\r\n-          class=\"font-weight-bold text-center text-uppercase white--text\"\r\n-        >\r\n-          Com o apoio:\r\n-        </v-card-subtitle>\r\n-        <v-img\r\n-          contain\r\n-          src=\"../../public/um.png\"\r\n-          max-width=\"100\"\r\n-          class=\"imgIcon\"\r\n-        ></v-img>\r\n+        <div class=\"supportDiv\">\r\n+          <v-img\r\n+            contain\r\n+            src=\"../../public/um.png\"\r\n+            max-width=\"100\"\r\n+            class=\"imgIcon\"\r\n+          ></v-img>\r\n+        </div>\r\n       </v-col>\r\n     </v-row>\r\n   </div>\r\n </template>\r\n@@ -46,7 +38,14 @@\n   margin: auto !important;\r\n }\r\n \r\n .textY {\r\n-  padding-top: 5% !important;\r\n+  margin: auto !important;\r\n+  align-items: center !important;\r\n+  text-align: center !important;\r\n+  padding-top: 3% !important;\r\n }\r\n+\r\n+.supportDiv {\r\n+  display: flex;\r\n+}\r\n </style>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1674257086804,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,51 +1,52 @@\n-<template>\r\n-  <div class=\"footer\">\r\n-    <v-row>\r\n-      <v-col cols=\"8\">\r\n-        <v-card-subtitle\r\n-          class=\"font-weight-bold text-center text-uppercase white--text textY\"\r\n-        >\r\n-          Torna-te um gestor financeiro mais eficiente e eficaz com a ajuda do\r\n-          Wingman\r\n-          <br />\r\n-          o teu assistente financeiro pessoal.\r\n-        </v-card-subtitle>\r\n-      </v-col>\r\n-      <v-col cols=\"4\" class=\"bottomCol\">\r\n-        <div class=\"supportDiv\">\r\n-          <v-img\r\n-            contain\r\n-            src=\"../../public/um.png\"\r\n-            max-width=\"100\"\r\n-            class=\"imgIcon\"\r\n-          ></v-img>\r\n-        </div>\r\n-      </v-col>\r\n-    </v-row>\r\n-  </div>\r\n-</template>\r\n-\r\n-\r\n-<style>\r\n-.footer {\r\n-  background-color: #242640 !important;\r\n-  padding: 0px !important;\r\n-  margin-top: 0px;\r\n-}\r\n-\r\n-.imgIcon {\r\n-  text-align: center !important;\r\n-  margin: auto !important;\r\n-}\r\n-\r\n-.textY {\r\n-  margin: auto !important;\r\n-  align-items: center !important;\r\n-  text-align: center !important;\r\n-  padding-top: 3% !important;\r\n-}\r\n-\r\n-.supportDiv {\r\n-  display: flex;\r\n-}\r\n+<template>\n+  <div class=\"footer\">\n+    <v-row>\n+      <v-col cols=\"8\">\n+        <v-card-subtitle\n+          class=\"font-weight-bold text-center text-uppercase white--text textY\"\n+        >\n+          Torna-te um gestor financeiro mais eficiente e eficaz com a ajuda do\n+          Wingman\n+          <br />\n+          o teu assistente financeiro pessoal.\n+        </v-card-subtitle>\n+      </v-col>\n+      <v-col cols=\"4\" class=\"bottomCol\">\n+        <div class=\"supportDiv\">\n+          <v-img\n+            contain\n+            src=\"../../public/um.png\"\n+            max-width=\"100\"\n+            class=\"imgIcon\"\n+          ></v-img>\n+        </div>\n+      </v-col>\n+    </v-row>\n+  </div>\n+</template>\n+\n+\n+<style>\n+.footer {\n+  background-color: #242640 !important;\n+  padding: 0px !important;\n+  margin-top: 0px;\n+}\n+\n+.imgIcon {\n+  text-align: center !important;\n+  margin: auto !important;\n+}\n+\n+.textY {\n+  margin: auto !important;\n+  align-items: center !important;\n+  text-align: center !important;\n+  font-size: 16px!important;\n+  padding-top: 3% !important;\n+}\n+\n+.supportDiv {\n+  display: flex;\n+}\n </style>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1674257104107,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,11 +5,9 @@\n         <v-card-subtitle\n           class=\"font-weight-bold text-center text-uppercase white--text textY\"\n         >\n           Torna-te um gestor financeiro mais eficiente e eficaz com a ajuda do\n-          Wingman\n-          <br />\n-          o teu assistente financeiro pessoal.\n+          Wingman,o teu assistente financeiro pessoal.\n         </v-card-subtitle>\n       </v-col>\n       <v-col cols=\"4\" class=\"bottomCol\">\n         <div class=\"supportDiv\">\n"
+                },
+                {
+                    "date": 1674257113622,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n   <div class=\"footer\">\n     <v-row>\n       <v-col cols=\"8\">\n         <v-card-subtitle\n-          class=\"font-weight-bold text-center text-uppercase white--text textY\"\n+          class=\" text-center text-uppercase white--text textY\"\n         >\n           Torna-te um gestor financeiro mais eficiente e eficaz com a ajuda do\n           Wingman,o teu assistente financeiro pessoal.\n         </v-card-subtitle>\n"
+                },
+                {
+                    "date": 1674257119268,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n .textY {\n   margin: auto !important;\n   align-items: center !important;\n   text-align: center !important;\n-  font-size: 16px!important;\n+  font-size: 12px!important;\n   padding-top: 3% !important;\n }\n \n .supportDiv {\n"
+                },
+                {
+                    "date": 1674257127255,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n .textY {\n   margin: auto !important;\n   align-items: center !important;\n   text-align: center !important;\n-  font-size: 12px!important;\n+  font-size: 14px!important;\n   padding-top: 3% !important;\n }\n \n .supportDiv {\n"
+                },
+                {
+                    "date": 1674257132889,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n         <v-card-subtitle\n           class=\" text-center text-uppercase white--text textY\"\n         >\n           Torna-te um gestor financeiro mais eficiente e eficaz com a ajuda do\n-          Wingman,o teu assistente financeiro pessoal.\n+          Wingman, o teu assistente financeiro pessoal.\n         </v-card-subtitle>\n       </v-col>\n       <v-col cols=\"4\" class=\"bottomCol\">\n         <div class=\"supportDiv\">\n"
                 }
             ],
             "date": 1670630247947,

@@ -1,7 +1,7 @@
 <template>
   <v-container class="navContainer" fluid>
-    <v-row cols="12" class="navBar" align="center">
-      <v-col cols="10'">
+    <v-row cols="12" lg="6" class="navBar" align="center">
+      <v-col cols="6" lg="10">
         <a @click="goToHome()">
           <v-img
             contain
@@ -13,14 +13,7 @@
         </a>
       </v-col>
 
-      <v-col cols="1" class="text-right">
-        <!-- download button with icon-->
-        <v-btn color="#FFCB52">
-          <strong>Download</strong>
-          <v-icon> mdi-download </v-icon>
-        </v-btn>
-      </v-col>
-      <v-col cols="1" class="text-right">
+      <v-col cols="6" lg="2" class="text-center">
         <v-btn color="#FFCB52" @click="goToBlog()"
           ><strong>Blog</strong>
         </v-btn>
@@ -76,5 +69,12 @@ export default {
 .navText {
   font-weight: 600 !important;
   color: #242640 !important;
+}
+
+/* Media query for 600 device width to hide .rightcard */
+@media only screen and (max-width: 600px) {
+  .rightCard {
+    display: none;
+  }
 }
 </style>

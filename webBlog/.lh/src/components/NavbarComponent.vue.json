@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 140,
+            "activePatchIndex": 152,
             "patches": [
                 {
                     "date": 1670006844183,
@@ -568,6 +568,54 @@
                 {
                     "date": 1673085479849,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n     goToBlog() {\r\n       this.$router.push(\"/blog\");\r\n     },\r\n     goToHome() {\r\n-      this.$router.push(\"/\");\r\n+      this.$router.push(\"/wingman\");\r\n     },\r\n   },\r\n };\r\n </script>\r\n"
+                },
+                {
+                    "date": 1674256649618,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,80 +1,87 @@\n-<template>\r\n-  <v-container class=\"navContainer\" fluid>\r\n-    <v-row cols=\"12\" class=\"navBar\" align=\"center\">\r\n-      <v-col cols=\"10'\">\r\n-        <a @click=\"goToHome()\">\r\n-          <v-img\r\n-            contain\r\n-            max-width=\"230\"\r\n-            src=\"../../public/icons/lg.png\"\r\n-            class=\"logo\"\r\n-          >\r\n-          </v-img>\r\n-        </a>\r\n-      </v-col>\r\n-\r\n-      <v-col cols=\"1\" class=\"text-right\">\r\n-        <!-- download button with icon-->\r\n-        <v-btn color=\"#FFCB52\">\r\n-          <strong>Download</strong>\r\n-          <v-icon> mdi-download </v-icon>\r\n-        </v-btn>\r\n-      </v-col>\r\n-      <v-col cols=\"1\" class=\"text-right\">\r\n-        <v-btn color=\"#FFCB52\" @click=\"goToBlog()\"\r\n-          ><strong>Blog</strong>\r\n-        </v-btn>\r\n-      </v-col>\r\n-    </v-row>\r\n-  </v-container>\r\n-</template>\r\n-  \r\n-  \r\n-  <script>\r\n-export default {\r\n-  data() {\r\n-    return {\r\n-      rotas: [],\r\n-    };\r\n-  },\r\n-  methods: {\r\n-    goToBlog() {\r\n-      this.$router.push(\"/blog\");\r\n-    },\r\n-    goToHome() {\r\n-      this.$router.push(\"/wingman\");\r\n-    },\r\n-  },\r\n-};\r\n-</script>\r\n-  \r\n-    <style>\r\n-* {\r\n-  font-family: \"Sora\", sans-serif !important;\r\n-}\r\n-\r\n-.navContainer {\r\n-  background-color: #7f9dc4;\r\n-}\r\n-\r\n-.navBar {\r\n-  margin-left: 50px !important;\r\n-  margin-right: 50px !important;\r\n-\r\n-  border-radius: 10px;\r\n-}\r\n-\r\n-/* rounded logo */\r\n-.logo {\r\n-  border-radius: 10px;\r\n-}\r\n-\r\n-.navIcon {\r\n-  color: #242640 !important;\r\n-}\r\n-\r\n-.navText {\r\n-  font-weight: 600 !important;\r\n-  color: #242640 !important;\r\n-}\r\n+<template>\n+  <v-container class=\"navContainer\" fluid>\n+    <v-row cols=\"12\" class=\"navBar\" align=\"center\">\n+      <v-col cols=\"10'\">\n+        <a @click=\"goToHome()\">\n+          <v-img\n+            contain\n+            max-width=\"230\"\n+            src=\"../../public/icons/lg.png\"\n+            class=\"logo\"\n+          >\n+          </v-img>\n+        </a>\n+      </v-col>\n+\n+      <v-col cols=\"1\" class=\"text-right\">\n+        <!-- download button with icon-->\n+        <v-btn color=\"#FFCB52\">\n+          <strong>Download</strong>\n+          <v-icon> mdi-download </v-icon>\n+        </v-btn>\n+      </v-col>\n+      <v-col cols=\"1\" class=\"text-right\">\n+        <v-btn color=\"#FFCB52\" @click=\"goToBlog()\"\n+          ><strong>Blog</strong>\n+        </v-btn>\n+      </v-col>\n+    </v-row>\n+  </v-container>\n+</template>\n+  \n+  \n+  <script>\n+export default {\n+  data() {\n+    return {\n+      rotas: [],\n+    };\n+  },\n+  methods: {\n+    goToBlog() {\n+      this.$router.push(\"/blog\");\n+    },\n+    goToHome() {\n+      this.$router.push(\"/wingman\");\n+    },\n+  },\n+};\n+</script>\n+  \n+    <style>\n+* {\n+  font-family: \"Sora\", sans-serif !important;\n+}\n+\n+.navContainer {\n+  background-color: #7f9dc4;\n+}\n+\n+.navBar {\n+  margin-left: 50px !important;\n+  margin-right: 50px !important;\n+\n+  border-radius: 10px;\n+}\n+\n+/* rounded logo */\n+.logo {\n+  border-radius: 10px;\n+}\n+\n+.navIcon {\n+  color: #242640 !important;\n+}\n+\n+.navText {\n+  font-weight: 600 !important;\n+  color: #242640 !important;\n+}\n+\n+/* Media query for 600 device width to hide .rightcard */\n+@media only screen and (max-width: 600px) {\n+  .rightCard {\n+    display: none;\n+  }\n+}\n </style>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1674256803711,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n <template>\n   <v-container class=\"navContainer\" fluid>\n     <v-row cols=\"12\" class=\"navBar\" align=\"center\">\n-      <v-col cols=\"10'\">\n+      <v-col cols=\"8'\">\n         <a @click=\"goToHome()\">\n           <v-img\n             contain\n             max-width=\"230\"\n"
+                },
+                {
+                    "date": 1674256808931,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n           </v-img>\n         </a>\n       </v-col>\n \n-      <v-col cols=\"1\" class=\"text-right\">\n+      <v-col cols=\"2\" class=\"text-right\">\n         <!-- download button with icon-->\n         <v-btn color=\"#FFCB52\">\n           <strong>Download</strong>\n           <v-icon> mdi-download </v-icon>\n"
+                },
+                {
+                    "date": 1674256814000,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n           <strong>Download</strong>\n           <v-icon> mdi-download </v-icon>\n         </v-btn>\n       </v-col>\n-      <v-col cols=\"1\" class=\"text-right\">\n+      <v-col cols=\"2\" class=\"text-right\">\n         <v-btn color=\"#FFCB52\" @click=\"goToBlog()\"\n           ><strong>Blog</strong>\n         </v-btn>\n       </v-col>\n"
+                },
+                {
+                    "date": 1674256834861,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n <template>\n   <v-container class=\"navContainer\" fluid>\n-    <v-row cols=\"12\" class=\"navBar\" align=\"center\">\n+    <v-row cols=\"12\" lg=\"6\" class=\"navBar\" align=\"center\">\n       <v-col cols=\"8'\">\n         <a @click=\"goToHome()\">\n           <v-img\n             contain\n@@ -19,9 +19,9 @@\n           <strong>Download</strong>\n           <v-icon> mdi-download </v-icon>\n         </v-btn>\n       </v-col>\n-      <v-col cols=\"2\" class=\"text-right\">\n+      <v-col cols=\"12\" lg=\"6\" class=\"text-right\">\n         <v-btn color=\"#FFCB52\" @click=\"goToBlog()\"\n           ><strong>Blog</strong>\n         </v-btn>\n       </v-col>\n"
+                },
+                {
+                    "date": 1674256843521,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n           </v-img>\n         </a>\n       </v-col>\n \n-      <v-col cols=\"2\" class=\"text-right\">\n+      <v-col cols=\"12\" lg=\"6\" class=\"text-right\">\n         <!-- download button with icon-->\n         <v-btn color=\"#FFCB52\">\n           <strong>Download</strong>\n           <v-icon> mdi-download </v-icon>\n"
+                },
+                {
+                    "date": 1674256860582,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,16 +12,16 @@\n           </v-img>\n         </a>\n       </v-col>\n \n-      <v-col cols=\"12\" lg=\"6\" class=\"text-right\">\n+      <v-col cols=\"6\" lg=\"2\" class=\"text-right\">\n         <!-- download button with icon-->\n         <v-btn color=\"#FFCB52\">\n           <strong>Download</strong>\n           <v-icon> mdi-download </v-icon>\n         </v-btn>\n       </v-col>\n-      <v-col cols=\"12\" lg=\"6\" class=\"text-right\">\n+      <v-col cols=6\" lg=\"2\" class=\"text-right\">\n         <v-btn color=\"#FFCB52\" @click=\"goToBlog()\"\n           ><strong>Blog</strong>\n         </v-btn>\n       </v-col>\n"
+                },
+                {
+                    "date": 1674256960914,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n <template>\n   <v-container class=\"navContainer\" fluid>\n     <v-row cols=\"12\" lg=\"6\" class=\"navBar\" align=\"center\">\n-      <v-col cols=\"8'\">\n+      <v-col cols=\"12\" lg=\"8\">\n         <a @click=\"goToHome()\">\n           <v-img\n             contain\n             max-width=\"230\"\n@@ -19,9 +19,9 @@\n           <strong>Download</strong>\n           <v-icon> mdi-download </v-icon>\n         </v-btn>\n       </v-col>\n-      <v-col cols=6\" lg=\"2\" class=\"text-right\">\n+      <v-col cols=\"6\" lg=\"2\" class=\"text-right\">\n         <v-btn color=\"#FFCB52\" @click=\"goToBlog()\"\n           ><strong>Blog</strong>\n         </v-btn>\n       </v-col>\n"
+                },
+                {
+                    "date": 1674256973743,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,16 +12,16 @@\n           </v-img>\n         </a>\n       </v-col>\n \n-      <v-col cols=\"6\" lg=\"2\" class=\"text-right\">\n+      <v-col cols=\"6\" lg=\"2\" class=\"text-center\">\n         <!-- download button with icon-->\n         <v-btn color=\"#FFCB52\">\n           <strong>Download</strong>\n           <v-icon> mdi-download </v-icon>\n         </v-btn>\n       </v-col>\n-      <v-col cols=\"6\" lg=\"2\" class=\"text-right\">\n+      <v-col cols=\"6\" lg=\"2\" class=\"text-center\">\n         <v-btn color=\"#FFCB52\" @click=\"goToBlog()\"\n           ><strong>Blog</strong>\n         </v-btn>\n       </v-col>\n"
+                },
+                {
+                    "date": 1674256985499,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,15 +13,8 @@\n         </a>\n       </v-col>\n \n       <v-col cols=\"6\" lg=\"2\" class=\"text-center\">\n-        <!-- download button with icon-->\n-        <v-btn color=\"#FFCB52\">\n-          <strong>Download</strong>\n-          <v-icon> mdi-download </v-icon>\n-        </v-btn>\n-      </v-col>\n-      <v-col cols=\"6\" lg=\"2\" class=\"text-center\">\n         <v-btn color=\"#FFCB52\" @click=\"goToBlog()\"\n           ><strong>Blog</strong>\n         </v-btn>\n       </v-col>\n"
+                },
+                {
+                    "date": 1674257011893,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n <template>\n   <v-container class=\"navContainer\" fluid>\n     <v-row cols=\"12\" lg=\"6\" class=\"navBar\" align=\"center\">\n-      <v-col cols=\"12\" lg=\"8\">\n+      <v-col cols=\"6\" lg=\"8\">\n         <a @click=\"goToHome()\">\n           <v-img\n             contain\n             max-width=\"230\"\n@@ -12,9 +12,9 @@\n           </v-img>\n         </a>\n       </v-col>\n \n-      <v-col cols=\"6\" lg=\"2\" class=\"text-center\">\n+      <v-col cols=\"6\" lg=\"4\" class=\"text-center\">\n         <v-btn color=\"#FFCB52\" @click=\"goToBlog()\"\n           ><strong>Blog</strong>\n         </v-btn>\n       </v-col>\n"
+                },
+                {
+                    "date": 1674257022377,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n <template>\n   <v-container class=\"navContainer\" fluid>\n     <v-row cols=\"12\" lg=\"6\" class=\"navBar\" align=\"center\">\n-      <v-col cols=\"6\" lg=\"8\">\n+      <v-col cols=\"6\" lg=\"10\">\n         <a @click=\"goToHome()\">\n           <v-img\n             contain\n             max-width=\"230\"\n@@ -12,9 +12,9 @@\n           </v-img>\n         </a>\n       </v-col>\n \n-      <v-col cols=\"6\" lg=\"4\" class=\"text-center\">\n+      <v-col cols=\"6\" lg=\"2\" class=\"text-center\">\n         <v-btn color=\"#FFCB52\" @click=\"goToBlog()\"\n           ><strong>Blog</strong>\n         </v-btn>\n       </v-col>\n"
                 }
             ],
             "date": 1670006844183,

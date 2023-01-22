@@ -170,35 +170,41 @@ class Receipt():
 
 
 def concat(r1,r2):
+	print(r1.lines)
+	print("\n")
+	print(len(r1.lines))
+	print("\n\n\n")
+	print(r2.lines)
+	print("\n")
+	print(len(r2.lines))
 	l1 = r1.lines
 	l2 = r2.lines
 
 	newlines = []
 
-	for line1 in l1:
-		for line2 in l2:
+	for line2 in l2:
+		for line1 in l1:
 			ratio = SequenceMatcher(None,line1,line2).ratio()
 			if ratio < 0.7:
 				newlines.append(line2)
+				break
+				
 
 	nl = l1 + newlines
 	r1.lines = nl
-
+	
+	print("\n\n\n")
+	print(r1.lines)
+	print("\n")
+	print(len(r1.lines))
 	return r1.parse()
 	
 				
-		
-
-
-
-
-
-
 def parseImage(files):
 	preProc = [pp.scaling,pp.normalize,pp.remove_noise,pp.remove_shadows]
 
 	if len(files) == 1:
-		filename = files[0] #fix temporario enquanto nao se implementa o parsing de + que 1 imagem
+		filename = files[0]
 		image = pp.cv2.imread(filename)
 		if debug: pp.show(image,'Original')
 
@@ -211,12 +217,14 @@ def parseImage(files):
 	else:
 		filename0 = files[0] 
 		image0 = pp.cv2.imread(filename0)
-		filename1 = files[1] 
-		image1 = pp.cv2.imread(filename1)
 		raw0 = pp.generate_text('out',pp.pipeline(image0,preProc),output)
 		r0 = Receipt(raw0,'info.json')
+		
+		filename1 = files[1] 
+		image1 = pp.cv2.imread(filename1)
 		raw1 = pp.generate_text('out',pp.pipeline(image1,preProc),output)
 		r1 = Receipt(raw1,'info.json')
+		
 		return concat(r0,r1)
 
 

@@ -13,7 +13,7 @@ const ActivityTable = ({data,headerHome, navigation}) => {
         //console.log(element.data)
         let value = element.value
         if (headerHome) value = value + '€'
-        let transaction = <TouchableOpacity onPress={() => navigation.navigate('EditExpense', {idExpense: element.idPurchase, idCategory: element.category})}><Text style={styles.text}>{element.transaction}</Text></TouchableOpacity>
+        let transaction = <TouchableOpacity onPress={() => navigation.navigate('EditExpense', {idExpense: element.idPurchase, idCategory: element.category, originOCR: false})}><Text style={styles.text}>{element.transaction}</Text></TouchableOpacity>
         tableData.push([CATEGORIES[element.category].icon, transaction, element.date, SIGNS[accents.remove(element.type)].icon, value]);
      });
     }  

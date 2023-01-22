@@ -9,10 +9,10 @@ import * as ImagePicker from 'expo-image-picker'
 import { SafeAreaView } from 'react-native'
 import { color, ScreenWidth } from 'react-native-elements/dist/helpers'
 import { Ionicons,  MaterialCommunityIcons,Entypo, MaterialIcons, FontAwesome, FontAwesome5, SimpleLineIcons, Feather } from '@expo/vector-icons'
-import ProductTable from '../components/ProductTable'
+import OCRExpense from '../components/OCRExpense'
 
 
-export default function PoliticsSuggestionScreen({ navigation }) {
+export default function OCRScreen({ navigation }) {
   const { height, width } = useWindowDimensions()
     const [products, setProducts] = useState([])
     const [token, setToken] = useState('')
@@ -23,6 +23,7 @@ export default function PoliticsSuggestionScreen({ navigation }) {
     const [disabled, setDisabled] = useState(true)
     const [loading, setLoading] = useState(false)
     const [loaded, setLoaded] = useState(false)
+    const [generalInfo, setGeneralInfo] = useState(null)
 
     useEffect(() => {
       AsyncStorage.getItem('userToken')
@@ -82,7 +83,6 @@ export default function PoliticsSuggestionScreen({ navigation }) {
     pickedImage.path = Platform.OS === 'ios' ? pickedImage.uri.replace('file://', '') : pickedImage.uri
     pickedImage.name = pickedImage.fileName
     data.append(pickedImage.fileName, pickedImage);
-    console.log('\nDATA FORM: ' + JSON.stringify(data))
     return data
   }
 
@@ -90,7 +90,7 @@ export default function PoliticsSuggestionScreen({ navigation }) {
   const sendPost = async () => {
     setLoading(true)
     //console.log('handleUploadPhoto ' + JSON.stringify(pickedImage))
-    const resp = await fetch(`https://1c3d-2001-818-dafd-2100-205f-1bd6-b32e-859c.eu.ngrok.io/upload`, {
+    const resp = await fetch(`http://94.60.175.136:8000/ocr/upload`, {
       method: 'POST',
       body: createFormData(),
       headers: {
@@ -100,15 +100,16 @@ export default function PoliticsSuggestionScreen({ navigation }) {
     })
     const transData = await resp.json()
     //console.log(transData)
+    let productsResult = transformData(transData)
     setLoading(false)
     setLoaded(true)
-    transfData(transData)
+    navigation.navigate('EditExpense', {originOCR: true, products: productsResult[0], genInfo: productsResult[1]})
 
   }
 
-  const transfData = (transData) => {      
+  const transformData = (transData) => {      
       var purchase = JSON.parse(transData);
-      console.log(purchase.items)
+      console.log(purchase)
       let products = []
       Object.keys(purchase.items).forEach((key, index) => {
         console.log(`${key}: ${purchase.items[key]}`);
@@ -119,7 +120,14 @@ export default function PoliticsSuggestionScreen({ navigation }) {
           description: key         
         })
         });
-      setProducts(products);
+      let gen = {
+        date: purchase.date,
+        market: purchase.market,
+        total : purchase.total
+      }
+      // Retorno isto assim pq se usar o setVar(), como é assíncrono, geralmente chega vazio à pag de Edit expense
+      //  e assim tenho a certeza que não 
+      return [products, gen]
   }
 
   function getCategoryIcon(selectedCategory) {
@@ -138,7 +146,7 @@ export default function PoliticsSuggestionScreen({ navigation }) {
 
     return ( askPermission(),
       <SafeAreaView style={styles.root}>
-             <Text style={styles.textInicial}>Carrega a fotografia da tua fatura:</Text>
+             {!loaded && <Text style={styles.textInicial}>Carrega a fotografia da tua fatura:</Text>}
 
       {pickedImage== '' &&
       <View style={{
@@ -205,23 +213,15 @@ export default function PoliticsSuggestionScreen({ navigation }) {
           </TouchableOpacity>
       }
       {loading && <ActivityIndicator size="large" color={COLORS.wingDarkBlue}/>}
+      {/*loaded &&
+          <TouchableOpacity onPress={()  => navigation.navigate('OCR', {refresh: true})} style={[styles.button, { width: width*0.50, backgroundColor: disabled? '#E8E8E8': COLORS.wingblue}]} disabled={disabled}>
+              <Text style={[styles.text , {color: disabled? '#C0C0C0': COLORS.white}]}>Recomeçar   <Entypo name="reload" size={25} style={styles.item} color={COLORS.wingDarkBlue}/>
+              </Text>
+          </TouchableOpacity>
+    */}
       
-        {loaded && 
-              <ProductTable
-                products={products}
-                handleDeleteProduct={console.log("Não há delete ")}
-                getCategoryIcon={getCategoryIcon}
-              />
-            
-          }
-      
-
-
-
       </View>
-    
-    
-        </SafeAreaView>
+    </SafeAreaView>
       )
       //)
   }

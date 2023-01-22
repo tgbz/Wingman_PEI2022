@@ -14,21 +14,15 @@ app.config["DEBUG"] = True
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-
-@app.route('/', methods=['GET'])
-def home():
-    return "<h1>Olá<h1/>"
-
-
 @app.route('/upload', methods=['POST'])
 @cross_origin(origin='*', headers=['Content-Type'])
 def upload_image():
     if request.method == "POST":
+        print("Request received...")
 
         if not os.path.exists(fileDir):
             os.makedirs(fileDir)
 
-        print("Request received...")
         fpaths = []
         fnames = []
         for k in request.files.keys():
@@ -47,10 +41,7 @@ def upload_image():
         os.rmdir(fileDir)
 
         print("Done!")
-        ret = jsonify(text)
-        print(text)
-        print(ret)
-        return ret
+        return jsonify(text)
 
 
 if __name__ == "__main__":

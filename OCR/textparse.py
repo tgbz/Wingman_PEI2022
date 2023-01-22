@@ -171,24 +171,32 @@ class Receipt():
 
 def concat(r1,r2):
 	print(r1.lines)
+	print("\n")
+	print(len(r1.lines))
 	print("\n\n\n")
 	print(r2.lines)
+	print("\n")
+	print(len(r2.lines))
 	l1 = r1.lines
 	l2 = r2.lines
 
 	newlines = []
 
-	for line1 in l1:
-		for line2 in l2:
+	for line2 in l2:
+		for line1 in l1:
 			ratio = SequenceMatcher(None,line1,line2).ratio()
 			if ratio < 0.7:
 				newlines.append(line2)
+				break
+				
 
 	nl = l1 + newlines
 	r1.lines = nl
 	
 	print("\n\n\n")
 	print(r1.lines)
+	print("\n")
+	print(len(r1.lines))
 	return r1.parse()
 	
 				

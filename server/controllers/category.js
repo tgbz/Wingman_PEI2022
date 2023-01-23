@@ -1,14 +1,19 @@
 var sql = require('../config/database.js');
+var Users = require("../controllers/users");
+const schedule = require('node-schedule');
 var Categories = module.exports;
+
 
 // Get todas as categorias e o total gasto em cada
 Categories.getCategory = function(id) {
+    var date = new Date();
+    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
     return new Promise(function(resolve,reject){
-        sql.query(`select user_has_category.idUser, category.idcategory, category.name, user_has_category.plafond, user_has_category.total_spent, category.is_essential
+        sql.query(`select user_has_category.idUser, category.idcategory, category.name, user_has_category.plafond, user_has_category.total_spent, category.is_essential, date
                     from category
                     inner join user_has_category on category.idcategory = user_has_category.idcategory
-                    where user_has_category.idUser = ?`,
-        id ,function(err,res){
+                    where user_has_category.idUser = ? and date = ?`,
+        [id,firstDay] ,function(err,res){
             if(err) {
                 console.log("error: ", err);
                 reject(err);
@@ -20,6 +25,25 @@ Categories.getCategory = function(id) {
     })   
 }
 
+Categories.getCategorybyMonth = function(id,date) {
+    var date = new Date(date);
+    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    return new Promise(function(resolve,reject){
+        sql.query(`select user_has_category.idUser, category.idcategory, category.name, user_has_category.plafond, user_has_category.total_spent, category.is_essential, date
+                    from category
+                    inner join user_has_category on category.idcategory = user_has_category.idcategory
+                    where user_has_category.idUser = ? and date = ?`,
+        [id,firstDay] ,function(err,res){
+            if(err) {
+                console.log("error: ", err);
+                reject(err);
+            }
+            else{
+                resolve(res)
+            }
+        });   
+    })   
+}
 
 
 
@@ -147,4 +171,52 @@ Categories.addExpensesbyID = function (idUser,category,total_spent ) {
         });
         })
     };
+
+
+    Categories.getAllCategories = function () {
+        return new Promise(function(resolve, reject) {
+            sql.query(`select idCategory from category`,
+                function (err, res) {
+                    if(err){
+                        console.log("error: ", err);
+                        reject(err);
+                    }
+                    else{
+                        resolve(res);
+                    }
+                });
+        })
+    };
+
+
+    Categories.createCategories = function (idUser,idcategory) {
+        var date = new Date();
+        var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+        return new Promise(function(resolve, reject) {
+            sql.query(`Insert into user_has_category (idUser,idcategory,plafond,total_spent,date) values (?,?,0,0,?)`,[idUser,idcategory,firstDay],
+                function (err, res) {
+                    if(err){
+                        console.log("error: ", err);
+                        reject(err);
+                    }
+                    else{
+                        resolve(res);
+                    }
+                });
+        })
+    };
+
+    Categories.createAllcategories = async function () {
+        var categorias = await Categories.getAllCategories()
+        var users = await Users.listUsers()
+        Object.values(users).forEach(user =>{
+            Object.values(categorias).forEach( category => {
+                Categories.createCategories(user.idUser,category.idCategory)
+            })
+        })
+    };
+
+    schedule.scheduleJob('0 0 0 1 */1 *', function () {
+        Categories.createAllcategories()
+    });
 

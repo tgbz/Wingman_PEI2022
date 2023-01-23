@@ -10,6 +10,7 @@ import { SafeAreaView } from 'react-native'
 import { color, ScreenWidth } from 'react-native-elements/dist/helpers'
 import { Ionicons,  MaterialCommunityIcons,Entypo, MaterialIcons, FontAwesome, FontAwesome5, SimpleLineIcons, Feather } from '@expo/vector-icons'
 import OCRExpense from '../components/OCRExpense'
+import { ScrollView } from 'react-native-gesture-handler'
 
 
 export default function OCRScreen({ navigation }) {
@@ -158,7 +159,8 @@ const galeria = <View style={styles.bt}>
   
 </View>
 
-    return ( askPermission(),
+    return ( askPermission(), console.log("PickedImage", pickedImage),
+    <ScrollView style={ {backgroundColor: COLORS.white} }>
       <SafeAreaView style={styles.root}>
              {!loaded && <Text style={styles.textInicial}>Carrega a fotografia da tua fatura:</Text>}
 
@@ -204,10 +206,20 @@ const galeria = <View style={styles.bt}>
         }]}>
 
         {pickedImage.length > 0  &&
-        <TouchableOpacity onPress={()  => sendPost()} style={[styles.button, { width: width*0.50, backgroundColor: disabled? '#E8E8E8': COLORS.wingblue}]} disabled={disabled}>
-        <Text style={[styles.text , {color: disabled? '#C0C0C0': COLORS.white}]}>Adicionar mais imagens   <Entypo name="arrow-right" size={25} style={styles.item} color={COLORS.wingDarkBlue}/>
-        </Text>
-    </TouchableOpacity>}
+        <View style={{ flexDirection:"row", flexWrap:'wrap', justifyContent:'space-around', width: width*0.50,
+      
+      
+          backgroundColor: COLORS.eggshell,
+          borderColor: COLORS.wingblue,
+          borderWidth: 3,
+          borderStyle: 'dashed',
+          marginVertical: 30,   
+          borderRadius:5
+      
+      
+      }}>{camara}{galeria}</View>
+       
+        }
 
       {!loaded &&
           <TouchableOpacity onPress={()  => sendPost()} style={[styles.button, { width: width*0.50, backgroundColor: disabled? '#E8E8E8': COLORS.wingblue}]} disabled={disabled}>
@@ -226,8 +238,8 @@ const galeria = <View style={styles.bt}>
       </View>
     
     </SafeAreaView>
+    </ScrollView>
       )
-      //)
   }
   
   const styles = StyleSheet.create({

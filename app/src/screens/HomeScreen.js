@@ -40,6 +40,7 @@ function HomeScreen({ navigation }) {
       `${serverURL}/purchases/getAllPurchase/${token.id}`
     );
     const transData = await resp.json();
+    console.log(transData.slice(0,1));
     setTransactionsData(transData.slice(0,5))
   };
   // Put transaction data on dd/mm/aa format

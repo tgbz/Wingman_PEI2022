@@ -63,7 +63,20 @@ export default function PoliticsScreen({navigation}){
     }};
 
 // every time route.params is true when user edit despesa, refresh data
-
+const route = useRoute()
+useEffect(() => {
+  console.log('route.params: ' + JSON.stringify(route.params))
+  // dont do shit if route.params is undefined
+  if (route.params) {
+    // se nao for undefined
+    if (route.params.refresh) {
+      // se for true
+      console.log('Refresh Activity Screen')
+      fetchData(token)
+      route.params.refresh = false
+    }
+  }
+}, [route.params])
     
 
   return ( adjustData(transactionsData), 

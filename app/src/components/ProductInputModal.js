@@ -5,11 +5,12 @@ import ChooseCategoryModal from './ChooseCategoryModal'
 import CustomInput from './CustomInput'
 const ProductInputModal = ({ isModalVisible,generalCategory,getCategoryIcon,getCategoryName, onSave, onCancel }) => {
   const [description, setDescription] = useState('')
-  const [value, setValue] = useState(1)
-  const [quantity, setQuantity] = useState('')
+  const [value, setValue] = useState('')
+  const [quantity, setQuantity] = useState(1)
   const [idcategory, setIdcategory] = useState(generalCategory)
   const [isCategoryModalVisible, setIsCategoryModalVisible] = useState(false);
 
+  // // TODO: Validate form data
 
     const { width } = useWindowDimensions()
   // USE EFFECT TO SET THE CATEGORY TO GENERAL CATEGORY
@@ -25,7 +26,7 @@ const ProductInputModal = ({ isModalVisible,generalCategory,getCategoryIcon,getC
   const handleClean = () => {
     setDescription('')
     setValue('')
-    setQuantity('')
+    setQuantity(1)
     setIdcategory(generalCategory)
     
   }
@@ -60,13 +61,18 @@ const ProductInputModal = ({ isModalVisible,generalCategory,getCategoryIcon,getC
 
 
           <Text style={styles.textTag}>Quantidade:</Text>
-          <CustomInput
-              placeholder={'2'}
-              value={quantity}
-              setValue={setQuantity}
-              keyboardType="numeric"
-              widthScale={0.8}
-            />
+          
+            <View
+                  style={[styles.buttonStyle, { width: width * 0.8}]}
+                >
+                  <TextInput
+                    placeholder="2"
+                    onChangeText={setQuantity}
+                    style={styles.textButton}
+                  >
+                    {quantity}
+                  </TextInput>
+                </View>
 
 
           <Text style={styles.textTag}>Categoria:</Text>
@@ -180,6 +186,24 @@ const styles = StyleSheet.create({
     color: COLORS.wingDarkBlue,
     marginStart: 10,
   },
+  buttonStyle: {
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 15,
+    marginVertical: 12,
+    borderWidth: 1,
+    flexDirection: 'row',
+    alignSelf: 'center',
+    borderColor: COLORS.wingblue,
+    alignItems: 'center',
+  },
+  textButton: {
+    flex: 0.95,
+    fontFamily: 'SoraRegular',
+    fontSize: SIZES.font,
+    color: COLORS.wingDarkBlue,
+    marginStart: 10,
+  }
 })
 
 export default ProductInputModal

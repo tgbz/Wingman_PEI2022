@@ -22,7 +22,9 @@ export default function EditExpenseScreen({ navigation }) {
   const [token, setToken] = useState('')
   const route = useRoute()
   const idExpense = route.params?.idExpense;
-
+  const originOCR =  route.params?.originOCR
+  console.log(route.params)
+  //: true, products: products, genInfo: generalInfo
   const [title, setTitle] = useState('')
   const [selectedCategory, setSelectedCategory] = useState(22)
   const [value, setValue] = useState('')
@@ -41,11 +43,36 @@ export default function EditExpenseScreen({ navigation }) {
       .catch((err) => console.log(err))
   }, [])
 
+  
   useEffect(() => {
     if (token.id) {
-      fetchData(token)
-    }
+      console.log("origem OCR", originOCR)
+      if (!originOCR){
+      fetchData(token)}
+    
+      else fetchDataOCR()
+      }
   }, [token])
+
+
+
+function fetchDataOCR () {
+  //setpurchaseData(purchase)
+  let infogen = route.params?.genInfo
+  let products = route.params?.products
+  setTitle(infogen.market)
+  setSelectedCategory(22)
+  setValue(infogen.total)
+  setDescription(infogen.market)
+  //if (infogen.date==null){infogen.date = Date.now()}
+  setDate(treatDate(infogen.date))
+  setProducts(products)
+    setIsDebit(true)
+  if (products.length == 1 && products[0].description == 'Não especificado') {
+    setSelectedCategory(purchase.products[0].idcategory)
+  }
+}
+
 
   const [purchaseData,setpurchaseData] = useState([])
 
@@ -70,8 +97,6 @@ export default function EditExpenseScreen({ navigation }) {
     if (purchase.products.length == 1 && purchase.products[0].description == 'Não especificado') {
       setSelectedCategory(purchase.products[0].idcategory)
     }
-
-
   }
 
   function treatDate (date) {
@@ -79,6 +104,10 @@ export default function EditExpenseScreen({ navigation }) {
     if (typeof date === 'string') {
       return date.slice(0, 10)
   }
+    if (date === null){
+      var date = new Date();
+	    return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+ date.getDate();
+    }
   }
 
   const toggleModalCT = () => {
@@ -194,6 +223,8 @@ export default function EditExpenseScreen({ navigation }) {
   // Edit expense
 
   const handleFormSubmission = async () => {
+    console.log("Entrei no handle agora!")
+    if (!originOCR){
     const newData = {
       // falta a CATEGORIA
       is_recurring: false,
@@ -222,6 +253,43 @@ export default function EditExpenseScreen({ navigation }) {
         alert('Erro ao editar transação!')
       }
     })
+  }
+  else
+  { if(products.length == 0){
+    products.push({
+      quantity: 1,
+      value: value,
+      idcategory: selectedCategory,
+      description: 'Não especificado',
+    })
+  }
+  const newData = {
+    // falta a CATEGORIA
+    is_recurring: false,
+    date: date,
+    value: value,
+    title: title,
+    description: description,
+    idUser: token.id,
+    seller: '',
+    type: isDebit ? 'Debito' : 'Credito',
+    products: products, // quantity , value , idcategory , description
+  }
+  const resp = await fetch(`${serverURL}/purchases/createPurchase/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newData),
+  }).then((resp) => {
+    if (resp.status === 200) {
+      alert('Despesa adicionada com sucesso!')
+      navigation.navigate('Casa', { refresh: true })
+    } else {
+      alert('Erro ao adicionar despesa!')
+    }
+  })
+}
   }
  
   // handleDeleteExpense()
@@ -402,18 +470,26 @@ export default function EditExpenseScreen({ navigation }) {
 
           <View style={styles.containerBTN}>
             <CustomButton
-              onPress={() => handleFormSubmission()}
+              onPress={() => {handleFormSubmission()}}
               text="Guardar Alterações"
               type="TERTIARY"
               widthScale={0.8}
             ></CustomButton>
             {/* Delete expense button - red */}
+            {!originOCR &&
             <CustomButton
-              onPress={() => handleDeleteExpense()}
+              onPress={() => {handleDeleteExpense()}}
               text="Eliminar Despesa"
               type="SECONDARY"
               widthScale={0.8}
-            ></CustomButton>
+            ></CustomButton>}
+            {originOCR &&
+            <CustomButton
+              onPress={() => {console.log("Carreguei aqui 1 vez"), navigation.navigate('Home')}}
+              text="Cancelar Despesa"
+              type="SECONDARY"
+              widthScale={0.8}
+            ></CustomButton>}
             
 
           </View>

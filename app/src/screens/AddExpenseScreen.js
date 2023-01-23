@@ -208,10 +208,8 @@ export default function AddExpenseScreen({ navigation }) {
             {typeContainer()}
             {/* Title input */}
             <Text style={styles.textTag}>Título</Text>
-            
             <View style={[styles.buttonStyle, { width: width * 0.8 }]}>
               <TextInput
-
                 placeholder="Ex: Conta de luz"
                 onChangeText={setTitle}
                 style={styles.textButton}

@@ -101,12 +101,11 @@ Purchases.updatePurchase = function(id,is_recurring, date, value, title, descrip
 
 Purchases.getAllPurchase = function(id) {
     return new Promise(function(resolve,reject){
-        sql.query(`SELECT p.idPurchase, p.is_recurring,p.title,p.date,p.value,p.description,p.idUser,p.seller,p.type,ps.idcategory,c.name,c.is_essential,pr.Description as product FROM purchase  as p
-                    inner join purchase_has_subcategory as ps on p.idPurchase= ps.idPurchase
-                    inner join product as pr on pr.idProduct = ps.idProduct
-                    inner join category as c on ps.idCategory = c.idcategory
-                    where p.idUser= ? and p.valid = 1
-                    ORDER BY p.date desc, idPurchase desc`,
+        sql.query(`SELECT p.idPurchase, p.is_recurring,p.title,p.date,p.value,p.description,p.idUser,p.seller,p.type,ps.idcategory, COUNT(*) AS magnitude  FROM purchase  as p
+        inner join purchase_has_subcategory as ps on p.idPurchase= ps.idPurchase
+        where p.idUser= ? and p.valid = 1
+        group by p.idPurchase
+        ORDER BY p.date desc, idPurchase desc`,
         id ,function(err,res){
             if(err) {
                 console.log("error: ", err);
@@ -219,7 +218,7 @@ Purchases.createManualPurchase = function (is_recurring, date, value, title, des
         })
     };
 
-    Purchases.addProduct = function (description) {
+Purchases.addProduct = function (description) {
     return new Promise(function(resolve, reject) {
         sql.query(`INSERT INTO product (Description) VALUES(?)  ON DUPLICATE KEY UPDATE idProduct=LAST_INSERT_ID(idProduct);`,[description],
             function (err, res) {
@@ -315,35 +314,6 @@ Purchases.addSubCategoryToPurchase = function (idPurchase,idProduct,category,val
         });
         })
     };
-
-    
-Purchases.teste = function (is_recurring, date, value, description, idUser, seller,idMovement,isFromAPI,type,verified,category,idProduct,connection) {
-    return new Promise(function(resolve, reject) {
-        Purchases.createPurchase(is_recurring, date, value, description, idUser, seller,idMovement,isFromAPI,type,verified,connection)
-        .then(insertedID =>{
-            if(insertedID>0){
-                console.log("AM I in ?! " + insertedID)
-                resolve(insertedID)
-                /*
-                Purchases.addSubCategoryToPurchase(insertedID,idProduct,category,value,connection)
-                .then(result =>{
-                    resolve(result)
-                })
-                .catch(err =>{
-                    console.log(err)
-                    reject (err)
-                })*/
-            }
-            else{
-                resolve("Duplicated Entry")
-            }
-        })
-        .catch(err =>{
-            console.log(err)
-            reject (err)
-        })
-    })
-}
 
 
 Purchases.uploadPurchases = function (is_recurring, date, value, description, idUser, seller,idMovement,isFromAPI,type,verified,category,idProduct,connection) {

@@ -9,6 +9,12 @@ router.get("/userCategory/:id", function (req, res){
     .catch(erro => res.status(500).jsonp(erro))
   }) 
 
+  router.get("/userCategory/:id/:date", function (req, res){
+    Categories.getCategorybyMonth(req.params.id,req.params.date)
+    .then( dados => res.jsonp(dados))
+    .catch(erro => res.status(500).jsonp(erro))
+  }) 
+
 router.put("/changePlafond/:id", function (req, res){
   console.log(req.body)
   Categories.changePlafond(req.params.id,req.body.idcategory,req.body.plafond)

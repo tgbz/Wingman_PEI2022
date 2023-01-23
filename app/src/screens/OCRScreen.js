@@ -60,7 +60,7 @@ export default function OCRScreen({ navigation }) {
     if (hasPermission){
       let data = await ImagePicker.launchCameraAsync({
         mediaTypes:ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true, aspect: [5,3] ,
+        allowsEditing: true, aspect: [3,4] ,
         quality: 0.7})
       if (!data.cancelled) {
         setPhoto(data.uri)
@@ -184,7 +184,7 @@ const galeria = <View style={styles.bt}>
       return <View  key={element.uri} style={{
           backgroundColor: COLORS.eggshell,
           width: (element.width > width*0.7?width*0.7:element.width)+5,
-          height: element.height*0.40+5,
+          height: (element.height > height*0.4?height*0.4:element[0].height)+5,
           borderColor: COLORS.wingblue,
           borderWidth: 3,
           justifyContent: 'center',
@@ -195,7 +195,7 @@ const galeria = <View style={styles.bt}>
         }}>
         <Image source={{ uri: element.uri}}
               style={[styles.image, { width: (element.width > width*0.7?width*0.7:element[0].width),
-        height: element.height*0.40}]}/>
+        height: (element.height > height*0.4?height*0.4:element[0].height)}]}/>
       </View>})
     }
       <View style={[{

@@ -18,7 +18,7 @@ export default function OCRScreen({ navigation }) {
     const [token, setToken] = useState('')
     const [hasPermission, setPermission] = React.useState(false)
     const [photo, setPhoto] = React.useState(null)
-    const [pickedImage, setPickedImage] = React.useState('')
+    const [pickedImage, setPickedImage] = React.useState([])
     const [pickId, setPickId] = useState(0) 
     const [disabled, setDisabled] = useState(true)
     const [loading, setLoading] = useState(false)
@@ -46,7 +46,7 @@ export default function OCRScreen({ navigation }) {
         quality: 1})
       if (!data.cancelled) {
         setPhoto(data.uri)
-        setPickedImage(data)
+        setPickedImage(pickedImage.concat(data))
         setDisabled(false)
 
       }
@@ -66,7 +66,7 @@ export default function OCRScreen({ navigation }) {
         data.name = "Cam".concat(String(pickId))
         data.fileName = "Cam".concat(String(pickId))
         setPickId(pickId+1)
-        setPickedImage(data)
+        setPickedImage(pickedImage.concat(data))
         setDisabled(false)
       }
     }else{
@@ -80,9 +80,11 @@ export default function OCRScreen({ navigation }) {
     //console.log('Create form data: ' + JSON.stringify(pickedImage) + ' ' + JSON.stringify(user))
     const data = new FormData()
     //for each image, do this 
-    pickedImage.path = Platform.OS === 'ios' ? pickedImage.uri.replace('file://', '') : pickedImage.uri
-    pickedImage.name = pickedImage.fileName
-    data.append(pickedImage.fileName, pickedImage);
+    pickedImage.forEach(element => {
+          element.path = Platform.OS === 'ios' ? element.uri.replace('file://', '') : element.uri
+          element.name = element.fileName
+          data.append(element.fileName, element);
+  })
     return data
   }
 
@@ -142,13 +144,25 @@ export default function OCRScreen({ navigation }) {
     // if no match is found, return null
     return null
   }
-
+const camara =  <View style={styles.bt}>
+<TouchableOpacity onPress={()  => pickFromCamera()} style={[styles.roundshape, {backgroundColor:  COLORS.wingblue}]}>
+<FontAwesome5 name="camera" size={25} style={styles.item} />
+</TouchableOpacity>
+<Text style={{fontFamily:FONTS.light}}>Câmara</Text>
+</View>
+const galeria = <View style={styles.bt}>
+<TouchableOpacity  onPress={()  => pickFromGallery()} style={[styles.roundshape, {backgroundColor:  COLORS.wingblue}]}>
+      <Entypo name="images" size={25} style={styles.item} />
+</TouchableOpacity>
+<Text style={{fontFamily:FONTS.light}}>Galeria</Text>
+  
+</View>
 
     return ( askPermission(),
       <SafeAreaView style={styles.root}>
              {!loaded && <Text style={styles.textInicial}>Carrega a fotografia da tua fatura:</Text>}
 
-      {pickedImage== '' &&
+      {pickedImage.length === 0 &&
       <View style={{
           backgroundColor: COLORS.eggshell,
           width: width*0.7,
@@ -161,28 +175,14 @@ export default function OCRScreen({ navigation }) {
           alignItems: 'center',
           marginVertical: 30,   
         }}>
-          <View style={{ flexDirection:"row", flexWrap:'wrap', justifyContent:'space-around', width: width*0.60}}>
-            <View style={styles.bt}>
-                <TouchableOpacity onPress={()  => pickFromCamera()} style={[styles.roundshape, {backgroundColor:  COLORS.wingblue}]}>
-                <FontAwesome5 name="camera" size={25} style={styles.item} />
-                </TouchableOpacity>
-                <Text style={{fontFamily:FONTS.light}}>Câmara</Text>
-            </View>
-            <View style={styles.bt}>
-            <TouchableOpacity  onPress={()  => pickFromGallery()} style={[styles.roundshape, {backgroundColor:  COLORS.wingblue}]}>
-                  <Entypo name="images" size={25} style={styles.item} />
-            </TouchableOpacity>
-            <Text style={{fontFamily:FONTS.light}}>Galeria</Text>
-              
-            </View>
-          </View>
+          <View style={{ flexDirection:"row", flexWrap:'wrap', justifyContent:'space-around', width: width*0.60}}>{camara}{galeria}</View>
       </View>
     }
-    {pickedImage!= '' &&
-      <View style={{
+    {pickedImage.length > 0 && pickedImage.map(element => {
+      return <View  key={element.uri} style={{
           backgroundColor: COLORS.eggshell,
-          width: (pickedImage.width > width*0.7?width*0.7:pickedImage.width)+5,
-          height: pickedImage.height*0.40+5,
+          width: (element.width > width*0.7?width*0.7:element.width)+5,
+          height: element.height*0.40+5,
           borderColor: COLORS.wingblue,
           borderWidth: 3,
           justifyContent: 'center',
@@ -191,13 +191,10 @@ export default function OCRScreen({ navigation }) {
           alignItems: 'center',
           marginVertical: 30,   
         }}>
-         <Image
-              source={{ uri: pickedImage.uri}}
-              style={[styles.image, { width: (pickedImage.width > width*0.7?width*0.7:pickedImage.width),
-        height: pickedImage.height*0.40}]}
-              
-            />
-      </View>
+        <Image source={{ uri: element.uri}}
+              style={[styles.image, { width: (element.width > width*0.7?width*0.7:element[0].width),
+        height: element.height*0.40}]}/>
+      </View>})
     }
       <View style={[{
           alignContent: 'center',
@@ -205,6 +202,12 @@ export default function OCRScreen({ navigation }) {
           alignSelf: 'center',
           marginVertical: 20,
         }]}>
+
+        {pickedImage.length > 0  &&
+        <TouchableOpacity onPress={()  => sendPost()} style={[styles.button, { width: width*0.50, backgroundColor: disabled? '#E8E8E8': COLORS.wingblue}]} disabled={disabled}>
+        <Text style={[styles.text , {color: disabled? '#C0C0C0': COLORS.white}]}>Adicionar mais imagens   <Entypo name="arrow-right" size={25} style={styles.item} color={COLORS.wingDarkBlue}/>
+        </Text>
+    </TouchableOpacity>}
 
       {!loaded &&
           <TouchableOpacity onPress={()  => sendPost()} style={[styles.button, { width: width*0.50, backgroundColor: disabled? '#E8E8E8': COLORS.wingblue}]} disabled={disabled}>
@@ -221,6 +224,7 @@ export default function OCRScreen({ navigation }) {
     */}
       
       </View>
+    
     </SafeAreaView>
       )
       //)

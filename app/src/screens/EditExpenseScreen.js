@@ -22,7 +22,8 @@ export default function EditExpenseScreen({ navigation }) {
   const [token, setToken] = useState('')
   const route = useRoute()
   const idExpense = route.params?.idExpense;
-  const originOCR = route.params?.originOCR;
+  const originOCR =  route.params?.originOCR
+  console.log(route.params)
   //: true, products: products, genInfo: generalInfo
   const [title, setTitle] = useState('')
   const [selectedCategory, setSelectedCategory] = useState(22)
@@ -45,19 +46,15 @@ export default function EditExpenseScreen({ navigation }) {
   
   useEffect(() => {
     if (token.id) {
+      console.log("origem OCR", originOCR)
       if (!originOCR){
       fetchData(token)}
-    }
-      else fetchDataOCR()
     
+      else fetchDataOCR()
+      }
   }, [token])
 
-/*if (originOCR){
-  let products = route.params?.products
-  console.log("Produtos", products)
-  setProducts(products)
-  fetchDataOCR()
-}*/
+
 
 function fetchDataOCR () {
   //setpurchaseData(purchase)
@@ -226,6 +223,7 @@ function fetchDataOCR () {
   // Edit expense
 
   const handleFormSubmission = async () => {
+    console.log("Entrei no handle agora!")
     if (!originOCR){
     const newData = {
       // falta a CATEGORIA
@@ -239,7 +237,6 @@ function fetchDataOCR () {
       type: isDebit ? 'Debito' : 'Credito',
       products: products, // quantity , value , idcategory , description
     }
-    
     const resp = await fetch(`${serverURL}/purchases/editPurchase/`+idExpense, {
       method: 'PUT',
       headers: {
@@ -258,7 +255,7 @@ function fetchDataOCR () {
     })
   }
   else
-  {if(products.length == 0){
+  { if(products.length == 0){
     products.push({
       quantity: 1,
       value: value,
@@ -291,7 +288,8 @@ function fetchDataOCR () {
     } else {
       alert('Erro ao adicionar despesa!')
     }
-  })}
+  })
+}
   }
  
   // handleDeleteExpense()
@@ -472,7 +470,7 @@ function fetchDataOCR () {
 
           <View style={styles.containerBTN}>
             <CustomButton
-              onPress={() => handleFormSubmission()}
+              onPress={() => {handleFormSubmission()}}
               text="Guardar Alterações"
               type="TERTIARY"
               widthScale={0.8}
@@ -480,14 +478,14 @@ function fetchDataOCR () {
             {/* Delete expense button - red */}
             {!originOCR &&
             <CustomButton
-              onPress={() => handleDeleteExpense()}
+              onPress={() => {handleDeleteExpense()}}
               text="Eliminar Despesa"
               type="SECONDARY"
               widthScale={0.8}
             ></CustomButton>}
             {originOCR &&
             <CustomButton
-              onPress={() => navigation.navigate('Home')}
+              onPress={() => {console.log("Carreguei aqui 1 vez"), navigation.navigate('Home')}}
               text="Cancelar Despesa"
               type="SECONDARY"
               widthScale={0.8}

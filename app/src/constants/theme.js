@@ -3,7 +3,7 @@ export const COLORS = {
   secondary: "#4D626C",
   wingblue : "#7A97C2",
   wingDarkBlue: "#151940",
-
+orange: "#ee821a",
   white: "#FFF",
   gray: "#74858C",
   eggshell: "#f3f4f6"

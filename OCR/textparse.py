@@ -12,11 +12,13 @@ date1RE = r'(\d{4})[\/|\-](\d{2})[\/|\-](\d{2})'
 
 date2RE = r'(\d{2})[\/|\-](\d{2})[\/|\-](\d{4})'
 
-pdItemRE = r'(\S+) ([a-zA-Z].+)\s( |)((\d|\d{2}),[ ]{0,1}(\d{2}|\d{3}))$'
+pdItemRE = r'(\S+) ([a-zA-Z].+)\s( |)((\d|\d{2})[,. ]{1,2}(\d{2}|\d{3}))$'
+
+pdTotalRE = r'([a-zA-Z].+)\s( |)((\d|\d{2})[,. ]{1,2}(\d{2}|\d{3}))$'
 
 lidlItemRE = r'^([^\d][^\n]+) ((\d|\d{2})[^\d]{0,2}(\d{2}|\d{3}))[ a-zA-Z]*$'
 
-totalRE = r'\d+(\.\s?|,\s?|[^a-zA-Z\d])\d{2}'
+totalRE = r'([^0-9])+[ ]{0,1}(\d{1,2}[., ]{1,2}\d{2}|\d{3})'
 
 valueRE = r'(\d+[,| |.]+\d+)'
 
@@ -43,13 +45,15 @@ class Receipt():
 		self.market = self.parse_market()
 		if self.market == 'Pingo Doce':
 			self.parse_items_pd()
+			self.total = self.parse_total_pd()
 		elif self.market == 'Lidl':
 			self.parse_items_lidl()
 
 		self.date = self.parse_date()
-		self.total = 0
-		for item in self.items.keys():
-			self.total += self.items[item]
+		if self.total == None or self.total == 0:
+			self.total = 0
+			for item in self.items.keys():
+				self.total += self.items[item]
 
 		return self.to_json()
 	
@@ -67,7 +71,6 @@ class Receipt():
 			for market in self.info['Markets']:
 				for spelling in self.info['Markets'][market]:
 					line = self.close_match(spelling, accuracy)
-					#print(spelling,'\n',line)
 					if line and (accuracy < min_accuracy or min_accuracy == -1):
 						min_accuracy = accuracy
 						market_match = market
@@ -106,7 +109,7 @@ class Receipt():
 	def parse_items_pd(self):
 		jump = False
 		for i,line in enumerate(self.lines):
-			if get_close_matches('resumo', line.split(), 1, 0.6):
+			if get_close_matches('resumo', line.split(), 1, 0.9):
 				break
 			if jump:
 				jump = False
@@ -115,6 +118,13 @@ class Receipt():
 			if match:
 				value = 0
 				itemName = match.group(2)
+				alpha = 0
+				for c in itemName:
+					if (c.isalpha()):
+						alpha+=1
+				if alpha < (len(itemName) - alpha):
+					continue
+
 				if get_close_matches('poupanca', self.lines[i+1].split(), 1, 0.6):
 					ivalue = float(match.group(4).replace(',','.').replace(' ',''))
 					matchP = re.search(valueRE,self.lines[i+1])
@@ -143,20 +153,13 @@ class Receipt():
 					continue
 		return date_str
 
-	def parse_total_pingo_doce(self):
-		for total_key in self.info['Totals']:
-			for int_accuracy in range(10, 4, -1):
-				accuracy = int_accuracy / 10.0
-				total_line = self.close_match(total_key,accuracy)
-				if total_line:
-					print('Found possible total line')
-					matches2 = get_close_matches('pagar', total_line.split(), 1, 0.6)
-					if matches2:
-						print('Found pagar total line')
-						match = re.search(totalRE,total_line)
-						if match:
-							total = match.group(0).replace(',','.')
-							return float(total)
+	def parse_total_pd(self):
+		for line in self.lines:
+			m = re.search(pdTotalRE,line)
+			if m:
+				if SequenceMatcher(None,m.group(1),"total a pagar").ratio() > 0.9:
+					return float(m.group(3).replace(',','.').replace(' ',''))
+		return None
 
 	def to_json(self):
 		object_data = {
@@ -170,39 +173,29 @@ class Receipt():
 
 
 def concat(r1,r2):
-	print(r1.lines)
-	print("\n")
-	print(len(r1.lines))
-	print("\n\n\n")
-	print(r2.lines)
-	print("\n")
-	print(len(r2.lines))
 	l1 = r1.lines
 	l2 = r2.lines
 
 	newlines = []
 
 	for line2 in l2:
+		found = False
 		for line1 in l1:
 			ratio = SequenceMatcher(None,line1,line2).ratio()
-			if ratio < 0.7:
-				newlines.append(line2)
-				break
+			if ratio > 0.9:
+				found = True
+		if not found:		
+			newlines.append(line2)
 				
 
 	nl = l1 + newlines
 	r1.lines = nl
 	
-	print("\n\n\n")
-	print(r1.lines)
-	print("\n")
-	print(len(r1.lines))
 	return r1.parse()
 	
 				
 def parseImage(files):
 	preProc = [pp.scaling,pp.normalize,pp.remove_noise,pp.remove_shadows]
-
 	if len(files) == 1:
 		filename = files[0]
 		image = pp.cv2.imread(filename)

@@ -18,7 +18,7 @@ const ActivityTable = ({data,headerHome, navigation}) => {
      });
     }  
     const headTable = ['','Transação', 'Data', 'Valor (€)']
-    const HomeTable = ['','Resumo de Atividade', '', <TouchableOpacity onPress={() => navigation.navigate('ActivitySummary')}><MaterialCommunityIcons name="eye-plus-outline" size={24} color="#ee821a"/></TouchableOpacity>]
+    const HomeTable = ['','Resumo de Atividade', '', <TouchableOpacity onPress={() => navigation.navigate('ActivitySummary', { refresh: true })}><MaterialCommunityIcons name="eye-plus-outline" size={24} color="#ee821a"/></TouchableOpacity>]
   
     return (
         getTable(),

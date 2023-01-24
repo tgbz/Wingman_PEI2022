@@ -540,6 +540,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textButton: {
+    flex: 0.95,
     fontFamily: 'SoraRegular',
     fontSize: SIZES.font,
     color: COLORS.wingDarkBlue,

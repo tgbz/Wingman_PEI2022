@@ -1,0 +1,54 @@
+{
+    "sourceFile": "src/constants/theme.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 9,
+            "patches": [
+                {
+                    "date": 1668272778451,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1668272829208,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n export const COLORS = {\n   primary: \"#001F2D\",\n   secondary: \"#4D626C\",\n-  wing : \"#7A97C2\"\n+  wingblue : \"#7A97C2\",\n \n   white: \"#FFF\",\n   gray: \"#74858C\",\n };\n"
+                },
+                {
+                    "date": 1668273111953,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,12 +16,10 @@\n   extraLarge: 24,\n };\n \n export const FONTS = {\n-  bold: \"InterBold\",\n-  semiBold: \"InterSemiBold\",\n-  medium: \"InterMedium\",\n-  regular: \"InterRegular\",\n+  semiBold: \"SoraSemiBold\",\n+  medium: \"SoraMedium\",\n   light: \"InterLight\",\n };\n \n export const SHADOWS = {\n"
+                },
+                {
+                    "date": 1668273117458,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n \n export const FONTS = {\n   semiBold: \"SoraSemiBold\",\n   medium: \"SoraMedium\",\n-  light: \"InterLight\",\n+  light: \"SoraLight\",\n };\n \n export const SHADOWS = {\n   light: {\n"
+                },
+                {
+                    "date": 1668274010380,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,15 +14,15 @@\n   medium: 16,\n   large: 18,\n   extraLarge: 24,\n };\n-\n+/*\n export const FONTS = {\n   semiBold: \"SoraSemiBold\",\n   medium: \"SoraMedium\",\n   light: \"SoraLight\",\n };\n-\n+*/\n export const SHADOWS = {\n   light: {\n     shadowColor: COLORS.gray,\n     shadowOffset: {\n"
+                },
+                {
+                    "date": 1668274374290,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,15 +14,15 @@\n   medium: 16,\n   large: 18,\n   extraLarge: 24,\n };\n-/*\n+\n export const FONTS = {\n-  semiBold: \"SoraSemiBold\",\n-  medium: \"SoraMedium\",\n-  light: \"SoraLight\",\n+  bold: \"Sora-Bold\",\n+  medium: \"Sora-Medium\",\n+  light: \"Sora-Light\",\n };\n-*/\n+\n export const SHADOWS = {\n   light: {\n     shadowColor: COLORS.gray,\n     shadowOffset: {\n"
+                },
+                {
+                    "date": 1668275170266,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,11 +16,11 @@\n   extraLarge: 24,\n };\n \n export const FONTS = {\n-  bold: \"Sora-Bold\",\n-  medium: \"Sora-Medium\",\n-  light: \"Sora-Light\",\n+  bold: \"SoraBold\",\n+  medium: \"SoraMedium\",\n+  light: \"SoraLight\",\n };\n \n export const SHADOWS = {\n   light: {\n"
+                },
+                {
+                    "date": 1668277944836,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n export const COLORS = {\n   primary: \"#001F2D\",\n   secondary: \"#4D626C\",\n   wingblue : \"#7A97C2\",\n+  wingDarkBlue: \"#151940\"\n \n   white: \"#FFF\",\n   gray: \"#74858C\",\n };\n"
+                },
+                {
+                    "date": 1668277949913,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n export const COLORS = {\n   primary: \"#001F2D\",\n   secondary: \"#4D626C\",\n   wingblue : \"#7A97C2\",\n-  wingDarkBlue: \"#151940\"\n+  wingDarkBlue: \"#151940\",\n \n   white: \"#FFF\",\n   gray: \"#74858C\",\n };\n"
+                },
+                {
+                    "date": 1668278090510,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,10 +12,10 @@\n   base: 8,\n   small: 12,\n   font: 14,\n   medium: 16,\n-  large: 18,\n-  extraLarge: 24,\n+  large: 20,\n+  extraLarge: 30,\n };\n \n export const FONTS = {\n   bold: \"SoraBold\",\n"
+                }
+            ],
+            "date": 1668272778451,
+            "name": "Commit-0",
+            "content": "export const COLORS = {\n  primary: \"#001F2D\",\n  secondary: \"#4D626C\",\n  wing : \"#7A97C2\"\n\n  white: \"#FFF\",\n  gray: \"#74858C\",\n};\n\nexport const SIZES = {\n  base: 8,\n  small: 12,\n  font: 14,\n  medium: 16,\n  large: 18,\n  extraLarge: 24,\n};\n\nexport const FONTS = {\n  bold: \"InterBold\",\n  semiBold: \"InterSemiBold\",\n  medium: \"InterMedium\",\n  regular: \"InterRegular\",\n  light: \"InterLight\",\n};\n\nexport const SHADOWS = {\n  light: {\n    shadowColor: COLORS.gray,\n    shadowOffset: {\n      width: 0,\n      height: 1,\n    },\n    shadowOpacity: 0.22,\n    shadowRadius: 2.22,\n\n    elevation: 3,\n  },\n  medium: {\n    shadowColor: COLORS.gray,\n    shadowOffset: {\n      width: 0,\n      height: 3,\n    },\n    shadowOpacity: 0.29,\n    shadowRadius: 4.65,\n\n    elevation: 7,\n  },\n  dark: {\n    shadowColor: COLORS.gray,\n    shadowOffset: {\n      width: 0,\n      height: 7,\n    },\n    shadowOpacity: 0.41,\n    shadowRadius: 9.11,\n\n    elevation: 14,\n  },\n};\n"
+        }
+    ]
+}

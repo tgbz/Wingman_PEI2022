@@ -1,0 +1,50 @@
+{
+    "sourceFile": "config/parameters.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 8,
+            "patches": [
+                {
+                    "date": 1667177786175,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1667177805713,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n var fs = require('fs')\n const Parameters = module.exports\n \n-var parametersFile = './config/parameters.json'\n+var parametersFile = 'parameters.json'\n var parameters = JSON.parse(fs.readFileSync(parametersFile))\n \n Parameters.setParameter = function (key, value) {\n     parameters[key].valor = value\n"
+                },
+                {
+                    "date": 1667177811444,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n var fs = require('fs')\n const Parameters = module.exports\n \n-var parametersFile = 'parameters.json'\n+var parametersFile = '/parameters.json'\n var parameters = JSON.parse(fs.readFileSync(parametersFile))\n \n Parameters.setParameter = function (key, value) {\n     parameters[key].valor = value\n"
+                },
+                {
+                    "date": 1667177818300,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n var fs = require('fs')\n const Parameters = module.exports\n \n-var parametersFile = '/parameters.json'\n+var parametersFile = './config/parameters.json'\n var parameters = JSON.parse(fs.readFileSync(parametersFile))\n \n Parameters.setParameter = function (key, value) {\n     parameters[key].valor = value\n"
+                },
+                {
+                    "date": 1667177896833,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n var fs = require('fs')\n const Parameters = module.exports\n \n-var parametersFile = './config/parameters.json'\n+var parametersFile = 'parameters.json'\n var parameters = JSON.parse(fs.readFileSync(parametersFile))\n \n Parameters.setParameter = function (key, value) {\n     parameters[key].valor = value\n"
+                },
+                {
+                    "date": 1667177913332,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n var fs = require('fs')\n const Parameters = module.exports\n \n-var parametersFile = 'parameters.json'\n+var parametersFile = '../config/parameters.json'\n var parameters = JSON.parse(fs.readFileSync(parametersFile))\n \n Parameters.setParameter = function (key, value) {\n     parameters[key].valor = value\n"
+                },
+                {
+                    "date": 1667177938570,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,20 +0,0 @@\n-var fs = require('fs')\n-const Parameters = module.exports\n-\n-var parametersFile = '../config/parameters.json'\n-var parameters = JSON.parse(fs.readFileSync(parametersFile))\n-\n-Parameters.setParameter = function (key, value) {\n-    parameters[key].valor = value\n-    fs.unlinkSync(parametersFile)\n-    const dados = JSON.stringify(parameters, null, 4)\n-    fs.writeFileSync(parametersFile, dados)\n-}\n-\n-Parameters.getParameter = function (key) {\n-    return parameters[key]\n-}\n-\n-Parameters.getParameters = function () {\n-    return parameters\n-}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1667177951223,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,1 +1,20 @@\n+var fs = require('fs')\n+const Parameters = module.exports\n \n+var parametersFile = './config/parameters.json'\n+var parameters = JSON.parse(fs.readFileSync(parametersFile))\n+\n+Parameters.setParameter = function (key, value) {\n+    parameters[key].valor = value\n+    fs.unlinkSync(parametersFile)\n+    const dados = JSON.stringify(parameters, null, 4)\n+    fs.writeFileSync(parametersFile, dados)\n+}\n+\n+Parameters.getParameter = function (key) {\n+    return parameters[key]\n+}\n+\n+Parameters.getParameters = function () {\n+    return parameters\n+}\n"
+                },
+                {
+                    "date": 1667177989125,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n var fs = require('fs')\n const Parameters = module.exports\n \n-var parametersFile = './config/parameters.json'\n+var parametersFile = './config/paremeters.json'\n var parameters = JSON.parse(fs.readFileSync(parametersFile))\n \n Parameters.setParameter = function (key, value) {\n     parameters[key].valor = value\n"
+                }
+            ],
+            "date": 1667177786175,
+            "name": "Commit-0",
+            "content": "var fs = require('fs')\nconst Parameters = module.exports\n\nvar parametersFile = './config/parameters.json'\nvar parameters = JSON.parse(fs.readFileSync(parametersFile))\n\nParameters.setParameter = function (key, value) {\n    parameters[key].valor = value\n    fs.unlinkSync(parametersFile)\n    const dados = JSON.stringify(parameters, null, 4)\n    fs.writeFileSync(parametersFile, dados)\n}\n\nParameters.getParameter = function (key) {\n    return parameters[key]\n}\n\nParameters.getParameters = function () {\n    return parameters\n}\n"
+        }
+    ]
+}

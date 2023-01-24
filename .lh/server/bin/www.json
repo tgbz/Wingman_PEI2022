@@ -1,0 +1,22 @@
+{
+    "sourceFile": "server/bin/www",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1667227472557,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1667227533227,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n var http = require('http');\n \n \n \n-var port = normalizePort(process.env.PORT || '9000');\n+var port = normalizePort(process.env.PORT || '3000');\n app.set('port', port);\n \n var server = http.createServer(app);\n \n"
+                }
+            ],
+            "date": 1667227472557,
+            "name": "Commit-0",
+            "content": "\nvar app = require('../app');\nvar debug = require('debug')('server-v2:server');\nvar http = require('http');\n\n\n\nvar port = normalizePort(process.env.PORT || '9000');\napp.set('port', port);\n\nvar server = http.createServer(app);\n\n\n\n/**\n * Garante que o servidor só começa a aceitar pedidos quando \n * as conexoes ao mySQL forem estabelecidas\n * Listen on provided port, on all network interfaces.\n */\n app.once('ready', () => {\n    server.listen(port);\n    server.on('error', onError);\n    server.on('listening', onListening);\n    console.log(`Servidor à escuta na porta ${port}...`);\n  })\n\n/**\n * Normalize a port into a number, string, or false.\n */\n\n function normalizePort(val) {\n    var port = parseInt(val, 10);\n  \n    if (isNaN(port)) {\n      // named pipe\n      return val;\n    }\n  \n    if (port >= 0) {\n      // port number\n      return port;\n    }\n  \n    return false;\n  }\n\n/**\n * Event listener for HTTP server \"error\" event.\n */\n\n function onError(error) {\n    if (error.syscall !== 'listen') {\n      throw error;\n    }\n  \n    var bind = typeof port === 'string'\n      ? 'Pipe ' + port\n      : 'Port ' + port;\n  \n    // handle specific listen errors with friendly messages\n    switch (error.code) {\n      case 'EACCES':\n        console.error(bind + ' requires elevated privileges');\n        process.exit(1);\n        break;\n      case 'EADDRINUSE':\n        console.error(bind + ' is already in use');\n        process.exit(1);\n        break;\n      default:\n        throw error;\n    }\n  }\n  \n  /**\n   * Event listener for HTTP server \"listening\" event.\n   */\n  \n  function onListening() {\n    var addr = server.address();\n    var bind = typeof addr === 'string'\n      ? 'pipe ' + addr\n      : 'port ' + addr.port;\n    debug('Listening on ' + bind);\n  }\n  "
+        }
+    ]
+}

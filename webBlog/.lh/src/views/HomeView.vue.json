@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/views/HomeView.vue",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1670604808633,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1670604836312,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,5 +5,18 @@\n     <FeaturesComponent />\r\n     <DownloadComponent />\r\n     <FooterComponent />\r\n   </div>\r\n-</template>\n\\ No newline at end of file\n+</template>\r\n+\r\n+<script>\r\n+export default {\r\n+  name: \"HomeView\",\r\n+  components: {\r\n+    NavbarComponent: () => import(\"@/components/NavbarComponent.vue\"),\r\n+    BannerPubComponent: () => import(\"@/components/BannerPubComponent.vue\"),\r\n+    FeaturesComponent: () => import(\"@/components/FeaturesComponent.vue\"),\r\n+    DownloadComponent: () => import(\"@/components/DownloadComponent.vue\"),\r\n+    FooterComponent: () => import(\"@/components/FooterComponent.vue\"),\r\n+  },\r\n+};\r\n+</script>\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1670604808633,
+            "name": "Commit-0",
+            "content": "<template>\r\n  <div>\r\n    <NavbarComponent />\r\n    <BannerPubComponent />\r\n    <FeaturesComponent />\r\n    <DownloadComponent />\r\n    <FooterComponent />\r\n  </div>\r\n</template>"
+        }
+    ]
+}

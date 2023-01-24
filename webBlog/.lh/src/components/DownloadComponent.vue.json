@@ -1,0 +1,30 @@
+{
+    "sourceFile": "src/components/DownloadComponent.vue",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1670630330982,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1670630827079,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n <template>\r\n   <div>\r\n     <v-row no-gutters>\r\n       <v-col cols=\"6\">\r\n-        <v-img max-height=\"600\" src=\"../../public/m1.jpg\"></v-img>\r\n+        <v-img max-height=\"650\" src=\"../../public/m1.jpg\"></v-img>\r\n       </v-col>\r\n \r\n       <v-col cols=\"6\">\r\n         <v-img max-height=\"600\" src=\"../../public/m2.jpg\"></v-img>\r\n"
+                },
+                {
+                    "date": 1670630839727,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,13 @@\n <template>\r\n   <div>\r\n     <v-row no-gutters>\r\n       <v-col cols=\"6\">\r\n-        <v-img max-height=\"650\" src=\"../../public/m1.jpg\"></v-img>\r\n+        <v-img max-height=\"700\" src=\"../../public/m1.jpg\"></v-img>\r\n       </v-col>\r\n \r\n       <v-col cols=\"6\">\r\n-        <v-img max-height=\"600\" src=\"../../public/m2.jpg\"></v-img>\r\n+        <v-img max-height=\"650\" src=\"../../public/m2.jpg\"></v-img>\r\n       </v-col>\r\n     </v-row>\r\n   </div>\r\n </template>\r\n"
+                },
+                {
+                    "date": 1670630864384,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,13 @@\n <template>\r\n   <div>\r\n     <v-row no-gutters>\r\n       <v-col cols=\"6\">\r\n-        <v-img max-height=\"700\" src=\"../../public/m1.jpg\"></v-img>\r\n+        <v-img max-height=\"550\" src=\"../../public/m1.jpg\"></v-img>\r\n       </v-col>\r\n \r\n       <v-col cols=\"6\">\r\n-        <v-img max-height=\"650\" src=\"../../public/m2.jpg\"></v-img>\r\n+        <v-img max-height=\"550\" src=\"../../public/m2.jpg\"></v-img>\r\n       </v-col>\r\n     </v-row>\r\n   </div>\r\n </template>\r\n"
+                }
+            ],
+            "date": 1670630330982,
+            "name": "Commit-0",
+            "content": "<template>\r\n  <div>\r\n    <v-row no-gutters>\r\n      <v-col cols=\"6\">\r\n        <v-img max-height=\"600\" src=\"../../public/m1.jpg\"></v-img>\r\n      </v-col>\r\n\r\n      <v-col cols=\"6\">\r\n        <v-img max-height=\"600\" src=\"../../public/m2.jpg\"></v-img>\r\n      </v-col>\r\n    </v-row>\r\n  </div>\r\n</template>\r\n  \r\n  \r\n  <style>\r\n</style>"
+        }
+    ]
+}

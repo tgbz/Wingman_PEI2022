@@ -1,0 +1,42 @@
+{
+    "sourceFile": "src/views/LoginView.vue",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 6,
+            "patches": [
+                {
+                    "date": 1670006702766,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1670009574698,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n <template>\r\n-  <LoginComponent />\r\n+  <LoginComponent class=\"mainComponent\" />\r\n </template>\r\n \r\n <script>\r\n import LoginComponent from \"@/components/LoginComponent.vue\";\r\n@@ -11,5 +11,12 @@\n   components: {\r\n     LoginComponent,\r\n   },\r\n };\r\n-</script>\n\\ No newline at end of file\n+</script>\r\n+\r\n+<style>\r\n+.mainComponent {\r\n+  width: 100% !important;\r\n+  height: 100% !important;\r\n+}\r\n+</style>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1670009585330,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,6 +17,7 @@\n <style>\r\n .mainComponent {\r\n   width: 100% !important;\r\n   height: 100% !important;\r\n+  padding: 10% !important;\r\n }\r\n </style>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1670009604835,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,7 +17,6 @@\n <style>\r\n .mainComponent {\r\n   width: 100% !important;\r\n   height: 100% !important;\r\n-  padding: 10% !important;\r\n }\r\n </style>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1670009709181,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,6 +17,7 @@\n <style>\r\n .mainComponent {\r\n   width: 100% !important;\r\n   height: 100% !important;\r\n+  margin: 0 !important;\r\n }\r\n </style>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1670071211557,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,23 +1,29 @@\n <template>\r\n-  <LoginComponent class=\"mainComponent\" />\r\n+  <div>\r\n+    <v-row cols=\"12\" no-gutters>\r\n+      <v-col>\r\n+        <NavbarComponent></NavbarComponent>\r\n+      </v-col>\r\n+      <v-col>\r\n+        <LoginComponent class=\"mainComponent\" />\r\n+      </v-col>\r\n+    </v-row>\r\n+  </div>\r\n </template>\r\n \r\n <script>\r\n import LoginComponent from \"@/components/LoginComponent.vue\";\r\n+import NavbarComponent from \"@/components/NavbarComponent.vue\";\r\n \r\n export default {\r\n   name: \"LoginView\",\r\n \r\n   components: {\r\n     LoginComponent,\r\n+    NavbarComponent,\r\n   },\r\n };\r\n </script>\r\n \r\n <style>\r\n-.mainComponent {\r\n-  width: 100% !important;\r\n-  height: 100% !important;\r\n-  margin: 0 !important;\r\n-}\r\n </style>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1670071367003,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,27 +1,18 @@\n <template>\r\n   <div>\r\n-    <v-row cols=\"12\" no-gutters>\r\n-      <v-col>\r\n-        <NavbarComponent></NavbarComponent>\r\n-      </v-col>\r\n-      <v-col>\r\n-        <LoginComponent class=\"mainComponent\" />\r\n-      </v-col>\r\n-    </v-row>\r\n+    <LoginComponent></LoginComponent>\r\n   </div>\r\n </template>\r\n \r\n <script>\r\n import LoginComponent from \"@/components/LoginComponent.vue\";\r\n-import NavbarComponent from \"@/components/NavbarComponent.vue\";\r\n \r\n export default {\r\n   name: \"LoginView\",\r\n \r\n   components: {\r\n     LoginComponent,\r\n-    NavbarComponent,\r\n   },\r\n };\r\n </script>\r\n \r\n"
+                }
+            ],
+            "date": 1670006702766,
+            "name": "Commit-0",
+            "content": "<template>\r\n  <LoginComponent />\r\n</template>\r\n\r\n<script>\r\nimport LoginComponent from \"@/components/LoginComponent.vue\";\r\n\r\nexport default {\r\n  name: \"LoginView\",\r\n\r\n  components: {\r\n    LoginComponent,\r\n  },\r\n};\r\n</script>"
+        }
+    ]
+}

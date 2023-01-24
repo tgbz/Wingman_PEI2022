@@ -1,0 +1,30 @@
+{
+    "sourceFile": "views/login-form.pug",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1667156915317,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1667157097786,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n block content\n   .w3-container.w3-margin.w3-border\n     .w3-container.w3-blue\n         h3 Introduza as suas credenciais:\n-    form.w3-container(action='/login' method='POST')\n+    form.w3-container(action='/users/login' method='POST')\n         label Email:\n         input.w3-input(type=\"text\" name=\"email\")\n         label Password:\n         input.w3-input(type=\"password\" name=\"password\")\n"
+                },
+                {
+                    "date": 1667180653676,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n     .w3-container.w3-blue\n         h3 Introduza as suas credenciais:\n     form.w3-container(action='/users/login' method='POST')\n         label Email:\n-        input.w3-input(type=\"text\" name=\"email\")\n+        input.w3-input(type=\"text\" name=\"username\")\n         label Password:\n         input.w3-input(type=\"password\" name=\"password\")\n         input.w3-btn.w3-blue(type=\"submit\" value=\"Enviar\")\n \n"
+                },
+                {
+                    "date": 1667237457238,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n     .w3-container.w3-blue\n         h3 Introduza as suas credenciais:\n     form.w3-container(action='/users/login' method='POST')\n         label Email:\n-        input.w3-input(type=\"text\" name=\"username\")\n+        input.w3-input(type=\"text\" name=\"name\")\n         label Password:\n         input.w3-input(type=\"password\" name=\"password\")\n         input.w3-btn.w3-blue(type=\"submit\" value=\"Enviar\")\n \n"
+                }
+            ],
+            "date": 1667156915317,
+            "name": "Commit-0",
+            "content": "extends layout\n\nblock content\n  .w3-container.w3-margin.w3-border\n    .w3-container.w3-blue\n        h3 Introduza as suas credenciais:\n    form.w3-container(action='/login' method='POST')\n        label Email:\n        input.w3-input(type=\"text\" name=\"email\")\n        label Password:\n        input.w3-input(type=\"password\" name=\"password\")\n        input.w3-btn.w3-blue(type=\"submit\" value=\"Enviar\")\n\n        "
+        }
+    ]
+}

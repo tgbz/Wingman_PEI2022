@@ -1,0 +1,66 @@
+{
+    "sourceFile": "src/config/hosts.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 12,
+            "patches": [
+                {
+                    "date": 1668268572357,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1668268727217,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,1 @@\n-import { Platform } from 'react-native';\n-\n-if (Platform.OS === 'ios') {\n-  module.exports.serverURL  = \"http://10.0.2.2:3000\";\n-} else if (Platform.OS === 'android') {\n-  module.exports.serverURL  = \"http://10.0.2.2:3000\";\n-} else {\n-  module.exports.serverURL = \"http://localhost:3000\";\n-}\n-\n-\n+module.exports.serverURL = \"http://localhost:3000\";\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1668268747492,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,1 +1,13 @@\n-module.exports.serverURL = \"http://localhost:3000\";\n\\ No newline at end of file\n+import { Platform } from 'react-native';\n+\n+if (Platform.OS === 'ios') {\n+  module.exports.serverURL  = \"http://10.0.2.2:3000\";\n+} else if (Platform.OS === 'android') {\n+  module.exports.serverURL  = \"http://10.0.2.2:3000\";\n+} \n+\n+\n+module.exports.serverURL = \"http://localhost:3000\";\n+\n+\n+\n"
+                },
+                {
+                    "date": 1668268757859,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,11 @@\n import { Platform } from 'react-native';\n \n if (Platform.OS === 'ios') {\n+    console.log('ios');\n   module.exports.serverURL  = \"http://10.0.2.2:3000\";\n } else if (Platform.OS === 'android') {\n+    console.log('android');\n   module.exports.serverURL  = \"http://10.0.2.2:3000\";\n } \n \n \n"
+                },
+                {
+                    "date": 1668268771456,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,6 @@\n import { Platform } from 'react-native';\n \n-if (Platform.OS === 'ios') {\n-    console.log('ios');\n-  module.exports.serverURL  = \"http://10.0.2.2:3000\";\n-} else if (Platform.OS === 'android') {\n-    console.log('android');\n-  module.exports.serverURL  = \"http://10.0.2.2:3000\";\n-} \n \n \n module.exports.serverURL = \"http://localhost:3000\";\n \n"
+                },
+                {
+                    "date": 1668268777231,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,6 @@\n-import { Platform } from 'react-native';\n \n \n-\n module.exports.serverURL = \"http://localhost:3000\";\n \n \n \n"
+                },
+                {
+                    "date": 1668268817480,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,9 @@\n+import { Platform } from 'react-native';\n \n+const serverURL = Platform.OS === 'android' ? 'http://localhost:3000' : 'http://10.0.2.2:3000';\n \n-module.exports.serverURL = \"http://localhost:3000\";\n \n+module.exports.serverURL = serverURL\";\n \n \n+\n"
+                },
+                {
+                    "date": 1668268823799,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,7 @@\n \n const serverURL = Platform.OS === 'android' ? 'http://localhost:3000' : 'http://10.0.2.2:3000';\n \n \n-module.exports.serverURL = serverURL\";\n \n \n \n"
+                },
+                {
+                    "date": 1668268837781,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,4 +5,9 @@\n \n \n \n \n+\n+export { serverURL };\n+\n+\n+\n"
+                },
+                {
+                    "date": 1668268932139,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,12 @@\n import { Platform } from 'react-native';\n \n-const serverURL = Platform.OS === 'android' ? 'http://localhost:3000' : 'http://10.0.2.2:3000';\n \n+if (Platform.OS == 'android') {\n+    const serverURL = 'http://10.0.2.2:3000';\n+} else if (Platform.OS == 'ios') {\n+    const serverURL = 'http://10.0.2.2:3000';\n+} else {\n+    const serverURL = 'http://localhost:3000';\n+}\n \n-\n-\n-\n-\n export { serverURL };\n-\n-\n-\n"
+                },
+                {
+                    "date": 1668268956428,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,13 @@\n import { Platform } from 'react-native';\n \n+serverURL = \"\";\n \n if (Platform.OS == 'android') {\n-    const serverURL = 'http://10.0.2.2:3000';\n+    erverURL = 'http://10.0.2.2:3000';\n } else if (Platform.OS == 'ios') {\n-    const serverURL = 'http://10.0.2.2:3000';\n+    serverURL = 'http://10.0.2.2:3000';\n } else {\n-    const serverURL = 'http://localhost:3000';\n+    serverURL = 'http://localhost:3000';\n }\n \n export { serverURL };\n"
+                },
+                {
+                    "date": 1668268973291,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \n serverURL = \"\";\n \n if (Platform.OS == 'android') {\n-    erverURL = 'http://10.0.2.2:3000';\n+    serverURL = 'http://10.0.2.2:3000';\n } else if (Platform.OS == 'ios') {\n     serverURL = 'http://10.0.2.2:3000';\n } else {\n     serverURL = 'http://localhost:3000';\n"
+                },
+                {
+                    "date": 1668268979824,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n import { Platform } from 'react-native';\n \n-serverURL = \"\";\n+let serverURL = \"\";\n \n if (Platform.OS == 'android') {\n     serverURL = 'http://10.0.2.2:3000';\n } else if (Platform.OS == 'ios') {\n"
+                }
+            ],
+            "date": 1668268572357,
+            "name": "Commit-0",
+            "content": "import { Platform } from 'react-native';\n\nif (Platform.OS === 'ios') {\n  module.exports.serverURL  = \"http://10.0.2.2:3000\";\n} else if (Platform.OS === 'android') {\n  module.exports.serverURL  = \"http://10.0.2.2:3000\";\n} else {\n  module.exports.serverURL = \"http://localhost:3000\";\n}\n\n\n"
+        }
+    ]
+}

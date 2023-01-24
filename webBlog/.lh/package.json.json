@@ -1,0 +1,30 @@
+{
+    "sourceFile": "package.json",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1670005973431,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1670005986419,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,10 +25,9 @@\n     \"vue-cli-plugin-vuetify\": \"~2.5.8\",\n     \"vue-template-compiler\": \"^2.6.14\",\n     \"vue-router\": \"^3.2.0\",\n     \"vuetify-loader\": \"^1.7.0\",\n-    \"vuex\": \"^3.4.0\",\n-    \"vuex-persistedstate\": \"^4.1.0\"\n+    \"vuex\": \"^3.4.0\"\n   },\n   \"eslintConfig\": {\n     \"root\": true,\n     \"env\": {\n"
+                },
+                {
+                    "date": 1670006088484,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,8 +26,9 @@\n     \"vue-template-compiler\": \"^2.6.14\",\n     \"vue-router\": \"^3.2.0\",\n     \"vuetify-loader\": \"^1.7.0\",\n     \"vuex\": \"^3.4.0\"\n+    \"vuex-persistedstate\": \"^4.1.0\"\n   },\n   \"eslintConfig\": {\n     \"root\": true,\n     \"env\": {\n"
+                },
+                {
+                    "date": 1674290611781,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,10 @@\n   \"private\": true,\n   \"scripts\": {\n     \"serve\": \"vue-cli-service serve\",\n     \"build\": \"vue-cli-service build\",\n-    \"lint\": \"vue-cli-service lint\"\n+    \"lint\": \"vue-cli-service lint\",\n+    \"deploy\": \"node scripts/gh-pages-deploy.js\"\n   },\n   \"dependencies\": {\n     \"core-js\": \"^3.8.3\",\n     \"vue\": \"^2.6.14\",\n@@ -25,10 +26,11 @@\n     \"vue-cli-plugin-vuetify\": \"~2.5.8\",\n     \"vue-template-compiler\": \"^2.6.14\",\n     \"vue-router\": \"^3.2.0\",\n     \"vuetify-loader\": \"^1.7.0\",\n-    \"vuex\": \"^3.4.0\"\n-    \"vuex-persistedstate\": \"^4.1.0\"\n+    \"vuex\": \"^3.4.0\",\n+    \"vuex-persistedstate\": \"^4.1.0\",\n+    \"execa\": \"latest\"\n   },\n   \"eslintConfig\": {\n     \"root\": true,\n     \"env\": {\n"
+                }
+            ],
+            "date": 1670005973431,
+            "name": "Commit-0",
+            "content": "{\n  \"name\": \"app\",\n  \"version\": \"0.1.0\",\n  \"private\": true,\n  \"scripts\": {\n    \"serve\": \"vue-cli-service serve\",\n    \"build\": \"vue-cli-service build\",\n    \"lint\": \"vue-cli-service lint\"\n  },\n  \"dependencies\": {\n    \"core-js\": \"^3.8.3\",\n    \"vue\": \"^2.6.14\",\n    \"vuetify\": \"^2.6.0\"\n  },\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.12.16\",\n    \"@babel/eslint-parser\": \"^7.12.16\",\n    \"@vue/cli-plugin-babel\": \"~5.0.0\",\n    \"@vue/cli-plugin-eslint\": \"~5.0.0\",\n    \"@vue/cli-service\": \"~5.0.0\",\n    \"eslint\": \"^7.32.0\",\n    \"eslint-plugin-vue\": \"^8.0.3\",\n    \"sass\": \"~1.32.0\",\n    \"sass-loader\": \"^10.0.0\",\n    \"vue-cli-plugin-vuetify\": \"~2.5.8\",\n    \"vue-template-compiler\": \"^2.6.14\",\n    \"vue-router\": \"^3.2.0\",\n    \"vuetify-loader\": \"^1.7.0\",\n    \"vuex\": \"^3.4.0\",\n    \"vuex-persistedstate\": \"^4.1.0\"\n  },\n  \"eslintConfig\": {\n    \"root\": true,\n    \"env\": {\n      \"node\": true\n    },\n    \"extends\": [\n      \"plugin:vue/essential\",\n      \"eslint:recommended\"\n    ],\n    \"parserOptions\": {\n      \"parser\": \"@babel/eslint-parser\"\n    },\n    \"rules\": {}\n  },\n  \"browserslist\": [\n    \"> 1%\",\n    \"last 2 versions\",\n    \"not dead\"\n  ]\n}\n"
+        }
+    ]
+}

@@ -1,0 +1,25 @@
+
+docker-compose up -d
+
+é preciso ir buscar o IP dos serviços à network no docker com docker inspect wingman_pei2022_kong-net
+
+depois mudar o url 
+
+//Wingman
+(em windows é curl.exe )
+curl -i -s -X POST --url http://localhost:8001/services/ --data 'name=wingman' --data 'url=http://WingmanIP:3000'
+
+
+curl -i -X POST --url http://localhost:8001/services/wingman/routes --data 'paths[]=/wingman'
+
+curl -i -X GET --url http://localhost:8000/wingman/users/userProfile/1
+
+
+//OCR
+curl -i -s -X POST --url http://localhost:8001/services/ --data 'name=ocr' --data 'url=http://ocrIP:5000'
+
+
+curl -i -X POST --url http://localhost:8001/services/ocr/routes --data 'paths[]=/ocr'
+
+curl -i -X GET --url http://localhost:8000/ocr
+

@@ -1,0 +1,42 @@
+{
+    "sourceFile": "views/registo-form.pug",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 6,
+            "patches": [
+                {
+                    "date": 1667151544691,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1667153416177,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,15 @@\n         h3 Registo de novo utilizador:\n     form.w3-container(action='/users/registo' method='POST')\n         label Username:\n         input.w3-input(type=\"text\" name=\"username\")\n+        label email:\n+        input.w3-input(type=\"text\" name=\"email\")\n+        label birthdate:\n+        input.w3-input(type=\"text\" name=\"birthdate\")\n+        label gender:\n\\ No newline at end of file\n+        input.w3-input(type=\"text\" name=\"gender\")\n+        label savings:\n+        input.w3-input(type=\"text\" name=\"savings\")\n         label Password:\n         input.w3-input(type=\"password\" name=\"password\")\n         input.w3-btn.w3-blue(type=\"submit\" value=\"Enviar\")\n-\n-        \n"
+                },
+                {
+                    "date": 1667153482536,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,12 +9,12 @@\n         input.w3-input(type=\"text\" name=\"username\")\n         label email:\n         input.w3-input(type=\"text\" name=\"email\")\n         label birthdate:\n-        input.w3-input(type=\"text\" name=\"birthdate\")\n+        input.w3-input(type=\"date\" name=\"birthdate\")\n         label gender:\n         input.w3-input(type=\"text\" name=\"gender\")\n         label savings:\n-        input.w3-input(type=\"text\" name=\"savings\")\n+        input.w3-input(type=\"number\" name=\"savings\")\n         label Password:\n\\ No newline at end of file\n         input.w3-input(type=\"password\" name=\"password\")\n-        input.w3-btn.w3-blue(type=\"submit\" value=\"Enviar\")\n+        input.w3-btn.w3-blue(type=\"submit\" value=\"Enviar\")\n"
+                },
+                {
+                    "date": 1667153625267,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,10 +11,12 @@\n         input.w3-input(type=\"text\" name=\"email\")\n         label birthdate:\n         input.w3-input(type=\"date\" name=\"birthdate\")\n         label gender:\n-        input.w3-input(type=\"text\" name=\"gender\")\n+        input.w3-radio(type=\"radio\" name=\"gender\")\n+        input.w3-radio(type=\"radio\" name=\"gender\")\n         label savings:\n         input.w3-input(type=\"number\" name=\"savings\")\n         label Password:\n\\ No newline at end of file\n         input.w3-input(type=\"password\" name=\"password\")\n-        input.w3-btn.w3-blue(type=\"submit\" value=\"Enviar\")\n+        input.w3-btn.w3-blue(type=\"submit\" value=\"Enviar\")\n+\n"
+                },
+                {
+                    "date": 1667153678211,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,12 +10,14 @@\n         label email:\n         input.w3-input(type=\"text\" name=\"email\")\n         label birthdate:\n         input.w3-input(type=\"date\" name=\"birthdate\")\n-        label gender:\n-        input.w3-radio(type=\"radio\" name=\"gender\")\n-        input.w3-radio(type=\"radio\" name=\"gender\")\n+        label Male:\n+        input.w3-radio(type=\"radio\" name=\"gender\" value=\"male\")\n+        label Female:\n+        input.w3-radio(type=\"radio\" name=\"gender\" value=\"female\")\n         label savings:\n         input.w3-input(type=\"number\" name=\"savings\")\n         label Password:\n         input.w3-input(type=\"password\" name=\"password\")\n         input.w3-btn.w3-blue(type=\"submit\" value=\"Enviar\")\n+\n"
+                },
+                {
+                    "date": 1667153686967,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,11 +11,11 @@\n         input.w3-input(type=\"text\" name=\"email\")\n         label birthdate:\n         input.w3-input(type=\"date\" name=\"birthdate\")\n         label Male:\n-        input.w3-radio(type=\"radio\" name=\"gender\" value=\"male\")\n+        input.w3-radio(type=\"radio\" name=\"gender\" value=\"0\")\n         label Female:\n-        input.w3-radio(type=\"radio\" name=\"gender\" value=\"female\")\n+        input.w3-radio(type=\"radio\" name=\"gender\" value=\"1\")\n         label savings:\n         input.w3-input(type=\"number\" name=\"savings\")\n         label Password:\n         input.w3-input(type=\"password\" name=\"password\")\n"
+                },
+                {
+                    "date": 1667153692689,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,11 +11,11 @@\n         input.w3-input(type=\"text\" name=\"email\")\n         label birthdate:\n         input.w3-input(type=\"date\" name=\"birthdate\")\n         label Male:\n-        input.w3-radio(type=\"radio\" name=\"gender\" value=\"0\")\n+        input.w3-radio(type=\"radio\" name=\"gender\" value=0)\n         label Female:\n-        input.w3-radio(type=\"radio\" name=\"gender\" value=\"1\")\n+        input.w3-radio(type=\"radio\" name=\"gender\" value=1)\n         label savings:\n         input.w3-input(type=\"number\" name=\"savings\")\n         label Password:\n         input.w3-input(type=\"password\" name=\"password\")\n"
+                }
+            ],
+            "date": 1667151544691,
+            "name": "Commit-0",
+            "content": "extends layout\n\nblock content\n  .w3-container.w3-margin.w3-border\n    .w3-container.w3-blue\n        h3 Registo de novo utilizador:\n    form.w3-container(action='/users/registo' method='POST')\n        label Username:\n        input.w3-input(type=\"text\" name=\"username\")\n        label Password:\n        input.w3-input(type=\"password\" name=\"password\")\n        input.w3-btn.w3-blue(type=\"submit\" value=\"Enviar\")\n\n        "
+        }
+    ]
+}

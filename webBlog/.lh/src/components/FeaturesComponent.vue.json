@@ -1,0 +1,210 @@
+{
+    "sourceFile": "src/components/FeaturesComponent.vue",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 48,
+            "patches": [
+                {
+                    "date": 1670621687500,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1670621759076,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,4 @@\n-<template>\r\n-  <div>\r\n-    <p>\"TEST\"</p>\r\n-  </div>\r\n-</template>\n\\ No newline at end of file\n+<template></template>\r\n+\r\n+<script>\r\n+</script>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1670621765277,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,6 @@\n-<template></template>\r\n+<template>\r\n+  <v-row> </v-row>\r\n+</template>\r\n \r\n <script>\r\n </script>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1670627437146,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,10 @@\n <template>\r\n-  <v-row> </v-row>\r\n+  <v-row justify=\"space-around\">\r\n+    <v-col>\r\n+      <v-icon></v-icon>\r\n+    </v-col>\r\n+  </v-row>\r\n </template>\r\n \r\n <script>\r\n </script>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1670628649580,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,18 @@\n <template>\r\n-  <v-row justify=\"space-around\">\r\n-    <v-col>\r\n+  <v-row>\r\n+    <v-col cols=\"3\">\r\n+      <v-img src=\"../../public/icons/poor.png\" max-height=\"200\"></v-img>\r\n+    </v-col>\r\n+\r\n+    <v-col cols=\"3\">\r\n+      <v-img src=\"../../public/icons/medium.png\" max-height=\"200\"></v-img>\r\n+    </v-col>\r\n+\r\n+    <v-col cols=\"3\">\r\n       <v-icon></v-icon>\r\n     </v-col>\r\n+    <v-col cols=\"3\"> </v-col>\r\n   </v-row>\r\n </template>\r\n \r\n <script>\r\n"
+                },
+                {
+                    "date": 1670628661855,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n       <v-img src=\"../../public/icons/poor.png\" max-height=\"200\"></v-img>\r\n     </v-col>\r\n \r\n     <v-col cols=\"3\">\r\n-      <v-img src=\"../../public/icons/medium.png\" max-height=\"200\"></v-img>\r\n+      <v-img src=\"../../public/icons/scan.png\" max-height=\"200\"></v-img>\r\n     </v-col>\r\n \r\n     <v-col cols=\"3\">\r\n       <v-icon></v-icon>\r\n"
+                },
+                {
+                    "date": 1670628708160,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,11 +8,13 @@\n       <v-img src=\"../../public/icons/scan.png\" max-height=\"200\"></v-img>\r\n     </v-col>\r\n \r\n     <v-col cols=\"3\">\r\n-      <v-icon></v-icon>\r\n+      <v-img src=\"../../public/icons/investing.png\" max-height=\"200\"></v-img>\r\n     </v-col>\r\n-    <v-col cols=\"3\"> </v-col>\r\n+    <v-col cols=\"3\">\r\n+      <v-img src=\"../../public/icons/finance.png\" max-height=\"200\"></v-img>\r\n+    </v-col>\r\n   </v-row>\r\n </template>\r\n \r\n <script>\r\n"
+                },
+                {
+                    "date": 1670628724285,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n     <v-col cols=\"3\">\r\n       <v-img src=\"../../public/icons/investing.png\" max-height=\"200\"></v-img>\r\n     </v-col>\r\n     <v-col cols=\"3\">\r\n-      <v-img src=\"../../public/icons/finance.png\" max-height=\"200\"></v-img>\r\n+      <v-img src=\"../../public/icons/expenses.png\" max-height=\"200\"></v-img>\r\n     </v-col>\r\n   </v-row>\r\n </template>\r\n \r\n"
+                },
+                {
+                    "date": 1670628731494,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n <template>\r\n   <v-row>\r\n     <v-col cols=\"3\">\r\n-      <v-img src=\"../../public/icons/poor.png\" max-height=\"200\"></v-img>\r\n+      <v-img contain src=\"../../public/icons/poor.png\" max-height=\"200\"></v-img>\r\n     </v-col>\r\n \r\n     <v-col cols=\"3\">\r\n       <v-img src=\"../../public/icons/scan.png\" max-height=\"200\"></v-img>\r\n"
+                },
+                {
+                    "date": 1670628740453,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,16 +4,24 @@\n       <v-img contain src=\"../../public/icons/poor.png\" max-height=\"200\"></v-img>\r\n     </v-col>\r\n \r\n     <v-col cols=\"3\">\r\n-      <v-img src=\"../../public/icons/scan.png\" max-height=\"200\"></v-img>\r\n+      <v-img contain src=\"../../public/icons/scan.png\" max-height=\"200\"></v-img>\r\n     </v-col>\r\n \r\n     <v-col cols=\"3\">\r\n-      <v-img src=\"../../public/icons/investing.png\" max-height=\"200\"></v-img>\r\n+      <v-img\r\n+        contain\r\n+        src=\"../../public/icons/investing.png\"\r\n+        max-height=\"200\"\r\n+      ></v-img>\r\n     </v-col>\r\n     <v-col cols=\"3\">\r\n-      <v-img src=\"../../public/icons/expenses.png\" max-height=\"200\"></v-img>\r\n+      <v-img\r\n+        contain\r\n+        src=\"../../public/icons/expenses.png\"\r\n+        max-height=\"200\"\r\n+      ></v-img>\r\n     </v-col>\r\n   </v-row>\r\n </template>\r\n \r\n"
+                },
+                {
+                    "date": 1670628756336,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n <template>\r\n-  <v-row>\r\n+  <v-row class=\"featuresRow\">\r\n     <v-col cols=\"3\">\r\n       <v-img contain src=\"../../public/icons/poor.png\" max-height=\"200\"></v-img>\r\n     </v-col>\r\n \r\n"
+                },
+                {
+                    "date": 1670628767651,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,5 +25,13 @@\n   </v-row>\r\n </template>\r\n \r\n <script>\r\n-</script>\n\\ No newline at end of file\n+</script>\r\n+\r\n+<style>\r\n+.featuresRow {\r\n+  background-color: #f5f6fa;\r\n+  padding: 0 !important;\r\n+  margin: 0 !important;\r\n+}\r\n+</style>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1670628780336,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,9 @@\n </script>\r\n \r\n <style>\r\n .featuresRow {\r\n-  background-color: #f5f6fa;\r\n+  background-color: ##7f9dc4;\r\n   padding: 0 !important;\r\n   margin: 0 !important;\r\n }\r\n </style>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1670628790858,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,12 @@\n <template>\r\n   <v-row class=\"featuresRow\">\r\n     <v-col cols=\"3\">\r\n-      <v-img contain src=\"../../public/icons/poor.png\" max-height=\"200\"></v-img>\r\n+      <v-img contain src=\"../../public/icons/poor.png\" max-height=\"100\"></v-img>\r\n     </v-col>\r\n \r\n     <v-col cols=\"3\">\r\n-      <v-img contain src=\"../../public/icons/scan.png\" max-height=\"200\"></v-img>\r\n+      <v-img contain src=\"../../public/icons/scan.png\" max-height=\"100\"></v-img>\r\n     </v-col>\r\n \r\n     <v-col cols=\"3\">\r\n       <v-img\r\n@@ -29,9 +29,9 @@\n </script>\r\n \r\n <style>\r\n .featuresRow {\r\n-  background-color: ##7f9dc4;\r\n+  background-color: #7f9dc4;\r\n   padding: 0 !important;\r\n   margin: 0 !important;\r\n }\r\n </style>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1670628797060,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n     <v-col cols=\"3\">\r\n       <v-img\r\n         contain\r\n         src=\"../../public/icons/investing.png\"\r\n-        max-height=\"200\"\r\n+        max-height=\"100\"\r\n       ></v-img>\r\n     </v-col>\r\n     <v-col cols=\"3\">\r\n       <v-img\r\n"
+                },
+                {
+                    "date": 1670628817454,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n <template>\r\n   <v-row class=\"featuresRow\">\r\n     <v-col cols=\"3\">\r\n       <v-img contain src=\"../../public/icons/poor.png\" max-height=\"100\"></v-img>\r\n+      <p>TESTE</p>\r\n     </v-col>\r\n \r\n     <v-col cols=\"3\">\r\n       <v-img contain src=\"../../public/icons/scan.png\" max-height=\"100\"></v-img>\r\n@@ -18,9 +19,9 @@\n     <v-col cols=\"3\">\r\n       <v-img\r\n         contain\r\n         src=\"../../public/icons/expenses.png\"\r\n-        max-height=\"200\"\r\n+        max-height=\"100\"\r\n       ></v-img>\r\n     </v-col>\r\n   </v-row>\r\n </template>\r\n"
+                },
+                {
+                    "date": 1670628830675,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,11 @@\n <template>\r\n   <v-row class=\"featuresRow\">\r\n     <v-col cols=\"3\">\r\n       <v-img contain src=\"../../public/icons/poor.png\" max-height=\"100\"></v-img>\r\n-      <p>TESTE</p>\r\n+      <v-card-text\r\n+        class=\"cardSub text-legt text-h6 text-uppercase white--text\"\r\n+      ></v-card-text>\r\n     </v-col>\r\n \r\n     <v-col cols=\"3\">\r\n       <v-img contain src=\"../../public/icons/scan.png\" max-height=\"100\"></v-img>\r\n"
+                },
+                {
+                    "date": 1670628839780,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,9 @@\n <template>\r\n   <v-row class=\"featuresRow\">\r\n     <v-col cols=\"3\">\r\n       <v-img contain src=\"../../public/icons/poor.png\" max-height=\"100\"></v-img>\r\n-      <v-card-text\r\n-        class=\"cardSub text-legt text-h6 text-uppercase white--text\"\r\n-      ></v-card-text>\r\n+      <v-card-text class=\"cardSub text-legt white--text\"></v-card-text>\r\n     </v-col>\r\n \r\n     <v-col cols=\"3\">\r\n       <v-img contain src=\"../../public/icons/scan.png\" max-height=\"100\"></v-img>\r\n"
+                },
+                {
+                    "date": 1670628845554,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n <template>\r\n   <v-row class=\"featuresRow\">\r\n     <v-col cols=\"3\">\r\n       <v-img contain src=\"../../public/icons/poor.png\" max-height=\"100\"></v-img>\r\n-      <v-card-text class=\"cardSub text-legt white--text\"></v-card-text>\r\n+      <v-card-text class=\"cardSub text-legt white--text\"> Teste </v-card-text>\r\n     </v-col>\r\n \r\n     <v-col cols=\"3\">\r\n       <v-img contain src=\"../../public/icons/scan.png\" max-height=\"100\"></v-img>\r\n"
+                },
+                {
+                    "date": 1670628851685,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n <template>\r\n   <v-row class=\"featuresRow\">\r\n     <v-col cols=\"3\">\r\n       <v-img contain src=\"../../public/icons/poor.png\" max-height=\"100\"></v-img>\r\n-      <v-card-text class=\"cardSub text-legt white--text\"> Teste </v-card-text>\r\n+      <v-card-text class=\"cardSub text-left white--text\"> Teste </v-card-text>\r\n     </v-col>\r\n \r\n     <v-col cols=\"3\">\r\n       <v-img contain src=\"../../public/icons/scan.png\" max-height=\"100\"></v-img>\r\n"
+                },
+                {
+                    "date": 1670628863548,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,11 @@\n <template>\r\n   <v-row class=\"featuresRow\">\r\n     <v-col cols=\"3\">\r\n       <v-img contain src=\"../../public/icons/poor.png\" max-height=\"100\"></v-img>\r\n-      <v-card-text class=\"cardSub text-left white--text\"> Teste </v-card-text>\r\n+      <v-card-text class=\"featureText text-center white--text\">\r\n+        Teste\r\n+      </v-card-text>\r\n     </v-col>\r\n \r\n     <v-col cols=\"3\">\r\n       <v-img contain src=\"../../public/icons/scan.png\" max-height=\"100\"></v-img>\r\n"
+                },
+                {
+                    "date": 1670628871015,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,5 +36,10 @@\n   background-color: #7f9dc4;\r\n   padding: 0 !important;\r\n   margin: 0 !important;\r\n }\r\n+\r\n+.featureText {\r\n+  padding: 5% !important;\r\n+  margin: 0 !important;\r\n+}\r\n </style>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1670628903582,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,8 +38,6 @@\n   margin: 0 !important;\r\n }\r\n \r\n .featureText {\r\n-  padding: 5% !important;\r\n-  margin: 0 !important;\r\n }\r\n </style>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1670628909637,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,6 +38,8 @@\n   margin: 0 !important;\r\n }\r\n \r\n .featureText {\r\n+  padding: 5% !important;\r\n+  margin: 0 !important;\r\n }\r\n </style>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1670628918766,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,7 +39,7 @@\n }\r\n \r\n .featureText {\r\n   padding: 5% !important;\r\n-  margin: 0 !important;\r\n+  font-weight: 500;\r\n }\r\n </style>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1670628955567,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,10 @@\n   <v-row class=\"featuresRow\">\r\n     <v-col cols=\"3\">\r\n       <v-img contain src=\"../../public/icons/poor.png\" max-height=\"100\"></v-img>\r\n       <v-card-text class=\"featureText text-center white--text\">\r\n-        Teste\r\n+        Têm uma clara visão sobre o teu estado financeiro, minimizando os\r\n+        desperdícios e má alocação de consumo.\r\n       </v-card-text>\r\n     </v-col>\r\n \r\n     <v-col cols=\"3\">\r\n@@ -40,6 +41,7 @@\n \r\n .featureText {\r\n   padding: 5% !important;\r\n   font-weight: 500;\r\n+  font-size: 16px;\r\n }\r\n </style>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1670629000419,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,33 +1,43 @@\n <template>\r\n-  <v-row class=\"featuresRow\">\r\n-    <v-col cols=\"3\">\r\n-      <v-img contain src=\"../../public/icons/poor.png\" max-height=\"100\"></v-img>\r\n-      <v-card-text class=\"featureText text-center white--text\">\r\n-        Têm uma clara visão sobre o teu estado financeiro, minimizando os\r\n-        desperdícios e má alocação de consumo.\r\n-      </v-card-text>\r\n-    </v-col>\r\n+  <div class=\"featuresRow\">\r\n+    <v-row class=\"fRow\">\r\n+      <v-col cols=\"3\">\r\n+        <v-img\r\n+          contain\r\n+          src=\"../../public/icons/poor.png\"\r\n+          max-height=\"100\"\r\n+        ></v-img>\r\n+        <v-card-text class=\"featureText text-center white--text\">\r\n+          Têm uma clara visão sobre o teu estado financeiro, minimizando os\r\n+          desperdícios e má alocação de consumo.\r\n+        </v-card-text>\r\n+      </v-col>\r\n \r\n-    <v-col cols=\"3\">\r\n-      <v-img contain src=\"../../public/icons/scan.png\" max-height=\"100\"></v-img>\r\n-    </v-col>\r\n+      <v-col cols=\"3\">\r\n+        <v-img\r\n+          contain\r\n+          src=\"../../public/icons/scan.png\"\r\n+          max-height=\"100\"\r\n+        ></v-img>\r\n+      </v-col>\r\n \r\n-    <v-col cols=\"3\">\r\n-      <v-img\r\n-        contain\r\n-        src=\"../../public/icons/investing.png\"\r\n-        max-height=\"100\"\r\n-      ></v-img>\r\n-    </v-col>\r\n-    <v-col cols=\"3\">\r\n-      <v-img\r\n-        contain\r\n-        src=\"../../public/icons/expenses.png\"\r\n-        max-height=\"100\"\r\n-      ></v-img>\r\n-    </v-col>\r\n-  </v-row>\r\n+      <v-col cols=\"3\">\r\n+        <v-img\r\n+          contain\r\n+          src=\"../../public/icons/investing.png\"\r\n+          max-height=\"100\"\r\n+        ></v-img>\r\n+      </v-col>\r\n+      <v-col cols=\"3\">\r\n+        <v-img\r\n+          contain\r\n+          src=\"../../public/icons/expenses.png\"\r\n+          max-height=\"100\"\r\n+        ></v-img>\r\n+      </v-col>\r\n+    </v-row>\r\n+  </div>\r\n </template>\r\n \r\n <script>\r\n </script>\r\n"
+                },
+                {
+                    "date": 1670629056463,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,9 @@\n         <v-img\r\n           contain\r\n           src=\"../../public/icons/poor.png\"\r\n           max-height=\"100\"\r\n+          class=\"imgIcon\"\r\n         ></v-img>\r\n         <v-card-text class=\"featureText text-center white--text\">\r\n           Têm uma clara visão sobre o teu estado financeiro, minimizando os\r\n           desperdícios e má alocação de consumo.\r\n@@ -17,23 +18,26 @@\n         <v-img\r\n           contain\r\n           src=\"../../public/icons/scan.png\"\r\n           max-height=\"100\"\r\n+          class=\"imgIcon\"\r\n         ></v-img>\r\n       </v-col>\r\n \r\n       <v-col cols=\"3\">\r\n         <v-img\r\n           contain\r\n           src=\"../../public/icons/investing.png\"\r\n           max-height=\"100\"\r\n+          class=\"imgIcon\"\r\n         ></v-img>\r\n       </v-col>\r\n       <v-col cols=\"3\">\r\n         <v-img\r\n           contain\r\n           src=\"../../public/icons/expenses.png\"\r\n           max-height=\"100\"\r\n+          class=\"imgIcon\"\r\n         ></v-img>\r\n       </v-col>\r\n     </v-row>\r\n   </div>\r\n"
+                },
+                {
+                    "date": 1670629062025,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,5 +57,10 @@\n   padding: 5% !important;\r\n   font-weight: 500;\r\n   font-size: 16px;\r\n }\r\n+\r\n+.imgIcon {\r\n+  padding: 5% !important;\r\n+  margin: 0 !important;\r\n+}\r\n </style>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1670629067371,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,8 +59,8 @@\n   font-size: 16px;\r\n }\r\n \r\n .imgIcon {\r\n-  padding: 5% !important;\r\n+  padding: 10% !important;\r\n   margin: 0 !important;\r\n }\r\n </style>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1670629083852,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,9 +48,9 @@\n \r\n <style>\r\n .featuresRow {\r\n   background-color: #7f9dc4;\r\n-  padding: 0 !important;\r\n+  padding: 10% !important;\r\n   margin: 0 !important;\r\n }\r\n \r\n .featureText {\r\n"
+                },
+                {
+                    "date": 1670629091637,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,9 +48,9 @@\n \r\n <style>\r\n .featuresRow {\r\n   background-color: #7f9dc4;\r\n-  padding: 10% !important;\r\n+  padding: 3% !important;\r\n   margin: 0 !important;\r\n }\r\n \r\n .featureText {\r\n"
+                },
+                {
+                    "date": 1670629111922,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,10 +48,10 @@\n \r\n <style>\r\n .featuresRow {\r\n   background-color: #7f9dc4;\r\n-  padding: 3% !important;\r\n-  margin: 0 !important;\r\n+  padding: 2% !important;\r\n+  margin: 0 5 0 5 !important;\r\n }\r\n \r\n .featureText {\r\n   padding: 5% !important;\r\n"
+                },
+                {
+                    "date": 1670629118386,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n <style>\r\n .featuresRow {\r\n   background-color: #7f9dc4;\r\n   padding: 2% !important;\r\n-  margin: 0 5 0 5 !important;\r\n+  margin: 0% 5% 0% 5% !important;\r\n }\r\n \r\n .featureText {\r\n   padding: 5% !important;\r\n"
+                },
+                {
+                    "date": 1670629131461,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,12 +46,15 @@\n <script>\r\n </script>\r\n \r\n <style>\r\n+.fRow {\r\n+  margin: 0% 5% 0% 5% !important;\r\n+}\r\n+\r\n .featuresRow {\r\n   background-color: #7f9dc4;\r\n   padding: 2% !important;\r\n-  margin: 0% 5% 0% 5% !important;\r\n }\r\n \r\n .featureText {\r\n   padding: 5% !important;\r\n"
+                },
+                {
+                    "date": 1670629143457,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,9 +57,9 @@\n }\r\n \r\n .featureText {\r\n   padding: 5% !important;\r\n-  font-weight: 500;\r\n+  font-weight: 600;\r\n   font-size: 16px;\r\n }\r\n \r\n .imgIcon {\r\n"
+                },
+                {
+                    "date": 1670629153986,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n           src=\"../../public/icons/poor.png\"\r\n           max-height=\"100\"\r\n           class=\"imgIcon\"\r\n         ></v-img>\r\n-        <v-card-text class=\"featureText text-center white--text\">\r\n+        <v-card-text class=\"featureText text-center text-lowercase white--text\">\r\n           Têm uma clara visão sobre o teu estado financeiro, minimizando os\r\n           desperdícios e má alocação de consumo.\r\n         </v-card-text>\r\n       </v-col>\r\n"
+                },
+                {
+                    "date": 1670629159084,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n           src=\"../../public/icons/poor.png\"\r\n           max-height=\"100\"\r\n           class=\"imgIcon\"\r\n         ></v-img>\r\n-        <v-card-text class=\"featureText text-center text-lowercase white--text\">\r\n+        <v-card-text class=\"featureText text-center text-uppercase white--text\">\r\n           Têm uma clara visão sobre o teu estado financeiro, minimizando os\r\n           desperdícios e má alocação de consumo.\r\n         </v-card-text>\r\n       </v-col>\r\n"
+                },
+                {
+                    "date": 1670629165262,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,9 +58,9 @@\n \r\n .featureText {\r\n   padding: 5% !important;\r\n   font-weight: 600;\r\n-  font-size: 16px;\r\n+  font-size: 14px;\r\n }\r\n \r\n .imgIcon {\r\n   padding: 10% !important;\r\n"
+                },
+                {
+                    "date": 1670629174386,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,8 +59,9 @@\n .featureText {\r\n   padding: 5% !important;\r\n   font-weight: 600;\r\n   font-size: 14px;\r\n+  font-family: \"Sora\", sans-serif !important;\r\n }\r\n \r\n .imgIcon {\r\n   padding: 10% !important;\r\n"
+                },
+                {
+                    "date": 1670629179539,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n .featureText {\r\n   padding: 5% !important;\r\n   font-weight: 600;\r\n   font-size: 14px;\r\n-  font-family: \"Sora\", sans-serif !important;\r\n+  font-family: \"Arial\", sans-serif !important;\r\n }\r\n \r\n .imgIcon {\r\n   padding: 10% !important;\r\n"
+                },
+                {
+                    "date": 1670629184900,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n .featureText {\r\n   padding: 5% !important;\r\n   font-weight: 600;\r\n   font-size: 14px;\r\n-  font-family: \"Arial\", sans-serif !important;\r\n+  font-family: \"Times New Roman\", sans-serif !important;\r\n }\r\n \r\n .imgIcon {\r\n   padding: 10% !important;\r\n"
+                },
+                {
+                    "date": 1670629193417,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n .featureText {\r\n   padding: 5% !important;\r\n   font-weight: 600;\r\n   font-size: 14px;\r\n-  font-family: \"Times New Roman\", sans-serif !important;\r\n+  font-family: \"Roboto\", sans-serif !important;\r\n }\r\n \r\n .imgIcon {\r\n   padding: 10% !important;\r\n"
+                },
+                {
+                    "date": 1670629202635,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n .featureText {\r\n   padding: 5% !important;\r\n   font-weight: 600;\r\n   font-size: 14px;\r\n-  font-family: \"Roboto\", sans-serif !important;\r\n+  font-family: \"Sora\", sans-serif !important;\r\n }\r\n \r\n .imgIcon {\r\n   padding: 10% !important;\r\n"
+                },
+                {
+                    "date": 1670629221987,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,8 +20,12 @@\n           src=\"../../public/icons/scan.png\"\r\n           max-height=\"100\"\r\n           class=\"imgIcon\"\r\n         ></v-img>\r\n+        <v-card-text class=\"featureText text-center text-uppercase white--text\">\r\n+          Têm uma clara visão sobre o teu estado financeiro, minimizando os\r\n+          desperdícios e má alocação de consumo.\r\n+        </v-card-text>\r\n       </v-col>\r\n \r\n       <v-col cols=\"3\">\r\n         <v-img\r\n"
+                },
+                {
+                    "date": 1670629227582,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,16 +33,24 @@\n           src=\"../../public/icons/investing.png\"\r\n           max-height=\"100\"\r\n           class=\"imgIcon\"\r\n         ></v-img>\r\n+        <v-card-text class=\"featureText text-center text-uppercase white--text\">\r\n+          Têm uma clara visão sobre o teu estado financeiro, minimizando os\r\n+          desperdícios e má alocação de consumo.\r\n+        </v-card-text>\r\n       </v-col>\r\n       <v-col cols=\"3\">\r\n         <v-img\r\n           contain\r\n           src=\"../../public/icons/expenses.png\"\r\n           max-height=\"100\"\r\n           class=\"imgIcon\"\r\n         ></v-img>\r\n+        <v-card-text class=\"featureText text-center text-uppercase white--text\">\r\n+          Têm uma clara visão sobre o teu estado financeiro, minimizando os\r\n+          desperdícios e má alocação de consumo.\r\n+        </v-card-text>\r\n       </v-col>\r\n     </v-row>\r\n   </div>\r\n </template>\r\n"
+                },
+                {
+                    "date": 1670629530030,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n       </v-col>\r\n       <v-col cols=\"3\">\r\n         <v-img\r\n           contain\r\n-          src=\"../../public/icons/expenses.png\"\r\n+          src=\"../../public/icons/piggy-bank.png\"\r\n           max-height=\"100\"\r\n           class=\"imgIcon\"\r\n         ></v-img>\r\n         <v-card-text class=\"featureText text-center text-uppercase white--text\">\r\n"
+                },
+                {
+                    "date": 1673085459515,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,11 +8,15 @@\n           max-height=\"100\"\r\n           class=\"imgIcon\"\r\n         ></v-img>\r\n         <v-card-text class=\"featureText text-center text-uppercase white--text\">\r\n-          Têm uma clara visão sobre o teu estado financeiro, minimizando os\r\n-          desperdícios e má alocação de consumo.\r\n+          Pequenas Ações Fazem a diferença! <br />A Wingman está atenta aos\r\n+          detalhes.\r\n         </v-card-text>\r\n+        <v-card-text class=\"itemDesc text-uppercase white--text text-center\">\r\n+          A Wingman não deixa que nenhum detalhe das suas finanças passe\r\n+          despercebido.\r\n+        </v-card-text>\r\n       </v-col>\r\n \r\n       <v-col cols=\"3\">\r\n         <v-img\r\n@@ -21,11 +25,15 @@\n           max-height=\"100\"\r\n           class=\"imgIcon\"\r\n         ></v-img>\r\n         <v-card-text class=\"featureText text-center text-uppercase white--text\">\r\n-          Têm uma clara visão sobre o teu estado financeiro, minimizando os\r\n-          desperdícios e má alocação de consumo.\r\n+          Simplifique a sua gestão de despesas com a nossa ferramenta de scan de\r\n+          faturas.\r\n         </v-card-text>\r\n+        <v-card-text class=\"itemDesc text-uppercase white--text text-center\">\r\n+          Gerir despesas nunca foi tão fácil! Disfrute da nossa ferramenta de\r\n+          scan de faturas e recibos.\r\n+        </v-card-text>\r\n       </v-col>\r\n \r\n       <v-col cols=\"3\">\r\n         <v-img\r\n@@ -34,11 +42,14 @@\n           max-height=\"100\"\r\n           class=\"imgIcon\"\r\n         ></v-img>\r\n         <v-card-text class=\"featureText text-center text-uppercase white--text\">\r\n-          Têm uma clara visão sobre o teu estado financeiro, minimizando os\r\n-          desperdícios e má alocação de consumo.\r\n+          Uma nova visão da sua gestão financeira! Simples, rápida e cómoda.\r\n         </v-card-text>\r\n+        <v-card-text class=\"itemDesc text-uppercase white--text text-center\">\r\n+          Gestão financeira descomplicada! Analise os seus rendimentos e\r\n+          despesas de forma simples, rápida e cómoda.\r\n+        </v-card-text>\r\n       </v-col>\r\n       <v-col cols=\"3\">\r\n         <v-img\r\n           contain\r\n@@ -46,11 +57,15 @@\n           max-height=\"100\"\r\n           class=\"imgIcon\"\r\n         ></v-img>\r\n         <v-card-text class=\"featureText text-center text-uppercase white--text\">\r\n-          Têm uma clara visão sobre o teu estado financeiro, minimizando os\r\n-          desperdícios e má alocação de consumo.\r\n+          Poupe para projetos futuros!\r\n+          <br />Comece já a poupar para o seu futuro!\r\n         </v-card-text>\r\n+        <v-card-text class=\"itemDesc text-uppercase white--text text-center\">\r\n+          Projetos futuros e viagens de sonho podem estar mais perto do que\r\n+          imagina!\r\n+        </v-card-text>\r\n       </v-col>\r\n     </v-row>\r\n   </div>\r\n </template>\r\n@@ -68,14 +83,19 @@\n   padding: 2% !important;\r\n }\r\n \r\n .featureText {\r\n-  padding: 5% !important;\r\n   font-weight: 600;\r\n   font-size: 14px;\r\n   font-family: \"Sora\", sans-serif !important;\r\n }\r\n \r\n+.itemDesc {\r\n+  font-weight: 300;\r\n+  font-size: 11px;\r\n+  font-family: \"Sora\", sans-serif !important;\r\n+}\r\n+\r\n .imgIcon {\r\n   padding: 10% !important;\r\n   margin: 0 !important;\r\n }\r\n"
+                },
+                {
+                    "date": 1674254748254,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,102 +1,102 @@\n-<template>\r\n-  <div class=\"featuresRow\">\r\n-    <v-row class=\"fRow\">\r\n-      <v-col cols=\"3\">\r\n-        <v-img\r\n-          contain\r\n-          src=\"../../public/icons/poor.png\"\r\n-          max-height=\"100\"\r\n-          class=\"imgIcon\"\r\n-        ></v-img>\r\n-        <v-card-text class=\"featureText text-center text-uppercase white--text\">\r\n-          Pequenas Ações Fazem a diferença! <br />A Wingman está atenta aos\r\n-          detalhes.\r\n-        </v-card-text>\r\n-        <v-card-text class=\"itemDesc text-uppercase white--text text-center\">\r\n-          A Wingman não deixa que nenhum detalhe das suas finanças passe\r\n-          despercebido.\r\n-        </v-card-text>\r\n-      </v-col>\r\n-\r\n-      <v-col cols=\"3\">\r\n-        <v-img\r\n-          contain\r\n-          src=\"../../public/icons/scan.png\"\r\n-          max-height=\"100\"\r\n-          class=\"imgIcon\"\r\n-        ></v-img>\r\n-        <v-card-text class=\"featureText text-center text-uppercase white--text\">\r\n-          Simplifique a sua gestão de despesas com a nossa ferramenta de scan de\r\n-          faturas.\r\n-        </v-card-text>\r\n-        <v-card-text class=\"itemDesc text-uppercase white--text text-center\">\r\n-          Gerir despesas nunca foi tão fácil! Disfrute da nossa ferramenta de\r\n-          scan de faturas e recibos.\r\n-        </v-card-text>\r\n-      </v-col>\r\n-\r\n-      <v-col cols=\"3\">\r\n-        <v-img\r\n-          contain\r\n-          src=\"../../public/icons/investing.png\"\r\n-          max-height=\"100\"\r\n-          class=\"imgIcon\"\r\n-        ></v-img>\r\n-        <v-card-text class=\"featureText text-center text-uppercase white--text\">\r\n-          Uma nova visão da sua gestão financeira! Simples, rápida e cómoda.\r\n-        </v-card-text>\r\n-        <v-card-text class=\"itemDesc text-uppercase white--text text-center\">\r\n-          Gestão financeira descomplicada! Analise os seus rendimentos e\r\n-          despesas de forma simples, rápida e cómoda.\r\n-        </v-card-text>\r\n-      </v-col>\r\n-      <v-col cols=\"3\">\r\n-        <v-img\r\n-          contain\r\n-          src=\"../../public/icons/piggy-bank.png\"\r\n-          max-height=\"100\"\r\n-          class=\"imgIcon\"\r\n-        ></v-img>\r\n-        <v-card-text class=\"featureText text-center text-uppercase white--text\">\r\n-          Poupe para projetos futuros!\r\n-          <br />Comece já a poupar para o seu futuro!\r\n-        </v-card-text>\r\n-        <v-card-text class=\"itemDesc text-uppercase white--text text-center\">\r\n-          Projetos futuros e viagens de sonho podem estar mais perto do que\r\n-          imagina!\r\n-        </v-card-text>\r\n-      </v-col>\r\n-    </v-row>\r\n-  </div>\r\n-</template>\r\n-\r\n-<script>\r\n-</script>\r\n-\r\n-<style>\r\n-.fRow {\r\n-  margin: 0% 5% 0% 5% !important;\r\n-}\r\n-\r\n-.featuresRow {\r\n-  background-color: #7f9dc4;\r\n-  padding: 2% !important;\r\n-}\r\n-\r\n-.featureText {\r\n-  font-weight: 600;\r\n-  font-size: 14px;\r\n-  font-family: \"Sora\", sans-serif !important;\r\n-}\r\n-\r\n-.itemDesc {\r\n-  font-weight: 300;\r\n-  font-size: 11px;\r\n-  font-family: \"Sora\", sans-serif !important;\r\n-}\r\n-\r\n-.imgIcon {\r\n-  padding: 10% !important;\r\n-  margin: 0 !important;\r\n-}\r\n+<template>\n+  <div class=\"featuresRow\">\n+    <v-row class=\"fRow\">\n+      <v-col cols=\"12\" lg=\"6\">\n+        <v-img\n+          contain\n+          src=\"../../public/icons/poor.png\"\n+          max-height=\"100\"\n+          class=\"imgIcon\"\n+        ></v-img>\n+        <v-card-text class=\"featureText text-center text-uppercase white--text\">\n+          Pequenas Ações Fazem a diferença! <br />A Wingman está atenta aos\n+          detalhes.\n+        </v-card-text>\n+        <v-card-text class=\"itemDesc text-uppercase white--text text-center\">\n+          A Wingman não deixa que nenhum detalhe das suas finanças passe\n+          despercebido.\n+        </v-card-text>\n+      </v-col>\n+\n+      <v-col cols=\"12\" lg=\"6\">\n+        <v-img\n+          contain\n+          src=\"../../public/icons/scan.png\"\n+          max-height=\"100\"\n+          class=\"imgIcon\"\n+        ></v-img>\n+        <v-card-text class=\"featureText text-center text-uppercase white--text\">\n+          Simplifique a sua gestão de despesas com a nossa ferramenta de scan de\n+          faturas.\n+        </v-card-text>\n+        <v-card-text class=\"itemDesc text-uppercase white--text text-center\">\n+          Gerir despesas nunca foi tão fácil! Disfrute da nossa ferramenta de\n+          scan de faturas e recibos.\n+        </v-card-text>\n+      </v-col>\n+\n+      <v-col cols=\"12\" lg=\"6\">\n+        <v-img\n+          contain\n+          src=\"../../public/icons/investing.png\"\n+          max-height=\"100\"\n+          class=\"imgIcon\"\n+        ></v-img>\n+        <v-card-text class=\"featureText text-center text-uppercase white--text\">\n+          Uma nova visão da sua gestão financeira! Simples, rápida e cómoda.\n+        </v-card-text>\n+        <v-card-text class=\"itemDesc text-uppercase white--text text-center\">\n+          Gestão financeira descomplicada! Analise os seus rendimentos e\n+          despesas de forma simples, rápida e cómoda.\n+        </v-card-text>\n+      </v-col>\n+      <v-col cols=\"12\" lg=\"6\">\n+        <v-img\n+          contain\n+          src=\"../../public/icons/piggy-bank.png\"\n+          max-height=\"100\"\n+          class=\"imgIcon\"\n+        ></v-img>\n+        <v-card-text class=\"featureText text-center text-uppercase white--text\">\n+          Poupe para projetos futuros!\n+          <br />Comece já a poupar para o seu futuro!\n+        </v-card-text>\n+        <v-card-text class=\"itemDesc text-uppercase white--text text-center\">\n+          Projetos futuros e viagens de sonho podem estar mais perto do que\n+          imagina!\n+        </v-card-text>\n+      </v-col>\n+    </v-row>\n+  </div>\n+</template>\n+\n+<script>\n+</script>\n+\n+<style>\n+.fRow {\n+  margin: 0% 5% 0% 5% !important;\n+}\n+\n+.featuresRow {\n+  background-color: #7f9dc4;\n+  padding: 2% !important;\n+}\n+\n+.featureText {\n+  font-weight: 600;\n+  font-size: 14px;\n+  font-family: \"Sora\", sans-serif !important;\n+}\n+\n+.itemDesc {\n+  font-weight: 300;\n+  font-size: 11px;\n+  font-family: \"Sora\", sans-serif !important;\n+}\n+\n+.imgIcon {\n+  padding: 10% !important;\n+  margin: 0 !important;\n+}\n </style>\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1670621687500,
+            "name": "Commit-0",
+            "content": "<template>\r\n  <div>\r\n    <p>\"TEST\"</p>\r\n  </div>\r\n</template>"
+        }
+    ]
+}

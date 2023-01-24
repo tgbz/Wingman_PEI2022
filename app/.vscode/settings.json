@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "*.ttml": "xml",
+        "*.ttss": "css"
+    },
+    "react-native":
+    {
+        "packager":
+        {
+            "port": 19000
+        }
+    }
+}

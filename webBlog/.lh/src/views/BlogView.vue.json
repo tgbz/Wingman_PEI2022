@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/views/BlogView.vue",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1673083121995,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1674257442765,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,18 +1,18 @@\n-<template>\r\n-  <div>\r\n-    <NavbarComponent />\r\n-\r\n-    <FooterComponent />\r\n-  </div>\r\n-</template>\r\n-  \r\n-  <script>\r\n-export default {\r\n-  name: \"HomeView\",\r\n-  components: {\r\n-    NavbarComponent: () => import(\"@/components/NavbarComponent.vue\"),\r\n-\r\n-    FooterComponent: () => import(\"@/components/FooterComponent.vue\"),\r\n-  },\r\n-};\r\n+<template>\n+  <div>\n+    <NavbarComponent />\n+    <ArticlesComponent/>\n+    <FooterComponent />\n+  </div>\n+</template>\n+  \n+  <script>\n+export default {\n+  name: \"HomeView\",\n+  components: {\n+    NavbarComponent: () => import(\"@/components/NavbarComponent.vue\"),\n+    ArticlesComponent: () => import(\"@/components/ArticlesComponent.vue\"),\n+    FooterComponent: () => import(\"@/components/FooterComponent.vue\"),\n+  },\n+};\n </script>\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1673083121995,
+            "name": "Commit-0",
+            "content": "<template>\r\n  <div>\r\n    <NavbarComponent />\r\n\r\n    <FooterComponent />\r\n  </div>\r\n</template>\r\n  \r\n  <script>\r\nexport default {\r\n  name: \"HomeView\",\r\n  components: {\r\n    NavbarComponent: () => import(\"@/components/NavbarComponent.vue\"),\r\n\r\n    FooterComponent: () => import(\"@/components/FooterComponent.vue\"),\r\n  },\r\n};\r\n</script>"
+        }
+    ]
+}

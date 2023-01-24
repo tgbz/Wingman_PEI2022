@@ -1,0 +1,18 @@
+{
+    "sourceFile": "models/user.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1667063389578,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1667063389578,
+            "name": "Commit-0",
+            "content": "var sql = require('../config/database.js');\n\nvar User = function(a){\n    this.name=a.name;\n    this.password=a.password;\n    this.email=a.email;\n    this.birthDate=a.birthDate;\n    //this.nif = a.nif;\n    this.gender=a.gender;\n    this.savings = a.savings;\n} \n\nmodule.exports=User;"
+        }
+    ]
+}

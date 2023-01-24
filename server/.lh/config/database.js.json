@@ -1,0 +1,50 @@
+{
+    "sourceFile": "config/database.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 8,
+            "patches": [
+                {
+                    "date": 1667065053962,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1667065064856,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-r session = require('express-session');\n+var session = require('express-session');\n var mysql = require('mysql2/promise');\n var MySQLStore = require('express-mysql-session')(session);\n var db_config = {\n   host: 'localhost',\n"
+                },
+                {
+                    "date": 1667065755795,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n var session = require('express-session');\n var mysql = require('mysql2/promise');\n-var MySQLStore = require('express-mysql-session')(session);\n+\n var db_config = {\n   host: 'localhost',\n   user: 'localUser',\n   password: 'localUser',\n@@ -20,6 +20,4 @@\n });\n \n \n module.exports = connection;\n-var sessionStore = new MySQLStore({}, connection);\n-module.exports = sessionStore;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1667066055293,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,10 +2,10 @@\n var mysql = require('mysql2/promise');\n \n var db_config = {\n   host: 'localhost',\n-  user: 'localUser',\n-  password: 'localUser',\n+  user: 'root',\n+  password: 'admin',\n   database: 'wingman',\n   timezone: \"Z\",\n   multipleStatements: true\n }\n"
+                },
+                {
+                    "date": 1667066280182,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n \n var db_config = {\n   host: 'localhost',\n   user: 'root',\n-  password: 'admin',\n+  password: 'password',\n   database: 'wingman',\n   timezone: \"Z\",\n   multipleStatements: true\n }\n"
+                },
+                {
+                    "date": 1667067300070,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n \n var db_config = {\n   host: 'localhost',\n   user: 'root',\n+  port: 3306,\n   password: 'password',\n   database: 'wingman',\n   timezone: \"Z\",\n   multipleStatements: true\n"
+                },
+                {
+                    "date": 1667151250627,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,13 @@\n var session = require('express-session');\n var mysql = require('mysql2/promise');\n \n var db_config = {\n-  host: 'localhost',\n-  user: 'root',\n+  host: '94.60.175.136:3306',\n+  user: 'wingman_admin',\n   port: 3306,\n   password: 'password',\n-  database: 'wingman',\n+  database: 'wingman_admin',\n   timezone: \"Z\",\n   multipleStatements: true\n }\n \n"
+                },
+                {
+                    "date": 1667151407008,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n var session = require('express-session');\n var mysql = require('mysql2/promise');\n \n var db_config = {\n-  host: '94.60.175.136:3306',\n+  host: '94.60.175.136',\n   user: 'wingman_admin',\n   port: 3306,\n   password: 'password',\n   database: 'wingman_admin',\n"
+                },
+                {
+                    "date": 1667151427058,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n   host: '94.60.175.136',\n   user: 'wingman_admin',\n   port: 3306,\n   password: 'password',\n-  database: 'wingman_admin',\n+  database: 'wingman',\n   timezone: \"Z\",\n   multipleStatements: true\n }\n \n"
+                }
+            ],
+            "date": 1667065053962,
+            "name": "Commit-0",
+            "content": "r session = require('express-session');\nvar mysql = require('mysql2/promise');\nvar MySQLStore = require('express-mysql-session')(session);\nvar db_config = {\n  host: 'localhost',\n  user: 'localUser',\n  password: 'localUser',\n  database: 'wingman',\n  timezone: \"Z\",\n  multipleStatements: true\n}\n\nvar connection = mysql.createPool(db_config)\n\nconnection.getConnection((err,connection)=> {\n  if(err)\n  throw err;\n  console.log('Database connected successfully');\n  connection.release();\n});\n\n\nmodule.exports = connection;\nvar sessionStore = new MySQLStore({}, connection);\nmodule.exports = sessionStore;"
+        }
+    ]
+}

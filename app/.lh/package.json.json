@@ -1,0 +1,18 @@
+{
+    "sourceFile": "package.json",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1668274256603,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1668274256603,
+            "name": "Commit-0",
+            "content": "{\n  \"name\": \"app\",\n  \"version\": \"1.0.0\",\n  \"main\": \"node_modules/expo/AppEntry.js\",\n  \"scripts\": {\n    \"start\": \"expo start\",\n    \"android\": \"expo start --android\",\n    \"linuxStart\": \"export SET NODE_OPTIONS=--openssl-legacy-provider && expo start\",\n    \"linuxBuild\": \"export SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts build\",\n    \"ios\": \"expo start --ios\",\n    \"web\": \"expo start --web\"\n  },\n  \"dependencies\": {\n    \"@expo/webpack-config\": \"^0.17.0\",\n    \"@react-native-async-storage/async-storage\": \"~1.17.3\",\n    \"@react-navigation/native\": \"^6.0.13\",\n    \"@react-navigation/native-stack\": \"^6.9.1\",\n    \"@react-navigation/stack\": \"^6.3.4\",\n    \"axios\": \"^0.23.0\",\n    \"expo\": \"~46.0.16\",\n    \"expo-status-bar\": \"~1.4.0\",\n    \"react\": \"18.0.0\",\n    \"react-dom\": \"18.0.0\",\n    \"react-native\": \"0.69.6\",\n    \"react-native-paper\": \"^5.0.0-rc.9\",\n    \"react-native-safe-area-context\": \"4.3.1\",\n    \"react-native-screens\": \"~3.15.0\",\n    \"react-native-web\": \"~0.18.7\",\n    \"react-router-dom\": \"^6.4.3\",\n    \"react-native-gesture-handler\": \"~2.5.0\"\n  },\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.12.9\"\n  },\n  \"rnpm\": {\n    \"assets\": [\n      \"./assets/fonts/\"\n    ]\n  },\n  \"private\": true\n}\n"
+        }
+    ]
+}

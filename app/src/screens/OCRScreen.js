@@ -13,6 +13,8 @@ import OCRExpense from '../components/OCRExpense'
 import { ScrollView } from 'react-native-gesture-handler'
 
 
+
+
 export default function OCRScreen({ navigation }) {
   const { height, width } = useWindowDimensions()
     const [products, setProducts] = useState([])
@@ -112,10 +114,8 @@ export default function OCRScreen({ navigation }) {
 
   const transformData = (transData) => {      
       var purchase = JSON.parse(transData);
-      console.log(purchase)
       let products = []
       Object.keys(purchase.items).forEach((key, index) => {
-        console.log(`${key}: ${purchase.items[key]}`);
         products.push({
           idcategory: 22,
           value:purchase.items[key],
@@ -146,20 +146,26 @@ export default function OCRScreen({ navigation }) {
     return null
   }
 const camara =  <View style={styles.bt}>
-<TouchableOpacity onPress={()  => pickFromCamera()} style={[styles.roundshape, {backgroundColor:  COLORS.wingblue}]}>
-<FontAwesome5 name="camera" size={25} style={styles.item} />
-</TouchableOpacity>
-<Text style={{fontFamily:FONTS.light}}>Câmara</Text>
-</View>
+                  <TouchableOpacity onPress={()  => pickFromCamera()} style={[styles.roundshape, {backgroundColor:  COLORS.wingblue}]}>
+                  <FontAwesome5 name="camera" size={25} style={styles.item} />
+                  </TouchableOpacity>
+                  <Text style={{fontFamily:FONTS.light}}>Câmara</Text>
+                  </View>
 const galeria = <View style={styles.bt}>
-<TouchableOpacity  onPress={()  => pickFromGallery()} style={[styles.roundshape, {backgroundColor:  COLORS.wingblue}]}>
-      <Entypo name="images" size={25} style={styles.item} />
-</TouchableOpacity>
-<Text style={{fontFamily:FONTS.light}}>Galeria</Text>
-  
-</View>
+                <TouchableOpacity  onPress={()  => pickFromGallery()} style={[styles.roundshape, {backgroundColor:  COLORS.wingblue}]}>
+                      <Entypo name="images" size={25} style={styles.item} />
+                </TouchableOpacity>
+                <Text style={{fontFamily:FONTS.light}}>Galeria</Text>
+                </View>
+const [moreOptions, setMoreOptions] = useState(false)
+const  maisImg = <View style={styles.bt}>
+                <TouchableOpacity  onPress={()  => setMoreOptions(true)} style={[styles.roundshape, {backgroundColor:  COLORS.wingblue}]}>
+                      <MaterialCommunityIcons name="file-image-plus-outline" size={25} style={styles.item} />
+                </TouchableOpacity>
+                </View>
 
-    return ( askPermission(), console.log("PickedImage", pickedImage),
+
+    return ( askPermission(), 
     <ScrollView style={ {backgroundColor: COLORS.white} }>
       <SafeAreaView style={styles.root}>
              {!loaded && <Text style={styles.textInicial}>Carrega a fotografia da tua fatura:</Text>}
@@ -205,36 +211,20 @@ const galeria = <View style={styles.bt}>
           marginVertical: 20,
         }]}>
 
-        {pickedImage.length > 0  &&
-        <View style={{ flexDirection:"row", flexWrap:'wrap', justifyContent:'space-around', width: width*0.50,
-      
-      
-          backgroundColor: COLORS.eggshell,
-          borderColor: COLORS.wingblue,
-          borderWidth: 3,
-          borderStyle: 'dashed',
-          marginVertical: 30,   
-          borderRadius:5
-      
-      
-      }}>{camara}{galeria}</View>
-       
+        {pickedImage.length > 0  && !moreOptions &&
+        <View style={[styles.viewButton, {width: width*0.70}]}>{maisImg}</View>
+        }
+        {pickedImage.length > 0  && moreOptions &&
+        <View style={[styles.viewButton, {width: width*0.70}]}>{camara}{galeria}</View>
         }
 
       {!loaded &&
-          <TouchableOpacity onPress={()  => sendPost()} style={[styles.button, { width: width*0.50, backgroundColor: disabled? '#E8E8E8': COLORS.wingblue}]} disabled={disabled}>
+          <TouchableOpacity onPress={()  => sendPost()} style={[styles.button, { width: width*0.70, backgroundColor: disabled? '#E8E8E8': COLORS.wingblue}]} disabled={disabled}>
               <Text style={[styles.text , {color: disabled? '#C0C0C0': COLORS.white}]}>Continuar   <Entypo name="arrow-right" size={25} style={styles.item} color={COLORS.wingDarkBlue}/>
               </Text>
           </TouchableOpacity>
       }
       {loading && <ActivityIndicator size="large" color={COLORS.wingDarkBlue}/>}
-      {/*loaded &&
-          <TouchableOpacity onPress={()  => navigation.navigate('OCR', {refresh: true})} style={[styles.button, { width: width*0.50, backgroundColor: disabled? '#E8E8E8': COLORS.wingblue}]} disabled={disabled}>
-              <Text style={[styles.text , {color: disabled? '#C0C0C0': COLORS.white}]}>Recomeçar   <Entypo name="reload" size={25} style={styles.item} color={COLORS.wingDarkBlue}/>
-              </Text>
-          </TouchableOpacity>
-    */}
-      
       </View>
     
     </SafeAreaView>
@@ -289,7 +279,14 @@ const galeria = <View style={styles.bt}>
       image: {
        
         resizeMode: 'cover'
-      }
-
+      },
+    viewButton : { flexDirection:"row", flexWrap:'wrap', justifyContent:'space-around',
+    backgroundColor: COLORS.eggshell,
+    borderColor: COLORS.wingblue,
+    borderWidth: 3,
+    borderStyle: 'dashed',
+    marginVertical: 10,   
+    borderRadius:5
+}
   })
   

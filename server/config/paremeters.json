@@ -1,6 +1,0 @@
-{
-    "userExpires": {
-        "valor": "9h",
-        "desc": "Tempo de expiração dos tokens dos utilizadores"
-    }
-}

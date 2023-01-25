@@ -18,10 +18,10 @@ import FilterScreen from '../screens/FilterScreen.js';
 import AddExpenseScreen from '../screens/AddExpenseScreen.js';
 import EditExpenseScreen from '../screens/EditExpenseScreen.js';
 import OCRScreen from '../screens/OCRScreen.js';
-
 import { COLORS,SIZES } from '../constants/theme.js';
 import PoliticsSuggestionScreen from '../screens/PoliticsSuggestionScreen.js';
 import ActivityTable from '../components/ActivityTable.js';
+import StatisticsScreen from '../screens/StatisticsScreen.js';
 
 
 // Screens Names
@@ -53,7 +53,7 @@ function MainContainer() {
               iconName = focused ? 'person-circle' : 'person-circle-outline'
             } else if (rn == politics) {
               iconName = focused ? 'journal' : 'journal-outline'
-            }else if (rn == "ActivitySummary") {
+            }else if (rn == "Stats") {
               iconName = focused ? 'bar-chart' : 'bar-chart-outline'
             }
             return <Ionicons name={iconName} size = {size} color = {color}/>
@@ -100,7 +100,7 @@ function MainContainer() {
         ),
         title:"Adicionar Despesa"
       }}/>
-        <Tab.Screen name="ActivitySummary" component={ActivitySummaryScreen} options={{title:"Atividade",headerShown: false}} />
+        <Tab.Screen name="Stats" component={StatisticsScreen} options={{title:"Estatísticas",headerShown: false}} />
         <Tab.Screen name={profileName} component={ProfileScreen} options={{title:"Perfil",headerShown: false}}/>
 
        {/* <Tab.Screen name={profileEditName} component={ProfileEditScreen} options={{headerShown: false}}/>

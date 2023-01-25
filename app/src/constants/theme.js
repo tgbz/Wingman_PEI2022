@@ -4,7 +4,8 @@ export const COLORS = {
   wingblue : "#7A97C2",
   wingDarkBlue: "#151940",
 orange: "#ee821a",
-  white: "#FFF",
+  white: "#fff",
+  wingDarkBluewhite: "#FFF",
   gray: "#74858C",
   eggshell: "#f3f4f6"
 };

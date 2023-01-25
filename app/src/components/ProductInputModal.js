@@ -3,7 +3,7 @@ import { SIZES,COLORS } from '../constants'
 import {useWindowDimensions, Modal, Text, TextInput, TouchableOpacity, StyleSheet, View } from 'react-native'
 import ChooseCategoryModal from './ChooseCategoryModal'
 import CustomInput from './CustomInput'
-const ProductInputModal = ({ isModalVisible,generalCategory,getCategoryIcon,getCategoryName, onSave, onCancel }) => {
+const ProductInputModal = ({ isModalVisible,generalCategory,getCategoryIcon,getCategoryName, onSave, onCancel,productToEdit,onEdit,isEdit}) => {
   const [description, setDescription] = useState('')
   const [value, setValue] = useState('')
   const [quantity, setQuantity] = useState(1)
@@ -11,6 +11,26 @@ const ProductInputModal = ({ isModalVisible,generalCategory,getCategoryIcon,getC
   const [isCategoryModalVisible, setIsCategoryModalVisible] = useState(false);
 
   // // TODO: Validate form data
+
+
+  // if setProductToEdit is not { } then set the fields to the productToEdit values
+  useEffect(() => {
+    if (isEdit) {
+      console.log('productToEdit',productToEdit.description)
+      setDescription(productToEdit.description)
+      setValue(productToEdit.value)
+      setQuantity(productToEdit.quantity)
+      setIdcategory(productToEdit.idcategory)
+    }else{
+      console.log('Not editing')
+      setDescription('')
+      setValue('')
+      setQuantity(1)
+      setIdcategory(generalCategory)
+    }
+  }, [isEdit])
+
+
 
     const { width } = useWindowDimensions()
   // USE EFFECT TO SET THE CATEGORY TO GENERAL CATEGORY
@@ -95,9 +115,15 @@ const ProductInputModal = ({ isModalVisible,generalCategory,getCategoryIcon,getC
           <TouchableOpacity
             style={styles.saveButton}
             onPress={() => {
+              if (isEdit) {
+                onEdit({ description, value, quantity, idcategory });
+                handleClean();
+                setIsCategoryModalVisible(false);
+              } else {
                 onSave({ description, value, quantity, idcategory });
                 handleClean();
                 setIsCategoryModalVisible(false);
+              }
                 }}
           >
         

@@ -15,6 +15,7 @@ import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 import ChooseCategoryModal from '../components/ChooseCategoryModal'
 import ProductInputModal from '../components/ProductInputModal'
 import ProductTable from '../components/ProductTable'
+import { set } from 'react-native-reanimated'
 
 
 export default function EditExpenseScreen({ navigation }) {
@@ -23,7 +24,7 @@ export default function EditExpenseScreen({ navigation }) {
   const route = useRoute()
   const idExpense = route.params?.idExpense;
   const originOCR =  route.params?.originOCR
-  console.log(route.params)
+  //console.log(route.params)
   //: true, products: products, genInfo: generalInfo
   const [title, setTitle] = useState('')
   const [selectedCategory, setSelectedCategory] = useState(22)
@@ -46,7 +47,7 @@ export default function EditExpenseScreen({ navigation }) {
   
   useEffect(() => {
     if (token.id) {
-      console.log("origem OCR", originOCR)
+      //console.log("origem OCR", originOCR)
       if (!originOCR){
       fetchData(token)}
     
@@ -84,7 +85,11 @@ function fetchDataOCR () {
     const purchase = await resp.json()
     setpurchaseData(purchase)
     setTitle(purchase.title)
-    setSelectedCategory(purchase.category)
+    if (purchase.idcategory == null) {
+      setSelectedCategory(22)
+    } else {
+    setSelectedCategory(purchase.idcategory)
+    }
     setValue(purchase.value)
     setDescription(purchase.description)
     setDate(treatDate(purchase.date))
@@ -133,7 +138,40 @@ function fetchDataOCR () {
 
   const handleCancel = () => {
     setIsModalVisible(false)
+    setProductToEdit({})
+    setIndexToEdit(-1)
+    setIsEdit(false)
   }
+
+
+
+
+  const [productToEdit, setProductToEdit] = useState({})
+  const [indexToEdit, setIndexToEdit] = useState(-1)
+  const [isEdit, setIsEdit] = useState(false)
+  // handle edit product opens the modal with the product info already filled
+  function handleEditProduct(index) {
+    //console.log('handleEditProduct')
+    //console.log(products[index])
+    setIsModalVisible(true)
+    setIsEdit(true)
+    setProductToEdit(products[index])
+    setIndexToEdit(index)
+  }
+
+  function handleEditProductSubmit(productInfo) {
+    //console.log('handleEditProductSubmit')
+    //console.log(productInfo)
+    //console.log(indexToEdit)
+    const newProducts = [...products]
+    newProducts[indexToEdit] = productInfo
+    setProducts(newProducts)
+    setProductToEdit({})
+    setIndexToEdit(0)
+    setIsEdit(false)
+    setIsModalVisible(false)
+  }
+    
 
   function handleDeleteProduct(index) {
     // Delete product at the specified index
@@ -426,6 +464,7 @@ function fetchDataOCR () {
                 products={products}
                 handleDeleteProduct={handleDeleteProduct}
                 getCategoryIcon={getCategoryIcon}
+                handleEditProduct={handleEditProduct}
               />
             ) : (
               <Text
@@ -465,6 +504,10 @@ function fetchDataOCR () {
               getCategoryName={getCategoryName}
               onSave={handleAddProduct}
               onCancel={handleCancel}
+              productToEdit={productToEdit}
+              onEdit={handleEditProductSubmit}
+              isEdit={isEdit}
+              
             />
           </View>
 
@@ -577,5 +620,5 @@ const styles = StyleSheet.create({
     fontSize: SIZES.font,
     color: COLORS.white,
     //marginStart: 10,
-  },
+  }
 })

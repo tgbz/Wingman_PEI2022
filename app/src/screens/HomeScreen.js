@@ -10,7 +10,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { useRoute } from '@react-navigation/native'
+import { useRoute } from "@react-navigation/native";
 import { useState, useEffect } from "react";
 import AuthContext from "../context/AuthProvider";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -32,7 +32,6 @@ function HomeScreen({ navigation }) {
       .catch((err) => console.log(err));
   }, []);
 
-
   //----------------------Resumo de Atividade--------------
   const getActvs = async () => {
     // fecth data from serverURL/users/userCategory/:id and print it
@@ -40,25 +39,31 @@ function HomeScreen({ navigation }) {
       `${serverURL}/purchases/getAllPurchase/${token.id}`
     );
     const transData = await resp.json();
-    console.log(transData.slice(0,1));
-    setTransactionsData(transData.slice(0,5))
+    setTransactionsData(transData.slice(0, 5));
   };
   // Put transaction data on dd/mm/aa format
   function treatDate(date) {
     date = date.split("T")[0];
     date = date.split("-").reverse().join("/");
-    date = date.split("/").slice(0,2).join("/")
-   
-    return date
+    date = date.split("/").slice(0, 2).join("/");
+
+    return date;
   }
 
-  const transactionsList = []
-  // Extract only the wanted info from the request to api 
-  function adjustData( transData) {
-    transData.forEach(element => {
+  const transactionsList = [];
+  // Extract only the wanted info from the request to api
+  function adjustData(transData) {
+    transData.forEach((element) => {
       //console.log(element)
-      let obj = {idPurchase: element.idPurchase,date: treatDate(element.date), transaction: element.title, value: element.value, category: element.idcategory, type: element.type}
-      transactionsList.push(obj)
+      let obj = {
+        idPurchase: element.idPurchase,
+        date: treatDate(element.date),
+        transaction: element.title,
+        value: element.value,
+        category: element.idcategory,
+        type: element.type,
+      };
+      transactionsList.push(obj);
     });
   }
   //---------------------- FimResumo de Atividade--------------
@@ -144,7 +149,6 @@ function HomeScreen({ navigation }) {
     }
   }, [token]);
 
-
   const [dataCPretty, setDataCPretty] = useState({});
 
   // transform the data to the format--> is_essential: {plafond, total_spent,categorieList}
@@ -165,29 +169,37 @@ function HomeScreen({ navigation }) {
       }
     });
     //console.log('\ndataCategoryPretty: ' + JSON.stringify(data))
-    setDataCPretty(data)
+    setDataCPretty(data);
   }
-
 
   //dataCategoryPretty(categoryData);
 
-      
   function transformToNoCategoryData(selector, categoryData) {
     const data = {};
     // make it wait for the data to be fetched
     //console.log('\n\nreformedData: ' + typeof  )
-    let spent =0,
+    let spent = 0,
       total_plafond = 0;
     //le.log('-----------------')
     //console.log('selector: ' + selector)
-    
+
     categoryData.forEach((element) => {
       if (parseInt(element.is_essential) == selector) {
         total_plafond += parseInt(element.plafond);
         spent += parseInt(element.total_spent);
       }
     });
-  
+
+    console.log(
+      "selector:" +
+        selector +
+        "\n" +
+        "total_plafond: " +
+        total_plafond +
+        "\n" +
+        "spent: " +
+        spent
+    );
     //console.log('total_plafond: ' + total_plafond)
     //console.log('spent: ' + spent)
     if (spent >= total_plafond) {
@@ -196,30 +208,34 @@ function HomeScreen({ navigation }) {
       //console.log(selector +' :'+ Math.round(spent / total_plafond))
       // arredonda para inteiro
       //data.data = [Math.round(spent / total_plafond)];
-    } else data.data = [Math.round(spent / total_plafond)];
+    } else data.data = [Math.round((spent * 100) / total_plafond)/100];
 
+    data.percSpent = (spent >= total_plafond) ? 100 : Math.round((spent * 100) / total_plafond);
+    data.total_spent = spent;
+    data.plafond = total_plafond;
     data.labels = [selector];
+    console.log(data);
     return data;
   }
 
   // every time route.params is true when user add despesa e edit despesa, refresh data
-  const route = useRoute()
+  const route = useRoute();
   useEffect(() => {
-    console.log('route.params: ' + JSON.stringify(route.params))
+    console.log("route.params: " + JSON.stringify(route.params));
     // dont do shit if route.params is undefined
     if (route.params) {
       // se nao for undefined
       if (route.params.refresh) {
         // se for true
-        console.log('Refresh Home Screen')
-        fetchData(token)
+        console.log("Refresh Home Screen");
+        fetchData(token);
         getActvs(token);
         //console.log(typeof route.params.refresh)
         // set route.params.refresh to false
-        route.params.refresh = false
+        route.params.refresh = false;
       }
     }
-  }, [route.params])
+  }, [route.params]);
 
   return (
     adjustData(transactionsData),
@@ -295,7 +311,8 @@ function HomeScreen({ navigation }) {
                   style={{
                     flexDirection: "row",
                     justifyContent: "space-between",
-                  }}>
+                  }}
+                >
                   <View style={styles.charts}>
                     <ProgressChart
                       data={transformToNoCategoryData(
@@ -309,6 +326,20 @@ function HomeScreen({ navigation }) {
                       chartConfig={chartConfig(essencial_selector)}
                       hideLegend={true}
                     />
+                          <Text
+                      style={{
+                        position: "absolute",
+                        alignSelf: "center",
+                        top: "50%",
+                        transform: [{ translateY: -26 }],
+                        fontFamily: FONTS.medium,
+                        fontSize: SIZES.small,
+                        color: COLORS.wingDarkBlue,
+                      }}
+                    >{transformToNoCategoryData(
+                      essencial_selector,
+                      categoryData
+                    ).percSpent}%</Text>
                     <Text style={styles.charts_text}>Essenciais</Text>
                     {/* <Text style={styles.charts_text}>{JSON.stringify(dataCPretty[0].spent)} €</Text> */}
                   </View>
@@ -325,6 +356,20 @@ function HomeScreen({ navigation }) {
                       chartConfig={chartConfig(non_essencial_selector)}
                       hideLegend={true}
                     />
+                    <Text
+                      style={{
+                        position: "absolute",
+                        alignSelf: "center",
+                        top: "50%",
+                        transform: [{ translateY: -26 }],
+                        fontFamily: FONTS.small,
+                        fontSize: SIZES.medium,
+                        color: COLORS.wingDarkBlue,
+                      }}
+                    >{transformToNoCategoryData(
+                      non_essencial_selector,
+                      categoryData
+                    ).percSpent}%</Text>
                     <Text style={styles.charts_text}>Não Essenciais</Text>
                   </View>
                   <View style={styles.charts}>
@@ -340,6 +385,20 @@ function HomeScreen({ navigation }) {
                       chartConfig={chartConfig(investment_selector)}
                       hideLegend={true}
                     />
+                          <Text
+                      style={{
+                        position: "absolute",
+                        alignSelf: "center",
+                        top: "50%",
+                        transform: [{ translateY: -26 }],
+                        fontFamily: FONTS.medium,
+                        fontSize: SIZES.small,
+                        color: COLORS.wingDarkBlue,
+                      }}
+                    >{transformToNoCategoryData(
+                      investment_selector,
+                      categoryData
+                    ).percSpent}%</Text>
                     <Text style={styles.charts_text}>Investimentos</Text>
                   </View>
                 </View>
@@ -368,10 +427,12 @@ function HomeScreen({ navigation }) {
           </View>
           <ActivityTable
             data={transactionsList}
-            headerHome={true} 
+            headerHome={true}
             navigation={navigation}
           ></ActivityTable>
-          <TouchableOpacity onPress={() => navigation.navigate('OCR')}><Text>OCR</Text></TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("OCR")}>
+            <Text>OCR</Text>
+          </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>
     )
@@ -459,7 +520,5 @@ const styles = StyleSheet.create({
     right: 0,
   },
 });
-
-
 
 export default HomeScreen;

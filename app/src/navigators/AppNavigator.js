@@ -118,7 +118,7 @@ export default function HomeStack() {
         headerTitleStyle: {
         fontFamily: 'SoraMedium',
         fontSize: SIZES.medium,
-        backgroundColor: 'transparent',
+        backgroundColor: COLORS.wingDarkBlue,
         },headerBackTitleVisible: false, headerTintColor: COLORS.wingDarkBlue,headerTitleAlign:"center",headerShadowVisible: false, headerTransparent: true,
         // backgrond color of the header 
        /*headerLeft: () => (

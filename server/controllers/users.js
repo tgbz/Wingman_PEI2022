@@ -43,9 +43,7 @@ return new Promise(function(resolve, reject) {
 }
 
 
-Users.register = function (
-    
-) {
+Users.register = function (newUser) {
     return new Promise(function(resolve, reject) {
         sql.getConnection(function(err,conn){
              if (err) {

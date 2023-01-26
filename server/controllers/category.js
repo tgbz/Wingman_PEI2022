@@ -134,32 +134,33 @@ Categories.updateSpent = function (idUser,idCategory,total_spent ) {
         })
     };
 
-Categories.addExpenses = function (idUser,category,total_spent,connection ) {
+Categories.addExpenses = function (idUser,category,total_spent,date,connection ) {
+    var date = new Date(date);
+    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    console.log(firstDay)
     return new Promise(function(resolve, reject) {
-        connection.query(`UPDATE user_has_category AS cat,( SELECT IFNULL( (SELECT idCategory FROM category WHERE name = ?),22) as idCategory) AS idCat
-        SET
-            total_spent = total_spent + ?
-        WHERE
-            idUser=? and  cat.idCategory = idCat.idCategory;`,[category, total_spent, idUser],
+        connection.query(`INSERT into user_has_category (idUser,idcategory,plafond,total_spent,date) values 
+        (?, IFNULL( (SELECT idCategory FROM category WHERE name = ?),11),0,?,?) ON DUPLICATE KEY UPDATE    total_spent = total_spent +?
+
+        `,[idUser,category, total_spent,firstDay,total_spent],
             function (err, res) {
             if(err){
                 console.log("error: ", err);
                 reject(err);
             }
             else{
+                console.log("Eu "+idUser +" alterei "+category+ " em "+total_spent)
                 resolve(res);
             }
         });
         })
     };
 
-Categories.addExpensesbyID = function (idUser,category,total_spent ) {
+Categories.addExpensesbyID = function (idUser,category,total_spent,date ) {
+    var date = new Date(date);
+    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
     return new Promise(function(resolve, reject) {
-        sql.query(`UPDATE user_has_category 
-        SET
-            total_spent = total_spent + ?
-        WHERE
-            idUser=? and  idcategory = ?`,[total_spent, idUser,category],
+        sql.query(`INSERT INTO user_has_category  (idUser, idCategory, plafond, total_spent, date) VALUES(?,?,0,?,?) ON DUPLICATE KEY UPDATE    total_spent = total_spent +? `,[idUser,category,total_spent,firstDay,total_spent],
             function (err, res) {
             if(err){
                 console.log("error: ", err);

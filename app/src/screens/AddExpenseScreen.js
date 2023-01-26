@@ -35,6 +35,8 @@ export default function AddExpenseScreen({ navigation }) {
   const formattedDate = today.toISOString().slice(0, 10)
   const [date, setDate] = useState(formattedDate)
 
+  // TODO: Validate form data
+
   useEffect(() => {
     AsyncStorage.getItem('userToken')
       .then((userToken) => setToken(JSON.parse(userToken)))
@@ -59,6 +61,17 @@ export default function AddExpenseScreen({ navigation }) {
 
   const handleCancel = () => {
     setIsModalVisible(false)
+  }
+
+  // handle clean form
+  function handleCleanForm() {
+    setTitle('')
+    setSelectedCategory(22)
+    setValue('')
+    setDescription('')
+    setProducts([])
+    setIsDebit(true)
+    setDate(formattedDate)
   }
 
   function handleDeleteProduct(index) {
@@ -208,10 +221,8 @@ export default function AddExpenseScreen({ navigation }) {
             {typeContainer()}
             {/* Title input */}
             <Text style={styles.textTag}>Título</Text>
-            
             <View style={[styles.buttonStyle, { width: width * 0.8 }]}>
               <TextInput
-
                 placeholder="Ex: Conta de luz"
                 onChangeText={setTitle}
                 style={styles.textButton}
@@ -357,9 +368,19 @@ export default function AddExpenseScreen({ navigation }) {
 
           <View style={styles.containerBTN}>
             <CustomButton
-              onPress={() => handleFormSubmission()}
+              onPress={() => {
+                handleCleanForm(),
+                handleFormSubmission()
+              }}
               text="Adicionar Movimento"
               type="TERTIARY"
+              widthScale={0.8}
+            ></CustomButton>
+
+<CustomButton
+              onPress={() => handleCleanForm()}
+              text="Limpar Dados"
+              type="SECONDARY"
               widthScale={0.8}
             ></CustomButton>
           </View>

@@ -15,6 +15,7 @@ import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 import ChooseCategoryModal from '../components/ChooseCategoryModal'
 import ProductInputModal from '../components/ProductInputModal'
 import ProductTable from '../components/ProductTable'
+import { set } from 'react-native-reanimated'
 
 
 export default function EditExpenseScreen({ navigation }) {
@@ -22,7 +23,9 @@ export default function EditExpenseScreen({ navigation }) {
   const [token, setToken] = useState('')
   const route = useRoute()
   const idExpense = route.params?.idExpense;
-
+  const originOCR =  route.params?.originOCR
+  //console.log(route.params)
+  //: true, products: products, genInfo: generalInfo
   const [title, setTitle] = useState('')
   const [selectedCategory, setSelectedCategory] = useState(22)
   const [value, setValue] = useState('')
@@ -41,11 +44,36 @@ export default function EditExpenseScreen({ navigation }) {
       .catch((err) => console.log(err))
   }, [])
 
+  
   useEffect(() => {
     if (token.id) {
-      fetchData(token)
-    }
+      //console.log("origem OCR", originOCR)
+      if (!originOCR){
+      fetchData(token)}
+    
+      else fetchDataOCR()
+      }
   }, [token])
+
+
+
+function fetchDataOCR () {
+  //setpurchaseData(purchase)
+  let infogen = route.params?.genInfo
+  let products = route.params?.products
+  setTitle(infogen.market)
+  setSelectedCategory(22)
+  setValue(infogen.total)
+  setDescription(infogen.market)
+  //if (infogen.date==null){infogen.date = Date.now()}
+  setDate(treatDate(infogen.date))
+  setProducts(products)
+    setIsDebit(true)
+  if (products.length == 1 && products[0].description == 'Não especificado') {
+    setSelectedCategory(purchase.products[0].idcategory)
+  }
+}
+
 
   const [purchaseData,setpurchaseData] = useState([])
 
@@ -57,7 +85,11 @@ export default function EditExpenseScreen({ navigation }) {
     const purchase = await resp.json()
     setpurchaseData(purchase)
     setTitle(purchase.title)
-    setSelectedCategory(purchase.category)
+    if (purchase.idcategory == null) {
+      setSelectedCategory(22)
+    } else {
+    setSelectedCategory(purchase.idcategory)
+    }
     setValue(purchase.value)
     setDescription(purchase.description)
     setDate(treatDate(purchase.date))
@@ -70,8 +102,6 @@ export default function EditExpenseScreen({ navigation }) {
     if (purchase.products.length == 1 && purchase.products[0].description == 'Não especificado') {
       setSelectedCategory(purchase.products[0].idcategory)
     }
-
-
   }
 
   function treatDate (date) {
@@ -79,6 +109,10 @@ export default function EditExpenseScreen({ navigation }) {
     if (typeof date === 'string') {
       return date.slice(0, 10)
   }
+    if (date === null){
+      var date = new Date();
+	    return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+ date.getDate();
+    }
   }
 
   const toggleModalCT = () => {
@@ -104,7 +138,40 @@ export default function EditExpenseScreen({ navigation }) {
 
   const handleCancel = () => {
     setIsModalVisible(false)
+    setProductToEdit({})
+    setIndexToEdit(-1)
+    setIsEdit(false)
   }
+
+
+
+
+  const [productToEdit, setProductToEdit] = useState({})
+  const [indexToEdit, setIndexToEdit] = useState(-1)
+  const [isEdit, setIsEdit] = useState(false)
+  // handle edit product opens the modal with the product info already filled
+  function handleEditProduct(index) {
+    //console.log('handleEditProduct')
+    //console.log(products[index])
+    setIsModalVisible(true)
+    setIsEdit(true)
+    setProductToEdit(products[index])
+    setIndexToEdit(index)
+  }
+
+  function handleEditProductSubmit(productInfo) {
+    //console.log('handleEditProductSubmit')
+    //console.log(productInfo)
+    //console.log(indexToEdit)
+    const newProducts = [...products]
+    newProducts[indexToEdit] = productInfo
+    setProducts(newProducts)
+    setProductToEdit({})
+    setIndexToEdit(0)
+    setIsEdit(false)
+    setIsModalVisible(false)
+  }
+    
 
   function handleDeleteProduct(index) {
     // Delete product at the specified index
@@ -194,6 +261,8 @@ export default function EditExpenseScreen({ navigation }) {
   // Edit expense
 
   const handleFormSubmission = async () => {
+    console.log("Entrei no handle agora!")
+    if (!originOCR){
     const newData = {
       // falta a CATEGORIA
       is_recurring: false,
@@ -222,6 +291,43 @@ export default function EditExpenseScreen({ navigation }) {
         alert('Erro ao editar transação!')
       }
     })
+  }
+  else
+  { if(products.length == 0){
+    products.push({
+      quantity: 1,
+      value: value,
+      idcategory: selectedCategory,
+      description: 'Não especificado',
+    })
+  }
+  const newData = {
+    // falta a CATEGORIA
+    is_recurring: false,
+    date: date,
+    value: value,
+    title: title,
+    description: description,
+    idUser: token.id,
+    seller: '',
+    type: isDebit ? 'Debito' : 'Credito',
+    products: products, // quantity , value , idcategory , description
+  }
+  const resp = await fetch(`${serverURL}/purchases/createPurchase/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newData),
+  }).then((resp) => {
+    if (resp.status === 200) {
+      alert('Despesa adicionada com sucesso!')
+      navigation.navigate('Casa', { refresh: true })
+    } else {
+      alert('Erro ao adicionar despesa!')
+    }
+  })
+}
   }
  
   // handleDeleteExpense()
@@ -358,6 +464,7 @@ export default function EditExpenseScreen({ navigation }) {
                 products={products}
                 handleDeleteProduct={handleDeleteProduct}
                 getCategoryIcon={getCategoryIcon}
+                handleEditProduct={handleEditProduct}
               />
             ) : (
               <Text
@@ -397,23 +504,35 @@ export default function EditExpenseScreen({ navigation }) {
               getCategoryName={getCategoryName}
               onSave={handleAddProduct}
               onCancel={handleCancel}
+              productToEdit={productToEdit}
+              onEdit={handleEditProductSubmit}
+              isEdit={isEdit}
+              
             />
           </View>
 
           <View style={styles.containerBTN}>
             <CustomButton
-              onPress={() => handleFormSubmission()}
+              onPress={() => {handleFormSubmission()}}
               text="Guardar Alterações"
               type="TERTIARY"
               widthScale={0.8}
             ></CustomButton>
             {/* Delete expense button - red */}
+            {!originOCR &&
             <CustomButton
-              onPress={() => handleDeleteExpense()}
+              onPress={() => {handleDeleteExpense()}}
               text="Eliminar Despesa"
               type="SECONDARY"
               widthScale={0.8}
-            ></CustomButton>
+            ></CustomButton>}
+            {originOCR &&
+            <CustomButton
+              onPress={() => {console.log("Carreguei aqui 1 vez"), navigation.navigate('Home')}}
+              text="Cancelar Despesa"
+              type="SECONDARY"
+              widthScale={0.8}
+            ></CustomButton>}
             
 
           </View>
@@ -464,6 +583,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textButton: {
+    flex: 0.95,
     fontFamily: 'SoraRegular',
     fontSize: SIZES.font,
     color: COLORS.wingDarkBlue,
@@ -500,5 +620,5 @@ const styles = StyleSheet.create({
     fontSize: SIZES.font,
     color: COLORS.white,
     //marginStart: 10,
-  },
+  }
 })

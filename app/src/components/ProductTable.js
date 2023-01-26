@@ -3,10 +3,10 @@ import { Table, Row, Data } from 'react-native-table-component'
 import { Modal, Text, TextInput, TouchableOpacity, StyleSheet, View } from 'react-native'
 import { COLORS,FONTS,SIZES } from '../constants'
 
-import { MaterialIcons } from 'react-native-vector-icons'
+import { MaterialIcons,MaterialCommunityIcons } from 'react-native-vector-icons'
 
-const ProductTable = ({ products, handleDeleteProduct,getCategoryIcon }) => {
-  const tableHead = ['Produto', 'Valor', 'Quant.', ' ']
+const ProductTable = ({ products, handleDeleteProduct,getCategoryIcon,handleEditProduct }) => {
+  const tableHead = ['Produto', 'Valor', ]
   
   return (
     <Table>
@@ -23,7 +23,13 @@ const ProductTable = ({ products, handleDeleteProduct,getCategoryIcon }) => {
             getCategoryIcon(product.idcategory),
             product.description,
             `${product.value} €`,
-            product.quantity,
+            `x${product.quantity}`,
+            <MaterialCommunityIcons
+              name="pencil"
+              size={24}
+              color={COLORS.wingDarkBlue}
+              onPress={() => handleEditProduct(index,product)}
+            />,
             <MaterialIcons
               name="delete"
               size={24}
@@ -31,7 +37,7 @@ const ProductTable = ({ products, handleDeleteProduct,getCategoryIcon }) => {
               onPress={() => handleDeleteProduct(index)}
             />,
           ]}
-          widthArr={[40,100, 90, 50, 60]}
+          widthArr={[40,100, 70, 50,30, 40]}
           style={styles.row}
           textStyle={styles.rowText}
         />
@@ -54,7 +60,7 @@ const styles = StyleSheet.create({
   headerText: {
     padding: 5,
           fontFamily: FONTS.medium,
-          fontSize: SIZES.medium,
+          fontSize: SIZES.small,
           color: COLORS.white,
   },
   row: {

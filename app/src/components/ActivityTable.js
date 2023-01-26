@@ -13,12 +13,12 @@ const ActivityTable = ({data,headerHome, navigation}) => {
         //console.log(element.data)
         let value = element.value
         if (headerHome) value = value + '€'
-        let transaction = <TouchableOpacity onPress={() => navigation.navigate('EditExpense', {idExpense: element.idPurchase, idCategory: element.category})}><Text style={styles.text}>{element.transaction}</Text></TouchableOpacity>
+        let transaction = <TouchableOpacity onPress={() => navigation.navigate('EditExpense', {idExpense: element.idPurchase, idCategory: element.category, originOCR: false})}><Text style={styles.text}>{element.transaction}</Text></TouchableOpacity>
         tableData.push([CATEGORIES[element.category].icon, transaction, element.date, SIGNS[accents.remove(element.type)].icon, value]);
      });
     }  
     const headTable = ['','Transação', 'Data', 'Valor (€)']
-    const HomeTable = ['','Resumo de Atividade', '', <TouchableOpacity onPress={() => navigation.navigate('ActivitySummary')}><MaterialCommunityIcons name="eye-plus-outline" size={24} color="#ee821a"/></TouchableOpacity>]
+    const HomeTable = ['','Resumo de Atividade', '', <TouchableOpacity onPress={() => navigation.navigate('ActivitySummary', { refresh: true })}><MaterialCommunityIcons name="eye-plus-outline" size={24} color="#ee821a"/></TouchableOpacity>]
   
     return (
         getTable(),

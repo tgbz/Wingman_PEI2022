@@ -43,9 +43,7 @@ return new Promise(function(resolve, reject) {
 }
 
 
-Users.register = function (
-    
-) {
+Users.register = function (newUser) {
     return new Promise(function(resolve, reject) {
         sql.getConnection(function(err,conn){
              if (err) {
@@ -170,6 +168,20 @@ Users.getUser = function(id) {
             }
             else{
                 resolve(res[0])
+            }
+        });   
+    })   
+}
+
+Users.listUsers = function() {
+    return new Promise(function(resolve,reject){
+        sql.query(`SELECT idUser from user`,function(err,res){
+            if(err) {
+                console.log("error: ", err);
+                reject(err);
+            }
+            else{
+                resolve(res)
             }
         });   
     })   

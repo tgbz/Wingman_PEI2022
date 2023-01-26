@@ -189,7 +189,7 @@ Purchases.getRecurrent = function(id) {
                             Purchases.addSubCategoryToPurchasebyID(insertedID,product,i.idcategory,i.value,i.quantity)
                             .then(result =>{
                                 console.log("result: "+result)
-                                Categories.addExpensesbyID(idUser,i.idcategory,i.value)
+                                Categories.addExpensesbyID(idUser,i.idcategory,i.value,date)
                                 .then(categoria =>{
                                     console.log("categoria: "+categoria)
                                     resolve(categoria)
@@ -339,21 +339,20 @@ Purchases.addSubCategoryToPurchase = function (idPurchase,idProduct,category,val
     };
 
 
-Purchases.uploadPurchases = function (is_recurring, date, value, description, idUser, seller,idMovement,isFromAPI,type,verified,category,idProduct,connection) {
+Purchases.uploadPurchases = function (is_recurring, date, value, description, idUser, seller,idMovement,isFromAPI,type,verified,category,idProduct) {
     return new Promise(function(resolve, reject) {
+        sql.getConnection(async function(err, connection) {
         Purchases.createPurchase(is_recurring, date, value, description, idUser, seller,idMovement,isFromAPI,type,verified,connection)
         .then(insertedID =>{
             Purchases.addSubCategoryToProduct(idProduct,category,connection)
             .then(res=>{
                 if(insertedID>0){
-                    console.log(insertedID)
                     Purchases.addSubCategoryToPurchase(insertedID,idProduct,category,value,connection)
                     .then(result =>{
-                        console.log(result)
-                        Categories.addExpenses(idUser,category,value,connection)
+                        Categories.addExpenses(idUser,category,value,date,connection)
                         .then(categoria =>{
-                            console.log(categoria)
                             resolve(categoria)
+                            connection.release()
                         })
                         .catch(err =>{
                             connection.rollback()
@@ -370,7 +369,8 @@ Purchases.uploadPurchases = function (is_recurring, date, value, description, id
                     })
                 }
                 else{
-                    resolve()
+                    resolve("Perdido")
+                    connection.release()
                 }
                 
             })
@@ -383,6 +383,7 @@ Purchases.uploadPurchases = function (is_recurring, date, value, description, id
             connection.rollback()
             reject(err)
         })
+    })
         })
     };
 
@@ -391,22 +392,20 @@ Purchases.uploadPurchases = function (is_recurring, date, value, description, id
 Purchases.uploadFromSibs = async function () {
     const UserList = await Users.getUsers()
     Object.values(UserList).forEach( i => {
-        axios.get('http://94.60.175.136:3335/statements/'+i.IBAN)
+        console.log(i.IBAN)
+        axios.get('http://94.60.175.136:3335/statements/update/'+i.IBAN)
         .then(async function(response){
-                sql.getConnection(async function(err, connection) {
+            if(!response.data){
+                console.log("Algo nao deu certo na conta  "+i.IBAN)
+            }
+            else{
                 movimentos = response.data.movimentos
                 Object.values(movimentos).forEach( movimento => { 
                     let date = new Date(movimento.date).toISOString().replace(/T/, ' ').replace(/\..+/, '')
-                    Purchases.uploadPurchases(0,date,movimento.value,movimento.description,i.idUser,movimento.issuer,movimento._id,1,movimento.type,0,movimento.category,1,connection)
-                    .then(()=>{
-                    })
-                    .catch(err=>{
-                        connection.rollback()
-                        console.log(err)
-                    })
+                    Purchases.uploadPurchases(0,date,movimento.value,movimento.description,i.idUser,movimento.issuer,movimento._id,1,movimento.type,0,movimento.category,1)
                 })
                 console.log("No erros YEY!")
-            })
+        }
         })
         .catch(function (error) {
             console.error(error);

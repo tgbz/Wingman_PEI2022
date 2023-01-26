@@ -125,7 +125,7 @@ Purchases.getBalance = function(id,date) {
     var lastDay  = new Date(date.getFullYear(), date.getMonth()+1, 0);
     console.log(lastDay)
     return new Promise(function(resolve,reject){
-        sql.query(`SELECT SUM(CASE WHEN type = 'Debito' THEN value END) AS despesa,  SUM(CASE WHEN type = 'Credito' THEN value END) AS income from purchase 
+        sql.query(`SELECT SUM(CASE WHEN type = 'Debito' THEN value ELSE 0 END) AS despesa,  SUM(CASE WHEN type = 'Credito' THEN value ELSE 0 END) AS income from purchase 
         where idUser = ? and (date BETWEEN ? AND ?)`,
         [id,firstDay,lastDay] ,function(err,res){
             if(err) {

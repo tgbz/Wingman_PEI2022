@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 5,
+            "activePatchIndex": 6,
             "patches": [
                 {
                     "date": 1669627957805,
@@ -28,6 +28,10 @@
                 {
                     "date": 1674748713266,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,5 @@\n import { Platform } from \"react-native\";\r\n \r\n-let serverURL = \"https://4972-2001-818-e7a8-c500-a0e8-b383-215a-5cee.eu.ngrok.io\";\r\n+let serverURL = \"https://4972-2001-818-e7a8-c500-a0e8-b383-215a-5cee.eu.ngrok.io\"\r\n \r\n-export default serverURL;\r\n-\r\n+export { serverURL };\r\n"
+                },
+                {
+                    "date": 1674752875796,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,12 @@\n import { Platform } from \"react-native\";\r\n \r\n let serverURL = \"https://4972-2001-818-e7a8-c500-a0e8-b383-215a-5cee.eu.ngrok.io\"\r\n \r\n+if (Platform.OS == \"android\") {\r\n+  serverURL = \"https://22f1-2001-818-dafd-2100-49d4-a948-2132-1963.eu.ngrok.io\";\r\n+} else if (Platform.OS == \"ios\") {\r\n+  serverURL = \"https://c7e8-2001-8a0-f3f5-b100-943a-a533-1fb9-2f55.ngrok.io\";\r\n+} else {\r\n+  serverURL = \"http://localhost:3000\";\r\n+}\r\n export { serverURL };\r\n"
                 }
             ],
             "date": 1669627957805,

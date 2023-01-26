@@ -119,6 +119,29 @@ Purchases.getAllPurchase = function(id) {
 }
 
 
+Purchases.getBalance = function(id,date) {
+    var date = new Date(date);
+    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    var lastDay  = new Date(date.getFullYear(), date.getMonth()+1, 0);
+    console.log(lastDay)
+    return new Promise(function(resolve,reject){
+        sql.query(`SELECT SUM(CASE WHEN type = 'Debito' THEN value END) AS despesa,  SUM(CASE WHEN type = 'Credito' THEN value END) AS income from purchase 
+        where idUser = ? and (date BETWEEN ? AND ?)`,
+        [id,firstDay,lastDay] ,function(err,res){
+            if(err) {
+                console.log("error: ", err);
+                reject(err);
+            }
+            else{
+                resolve(res)
+            }
+        });   
+    })   
+}
+
+
+
+
 Purchases.getRecurrent = function(id) {
     return new Promise(function(resolve,reject){
         sql.query(`SELECT * FROM purchase where idUser=? and is_recurring = 1`,

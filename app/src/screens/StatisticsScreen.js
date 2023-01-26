@@ -18,18 +18,26 @@ import AuthContext from '../context/AuthProvider'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { FONTS, COLORS, SHADOWS, SIZES } from '../constants'
 import { serverURL } from '../config/hosts'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'
 import { ProgressChart } from 'react-native-chart-kit'
 import { CATEGORIES, CATEGORIESCOLORS } from '../constants'
-
+import { BarChart } from 'react-native-chart-kit'
 import _ from 'lodash' //Fazer Clone dos objetos
-
+import { set } from 'react-native-reanimated'
 
 function StatisticsScreen({ navigation }) {
   const { width } = useWindowDimensions()
   const [token, setToken] = useState('')
   const months = []
   const [selectedMonth, setSelectedMonth] = useState(11)
+    // Set the height of each item in the list
+    const ITEM_HEIGHT = 100;
+
+
+  const getItemLayout = (data, index) => (
+
+    { length: ITEM_HEIGHT, offset: ITEM_HEIGHT * index, index }
+  );
 
   useEffect(() => {
     AsyncStorage.getItem('userToken')
@@ -53,14 +61,14 @@ function StatisticsScreen({ navigation }) {
   const navigateToPrevious = () => {
     if (selectedMonth > 0) {
       setSelectedMonth(selectedMonth - 1)
-      flatListRef.current.scrollToIndex({ animated: true, index: selectedMonth - 1 })
+      //flatListRef.current.scrollToIndex({ animated: true, index: selectedMonth - 1 })
     }
   }
 
   const navigateToNext = () => {
     if (selectedMonth < months.length - 1) {
       setSelectedMonth(selectedMonth + 1)
-      flatListRef.current.scrollToIndex({ animated: true, index: selectedMonth + 1 })
+      //flatListRef.current.scrollToIndex({ animated: true, index: selectedMonth + 1 })
     }
   }
 
@@ -69,8 +77,10 @@ function StatisticsScreen({ navigation }) {
   // fecth data from the server
   // router.get("/userCategory/:id/:date"
   const [dataCategories, setDataCategories] = useState([])
-  const fecthData = async (token,date) => {
-    console.log("Date to fetch: ",date)
+  const [income, setIncome] = useState(0)
+  const [expense, setExpense] = useState(0)
+  const fecthData = async (token, date) => {
+    //console.log('Date to fetch: ', date)
     const response = await fetch(`${serverURL}/categories/userCategory/` + token.id + `/` + date, {
       method: 'GET',
       headers: {
@@ -78,8 +88,24 @@ function StatisticsScreen({ navigation }) {
       },
     })
     const data = await response.json()
-    console.log("Data: ",data[0])
+    //console.log('Data: ', data[0])
     setDataCategories(data)
+
+    // fetch data for the balance info 
+    // router.get('/getBalance/:id/:date'
+    console.log('Date to fetch: ', `${serverURL}/purchases/getBalance/` + token.id + `/` + date)
+    const responseBalance = await fetch(`${serverURL}/purchases/getBalance/` + token.id + `/` + date, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    const dataBalance = await responseBalance.json()
+    console.log('Data Balance: ', dataBalance[0])
+    console.log('Income: ', dataBalance[0].income)
+    console.log('Expense: ', dataBalance[0].despesa)
+    setIncome(Math.round(dataBalance[0].income))
+    setExpense(Math.round(dataBalance[0].despesa))
   }
   const monthsLong = {
     janeiro: '01',
@@ -94,7 +120,7 @@ function StatisticsScreen({ navigation }) {
     outubro: '10',
     novembro: '11',
     dezembro: '12',
-  };
+  }
   // fetch the data for the correct month when the month is changed
   useEffect(() => {
     // got the month and year from the months array
@@ -105,17 +131,17 @@ function StatisticsScreen({ navigation }) {
 
     // format  2023-01-01
     const date = year + '-' + monthNumber + '-' + '01'
-    fecthData(token,date)
-
+    flatListRef.current.scrollToIndex({ animated: true, index: selectedMonth });
+    fecthData(token, date)
   }, [selectedMonth])
-
 
   useEffect(() => {
     if (token.id) {
       const today = new Date()
       // format  2023-01-01
       const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
-      fecthData(token,date)
+      flatListRef.current.scrollToIndex({ animated: true, index: selectedMonth });
+      fecthData(token, date)
     }
   }, [token])
 
@@ -124,7 +150,7 @@ function StatisticsScreen({ navigation }) {
   // and a donut chart for  each categorie with the plafond vs spent data of the month selected
   return (
     getMonths(),
-    console.log(months),
+    //console.log(months),
     (
       <SafeAreaView style={styles.root} forceInset={{ horizontal: 'never' }}>
         <ScrollView>
@@ -136,6 +162,7 @@ function StatisticsScreen({ navigation }) {
               </TouchableOpacity>
               <FlatList
                 ref={flatListRef}
+                getItemLayout={getItemLayout}
                 data={months}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item, index }) => (
@@ -169,11 +196,35 @@ function StatisticsScreen({ navigation }) {
               </TouchableOpacity>
             </View>
           </View>
+
           <View style={styles.containerC}>
-            {/*Title FlatList */}
+            <View style={styles.balanceContainer}>
+              <Text style={styles.balanceText}>{income-expense} €</Text>
+              <Text style={styles.percentageBalance}>Gastaste {Math.round((expense*100)/income)}% do que ganhaste</Text>
+            </View>
+            {/* Two containers in line */}
+            <View style={styles.incomeExpenseContainer}>
+              <View style={[styles.IEContainer,{shadowColor: 'green'}]}>
+                <MaterialCommunityIcons name="arrow-up" style={styles.incomeIcon} />
+                <View style={styles.IETextContainer}>
+                  <Text style={styles.IEText}>Receitas</Text>
+                  <Text style={styles.IENumber}>{income} €</Text>
+                </View>
+              </View>
+              <View style={[styles.IEContainer,{shadowColor: 'red'}]}>
+                <MaterialCommunityIcons name="arrow-down" style={styles.expenseIcon} />
+                <View style={styles.IETextContainer}>
+                  <Text style={styles.IEText}>Despesas</Text>
+                  <Text style={styles.IENumber}>{expense} €</Text>
+                </View>
+              </View>
+            </View>
+
+            {/*Title FlatList 
             <View style={styles.titleContainer}>
               <Text style={styles.title}>Despesas por Categoria</Text>
             </View>
+            */}
 
             <FlatList
               //data={dataCategories}
@@ -189,7 +240,7 @@ function StatisticsScreen({ navigation }) {
                         {
                           backgroundColor: CATEGORIESCOLORS[item.idcategory],
                           width: `${(item.total_spent / item.plafond) * 100}%`,
-                          maxWidth: width - 10,
+                          maxWidth: width - 20,
                         },
                       ]}
                     />
@@ -204,19 +255,25 @@ function StatisticsScreen({ navigation }) {
                     </Text>
                   </View>
                   {/*At the end of the row show spent and planfond */}
-                    <View style={{alignItems: 'flex-end',paddingRight:20}}>
-                        {/*If the spent is bigger than the plafond show the plafond in red */}
-                        {item.total_spent > item.plafond && (
-                            <>
-                        <Text style={{fontSize: 14,fontFamily:"SoraBold", color: COLORS.wingDarkBlue}}>
-                        {Number(item.total_spent).toFixed(0)} €
+                  <View style={{ alignItems: 'flex-end', paddingRight: 20 }}>
+                    {/*If the spent is bigger than the plafond show the plafond in red */}
+                    {item.total_spent > item.plafond && (
+                      <>
+                        <Text
+                          style={{
+                            fontSize: 14,
+                            fontFamily: 'SoraBold',
+                            color: COLORS.wingDarkBlue,
+                          }}
+                        >
+                          {Number(item.total_spent).toFixed(0)} €
                         </Text>
-                        <Text style={{fontSize: 13, color: COLORS.wingDarkBlue,opacity: 0.8}}>
-                        {Number(item.plafond).toFixed(0)} €
+                        <Text style={{ fontSize: 13, color: COLORS.wingDarkBlue, opacity: 0.8 }}>
+                          {Number(item.plafond).toFixed(0)} €
                         </Text>
-                        </>
-                        )}
-                    </View>
+                      </>
+                    )}
+                  </View>
                 </View>
               )}
             />
@@ -277,7 +334,8 @@ const styles = StyleSheet.create({
     flex: 1,
     //alignItems: 'center',
     // tirar este padding e ajustar a width right to full screen
-    //padding: 10,
+    padding: 10,
+//paddingTop: 10,
     justifyContent: 'center',
     paddingBottom: 100,
   },
@@ -286,7 +344,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 8,
     paddingLeft: 16,
-    marginBottom: 4,
+    marginBottom: 8,
     borderRadius: 8,
     backgroundColor: 'white',
   },
@@ -326,7 +384,7 @@ const styles = StyleSheet.create({
     //borderRadius: 8,
     borderBottomEndRadius: 8,
     borderTopEndRadius: 8,
-    opacity: 1,
+    opacity: 0.8,
   },
   titleContainer: {
     flex: 1,
@@ -340,6 +398,72 @@ const styles = StyleSheet.create({
     color: COLORS.wingDarkBlue,
     fontFamily: 'SoraMedium',
     fontSize: 20,
+  },
+  balanceContainer: {
+    flex: 1,
+    alignItems: 'center',
+    //justifyContent: 'center',
+    padding: 10,
+    //marginBottom: 5,
+  },
+  balanceText: {
+    color: COLORS.wingDarkBlue,
+    fontFamily: 'SoraMedium',
+    fontSize: 30,
+  },
+  percentageBalance: {
+    color: COLORS.secondary,
+    fontFamily: 'SoraMedium',
+    fontSize: 13,
+  },
+
+  incomeExpenseContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    marginTop: 20,
+    marginBottom: 20,
+    alignItems: 'center',
+    backgroundColor: 'white',
+  },
+  IEContainer: {
+    alignItems: 'center',
+    width: '48%',
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: COLORS.eggshell,
+    elevation: 5,
+    //shadowOffset: { width: 5, height: 5 },
+    //shadowOpacity: 0.3, 
+    //shadowRadius: 5,
+    marginRight: 5,
+    flexDirection: 'row',
+  },
+  IETextContainer: {
+    flex: 1,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    marginLeft: 10,
+  },
+  incomeIcon: {
+    color: 'green',
+    fontSize: 30,
+    //marginBottom: 10,
+  },
+  expenseIcon: {
+    color: 'red',
+    fontSize: 30,
+    //marginBottom: 10,
+  },
+  IEText: {
+    color: COLORS.secondary,
+    fontFamily: 'SoraMedium',
+    fontSize: 15,
+  },
+  IENumber: {
+    color: COLORS.wingDarkBlue,
+    fontFamily: 'SoraMedium',
+    fontSize: 24,
   },
 })
 

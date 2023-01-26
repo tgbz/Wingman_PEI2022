@@ -87,7 +87,7 @@ export default function AddAccountScreen({ navigation }) {
     // if data is not empty, then account was added
     if (data) {
       // go back to AccountsScreen and refresh data
-      //navigation.navigate('Accounts', { refresh: true })
+      navigation.navigate('Accounts', { refresh: true })
     }
   }
 

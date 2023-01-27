@@ -38,7 +38,7 @@ def upload_image():
 
         for f in fpaths:
             os.remove(f)
-        os.rmdir(fileDir)
+        #os.rmdir(fileDir)
 
         print("Done!")
         return jsonify(text)

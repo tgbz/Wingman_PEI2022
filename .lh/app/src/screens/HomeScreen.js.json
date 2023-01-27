@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 46,
+            "activePatchIndex": 49,
             "patches": [
                 {
                     "date": 1674127451404,
@@ -192,6 +192,18 @@
                 {
                     "date": 1674752733492,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -207,9 +207,9 @@\n       data.data = [1];\r\n       //console.log(selector +' :'+ Math.round(spent / total_plafond))\r\n       // arredonda para inteiro\r\n       //data.data = [Math.round(spent / total_plafond)];\r\n-    } else data.data = [Math.round((spent * 100) / total_plafond)]/100;\r\n+    } else data.data = [Math.round((spent * 100) / total_plafond)/100];\r\n \r\n     data.percSpent = (spent >= total_plafond) ? 100 : Math.round((spent * 100) / total_plafond);\r\n     data.total_spent = spent;\r\n     data.plafond = total_plafond;\r\n"
+                },
+                {
+                    "date": 1674753421724,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -287,9 +287,9 @@\n                     <Text\r\n                       style={{\r\n                         color: COLORS.white,\r\n                         fontFamily: \"SoraBold\",\r\n-                        fontSize: SIZES.medium,\r\n+                        fontSize: SIZES.small,\r\n                       }}\r\n                     >\r\n                       Definir Política de consumo\r\n                     </Text>\r\n"
+                },
+                {
+                    "date": 1674753431513,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -287,9 +287,9 @@\n                     <Text\r\n                       style={{\r\n                         color: COLORS.white,\r\n                         fontFamily: \"SoraBold\",\r\n-                        fontSize: SIZES.small,\r\n+                        fontSize: SIZES.medium,\r\n                       }}\r\n                     >\r\n                       Definir Política de consumo\r\n                     </Text>\r\n"
+                },
+                {
+                    "date": 1674753438994,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -362,9 +362,9 @@\n                         alignSelf: \"center\",\r\n                         top: \"50%\",\r\n                         transform: [{ translateY: -26 }],\r\n                         fontFamily: FONTS.small,\r\n-                        fontSize: SIZES.medium,\r\n+                        fontSize: SIZES.small,\r\n                         color: COLORS.wingDarkBlue,\r\n                       }}\r\n                     >{transformToNoCategoryData(\r\n                       non_essencial_selector,\r\n"
                 }
             ],
             "date": 1674127451404,

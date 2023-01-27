@@ -48,14 +48,16 @@ Categories.getCategorybyMonth = function(id,date) {
 
 
 Categories.changePlafonds = function (idUser,idCategory,plafond,connection ) {
+    var date = new Date();
+    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
     return new Promise(function(resolve, reject) {
       connection.query(`INSERT INTO user_has_category
-            (idUser,idCategory,plafond)
+            (idUser,idCategory,plafond,date)
             VALUES
-            (?,?,?)
+            (?,?,?,?)
             as new_foo
             on duplicate key update
-            plafond = new_foo.plafond`,[idUser,idCategory,plafond],
+            plafond = new_foo.plafond`,[idUser,idCategory,plafond,firstDay],
           function (err, res) {
             if(err){
                 console.log("error: ", err);
@@ -103,8 +105,10 @@ Categories.changeAllPlafonds = function (idUser,categorias) {
 
 
 Categories.changePlafond = function (idUser,idCategory,plafond ) {
+    var date = new Date();
+    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
     return new Promise(function(resolve, reject) {
-      sql.query(`UPDATE user_has_category  SET plafond = ? where idUser = ? AND idcategory=?`,[plafond, idUser,idCategory],
+      sql.query(`UPDATE user_has_category  SET plafond = ? where idUser = ? AND idcategory=? and date = ?`,[plafond, idUser,idCategory,firstDay],
           function (err, res) {
             if(err){
                 console.log("error: ", err);

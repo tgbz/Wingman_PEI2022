@@ -76,17 +76,25 @@ export default function PoliticsScreen({ navigation }) {
   const deleteByValue = (word) => {
     if (word!== null){
       temp = origin.filter(element =>accents.remove(element.type)!==word )
-      new_temp = temp.filter(element => checks[element.category])
+      new_temp = temp.filter(element => checks[element.category]===true)
       //temp = temp.filter(elem => checks[element.category] )
       setTransactionsList(new_temp)}
-    else{
-      new_temp = origin.filter(element => checks[element.category])
+    else {
+      new_temp = origin.filter(element => checks[element.category]===true)
       setTransactionsList(new_temp)}
+
   }
 
 
 
+
   const applyFilters = () => {
+    var c = 0
+    Object.keys(checks).forEach(elem => {checks[elem]? c=c+1: c})
+    
+
+    console.log(c)
+    if (c >0){
     handleCloseModalPress()
     setFilters(false)
     if (valorSelect === 2){    
@@ -96,24 +104,18 @@ export default function PoliticsScreen({ navigation }) {
     else if (valorSelect === 0) {
       deleteByValue(null)}
     }
+    else alert("Tem de selecionar pelo menos 1 categoria!")
+  }
 
 
   const allCheck = (value) => {
-    const keys = Object.keys(checks);
-
-    // print all keys
     
-    console.log("dentro" , keys);
-    
-    // [ 'java', 'javascript', 'nodejs', 'php' ]
-    
-    // iterate over object
-    
-    keys.forEach((key, index) => {
-        console.log(`${key}: ${checks[key]}`);
-    });
-    
+    setChecks(checks => { 
+      var aux ={}
+      Object.keys(checks).forEach(elem => {
+          aux[elem] = value
   
+      }); return aux})
   }
 
   /////////////////FIM - FILTROS///////////////////
@@ -184,12 +186,12 @@ export default function PoliticsScreen({ navigation }) {
   const handleCloseModalPress = () => setFilters(false);
 
   const handleAll = () => {
-    console.log("Toqueiii")
+    allCheck(!allCats)
     setAllCats(!allCats)
   }
 
   const buttonAllNone = (iconName, text) => {
-    return <View style={{flexDirection:'row', justifyContent:'center', paddingVertical:'1.5%'}}><Text style={{paddingVertical: 5, fontFamily:FONTS.light }}>{text}</Text><TouchableOpacity onPress={handleAll}><MaterialCommunityIcons name={iconName} size={24} color={COLORS.wingDarkBlue}/></TouchableOpacity></View>
+    return <View style={{flexDirection:'row', justifyContent:'center', paddingVertical:'1.5%'}}><TouchableOpacity onPress={handleAll}><Text style={{paddingVertical: 5, fontFamily:FONTS.light }}>{text}</Text><MaterialCommunityIcons name={iconName} size={24} color={COLORS.wingDarkBlue}/></TouchableOpacity></View>
   }
 
 
@@ -208,7 +210,7 @@ export default function PoliticsScreen({ navigation }) {
                 <View style={styles.valor}>
                   <View style={{flexDirection:'row', justifyContent: 'space-between'}}>
                     <Text style={styles.text}>Categorias </Text>
-                    {!allCats? buttonAllNone('checkbox-multiple-marked-outline', 'Todas'): buttonAllNone('checkbox-blank-outline', 'Nenhuma')}
+                    {allCats? buttonAllNone('checkbox-blank-outline', 'Nenhuma'):buttonAllNone('checkbox-multiple-marked-outline', 'Todas')}
                   </View>
                       {showAllCategories()}
                 </View>

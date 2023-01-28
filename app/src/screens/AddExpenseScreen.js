@@ -14,7 +14,7 @@ import { useState, useEffect } from 'react'
 import { StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native'
 import { serverURL } from '../config/hosts'
-import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { MaterialIcons, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons'
 import { CustomButton } from '../components'
 import ChooseCategoryModal from '../components/ChooseCategoryModal'
 import ProductInputModal from '../components/ProductInputModal'
@@ -219,17 +219,28 @@ export default function AddExpenseScreen({ navigation }) {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.infoContainer}>
             {typeContainer()}
+
             {/* Title input */}
-            <Text style={styles.textTag}>Título</Text>
-            <View style={[styles.buttonStyle, { width: width * 0.8 }]}>
-              <TextInput
-                placeholder="Ex: Conta de luz"
-                onChangeText={setTitle}
-                style={styles.textButton}
-              >
-                {title}
-              </TextInput>
-            </View>
+            <View style={[{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'stretch' }]}>
+              <View>
+              <Text style={styles.textTag}>Título</Text>
+                <View style={[styles.buttonStyle, { width: width * 0.62}]}>
+                  <TextInput
+                    placeholder="Ex: Conta de luz"
+                    onChangeText={setTitle}
+                    style={styles.textButton}
+                  >
+                    {title}
+                  </TextInput>
+                  </View>
+                </View>
+                <View>
+                    <Text style={styles.textTag}> </Text>
+                    <TouchableOpacity onPress={() => navigation.navigate("OCR")} style={[styles.buttonStyle, {width:width*0.15, backgroundColor:COLORS.wingDarkBlue, borderRadius: 13,justifyContent:'center'}]}>
+                        <FontAwesome5 name="camera" size={22} style={styles.item} color={COLORS.white} />
+                    </TouchableOpacity>
+                </View>
+              </View>
 
             {/* Value and Date input */}
             <View

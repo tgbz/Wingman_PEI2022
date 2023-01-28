@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 76,
+            "activePatchIndex": 77,
             "patches": [
                 {
                     "date": 1674127451404,
@@ -312,6 +312,10 @@
                 {
                     "date": 1674924059765,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -499,9 +499,9 @@\n   },\r\n   profileImage: {\r\n     // put image in the upper left corner\r\n     position: \"absolute\",\r\n-    top: 8,\r\n+    top: 5,\r\n     left: 10,\r\n     width: 60,\r\n     height: 60,\r\n     borderRadius: 100,\r\n"
+                },
+                {
+                    "date": 1674925028616,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -432,11 +432,11 @@\n             data={transactionsList}\r\n             headerHome={true}\r\n             navigation={navigation}\r\n           ></ActivityTable>\r\n-       {/*    <TouchableOpacity onPress={() => navigation.navigate(\"OCR\")}>\r\n+          <TouchableOpacity onPress={() => navigation.navigate(\"OCR\")}>\r\n             <Text>OCR</Text>\r\n-          </TouchableOpacity> */}\r\n+          </TouchableOpacity>\r\n         </ScrollView>\r\n       </SafeAreaView>\r\n     )\r\n   );\r\n"
                 }
             ],
             "date": 1674127451404,

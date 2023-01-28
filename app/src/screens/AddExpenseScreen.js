@@ -14,7 +14,7 @@ import { useState, useEffect } from 'react'
 import { StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native'
 import { serverURL } from '../config/hosts'
-import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { MaterialIcons, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons'
 import { CustomButton } from '../components'
 import ChooseCategoryModal from '../components/ChooseCategoryModal'
 import ProductInputModal from '../components/ProductInputModal'
@@ -219,7 +219,9 @@ export default function AddExpenseScreen({ navigation }) {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.infoContainer}>
             {typeContainer()}
+
             {/* Title input */}
+
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text style={styles.textTag}>Título</Text>
             {/* Button with camera icon to navigate to OCR aligned to right */}
@@ -240,6 +242,7 @@ export default function AddExpenseScreen({ navigation }) {
                 {title}
               </TextInput>
             </View>
+
 
             {/* Value and Date input */}
             <View

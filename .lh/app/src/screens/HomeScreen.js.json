@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 77,
+            "activePatchIndex": 81,
             "patches": [
                 {
                     "date": 1674127451404,
@@ -316,6 +316,22 @@
                 {
                     "date": 1674925028616,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -432,11 +432,11 @@\n             data={transactionsList}\r\n             headerHome={true}\r\n             navigation={navigation}\r\n           ></ActivityTable>\r\n-       {/*    <TouchableOpacity onPress={() => navigation.navigate(\"OCR\")}>\r\n+          <TouchableOpacity onPress={() => navigation.navigate(\"OCR\")}>\r\n             <Text>OCR</Text>\r\n-          </TouchableOpacity> */}\r\n+          </TouchableOpacity>\r\n         </ScrollView>\r\n       </SafeAreaView>\r\n     )\r\n   );\r\n"
+                },
+                {
+                    "date": 1674925378063,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -432,11 +432,9 @@\n             data={transactionsList}\r\n             headerHome={true}\r\n             navigation={navigation}\r\n           ></ActivityTable>\r\n-          <TouchableOpacity onPress={() => navigation.navigate(\"OCR\")}>\r\n-            <Text>OCR</Text>\r\n-          </TouchableOpacity>\r\n+\r\n         </ScrollView>\r\n       </SafeAreaView>\r\n     )\r\n   );\r\n"
+                },
+                {
+                    "date": 1674932749869,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -283,9 +283,9 @@\n             </View>\r\n             <View style={styles.body}>\r\n               {/* if hascategory==0  make a card to redirect to politicsSuggestionScreen \r\n         ELSE NOTHING*/}\r\n-              {userData.hascategory == 0 ? (\r\n+              {userData.hascategory == 1 ? (\r\n                 <View style={[styles.card1, { backgroundColor: \"#ee821a\" }]}>\r\n                   <View>\r\n                     <Text\r\n                       style={{\r\n"
+                },
+                {
+                    "date": 1674932823288,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -283,9 +283,9 @@\n             </View>\r\n             <View style={styles.body}>\r\n               {/* if hascategory==0  make a card to redirect to politicsSuggestionScreen \r\n         ELSE NOTHING*/}\r\n-              {userData.hascategory == 1 ? (\r\n+              {userData.hascategory == 0 ? (\r\n                 <View style={[styles.card1, { backgroundColor: \"#ee821a\" }]}>\r\n                   <View>\r\n                     <Text\r\n                       style={{\r\n"
+                },
+                {
+                    "date": 1674932940923,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -216,9 +216,8 @@\n     data.percSpent = (spent >= total_plafond) ? 100 : Math.round((spent * 100) / total_plafond);\r\n     data.total_spent = spent;\r\n     data.plafond = total_plafond;\r\n     data.labels = [selector];\r\n-    console.log(data);\r\n     return data;\r\n   }\r\n \r\n   // every time route.params is true when user add despesa e edit despesa, refresh data\r\n"
                 }
             ],
             "date": 1674127451404,

@@ -36,6 +36,7 @@ export default function ProfileEditScreen({ navigation }) {
     console.log(serverURL + '/users/userProfile/' + token.id)
     const resp = await fetch(`${serverURL}/users/userProfile/${token.id}`)
     const data = await resp.json()
+    console.log(data)
     setData(data)
     setSelected(data.gender)
     setBirthdate(data.birthdate.substring(0, 10))

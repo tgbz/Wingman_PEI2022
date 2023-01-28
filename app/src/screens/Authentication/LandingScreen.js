@@ -56,11 +56,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-<<<<<<< HEAD
     
-=======
-    bottom:"30%"
->>>>>>> 6a5a1e84ff00343ad7ea2f3e6f48d3d1adefac2c
   },
   containerLogo: {
     alignItems: "center",

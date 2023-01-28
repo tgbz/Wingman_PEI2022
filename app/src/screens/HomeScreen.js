@@ -217,7 +217,6 @@ function HomeScreen({ navigation }) {
     data.total_spent = spent;
     data.plafond = total_plafond;
     data.labels = [selector];
-    console.log(data);
     return data;
   }
 
@@ -433,9 +432,7 @@ function HomeScreen({ navigation }) {
             headerHome={true}
             navigation={navigation}
           ></ActivityTable>
-          <TouchableOpacity onPress={() => navigation.navigate("OCR")}>
-            <Text>OCR</Text>
-          </TouchableOpacity>
+
         </ScrollView>
       </SafeAreaView>
     )

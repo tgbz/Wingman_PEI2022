@@ -482,7 +482,7 @@ function fetchDataOCR () {
               style={[
                 styles.buttonStyle,
                 {
-                  width: width * 0.3,
+                  width: width * 0.35,
                   borderRadius: 30,
                   paddingVertical: 3,
                   alignSelf: 'flex-end',

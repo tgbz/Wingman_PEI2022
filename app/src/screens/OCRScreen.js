@@ -260,8 +260,10 @@ const styles = StyleSheet.create({
     padding: 20,
     fontFamily: FONTS.medium,
     fontSize: SIZES.medium,
-    justifyContent: 'center',
+    
+    alignItems: 'center',
     color: COLORS.wingDarkBlue
+    
   },
   text: {
     fontFamily: FONTS.medium,

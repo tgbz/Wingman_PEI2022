@@ -1,0 +1,130 @@
+{
+    "sourceFile": "app/src/components/TypeTransaction.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 28,
+            "patches": [
+                {
+                    "date": 1674928714216,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1674928723576,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n         if (valorSelectHere == actVal) return [COLORS.wingDarkBlue, COLORS.white]\r\n         return [COLORS.white, COLORS.wingDarkBlue]\r\n       }\r\n   return (\r\n-    <View style={{marginTop:40}}>\r\n+    <View style={{marginTop:50}}>\r\n              \r\n               <View style={{flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 10}}>\r\n                 <TouchableOpacity onPress={() => (setValorSelectHere(0), setValorSelect(0))} style={[styles.button, {width: width/3- 25, backgroundColor: getColor(0)[0]}]}>\r\n                   <Text style={[styles.textValor, {color:getColor(0)[1]}]}>Todos </Text >\r\n"
+                },
+                {
+                    "date": 1674928735443,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n         if (valorSelectHere == actVal) return [COLORS.wingDarkBlue, COLORS.white]\r\n         return [COLORS.white, COLORS.wingDarkBlue]\r\n       }\r\n   return (\r\n-    <View style={{marginTop:50}}>\r\n+    <View style={{marginTop:30}}>\r\n              \r\n               <View style={{flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 10}}>\r\n                 <TouchableOpacity onPress={() => (setValorSelectHere(0), setValorSelect(0))} style={[styles.button, {width: width/3- 25, backgroundColor: getColor(0)[0]}]}>\r\n                   <Text style={[styles.textValor, {color:getColor(0)[1]}]}>Todos </Text >\r\n"
+                },
+                {
+                    "date": 1674928888259,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n       },\r\n       textValor: {\r\n         color: 'white',\r\n         fontFamily: 'SoraMedium',\r\n-        fontSize: SIZES.medium,\r\n+        fontSize: SIZES.font,\r\n         alignContent: 'center',\r\n         alignItems: 'center',\r\n         alignSelf: 'center',\r\n         paddingVertical: 8\r\n"
+                },
+                {
+                    "date": 1674928898176,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -54,7 +54,8 @@\n         alignContent: 'center',\r\n         alignItems: 'center',\r\n         alignSelf: 'center',\r\n         paddingVertical: 8\r\n+        paddinghorizontal: 10\r\n       },\r\n     \r\n })\r\n"
+                },
+                {
+                    "date": 1674928906757,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,9 +53,9 @@\n         fontSize: SIZES.font,\r\n         alignContent: 'center',\r\n         alignItems: 'center',\r\n         alignSelf: 'center',\r\n-        paddingVertical: 8\r\n-        paddinghorizontal: 10\r\n+        paddingVertical: 8,\r\n+        paddingHorizontal: 10,\r\n       },\r\n     \r\n })\r\n"
+                },
+                {
+                    "date": 1674928915507,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n       },\r\n       button: {\r\n         backgroundColor: COLORS.wingDarkBlue,\r\n         borderRadius: 35,\r\n-        height: 40,\r\n+        height: 30,\r\n         borderWidth: 1,\r\n         borderColor: COLORS.wingDarkBlue\r\n       },\r\n       textValor: {\r\n@@ -54,8 +54,8 @@\n         alignContent: 'center',\r\n         alignItems: 'center',\r\n         alignSelf: 'center',\r\n         paddingVertical: 8,\r\n-        paddingHorizontal: 10,\r\n+        paddingHorizontal: 20,\r\n       },\r\n     \r\n })\r\n"
+                },
+                {
+                    "date": 1674928922972,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,11 +42,12 @@\n       },\r\n       button: {\r\n         backgroundColor: COLORS.wingDarkBlue,\r\n         borderRadius: 35,\r\n-        height: 30,\r\n+        height: 40,\r\n         borderWidth: 1,\r\n         borderColor: COLORS.wingDarkBlue\r\n+        paddingHorizontal: 20,\r\n       },\r\n       textValor: {\r\n         color: 'white',\r\n         fontFamily: 'SoraMedium',\r\n"
+                },
+                {
+                    "date": 1674928933781,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,10 +44,9 @@\n         backgroundColor: COLORS.wingDarkBlue,\r\n         borderRadius: 35,\r\n         height: 40,\r\n         borderWidth: 1,\r\n-        borderColor: COLORS.wingDarkBlue\r\n-        paddingHorizontal: 20,\r\n+        borderColor: COLORS.wingDarkBlue,\r\n       },\r\n       textValor: {\r\n         color: 'white',\r\n         fontFamily: 'SoraMedium',\r\n"
+                },
+                {
+                    "date": 1674930396061,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,8 +45,9 @@\n         borderRadius: 35,\r\n         height: 40,\r\n         borderWidth: 1,\r\n         borderColor: COLORS.wingDarkBlue,\r\n+        paddingBottom: 10,\r\n       },\r\n       textValor: {\r\n         color: 'white',\r\n         fontFamily: 'SoraMedium',\r\n"
+                },
+                {
+                    "date": 1674930403486,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,9 +45,8 @@\n         borderRadius: 35,\r\n         height: 40,\r\n         borderWidth: 1,\r\n         borderColor: COLORS.wingDarkBlue,\r\n-        paddingBottom: 10,\r\n       },\r\n       textValor: {\r\n         color: 'white',\r\n         fontFamily: 'SoraMedium',\r\n"
+                },
+                {
+                    "date": 1674930414837,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n         if (valorSelectHere == actVal) return [COLORS.wingDarkBlue, COLORS.white]\r\n         return [COLORS.white, COLORS.wingDarkBlue]\r\n       }\r\n   return (\r\n-    <View style={{marginTop:30}}>\r\n+    <View style={{marginTop:40}}>\r\n              \r\n               <View style={{flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 10}}>\r\n                 <TouchableOpacity onPress={() => (setValorSelectHere(0), setValorSelect(0))} style={[styles.button, {width: width/3- 25, backgroundColor: getColor(0)[0]}]}>\r\n                   <Text style={[styles.textValor, {color:getColor(0)[1]}]}>Todos </Text >\r\n"
+                },
+                {
+                    "date": 1674930421203,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n         if (valorSelectHere == actVal) return [COLORS.wingDarkBlue, COLORS.white]\r\n         return [COLORS.white, COLORS.wingDarkBlue]\r\n       }\r\n   return (\r\n-    <View style={{marginTop:40}}>\r\n+    <View style={{marginTop:50}}>\r\n              \r\n               <View style={{flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 10}}>\r\n                 <TouchableOpacity onPress={() => (setValorSelectHere(0), setValorSelect(0))} style={[styles.button, {width: width/3- 25, backgroundColor: getColor(0)[0]}]}>\r\n                   <Text style={[styles.textValor, {color:getColor(0)[1]}]}>Todos </Text >\r\n"
+                },
+                {
+                    "date": 1674930427326,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n         if (valorSelectHere == actVal) return [COLORS.wingDarkBlue, COLORS.white]\r\n         return [COLORS.white, COLORS.wingDarkBlue]\r\n       }\r\n   return (\r\n-    <View style={{marginTop:50}}>\r\n+    <View style={{marginTop:40}}>\r\n              \r\n               <View style={{flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 10}}>\r\n                 <TouchableOpacity onPress={() => (setValorSelectHere(0), setValorSelect(0))} style={[styles.button, {width: width/3- 25, backgroundColor: getColor(0)[0]}]}>\r\n                   <Text style={[styles.textValor, {color:getColor(0)[1]}]}>Todos </Text >\r\n"
+                },
+                {
+                    "date": 1674930896313,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n         fontSize: SIZES.extraLarge,\r\n       },\r\n       button: {\r\n         backgroundColor: COLORS.wingDarkBlue,\r\n-        borderRadius: 35,\r\n+       \r\n         height: 40,\r\n         borderWidth: 1,\r\n         borderColor: COLORS.wingDarkBlue,\r\n       },\r\n"
+                },
+                {
+                    "date": 1674930937022,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,9 +43,9 @@\n       button: {\r\n         backgroundColor: COLORS.wingDarkBlue,\r\n        \r\n         height: 40,\r\n-        borderWidth: 1,\r\n+        borderWidth: .5,\r\n         borderColor: COLORS.wingDarkBlue,\r\n       },\r\n       textValor: {\r\n         color: 'white',\r\n"
+                },
+                {
+                    "date": 1674930988418,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n   return (\r\n     <View style={{marginTop:40}}>\r\n              \r\n               <View style={{flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 10}}>\r\n-                <TouchableOpacity onPress={() => (setValorSelectHere(0), setValorSelect(0))} style={[styles.button, {width: width/3- 25, backgroundColor: getColor(0)[0]}]}>\r\n+                <TouchableOpacity onPress={() => (setValorSelectHere(0), setValorSelect(0))} style={[styles.button, {width: width/3- 25, borderRadiusTopLeft: 35 ,backgroundColor: getColor(0)[0]}]}>\r\n                   <Text style={[styles.textValor, {color:getColor(0)[1]}]}>Todos </Text >\r\n                 </TouchableOpacity>\r\n                 <TouchableOpacity onPress={() => (setValorSelectHere(1), setValorSelect(1))} style={[styles.button,  {width: width/3-25, backgroundColor: getColor(1)[0]}]}>\r\n                   <Text style={[styles.textValor, {color:getColor(1)[1]}]}>Débito </Text >\r\n"
+                },
+                {
+                    "date": 1674931037217,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n   return (\r\n     <View style={{marginTop:40}}>\r\n              \r\n               <View style={{flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 10}}>\r\n-                <TouchableOpacity onPress={() => (setValorSelectHere(0), setValorSelect(0))} style={[styles.button, {width: width/3- 25, borderRadiusTopLeft: 35 ,backgroundColor: getColor(0)[0]}]}>\r\n+                <TouchableOpacity onPress={() => (setValorSelectHere(0), setValorSelect(0))} style={[styles.button, {width: width/3- 25, borderTopLeftRadius: 35 ,backgroundColor: getColor(0)[0]}]}>\r\n                   <Text style={[styles.textValor, {color:getColor(0)[1]}]}>Todos </Text >\r\n                 </TouchableOpacity>\r\n                 <TouchableOpacity onPress={() => (setValorSelectHere(1), setValorSelect(1))} style={[styles.button,  {width: width/3-25, backgroundColor: getColor(1)[0]}]}>\r\n                   <Text style={[styles.textValor, {color:getColor(1)[1]}]}>Débito </Text >\r\n"
+                },
+                {
+                    "date": 1674931042493,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n   return (\r\n     <View style={{marginTop:40}}>\r\n              \r\n               <View style={{flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 10}}>\r\n-                <TouchableOpacity onPress={() => (setValorSelectHere(0), setValorSelect(0))} style={[styles.button, {width: width/3- 25, borderTopLeftRadius: 35 ,backgroundColor: getColor(0)[0]}]}>\r\n+                <TouchableOpacity onPress={() => (setValorSelectHere(0), setValorSelect(0))} style={[styles.button, {width: width/3- 25, borderTopLeftRadius: 5 ,backgroundColor: getColor(0)[0]}]}>\r\n                   <Text style={[styles.textValor, {color:getColor(0)[1]}]}>Todos </Text >\r\n                 </TouchableOpacity>\r\n                 <TouchableOpacity onPress={() => (setValorSelectHere(1), setValorSelect(1))} style={[styles.button,  {width: width/3-25, backgroundColor: getColor(1)[0]}]}>\r\n                   <Text style={[styles.textValor, {color:getColor(1)[1]}]}>Débito </Text >\r\n"
+                },
+                {
+                    "date": 1674931051249,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n   return (\r\n     <View style={{marginTop:40}}>\r\n              \r\n               <View style={{flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 10}}>\r\n-                <TouchableOpacity onPress={() => (setValorSelectHere(0), setValorSelect(0))} style={[styles.button, {width: width/3- 25, borderTopLeftRadius: 5 ,backgroundColor: getColor(0)[0]}]}>\r\n+                <TouchableOpacity onPress={() => (setValorSelectHere(0), setValorSelect(0))} style={[styles.button, {width: width/3- 25, borderTopLeftRadius: 1 ,backgroundColor: getColor(0)[0]}]}>\r\n                   <Text style={[styles.textValor, {color:getColor(0)[1]}]}>Todos </Text >\r\n                 </TouchableOpacity>\r\n                 <TouchableOpacity onPress={() => (setValorSelectHere(1), setValorSelect(1))} style={[styles.button,  {width: width/3-25, backgroundColor: getColor(1)[0]}]}>\r\n                   <Text style={[styles.textValor, {color:getColor(1)[1]}]}>Débito </Text >\r\n"
+                },
+                {
+                    "date": 1674931070148,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n   return (\r\n     <View style={{marginTop:40}}>\r\n              \r\n               <View style={{flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 10}}>\r\n-                <TouchableOpacity onPress={() => (setValorSelectHere(0), setValorSelect(0))} style={[styles.button, {width: width/3- 25, borderTopLeftRadius: 1 ,backgroundColor: getColor(0)[0]}]}>\r\n+                <TouchableOpacity onPress={() => (setValorSelectHere(0), setValorSelect(0))} style={[styles.button, {width: width/3- 25, borderTopLeftRadius: 5, borderBottomLeftRadius: 5 ,backgroundColor: getColor(0)[0]}]}>\r\n                   <Text style={[styles.textValor, {color:getColor(0)[1]}]}>Todos </Text >\r\n                 </TouchableOpacity>\r\n                 <TouchableOpacity onPress={() => (setValorSelectHere(1), setValorSelect(1))} style={[styles.button,  {width: width/3-25, backgroundColor: getColor(1)[0]}]}>\r\n                   <Text style={[styles.textValor, {color:getColor(1)[1]}]}>Débito </Text >\r\n"
+                },
+                {
+                    "date": 1674931095345,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n                 </TouchableOpacity>\r\n                 <TouchableOpacity onPress={() => (setValorSelectHere(1), setValorSelect(1))} style={[styles.button,  {width: width/3-25, backgroundColor: getColor(1)[0]}]}>\r\n                   <Text style={[styles.textValor, {color:getColor(1)[1]}]}>Débito </Text >\r\n                 </TouchableOpacity>\r\n-                <TouchableOpacity onPress={() => (setValorSelectHere(2), setValorSelect(2))} style={[styles.button,  {width: width/3-25, backgroundColor: getColor(2)[0]}]}>\r\n+                <TouchableOpacity onPress={() => (setValorSelectHere(2), setValorSelect(2))} style={[styles.button,  {width: width/3-25, borderTopRightRadius: 5, borderBottomRightRadius: 5, backgroundColor: getColor(2)[0]}]}>\r\n                   <Text style={[styles.textValor, {color:getColor(2)[1]}]}>Crédito </Text >\r\n                 </TouchableOpacity>\r\n               </View>\r\n               </View>\r\n"
+                },
+                {
+                    "date": 1674931120491,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,9 +43,9 @@\n       button: {\r\n         backgroundColor: COLORS.wingDarkBlue,\r\n        \r\n         height: 40,\r\n-        borderWidth: .5,\r\n+        borderWidth: 1,\r\n         borderColor: COLORS.wingDarkBlue,\r\n       },\r\n       textValor: {\r\n         color: 'white',\r\n"
+                },
+                {
+                    "date": 1674931127850,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,9 +43,9 @@\n       button: {\r\n         backgroundColor: COLORS.wingDarkBlue,\r\n        \r\n         height: 40,\r\n-        borderWidth: 1,\r\n+        borderWidth: 1.5,\r\n         borderColor: COLORS.wingDarkBlue,\r\n       },\r\n       textValor: {\r\n         color: 'white',\r\n"
+                },
+                {
+                    "date": 1674931137672,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,9 +43,9 @@\n       button: {\r\n         backgroundColor: COLORS.wingDarkBlue,\r\n        \r\n         height: 40,\r\n-        borderWidth: 1.5,\r\n+        borderWidth: .2,\r\n         borderColor: COLORS.wingDarkBlue,\r\n       },\r\n       textValor: {\r\n         color: 'white',\r\n"
+                },
+                {
+                    "date": 1674931144301,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,9 +43,9 @@\n       button: {\r\n         backgroundColor: COLORS.wingDarkBlue,\r\n        \r\n         height: 40,\r\n-        borderWidth: .2,\r\n+        borderWidth: .25,\r\n         borderColor: COLORS.wingDarkBlue,\r\n       },\r\n       textValor: {\r\n         color: 'white',\r\n"
+                },
+                {
+                    "date": 1674931149535,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,9 +43,9 @@\n       button: {\r\n         backgroundColor: COLORS.wingDarkBlue,\r\n        \r\n         height: 40,\r\n-        borderWidth: .25,\r\n+        borderWidth: .3,\r\n         borderColor: COLORS.wingDarkBlue,\r\n       },\r\n       textValor: {\r\n         color: 'white',\r\n"
+                },
+                {
+                    "date": 1674931164268,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -54,8 +54,8 @@\n         alignContent: 'center',\r\n         alignItems: 'center',\r\n         alignSelf: 'center',\r\n         paddingVertical: 8,\r\n-        paddingHorizontal: 20,\r\n+        paddingHorizontal: 10,\r\n       },\r\n     \r\n })\r\n"
+                },
+                {
+                    "date": 1674931174657,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,8 +45,9 @@\n        \r\n         height: 40,\r\n         borderWidth: .3,\r\n         borderColor: COLORS.wingDarkBlue,\r\n+        justifyContent: 'center',\r\n       },\r\n       textValor: {\r\n         color: 'white',\r\n         fontFamily: 'SoraMedium',\r\n@@ -54,8 +55,8 @@\n         alignContent: 'center',\r\n         alignItems: 'center',\r\n         alignSelf: 'center',\r\n         paddingVertical: 8,\r\n-        paddingHorizontal: 10,\r\n+        paddingHorizontal: 20,\r\n       },\r\n     \r\n })\r\n"
+                }
+            ],
+            "date": 1674928714216,
+            "name": "Commit-0",
+            "content": "import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions } from 'react-native'\r\nimport { CATEGORIES, COLORS, SIZES } from '../constants'\r\nimport React from 'react'\r\nimport { useState, useEffect } from 'react'\r\n\r\nimport CustomButton from '../components/CustomButton'\r\nimport { SafeAreaView } from 'react-native-safe-area-context'\r\nimport { Ionicons } from '@expo/vector-icons'\r\nexport default function TypeTransaction({valorSelected, setValorSelect}) {\r\n    const width = Dimensions.get('window').width;\r\n    const [valorSelectHere, setValorSelectHere] = useState(valorSelected) // 0 = Todos, 1 - Debito , 2 - Credito\r\n\r\n    const getColor = (actVal) => {\r\n        if (valorSelectHere == actVal) return [COLORS.wingDarkBlue, COLORS.white]\r\n        return [COLORS.white, COLORS.wingDarkBlue]\r\n      }\r\n  return (\r\n    <View style={{marginTop:40}}>\r\n             \r\n              <View style={{flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 10}}>\r\n                <TouchableOpacity onPress={() => (setValorSelectHere(0), setValorSelect(0))} style={[styles.button, {width: width/3- 25, backgroundColor: getColor(0)[0]}]}>\r\n                  <Text style={[styles.textValor, {color:getColor(0)[1]}]}>Todos </Text >\r\n                </TouchableOpacity>\r\n                <TouchableOpacity onPress={() => (setValorSelectHere(1), setValorSelect(1))} style={[styles.button,  {width: width/3-25, backgroundColor: getColor(1)[0]}]}>\r\n                  <Text style={[styles.textValor, {color:getColor(1)[1]}]}>Débito </Text >\r\n                </TouchableOpacity>\r\n                <TouchableOpacity onPress={() => (setValorSelectHere(2), setValorSelect(2))} style={[styles.button,  {width: width/3-25, backgroundColor: getColor(2)[0]}]}>\r\n                  <Text style={[styles.textValor, {color:getColor(2)[1]}]}>Crédito </Text >\r\n                </TouchableOpacity>\r\n              </View>\r\n              </View>\r\n              )\r\n}\r\n\r\nconst styles = StyleSheet.create({\r\n  \r\n\r\n      text: {\r\n        marginTop:30, \r\n        fontFamily: 'SoraBold',\r\n        fontSize: SIZES.extraLarge,\r\n      },\r\n      button: {\r\n        backgroundColor: COLORS.wingDarkBlue,\r\n        borderRadius: 35,\r\n        height: 40,\r\n        borderWidth: 1,\r\n        borderColor: COLORS.wingDarkBlue\r\n      },\r\n      textValor: {\r\n        color: 'white',\r\n        fontFamily: 'SoraMedium',\r\n        fontSize: SIZES.medium,\r\n        alignContent: 'center',\r\n        alignItems: 'center',\r\n        alignSelf: 'center',\r\n        paddingVertical: 8\r\n      },\r\n    \r\n})\r\n"
+        }
+    ]
+}

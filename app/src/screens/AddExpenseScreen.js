@@ -5,6 +5,8 @@ import {
   TouchableOpacity,
   useWindowDimensions,
   ScrollView,
+  Platform,
+  StatusBar
 } from 'react-native'
 import React from 'react'
 import AuthContext from '../context/AuthProvider'
@@ -407,6 +409,7 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: COLORS.white,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 
   },
   infoContainer: {
     marginHorizontal: 40,

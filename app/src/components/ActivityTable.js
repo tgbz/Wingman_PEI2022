@@ -27,7 +27,7 @@ const ActivityTable = ({data,headerHome, navigation}) => {
                 <Row data={HomeTable} style={headerHome? styles.HeadStyleHome: styles.HeadStyle} flexArr={[0.1,1.7, 0.6, 0.3]} textStyle={styles.textHeaders}/>: 
                 <Row data={headTable} style={headerHome? styles.HeadStyleHome: styles.HeadStyle} flexArr={[0.1,1.7, 0.6, 0.8]} textStyle={styles.textHeaders}/>}
             <TableWrapper style={styles.wrapper}>
-              <Rows data={tableData} flexArr={[0.3,1.3, 0.6,0.1, 0.6]} style={styles.row} textStyle={styles.text}/>
+              <Rows data={tableData} flexArr={[0.3,1.3, 0.6,0.15, 0.6]} style={styles.row} textStyle={styles.text}/>
             </TableWrapper>
           </Table>
          

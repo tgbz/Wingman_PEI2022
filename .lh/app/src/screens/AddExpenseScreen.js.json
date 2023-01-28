@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1674925012064,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1674928203228,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,10 @@\n   TextInput,\r\n   TouchableOpacity,\r\n   useWindowDimensions,\r\n   ScrollView,\r\n+  Platform,\r\n+  StatusBar\r\n } from 'react-native'\r\n import React from 'react'\r\n import AuthContext from '../context/AuthProvider'\r\n import AsyncStorage from '@react-native-async-storage/async-storage'\r\n@@ -406,8 +408,9 @@\n const styles = StyleSheet.create({\r\n   root: {\r\n     flex: 1,\r\n     backgroundColor: COLORS.white,\r\n+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 \r\n   },\r\n   infoContainer: {\r\n     marginHorizontal: 40,\r\n     marginBottom: 40,\r\n"
                 }
             ],
             "date": 1674925012064,

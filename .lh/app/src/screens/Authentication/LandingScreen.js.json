@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 20,
+            "activePatchIndex": 22,
             "patches": [
                 {
                     "date": 1674920013683,
@@ -88,6 +88,14 @@
                 {
                     "date": 1674920356998,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n \r\n         <View style={[styles.container, {top: height *0.47}]}>\r\n         <Image style={[styles.preview,{height: height*0.81}]} source={require('../../../assets/images/preview-home.png')}></Image>\r\n         \r\n-        <View style={styles.containerBTN}>\r\n+        <View style={[styles.containerBTN,  {bottom: height*0.2}]}>\r\n             <TouchableOpacity onPress={() => navigation.navigate(\"Login\")} style={styles.button}>\r\n                 <Text style={[styles.buttonText,{height: height*0.02}]}>Entrar</Text>\r\n             </TouchableOpacity>\r\n             <TouchableOpacity onPress={() => navigation.navigate(\"Register\")} style={styles.button}>\r\n@@ -101,9 +101,9 @@\n \r\n     //row align items\r\n     //flexDirection: 'row',\r\n     alignItems: 'center',\r\n-    justifyContent: 'flex-end',\r\n+    justifyContent: 'flex-start',\r\n     // margin horizontal\r\n     //justifyContent: 'space-evenly',\r\n     width: '100%'\r\n   },\r\n"
+                },
+                {
+                    "date": 1674925209924,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n \r\n         <View style={[styles.container, {top: height *0.47}]}>\r\n         <Image style={[styles.preview,{height: height*0.81}]} source={require('../../../assets/images/preview-home.png')}></Image>\r\n         \r\n-        <View style={[styles.containerBTN,  {bottom: height*0.2}]}>\r\n+        <View style={[styles.containerBTN,  {bottom: height*0.22}]}>\r\n             <TouchableOpacity onPress={() => navigation.navigate(\"Login\")} style={styles.button}>\r\n                 <Text style={[styles.buttonText,{height: height*0.02}]}>Entrar</Text>\r\n             </TouchableOpacity>\r\n             <TouchableOpacity onPress={() => navigation.navigate(\"Register\")} style={styles.button}>\r\n@@ -60,9 +60,8 @@\n   },\r\n   containerLogo: {\r\n     alignItems: \"center\",\r\n     justifyContent: \"center\",\r\n-    bottom:\"30%\"\r\n   },\r\n   logo: {\r\n     width: 200,\r\n     maxHeight:200\r\n"
+                },
+                {
+                    "date": 1674925308529,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,8 +60,9 @@\n   },\r\n   containerLogo: {\r\n     alignItems: \"center\",\r\n     justifyContent: \"center\",\r\n+    bottom:\"30%\"\r\n   },\r\n   logo: {\r\n     width: 200,\r\n     maxHeight:200\r\n"
                 }
             ],
             "date": 1674920013683,

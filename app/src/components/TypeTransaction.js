@@ -16,15 +16,15 @@ export default function TypeTransaction({valorSelected, setValorSelect}) {
       }
   return (
     <View style={{marginTop:40}}>
-              <Text style={styles.text}>Valor (€)</Text>
+             
               <View style={{flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 10}}>
-                <TouchableOpacity onPress={() => (setValorSelectHere(0), setValorSelect(0))} style={[styles.button, {width: width/3- 25, backgroundColor: getColor(0)[0]}]}>
+                <TouchableOpacity onPress={() => (setValorSelectHere(0), setValorSelect(0))} style={[styles.button, {width: width/3- 25, borderTopLeftRadius: 5, borderBottomLeftRadius: 5 ,backgroundColor: getColor(0)[0]}]}>
                   <Text style={[styles.textValor, {color:getColor(0)[1]}]}>Todos </Text >
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => (setValorSelectHere(1), setValorSelect(1))} style={[styles.button,  {width: width/3-25, backgroundColor: getColor(1)[0]}]}>
                   <Text style={[styles.textValor, {color:getColor(1)[1]}]}>Débito </Text >
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => (setValorSelectHere(2), setValorSelect(2))} style={[styles.button,  {width: width/3-25, backgroundColor: getColor(2)[0]}]}>
+                <TouchableOpacity onPress={() => (setValorSelectHere(2), setValorSelect(2))} style={[styles.button,  {width: width/3-25, borderTopRightRadius: 5, borderBottomRightRadius: 5, backgroundColor: getColor(2)[0]}]}>
                   <Text style={[styles.textValor, {color:getColor(2)[1]}]}>Crédito </Text >
                 </TouchableOpacity>
               </View>
@@ -42,19 +42,21 @@ const styles = StyleSheet.create({
       },
       button: {
         backgroundColor: COLORS.wingDarkBlue,
-        borderRadius: 35,
+       
         height: 40,
-        borderWidth: 1,
-        borderColor: COLORS.wingDarkBlue
+        borderWidth: .3,
+        borderColor: COLORS.wingDarkBlue,
+        justifyContent: 'center',
       },
       textValor: {
         color: 'white',
         fontFamily: 'SoraMedium',
-        fontSize: SIZES.medium,
+        fontSize: SIZES.font,
         alignContent: 'center',
         alignItems: 'center',
         alignSelf: 'center',
-        paddingVertical: 8
+        paddingVertical: 8,
+        paddingHorizontal: 20,
       },
     
 })

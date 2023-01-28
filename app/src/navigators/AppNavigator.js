@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useWindowDimensions } from 'react-native';
+import { useWindowDimensions, Text } from 'react-native';
 // Screens
 import HomeScreen from "../screens/HomeScreen.js"
 import ProfileScreen from "../screens/ProfileScreen.js"
@@ -22,6 +22,7 @@ import { COLORS,SIZES } from '../constants/theme.js';
 import PoliticsSuggestionScreen from '../screens/PoliticsSuggestionScreen.js';
 import ActivityTable from '../components/ActivityTable.js';
 import StatisticsScreen from '../screens/StatisticsScreen.js';
+import Modal from 'react-native-modal';
 
 
 // Screens Names
@@ -137,13 +138,8 @@ export default function HomeStack() {
         <Stack.Screen name="AddAccount" component={AddAccountScreen}   options={{title:"Adicionar Conta"}}/>
         <Stack.Screen name="Politics" component={PoliticsScreen} options={{title:"Políticas de Consumo"}}/>
         <Stack.Screen name="PoliticsSuggestion" component={PoliticsSuggestionScreen} options={{title:"Sugestões de Consumo"}}/>
-        <Stack.Screen name="ActivitySummary" component={ActivitySummaryScreen} options={({ navigation }) => ({
-                                                                                title: 'Resumo de Atividade',
-                                                                                headerRight: () => (
-                                                                                  <Ionicons name="options" size={24} onPress={() => navigation.navigate("Filter")}/>
-                                                                                )
-                                                                               
-                                                                              })}/>
+        <Stack.Screen name="ActivitySummary" component={ActivitySummaryScreen} options={{
+                                                                                title: 'Resumo de Atividade'}}/>
         <Stack.Screen name="Filter" component={FilterScreen} options={{title:"Filtros",  presentation: 'modal'}}/>
         <Stack.Screen name="EditExpense" component={EditExpenseScreen} options={{title:"Transação"}}/>
         <Stack.Screen name="OCR" component={OCRScreen} options={{title:"OCR"}}/>

@@ -9,7 +9,7 @@ import ActivityTable from '../components/ActivityTable'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { serverURL } from '../config/hosts'
 import { useRoute } from '@react-navigation/native'
-import { Ionicons } from '@expo/vector-icons'
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { CheckBox, Icon } from '@rneui/themed';
 import Modal from 'react-native-modal';
 import TypeTransaction from '../components/TypeTransaction'
@@ -39,6 +39,7 @@ export default function PoliticsScreen({ navigation }) {
   const [token, setToken] = useState('')
   const [filters, setFilters] = useState(false)
   const [origin, setOrigin] = useState([])
+  const [allCats, setAllCats] = useState(true)
 
   /////////////////FILTROS///////////////////
   const [valorSelect, setValorSelect] = useState(0) // 0 = Todos, 1 - Debito , 2 - Credito
@@ -51,11 +52,15 @@ export default function PoliticsScreen({ navigation }) {
 
   };
 
+  const categoria = (key) => {
+    return <View style={{flexDirection:'row'}}><Text>   </Text>{CATEGORIES[key].icon}<Text style={styles.buttonText}>     {CATEGORIES[key].name}</Text></View>
+  }
+
   function showAllCategories() {
     const checksv2 = Object.keys(checks);
     return checksv2.map(key => {
       return <CheckBox
-        title={CATEGORIES[key].name}
+        title={categoria(key)}
         checked={checks[key]}
         key={key}
         onPress={() => { handleAddChecks(key) }}
@@ -93,6 +98,23 @@ export default function PoliticsScreen({ navigation }) {
     }
 
 
+  const allCheck = (value) => {
+    const keys = Object.keys(checks);
+
+    // print all keys
+    
+    console.log("dentro" , keys);
+    
+    // [ 'java', 'javascript', 'nodejs', 'php' ]
+    
+    // iterate over object
+    
+    keys.forEach((key, index) => {
+        console.log(`${key}: ${checks[key]}`);
+    });
+    
+  
+  }
 
   /////////////////FIM - FILTROS///////////////////
 
@@ -161,23 +183,38 @@ export default function PoliticsScreen({ navigation }) {
 
   const handleCloseModalPress = () => setFilters(false);
 
+  const handleAll = () => {
+    console.log("Toqueiii")
+    setAllCats(!allCats)
+  }
+
+  const buttonAllNone = (iconName, text) => {
+    return <View style={{flexDirection:'row', justifyContent:'center', paddingVertical:'1.5%'}}><Text style={{paddingVertical: 5, fontFamily:FONTS.light }}>{text}</Text><TouchableOpacity onPress={handleAll}><MaterialCommunityIcons name={iconName} size={24} color={COLORS.wingDarkBlue}/></TouchableOpacity></View>
+  }
+
+
   if (transactionsList.length===0){
-  adjustData(transactionsData)
+      adjustData(transactionsData)
   }
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.eggshell }}>
       <ScrollView>
       {filters &&
           <Modal isVisible={filters} hasBackdrop={false} transparent={true} backdropColor="rgba(0,0,0,0.5)">
-
            <View style={styles.modalView}>
               <ScrollView >
                 <TypeTransaction valorSelected={valorSelect} setValorSelect={handleValorSelect}></TypeTransaction>
+
                 <View style={styles.valor}>
-                  <Text style={styles.text}>Categorias </Text>
+                  <View style={{flexDirection:'row', justifyContent: 'space-between'}}>
+                    <Text style={styles.text}>Categorias </Text>
+                    {!allCats? buttonAllNone('checkbox-multiple-marked-outline', 'Todas'): buttonAllNone('checkbox-blank-outline', 'Nenhuma')}
+                  </View>
                       {showAllCategories()}
                 </View>
-                <View style={{flexDirection:'row', justifyContent: 'space-around'}}>
+              </ScrollView>
+
+              <View style={{flexDirection:'row', justifyContent: 'space-around', marginBottom: 40}}>
                   <TouchableOpacity onPress={handleCloseModalPress} style={[styles.button, {backgroundColor: COLORS.white, width:(width*0.75)/2}]}>
                     <Text style={[styles.buttonText, {color: COLORS.wingDarkBlue}]}>Cancelar</Text>
                   </TouchableOpacity>
@@ -185,7 +222,6 @@ export default function PoliticsScreen({ navigation }) {
                     <Text  style={[styles.buttonText, {color: COLORS.white}]} >Aplicar Filtros</Text>
                   </TouchableOpacity>
                 </View>
-              </ScrollView>
             </View>
           </Modal>
         }
@@ -226,7 +262,7 @@ const styles = StyleSheet.create({
     paddingRight: 15
   }, 
   valor: {
-    padding: 10,
+    marginVertical: '3%'
   },
   text: {
     fontFamily: 'SoraBold',

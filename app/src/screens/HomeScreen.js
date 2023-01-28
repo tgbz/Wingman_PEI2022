@@ -430,9 +430,9 @@ function HomeScreen({ navigation }) {
             headerHome={true}
             navigation={navigation}
           ></ActivityTable>
-          <TouchableOpacity onPress={() => navigation.navigate("OCR")}>
+          {<TouchableOpacity onPress={() => navigation.navigate("OCR")}>
             <Text>OCR</Text>
-          </TouchableOpacity>
+          </TouchableOpacity>}
         </ScrollView>
       </SafeAreaView>
     )

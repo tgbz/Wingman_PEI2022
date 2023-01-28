@@ -15,7 +15,7 @@ export default function TypeTransaction({valorSelected, setValorSelect}) {
         return [COLORS.white, COLORS.wingDarkBlue]
       }
   return (
-    <View>
+    <View style={{marginTop:40}}>
               <Text style={styles.text}>Valor (€)</Text>
               <View style={{flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 10}}>
                 <TouchableOpacity onPress={() => (setValorSelectHere(0), setValorSelect(0))} style={[styles.button, {width: width/3- 25, backgroundColor: getColor(0)[0]}]}>

@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    bottom:"27%"
+    bottom:"30%"
   },
   containerLogo: {
     alignItems: "center",

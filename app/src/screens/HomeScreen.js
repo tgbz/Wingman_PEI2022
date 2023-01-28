@@ -362,8 +362,8 @@ function HomeScreen({ navigation }) {
                         alignSelf: "center",
                         top: "50%",
                         transform: [{ translateY: -26 }],
-                        fontFamily: FONTS.small,
-                        fontSize: SIZES.medium,
+                        fontFamily: FONTS.medium,
+                        fontSize: SIZES.small,
                         color: COLORS.wingDarkBlue,
                       }}
                     >{transformToNoCategoryData(

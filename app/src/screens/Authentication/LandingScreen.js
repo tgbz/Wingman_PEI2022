@@ -12,7 +12,7 @@ function LandingScreen({navigation}) {
             <Image style={[styles.logo,{height: height*0.14}]} resizeMode="contain" source={require('../../../assets/images/logo-white.png')}></Image>
             <Text style={styles.wingman}>Wingman</Text>
         </View>        
-            <View style={styles.container}>
+            <View style={[styles.container,{bottom:height*0.27}]}>
             <Text style={styles.text}>Ganha controlo sobre as tuas </Text>
             <Text style={styles.text}>finanças, potencia as tuas</Text>
             <Text style={styles.text}>poupanças e melhora a</Text>
@@ -20,10 +20,10 @@ function LandingScreen({navigation}) {
           
         </View>
 
+        <View style={[styles.container, {top: height *0.47}]}>
+        <Image style={[styles.preview,{height: height*0.81}]} source={require('../../../assets/images/preview-home.png')}></Image>
         
-        <Image style={[styles.preview,{height: height*0.82}]} source={require('../../../assets/images/preview-home.png')}></Image>
-        
-        <View style={styles.containerBTN}>
+        <View style={[styles.containerBTN,  {bottom: height*0.22}]}>
             <TouchableOpacity onPress={() => navigation.navigate("Login")} style={styles.button}>
                 <Text style={[styles.buttonText,{height: height*0.02}]}>Entrar</Text>
             </TouchableOpacity>
@@ -31,7 +31,7 @@ function LandingScreen({navigation}) {
                 <Text style={[styles.buttonText,{height: height*0.02}]}>Registe-se Já!</Text>
             </TouchableOpacity>
         </View>
-        
+        </View>
     </SafeAreaView>
   );
 }
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    bottom:"27%"
+    
   },
   containerLogo: {
     alignItems: "center",
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     //bottom: 200,
     // Put the buttons at the bottom of the screen
     position: 'absolute',
-    bottom: "8%",
+
     //row align items
     //flexDirection: 'row',
     alignItems: 'center',

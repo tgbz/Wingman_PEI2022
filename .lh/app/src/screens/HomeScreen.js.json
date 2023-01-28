@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 49,
+            "activePatchIndex": 76,
             "patches": [
                 {
                     "date": 1674127451404,
@@ -204,6 +204,114 @@
                 {
                     "date": 1674753438994,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -362,9 +362,9 @@\n                         alignSelf: \"center\",\r\n                         top: \"50%\",\r\n                         transform: [{ translateY: -26 }],\r\n                         fontFamily: FONTS.small,\r\n-                        fontSize: SIZES.medium,\r\n+                        fontSize: SIZES.small,\r\n                         color: COLORS.wingDarkBlue,\r\n                       }}\r\n                     >{transformToNoCategoryData(\r\n                       non_essencial_selector,\r\n"
+                },
+                {
+                    "date": 1674922917617,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -361,9 +361,9 @@\n                         position: \"absolute\",\r\n                         alignSelf: \"center\",\r\n                         top: \"50%\",\r\n                         transform: [{ translateY: -26 }],\r\n-                        fontFamily: FONTS.small,\r\n+                        fontFamily: FONTS.medium,\r\n                         fontSize: SIZES.small,\r\n                         color: COLORS.wingDarkBlue,\r\n                       }}\r\n                     >{transformToNoCategoryData(\r\n@@ -429,11 +429,9 @@\n             data={transactionsList}\r\n             headerHome={true}\r\n             navigation={navigation}\r\n           ></ActivityTable>\r\n-          <TouchableOpacity onPress={() => navigation.navigate(\"OCR\")}>\r\n-            <Text>OCR</Text>\r\n-          </TouchableOpacity>\r\n+       \r\n         </ScrollView>\r\n       </SafeAreaView>\r\n     )\r\n   );\r\n"
+                },
+                {
+                    "date": 1674923187988,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -429,9 +429,11 @@\n             data={transactionsList}\r\n             headerHome={true}\r\n             navigation={navigation}\r\n           ></ActivityTable>\r\n-       \r\n+       {/*    <TouchableOpacity onPress={() => navigation.navigate(\"OCR\")}>\r\n+            <Text>OCR</Text>\r\n+          </TouchableOpacity> */}\r\n         </ScrollView>\r\n       </SafeAreaView>\r\n     )\r\n   );\r\n"
+                },
+                {
+                    "date": 1674923293800,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -447,9 +447,9 @@\n   header: {\r\n     flexDirection: \"row\",\r\n     // alignItems: 'center',\r\n     justifyContent: \"space-between\",\r\n-    marginTop: \"3%\",\r\n+    marginTop: \"5%\",\r\n   },\r\n \r\n   container: {\r\n     //flex: 1,\r\n"
+                },
+                {
+                    "date": 1674923351565,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -71,8 +71,9 @@\n   // Donut Charts\r\n   // ----------------------------------------------------------------------------------------\r\n \r\n   const screenWidth = Dimensions.get(\"window\").width - 40;\r\n+  const height = Dimensions.get(\"window\").height;\r\n   const [categoryData, setCategoryData] = useState([]);\r\n   const noCategoryChartDataExample = {\r\n     labels: [\"No Category\"], // optional\r\n     data: [0.4],\r\n@@ -242,9 +243,9 @@\n     (\r\n       <SafeAreaView style={styles.root}>\r\n         <ScrollView>\r\n           <View style={styles.container}>\r\n-            <View style={styles.header}>\r\n+            <View style={[styles.header, {}]}>\r\n               <View style={styles.profileImage}>\r\n                 {photo ? (\r\n                   (console.log(\"I have photo!! \" + JSON.stringify(photo)),\r\n                   (\r\n@@ -447,9 +448,9 @@\n   header: {\r\n     flexDirection: \"row\",\r\n     // alignItems: 'center',\r\n     justifyContent: \"space-between\",\r\n-    marginTop: \"5%\",\r\n+   \r\n   },\r\n \r\n   container: {\r\n     //flex: 1,\r\n"
+                },
+                {
+                    "date": 1674923379388,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -243,9 +243,9 @@\n     (\r\n       <SafeAreaView style={styles.root}>\r\n         <ScrollView>\r\n           <View style={styles.container}>\r\n-            <View style={[styles.header, {}]}>\r\n+            <View style={[styles.header, {top: height*0.4}]}>\r\n               <View style={styles.profileImage}>\r\n                 {photo ? (\r\n                   (console.log(\"I have photo!! \" + JSON.stringify(photo)),\r\n                   (\r\n"
+                },
+                {
+                    "date": 1674923387616,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -243,9 +243,9 @@\n     (\r\n       <SafeAreaView style={styles.root}>\r\n         <ScrollView>\r\n           <View style={styles.container}>\r\n-            <View style={[styles.header, {top: height*0.4}]}>\r\n+            <View style={[styles.header, {top: height*0.01}]}>\r\n               <View style={styles.profileImage}>\r\n                 {photo ? (\r\n                   (console.log(\"I have photo!! \" + JSON.stringify(photo)),\r\n                   (\r\n"
+                },
+                {
+                    "date": 1674923399045,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -243,9 +243,9 @@\n     (\r\n       <SafeAreaView style={styles.root}>\r\n         <ScrollView>\r\n           <View style={styles.container}>\r\n-            <View style={[styles.header, {top: height*0.01}]}>\r\n+            <View style={[styles.header, {top: height*0.035}]}>\r\n               <View style={styles.profileImage}>\r\n                 {photo ? (\r\n                   (console.log(\"I have photo!! \" + JSON.stringify(photo)),\r\n                   (\r\n"
+                },
+                {
+                    "date": 1674923406882,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -243,9 +243,9 @@\n     (\r\n       <SafeAreaView style={styles.root}>\r\n         <ScrollView>\r\n           <View style={styles.container}>\r\n-            <View style={[styles.header, {top: height*0.035}]}>\r\n+            <View style={[styles.header, {top: height*0.02}]}>\r\n               <View style={styles.profileImage}>\r\n                 {photo ? (\r\n                   (console.log(\"I have photo!! \" + JSON.stringify(photo)),\r\n                   (\r\n"
+                },
+                {
+                    "date": 1674923413905,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -243,9 +243,9 @@\n     (\r\n       <SafeAreaView style={styles.root}>\r\n         <ScrollView>\r\n           <View style={styles.container}>\r\n-            <View style={[styles.header, {top: height*0.02}]}>\r\n+            <View style={[styles.header, {top: height*0.019}]}>\r\n               <View style={styles.profileImage}>\r\n                 {photo ? (\r\n                   (console.log(\"I have photo!! \" + JSON.stringify(photo)),\r\n                   (\r\n"
+                },
+                {
+                    "date": 1674923432457,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -498,10 +498,10 @@\n     // put image in the upper left corner\r\n     position: \"absolute\",\r\n     top: 0,\r\n     left: 0,\r\n-    width: 70,\r\n-    height: 70,\r\n+    width: 60,\r\n+    height: 60,\r\n     borderRadius: 100,\r\n     overflow: \"hidden\",\r\n   },\r\n   card1: {\r\n"
+                },
+                {
+                    "date": 1674923439294,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -496,9 +496,9 @@\n   },\r\n   profileImage: {\r\n     // put image in the upper left corner\r\n     position: \"absolute\",\r\n-    top: 0,\r\n+    top: 19,\r\n     left: 0,\r\n     width: 60,\r\n     height: 60,\r\n     borderRadius: 100,\r\n"
+                },
+                {
+                    "date": 1674923444958,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -496,10 +496,10 @@\n   },\r\n   profileImage: {\r\n     // put image in the upper left corner\r\n     position: \"absolute\",\r\n-    top: 19,\r\n-    left: 0,\r\n+    top: 10,\r\n+    left: 5,\r\n     width: 60,\r\n     height: 60,\r\n     borderRadius: 100,\r\n     overflow: \"hidden\",\r\n"
+                },
+                {
+                    "date": 1674923450174,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -497,9 +497,9 @@\n   profileImage: {\r\n     // put image in the upper left corner\r\n     position: \"absolute\",\r\n     top: 10,\r\n-    left: 5,\r\n+    left: 10,\r\n     width: 60,\r\n     height: 60,\r\n     borderRadius: 100,\r\n     overflow: \"hidden\",\r\n"
+                },
+                {
+                    "date": 1674923469564,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -243,9 +243,9 @@\n     (\r\n       <SafeAreaView style={styles.root}>\r\n         <ScrollView>\r\n           <View style={styles.container}>\r\n-            <View style={[styles.header, {top: height*0.019}]}>\r\n+            <View style={[styles.header, {top: height*0.015}]}>\r\n               <View style={styles.profileImage}>\r\n                 {photo ? (\r\n                   (console.log(\"I have photo!! \" + JSON.stringify(photo)),\r\n                   (\r\n"
+                },
+                {
+                    "date": 1674923503864,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -477,9 +477,9 @@\n     color: COLORS.wingDarkBlue,\r\n   },\r\n   title: {\r\n     fontFamily: \"SoraLight\",\r\n-    fontSize: SIZES.medium,\r\n+    fontSize: SIZES.small,\r\n     color: COLORS.wingDarkBlue,\r\n     marginBottom: 5,\r\n     // align text to the right\r\n     textAlign: \"left\",\r\n"
+                },
+                {
+                    "date": 1674923699381,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -457,9 +457,9 @@\n     //backgroundColor: COLORS.white,\r\n     //alignItems: \"center\",\r\n     //justifyContent: \"center\",\r\n     marginHorizontal: 20,\r\n-    marginTop: \"3%\",\r\n+    marginTop: \"2%\",\r\n   },\r\n   charts: {\r\n     alignItems: \"center\",\r\n     justifyContent: \"center\",\r\n"
+                },
+                {
+                    "date": 1674923704496,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -457,9 +457,9 @@\n     //backgroundColor: COLORS.white,\r\n     //alignItems: \"center\",\r\n     //justifyContent: \"center\",\r\n     marginHorizontal: 20,\r\n-    marginTop: \"2%\",\r\n+    marginTop: \"1%\",\r\n   },\r\n   charts: {\r\n     alignItems: \"center\",\r\n     justifyContent: \"center\",\r\n"
+                },
+                {
+                    "date": 1674923709700,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -457,9 +457,9 @@\n     //backgroundColor: COLORS.white,\r\n     //alignItems: \"center\",\r\n     //justifyContent: \"center\",\r\n     marginHorizontal: 20,\r\n-    marginTop: \"1%\",\r\n+    marginTop: \"0%\",\r\n   },\r\n   charts: {\r\n     alignItems: \"center\",\r\n     justifyContent: \"center\",\r\n"
+                },
+                {
+                    "date": 1674923716533,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -457,9 +457,9 @@\n     //backgroundColor: COLORS.white,\r\n     //alignItems: \"center\",\r\n     //justifyContent: \"center\",\r\n     marginHorizontal: 20,\r\n-    marginTop: \"0%\",\r\n+    marginTop: \"3%\",\r\n   },\r\n   charts: {\r\n     alignItems: \"center\",\r\n     justifyContent: \"center\",\r\n"
+                },
+                {
+                    "date": 1674923958817,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,8 +7,9 @@\n   Button,\r\n   Dimensions,\r\n   Image,\r\n   SafeAreaView,\r\n+  Platform\r\n } from \"react-native\";\r\n import { ScrollView } from \"react-native-gesture-handler\";\r\n import { useRoute } from \"@react-navigation/native\";\r\n import { useState, useEffect } from \"react\";\r\n@@ -443,8 +444,9 @@\n const styles = StyleSheet.create({\r\n   root: {\r\n     flex: 1,\r\n     backgroundColor: COLORS.eggshell,\r\n+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 \r\n   },\r\n   header: {\r\n     flexDirection: \"row\",\r\n     // alignItems: 'center',\r\n"
+                },
+                {
+                    "date": 1674923987321,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,10 @@\n   Button,\r\n   Dimensions,\r\n   Image,\r\n   SafeAreaView,\r\n-  Platform\r\n+  Platform,\r\n+  StatusBar,\r\n } from \"react-native\";\r\n import { ScrollView } from \"react-native-gesture-handler\";\r\n import { useRoute } from \"@react-navigation/native\";\r\n import { useState, useEffect } from \"react\";\r\n"
+                },
+                {
+                    "date": 1674924005087,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -245,9 +245,9 @@\n     (\r\n       <SafeAreaView style={styles.root}>\r\n         <ScrollView>\r\n           <View style={styles.container}>\r\n-            <View style={[styles.header, {top: height*0.015}]}>\r\n+            <View style={[styles.header,]}>\r\n               <View style={styles.profileImage}>\r\n                 {photo ? (\r\n                   (console.log(\"I have photo!! \" + JSON.stringify(photo)),\r\n                   (\r\n"
+                },
+                {
+                    "date": 1674924014492,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -245,9 +245,9 @@\n     (\r\n       <SafeAreaView style={styles.root}>\r\n         <ScrollView>\r\n           <View style={styles.container}>\r\n-            <View style={[styles.header,]}>\r\n+            <View style={styles.header}>\r\n               <View style={styles.profileImage}>\r\n                 {photo ? (\r\n                   (console.log(\"I have photo!! \" + JSON.stringify(photo)),\r\n                   (\r\n"
+                },
+                {
+                    "date": 1674924033003,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -501,10 +501,10 @@\n     // put image in the upper left corner\r\n     position: \"absolute\",\r\n     top: 10,\r\n     left: 10,\r\n-    width: 60,\r\n-    height: 60,\r\n+    width: 70,\r\n+    height: 70,\r\n     borderRadius: 100,\r\n     overflow: \"hidden\",\r\n   },\r\n   card1: {\r\n"
+                },
+                {
+                    "date": 1674924038331,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -501,10 +501,10 @@\n     // put image in the upper left corner\r\n     position: \"absolute\",\r\n     top: 10,\r\n     left: 10,\r\n-    width: 70,\r\n-    height: 70,\r\n+    width: 60,\r\n+    height: 60,\r\n     borderRadius: 100,\r\n     overflow: \"hidden\",\r\n   },\r\n   card1: {\r\n"
+                },
+                {
+                    "date": 1674924053860,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -499,9 +499,9 @@\n   },\r\n   profileImage: {\r\n     // put image in the upper left corner\r\n     position: \"absolute\",\r\n-    top: 10,\r\n+    top: 8,\r\n     left: 10,\r\n     width: 60,\r\n     height: 60,\r\n     borderRadius: 100,\r\n"
+                },
+                {
+                    "date": 1674924059765,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -499,9 +499,9 @@\n   },\r\n   profileImage: {\r\n     // put image in the upper left corner\r\n     position: \"absolute\",\r\n-    top: 8,\r\n+    top: 5,\r\n     left: 10,\r\n     width: 60,\r\n     height: 60,\r\n     borderRadius: 100,\r\n"
                 }
             ],
             "date": 1674127451404,

@@ -8,6 +8,8 @@ import {
   Dimensions,
   Image,
   SafeAreaView,
+  Platform,
+  StatusBar,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useRoute } from "@react-navigation/native";
@@ -72,6 +74,7 @@ function HomeScreen({ navigation }) {
   // ----------------------------------------------------------------------------------------
 
   const screenWidth = Dimensions.get("window").width - 40;
+  const height = Dimensions.get("window").height;
   const [categoryData, setCategoryData] = useState([]);
   const noCategoryChartDataExample = {
     labels: ["No Category"], // optional
@@ -430,9 +433,9 @@ function HomeScreen({ navigation }) {
             headerHome={true}
             navigation={navigation}
           ></ActivityTable>
-          <TouchableOpacity onPress={() => navigation.navigate("OCR")}>
+       {/*    <TouchableOpacity onPress={() => navigation.navigate("OCR")}>
             <Text>OCR</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </ScrollView>
       </SafeAreaView>
     )
@@ -443,12 +446,13 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: COLORS.eggshell,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 
   },
   header: {
     flexDirection: "row",
     // alignItems: 'center',
     justifyContent: "space-between",
-    marginTop: "3%",
+   
   },
 
   container: {
@@ -477,7 +481,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: "SoraLight",
-    fontSize: SIZES.medium,
+    fontSize: SIZES.small,
     color: COLORS.wingDarkBlue,
     marginBottom: 5,
     // align text to the right
@@ -496,10 +500,10 @@ const styles = StyleSheet.create({
   profileImage: {
     // put image in the upper left corner
     position: "absolute",
-    top: 0,
-    left: 0,
-    width: 70,
-    height: 70,
+    top: 5,
+    left: 10,
+    width: 60,
+    height: 60,
     borderRadius: 100,
     overflow: "hidden",
   },

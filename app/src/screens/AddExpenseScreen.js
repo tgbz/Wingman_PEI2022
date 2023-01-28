@@ -220,7 +220,17 @@ export default function AddExpenseScreen({ navigation }) {
           <View style={styles.infoContainer}>
             {typeContainer()}
             {/* Title input */}
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text style={styles.textTag}>Título</Text>
+            {/* Button with camera icon to navigate to OCR aligned to right */}
+            <TouchableOpacity
+              style={{ position: 'absolute', right: 0 }}
+              onPress={() => navigation.navigate('OCR')}
+            >
+              <MaterialIcons name="camera-alt" size={24} color={COLORS.wingDarkBlue} />
+            </TouchableOpacity>
+        
+            </View>
             <View style={[styles.buttonStyle, { width: width * 0.8 }]}>
               <TextInput
                 placeholder="Ex: Conta de luz"

@@ -61,8 +61,9 @@ const styles = StyleSheet.create({
   },
   containerLogo: {
     flexDirection: 'row',
-    top: 40,
-    paddingVertical: 20,
+    top: 10,
+    paddingVertical: 4,
+    paddingTop: 20,
     alignContent: 'center',
     alignItems: 'center'
   },
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
   },
   placeInput:{
     alignItems: 'left',
-    top: 30,
+
     width: "100%",
     alignItems: 'center',
 
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
   text:{
     color: COLORS.wingDarkBlue,
     fontFamily:"SoraLight",
-    fontSize: 20,
+    fontSize: 15,
     alignSelf: 'flex-start',
     paddingHorizontal:30,
   }

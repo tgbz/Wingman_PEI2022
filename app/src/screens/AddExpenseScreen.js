@@ -5,6 +5,8 @@ import {
   TouchableOpacity,
   useWindowDimensions,
   ScrollView,
+  Platform,
+  StatusBar
 } from 'react-native'
 import React from 'react'
 import AuthContext from '../context/AuthProvider'
@@ -14,7 +16,7 @@ import { useState, useEffect } from 'react'
 import { StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native'
 import { serverURL } from '../config/hosts'
-import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { MaterialIcons, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons'
 import { CustomButton } from '../components'
 import ChooseCategoryModal from '../components/ChooseCategoryModal'
 import ProductInputModal from '../components/ProductInputModal'
@@ -34,6 +36,8 @@ export default function AddExpenseScreen({ navigation }) {
   const today = new Date()
   const formattedDate = today.toISOString().slice(0, 10)
   const [date, setDate] = useState(formattedDate)
+
+  // TODO: Validate form data
 
   useEffect(() => {
     AsyncStorage.getItem('userToken')
@@ -59,6 +63,17 @@ export default function AddExpenseScreen({ navigation }) {
 
   const handleCancel = () => {
     setIsModalVisible(false)
+  }
+
+  // handle clean form
+  function handleCleanForm() {
+    setTitle('')
+    setSelectedCategory(22)
+    setValue('')
+    setDescription('')
+    setProducts([])
+    setIsDebit(true)
+    setDate(formattedDate)
   }
 
   function handleDeleteProduct(index) {
@@ -206,8 +221,20 @@ export default function AddExpenseScreen({ navigation }) {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.infoContainer}>
             {typeContainer()}
+
             {/* Title input */}
+
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text style={styles.textTag}>Título</Text>
+            {/* Button with camera icon to navigate to OCR aligned to right */}
+            <TouchableOpacity
+              style={{ position: 'absolute', right: 0 }}
+              onPress={() => navigation.navigate('OCR')}
+            >
+              <MaterialIcons name="camera-alt" size={24} color={COLORS.wingDarkBlue} />
+            </TouchableOpacity>
+        
+            </View>
             <View style={[styles.buttonStyle, { width: width * 0.8 }]}>
               <TextInput
                 placeholder="Ex: Conta de luz"
@@ -217,6 +244,7 @@ export default function AddExpenseScreen({ navigation }) {
                 {title}
               </TextInput>
             </View>
+
 
             {/* Value and Date input */}
             <View
@@ -355,9 +383,19 @@ export default function AddExpenseScreen({ navigation }) {
 
           <View style={styles.containerBTN}>
             <CustomButton
-              onPress={() => handleFormSubmission()}
+              onPress={() => {
+                handleCleanForm(),
+                handleFormSubmission()
+              }}
               text="Adicionar Movimento"
               type="TERTIARY"
+              widthScale={0.8}
+            ></CustomButton>
+
+<CustomButton
+              onPress={() => handleCleanForm()}
+              text="Limpar Dados"
+              type="SECONDARY"
               widthScale={0.8}
             ></CustomButton>
           </View>
@@ -371,6 +409,7 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: COLORS.white,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 
   },
   infoContainer: {
     marginHorizontal: 40,

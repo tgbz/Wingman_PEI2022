@@ -85,6 +85,7 @@ function RegisterScreen({ navigation }) {
   }
   return (
     <ScrollView style={styles.container}>
+      <View style={{paddingBottom:35}}>
       <View style={styles.containerLogo}>
         <CustomBackButton onPress={() => navigation.navigate("Landing")}></CustomBackButton>
         <Image source={require('../../../assets/images/logo_azul_escuro.png')} resizeMode='contain' style={[styles.logo, {height: height * 0.15}]}></Image>
@@ -100,6 +101,7 @@ function RegisterScreen({ navigation }) {
         <CustomInput placeholder={"aaaa-mm-dd"} value={birthdate} setValue={setBirthdate}iconNameEntry='date-range'/>
         <Text style={styles.text}>Género</Text>
         <SelectList 
+         
           setSelected={(val) => {val === 'Feminino'? setSelected('1') : val === 'Masculino'? setSelected('0') :setSelected('2') }} 
           data={data} 
           save="value"
@@ -107,8 +109,10 @@ function RegisterScreen({ navigation }) {
           defaultOption={{key: "0", value: 'Masculino'}}
           fontFamily="SoraLight"
           boxStyles={styles.selectList}
-          inputStyles={[styles.text, {color:'black'}]}
           dropdownStyles={styles.dropdownStyles}
+          iconContainer={styles.iconContainerStyles}
+          inputStyles={[styles.text, {color:'black',textAlign: 'left'}]}
+         
           
         />
         {validPassword? <Text style={styles.text}>Password</Text> : showErrorField("Password")}
@@ -127,7 +131,7 @@ function RegisterScreen({ navigation }) {
       <CustomTextButton onPress={() => navigation.navigate("Login")} textNormal="Já tem conta? " textButton="Login!" textSize={16}></CustomTextButton>
 
       </View> 
-      <View>
+{/*       <View>
         <Button title="Show Date Picker" onPress={showDatePicker} />
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
@@ -136,6 +140,8 @@ function RegisterScreen({ navigation }) {
           onCancel={hideDatePicker}
           style={styles.calendar}
         />
+      </View> */}
+    
       </View>
     </ScrollView>
   );
@@ -145,12 +151,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.eggshell,
+
     
   },
   containerLogo: {
     flexDirection: 'row',
-    top: 40,
-    paddingVertical: 20,
+    top: 10,
+    paddingVertical: 4,
+    paddingTop: 20,
     alignContent: 'center',
     alignItems: 'center'
   
@@ -198,9 +206,17 @@ const styles = StyleSheet.create({
   selectList:{
     backgroundColor: "#eceffa",
     borderColor: COLORS.wingblue,
+    borderRadius: 5,
+    //align box to the right
+    
+    
+  },
+  iconContainerStyles:{
+    position: 'absolute',
+    right: 10,
+    top: 10
   },
   dropdownStyles:{
-    maxHeight: 120,
     backgroundColor: "#eceffa",
     borderColor:COLORS.wingblue
   },

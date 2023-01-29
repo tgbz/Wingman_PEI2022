@@ -351,7 +351,7 @@ Transactions.newTransaction = function (statementID) {
           ];
         break;
     }
-    tmpValor = Math.floor(Math.random() * 1000) + 1;
+    tmpValor = Math.floor(Math.random() * 400) + 1;
   } else {
     tmpCategoria =
       categoriasCredito[Math.floor(Math.random() * categoriasCredito.length)];
@@ -375,7 +375,7 @@ Transactions.newTransaction = function (statementID) {
           ];
         break;
     }
-    tmpValor = Math.floor(Math.random() * 1600) + 1;
+    tmpValor = Math.floor(Math.random() * 700) + 1;
   }
 
   tmpDescricao = tmpEmissor + " - " + tmpCategoria;

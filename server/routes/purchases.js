@@ -52,4 +52,12 @@ router.get('/teste/',function(req,res){
       .catch(erro => res.status(500).jsonp(erro))
 });
 
+
+router.get('/getBalance/:id/:date',function(req,res){
+  Purchases.getBalance(req.params.id, req.params.date)
+      .then(purchase => res.jsonp(purchase))
+      .catch(erro => res.status(500).jsonp(erro))
+});
+
+
 module.exports = router;

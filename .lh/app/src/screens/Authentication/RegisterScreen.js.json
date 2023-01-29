@@ -1,0 +1,314 @@
+{
+    "sourceFile": "app/src/screens/Authentication/RegisterScreen.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 74,
+            "patches": [
+                {
+                    "date": 1674920580326,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1674920645359,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -197,8 +197,9 @@\n   },\r\n   selectList:{\r\n     backgroundColor: \"#eceffa\",\r\n     borderColor: COLORS.wingblue,\r\n+    flex:0.95\r\n   },\r\n   dropdownStyles:{\r\n     maxHeight: 120,\r\n     backgroundColor: \"#eceffa\",\r\n"
+                },
+                {
+                    "date": 1674920689036,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -197,9 +197,15 @@\n   },\r\n   selectList:{\r\n     backgroundColor: \"#eceffa\",\r\n     borderColor: COLORS.wingblue,\r\n-    flex:0.95\r\n+    borderRadius: 5,\r\n+        paddingHorizontal: 10,\r\n+        paddingVertical: 15,\r\n+        marginVertical: 12,\r\n+        borderWidth: 1,\r\n+        flex:0.95\r\n+    \r\n   },\r\n   dropdownStyles:{\r\n     maxHeight: 120,\r\n     backgroundColor: \"#eceffa\",\r\n"
+                },
+                {
+                    "date": 1674920695702,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -202,9 +202,9 @@\n         paddingHorizontal: 10,\r\n         paddingVertical: 15,\r\n         marginVertical: 12,\r\n         borderWidth: 1,\r\n-        flex:0.95\r\n+        \r\n     \r\n   },\r\n   dropdownStyles:{\r\n     maxHeight: 120,\r\n"
+                },
+                {
+                    "date": 1674920704769,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -202,9 +202,9 @@\n         paddingHorizontal: 10,\r\n         paddingVertical: 15,\r\n         marginVertical: 12,\r\n         borderWidth: 1,\r\n-        \r\n+        width: \"70%\",\r\n     \r\n   },\r\n   dropdownStyles:{\r\n     maxHeight: 120,\r\n"
+                },
+                {
+                    "date": 1674920721647,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -202,9 +202,9 @@\n         paddingHorizontal: 10,\r\n         paddingVertical: 15,\r\n         marginVertical: 12,\r\n         borderWidth: 1,\r\n-        width: \"70%\",\r\n+        width: \"60%\",\r\n     \r\n   },\r\n   dropdownStyles:{\r\n     maxHeight: 120,\r\n"
+                },
+                {
+                    "date": 1674920754290,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -202,9 +202,9 @@\n         paddingHorizontal: 10,\r\n         paddingVertical: 15,\r\n         marginVertical: 12,\r\n         borderWidth: 1,\r\n-        width: \"60%\",\r\n+        width: 55%\r\n     \r\n   },\r\n   dropdownStyles:{\r\n     maxHeight: 120,\r\n"
+                },
+                {
+                    "date": 1674920764069,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -202,9 +202,9 @@\n         paddingHorizontal: 10,\r\n         paddingVertical: 15,\r\n         marginVertical: 12,\r\n         borderWidth: 1,\r\n-        width: 55%\r\n+        width: \"55%\",\r\n     \r\n   },\r\n   dropdownStyles:{\r\n     maxHeight: 120,\r\n"
+                },
+                {
+                    "date": 1674920770671,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -202,9 +202,9 @@\n         paddingHorizontal: 10,\r\n         paddingVertical: 15,\r\n         marginVertical: 12,\r\n         borderWidth: 1,\r\n-        width: \"55%\",\r\n+        width: \"85%\",\r\n     \r\n   },\r\n   dropdownStyles:{\r\n     maxHeight: 120,\r\n"
+                },
+                {
+                    "date": 1674920783210,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -202,9 +202,9 @@\n         paddingHorizontal: 10,\r\n         paddingVertical: 15,\r\n         marginVertical: 12,\r\n         borderWidth: 1,\r\n-        width: \"85%\",\r\n+        width: \"64%\",\r\n     \r\n   },\r\n   dropdownStyles:{\r\n     maxHeight: 120,\r\n"
+                },
+                {
+                    "date": 1674920788992,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -202,9 +202,9 @@\n         paddingHorizontal: 10,\r\n         paddingVertical: 15,\r\n         marginVertical: 12,\r\n         borderWidth: 1,\r\n-        width: \"64%\",\r\n+        width: \"64.5%\",\r\n     \r\n   },\r\n   dropdownStyles:{\r\n     maxHeight: 120,\r\n"
+                },
+                {
+                    "date": 1674920833274,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -184,9 +184,9 @@\n   text:{\r\n     color: COLORS.wingDarkBlue,\r\n     fontFamily:\"SoraLight\",\r\n     fontSize: 15,\r\n-    alignSelf: 'flex-start',\r\n+    alignSelf: '',\r\n     paddingHorizontal:30,\r\n   },\r\n   error:{\r\n     color: 'red',\r\n"
+                },
+                {
+                    "date": 1674920840505,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -184,10 +184,9 @@\n   text:{\r\n     color: COLORS.wingDarkBlue,\r\n     fontFamily:\"SoraLight\",\r\n     fontSize: 15,\r\n-    alignSelf: '',\r\n-    paddingHorizontal:30,\r\n+    alignSelf: 'flex-start',\r\n   },\r\n   error:{\r\n     color: 'red',\r\n     fontFamily:\"SoraLight\",\r\n"
+                },
+                {
+                    "date": 1674920860073,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -185,8 +185,9 @@\n     color: COLORS.wingDarkBlue,\r\n     fontFamily:\"SoraLight\",\r\n     fontSize: 15,\r\n     alignSelf: 'flex-start',\r\n+    paddingHorizontal:30,\r\n   },\r\n   error:{\r\n     color: 'red',\r\n     fontFamily:\"SoraLight\",\r\n"
+                },
+                {
+                    "date": 1674920879198,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -206,9 +206,9 @@\n         width: \"64.5%\",\r\n     \r\n   },\r\n   dropdownStyles:{\r\n-    maxHeight: 120,\r\n+    maxHeight: 80,\r\n     backgroundColor: \"#eceffa\",\r\n     borderColor:COLORS.wingblue\r\n   },\r\n   containerNovo: {\r\n"
+                },
+                {
+                    "date": 1674920887365,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -206,9 +206,8 @@\n         width: \"64.5%\",\r\n     \r\n   },\r\n   dropdownStyles:{\r\n-    maxHeight: 80,\r\n     backgroundColor: \"#eceffa\",\r\n     borderColor:COLORS.wingblue\r\n   },\r\n   containerNovo: {\r\n"
+                },
+                {
+                    "date": 1674920908355,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -198,9 +198,9 @@\n   selectList:{\r\n     backgroundColor: \"#eceffa\",\r\n     borderColor: COLORS.wingblue,\r\n     borderRadius: 5,\r\n-        paddingHorizontal: 10,\r\n+        paddingHorizontal: 2,\r\n         paddingVertical: 15,\r\n         marginVertical: 12,\r\n         borderWidth: 1,\r\n         width: \"64.5%\",\r\n"
+                },
+                {
+                    "date": 1674920924146,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -198,13 +198,13 @@\n   selectList:{\r\n     backgroundColor: \"#eceffa\",\r\n     borderColor: COLORS.wingblue,\r\n     borderRadius: 5,\r\n-        paddingHorizontal: 2,\r\n+        paddingHorizontal: 0,\r\n         paddingVertical: 15,\r\n         marginVertical: 12,\r\n         borderWidth: 1,\r\n-        width: \"64.5%\",\r\n+        width: \"50%\",\r\n     \r\n   },\r\n   dropdownStyles:{\r\n     backgroundColor: \"#eceffa\",\r\n"
+                },
+                {
+                    "date": 1674920933774,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -202,9 +202,9 @@\n         paddingHorizontal: 0,\r\n         paddingVertical: 15,\r\n         marginVertical: 12,\r\n         borderWidth: 1,\r\n-        width: \"50%\",\r\n+        width: \"65%\",\r\n     \r\n   },\r\n   dropdownStyles:{\r\n     backgroundColor: \"#eceffa\",\r\n"
+                },
+                {
+                    "date": 1674920939444,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -202,9 +202,9 @@\n         paddingHorizontal: 0,\r\n         paddingVertical: 15,\r\n         marginVertical: 12,\r\n         borderWidth: 1,\r\n-        width: \"65%\",\r\n+        width: \"63%\",\r\n     \r\n   },\r\n   dropdownStyles:{\r\n     backgroundColor: \"#eceffa\",\r\n"
+                },
+                {
+                    "date": 1674921123703,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -99,8 +99,13 @@\n         {validBirthdate? <Text style={styles.text}>Data de Nascimento</Text> : showErrorField(\"Data de Nascimento\")}\r\n         <CustomInput placeholder={\"aaaa-mm-dd\"} value={birthdate} setValue={setBirthdate}iconNameEntry='date-range'/>\r\n         <Text style={styles.text}>Género</Text>\r\n         <SelectList \r\n+          iconPosition=\"right\"\r\n+          icon=\"chevron-down\"\r\n+          iconSize={20}\r\n+          iconColor={COLORS.darkBlue}\r\n+\r\n           setSelected={(val) => {val === 'Feminino'? setSelected('1') : val === 'Masculino'? setSelected('0') :setSelected('2') }} \r\n           data={data} \r\n           save=\"value\"\r\n           search={false}\r\n"
+                },
+                {
+                    "date": 1674921150403,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -99,13 +99,9 @@\n         {validBirthdate? <Text style={styles.text}>Data de Nascimento</Text> : showErrorField(\"Data de Nascimento\")}\r\n         <CustomInput placeholder={\"aaaa-mm-dd\"} value={birthdate} setValue={setBirthdate}iconNameEntry='date-range'/>\r\n         <Text style={styles.text}>Género</Text>\r\n         <SelectList \r\n-          iconPosition=\"right\"\r\n-          icon=\"chevron-down\"\r\n-          iconSize={20}\r\n-          iconColor={COLORS.darkBlue}\r\n-\r\n+         \r\n           setSelected={(val) => {val === 'Feminino'? setSelected('1') : val === 'Masculino'? setSelected('0') :setSelected('2') }} \r\n           data={data} \r\n           save=\"value\"\r\n           search={false}\r\n"
+                },
+                {
+                    "date": 1674921186625,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -206,12 +206,18 @@\n         borderWidth: 1,\r\n         width: \"63%\",\r\n     \r\n   },\r\n-  dropdownStyles:{\r\n-    backgroundColor: \"#eceffa\",\r\n-    borderColor:COLORS.wingblue\r\n-  },\r\n+  dropdownStyles={\r\n+    container: {\r\n+        flexDirection: 'row',\r\n+        alignItems: 'center',\r\n+        justifyContent: 'space-between',\r\n+    },\r\n+    icon: {\r\n+        alignSelf: 'flex-end',\r\n+    },\r\n+},\r\n   containerNovo: {\r\n     flex: 1,\r\n     alignItems: \"center\",\r\n     justifyContent: \"center\"\r\n"
+                },
+                {
+                    "date": 1674921191723,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -206,9 +206,9 @@\n         borderWidth: 1,\r\n         width: \"63%\",\r\n     \r\n   },\r\n-  dropdownStyles={\r\n+  dropdownStyles:{\r\n     container: {\r\n         flexDirection: 'row',\r\n         alignItems: 'center',\r\n         justifyContent: 'space-between',\r\n"
+                },
+                {
+                    "date": 1674921227712,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -207,17 +207,11 @@\n         width: \"63%\",\r\n     \r\n   },\r\n   dropdownStyles:{\r\n-    container: {\r\n-        flexDirection: 'row',\r\n-        alignItems: 'center',\r\n-        justifyContent: 'space-between',\r\n-    },\r\n-    icon: {\r\n-        alignSelf: 'flex-end',\r\n-    },\r\n-},\r\n+    backgroundColor: \"#eceffa\",\r\n+    borderColor:COLORS.wingblue\r\n+  },\r\n   containerNovo: {\r\n     flex: 1,\r\n     alignItems: \"center\",\r\n     justifyContent: \"center\"\r\n"
+                },
+                {
+                    "date": 1674921268690,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -195,9 +195,9 @@\n     fontSize: SIZES.small,\r\n     alignSelf: 'flex-start',\r\n     paddingHorizontal:30,\r\n   },\r\n-  selectList:{\r\n+  /* selectList:{\r\n     backgroundColor: \"#eceffa\",\r\n     borderColor: COLORS.wingblue,\r\n     borderRadius: 5,\r\n         paddingHorizontal: 0,\r\n@@ -205,9 +205,9 @@\n         marginVertical: 12,\r\n         borderWidth: 1,\r\n         width: \"63%\",\r\n     \r\n-  },\r\n+  }, */\r\n   dropdownStyles:{\r\n     backgroundColor: \"#eceffa\",\r\n     borderColor:COLORS.wingblue\r\n   },\r\n"
+                },
+                {
+                    "date": 1674921287244,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -195,19 +195,26 @@\n     fontSize: SIZES.small,\r\n     alignSelf: 'flex-start',\r\n     paddingHorizontal:30,\r\n   },\r\n-  /* selectList:{\r\n+  selectList:{\r\n     backgroundColor: \"#eceffa\",\r\n     borderColor: COLORS.wingblue,\r\n     borderRadius: 5,\r\n         paddingHorizontal: 0,\r\n         paddingVertical: 15,\r\n         marginVertical: 12,\r\n         borderWidth: 1,\r\n         width: \"63%\",\r\n+        icon : {\r\n+          color: COLORS.wingblue,\r\n+          fontSize: 20,\r\n+          position: \"absolute\",\r\n+          right: 10,\r\n+          top: 10,\r\n+        }\r\n     \r\n-  }, */\r\n+  },\r\n   dropdownStyles:{\r\n     backgroundColor: \"#eceffa\",\r\n     borderColor:COLORS.wingblue\r\n   },\r\n"
+                },
+                {
+                    "date": 1674921303301,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -206,9 +206,9 @@\n         borderWidth: 1,\r\n         width: \"63%\",\r\n         icon : {\r\n           color: COLORS.wingblue,\r\n-          fontSize: 20,\r\n+          fontSize: 30,\r\n           position: \"absolute\",\r\n           right: 10,\r\n           top: 10,\r\n         }\r\n"
+                },
+                {
+                    "date": 1674921309469,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -204,15 +204,9 @@\n         paddingVertical: 15,\r\n         marginVertical: 12,\r\n         borderWidth: 1,\r\n         width: \"63%\",\r\n-        icon : {\r\n-          color: COLORS.wingblue,\r\n-          fontSize: 30,\r\n-          position: \"absolute\",\r\n-          right: 10,\r\n-          top: 10,\r\n-        }\r\n+        alignSelf: 'center',\r\n     \r\n   },\r\n   dropdownStyles:{\r\n     backgroundColor: \"#eceffa\",\r\n"
+                },
+                {
+                    "date": 1674921365637,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -185,9 +185,9 @@\n   text:{\r\n     color: COLORS.wingDarkBlue,\r\n     fontFamily:\"SoraLight\",\r\n     fontSize: 15,\r\n-    alignSelf: 'flex-start',\r\n+    \r\n     paddingHorizontal:30,\r\n   },\r\n   error:{\r\n     color: 'red',\r\n@@ -204,9 +204,8 @@\n         paddingVertical: 15,\r\n         marginVertical: 12,\r\n         borderWidth: 1,\r\n         width: \"63%\",\r\n-        alignSelf: 'center',\r\n     \r\n   },\r\n   dropdownStyles:{\r\n     backgroundColor: \"#eceffa\",\r\n"
+                },
+                {
+                    "date": 1674921546371,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -109,8 +109,9 @@\n           fontFamily=\"SoraLight\"\r\n           boxStyles={styles.selectList}\r\n           inputStyles={[styles.text, {color:'black'}]}\r\n           dropdownStyles={styles.dropdownStyles}\r\n+          iconContainer={styles.iconContainerStyles}\r\n           \r\n         />\r\n         {validPassword? <Text style={styles.text}>Password</Text> : showErrorField(\"Password\")}\r\n         <CustomInput placeholder={\"*******\"} value={password} setValue={setPassword} secureTextEntry iconNameEntry='form-textbox-password'/>\r\n@@ -185,9 +186,9 @@\n   text:{\r\n     color: COLORS.wingDarkBlue,\r\n     fontFamily:\"SoraLight\",\r\n     fontSize: 15,\r\n-    \r\n+    alignSelf: 'flex-start',\r\n     paddingHorizontal:30,\r\n   },\r\n   error:{\r\n     color: 'red',\r\n"
+                },
+                {
+                    "date": 1674921569048,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -205,9 +205,12 @@\n         paddingVertical: 15,\r\n         marginVertical: 12,\r\n         borderWidth: 1,\r\n         width: \"63%\",\r\n-    \r\n+    iconContainerStyles:{\r\n+      backgroundColor: \"#eceffa\",\r\n+      borderColor:COLORS.wingblue\r\n+    }\r\n   },\r\n   dropdownStyles:{\r\n     backgroundColor: \"#eceffa\",\r\n     borderColor:COLORS.wingblue\r\n"
+                },
+                {
+                    "date": 1674921588219,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -205,13 +205,13 @@\n         paddingVertical: 15,\r\n         marginVertical: 12,\r\n         borderWidth: 1,\r\n         width: \"63%\",\r\n-    iconContainerStyles:{\r\n-      backgroundColor: \"#eceffa\",\r\n-      borderColor:COLORS.wingblue\r\n-    }\r\n   },\r\n+  iconContainerStyles:{\r\n+    backgroundColor: \"#eceffa\",\r\n+    borderColor:COLORS.wingblue\r\n+  },\r\n   dropdownStyles:{\r\n     backgroundColor: \"#eceffa\",\r\n     borderColor:COLORS.wingblue\r\n   },\r\n"
+                },
+                {
+                    "date": 1674921601967,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -207,10 +207,11 @@\n         borderWidth: 1,\r\n         width: \"63%\",\r\n   },\r\n   iconContainerStyles:{\r\n-    backgroundColor: \"#eceffa\",\r\n-    borderColor:COLORS.wingblue\r\n+    position: 'absolute',\r\n+    right: 10,\r\n+    top: 10\r\n   },\r\n   dropdownStyles:{\r\n     backgroundColor: \"#eceffa\",\r\n     borderColor:COLORS.wingblue\r\n"
+                },
+                {
+                    "date": 1674921623203,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -107,11 +107,11 @@\n           search={false}\r\n           defaultOption={{key: \"0\", value: 'Masculino'}}\r\n           fontFamily=\"SoraLight\"\r\n           boxStyles={styles.selectList}\r\n-          inputStyles={[styles.text, {color:'black'}]}\r\n           dropdownStyles={styles.dropdownStyles}\r\n           iconContainer={styles.iconContainerStyles}\r\n+          inputStyles={[styles.text, {color:'black',textAlign: 'left'}]}\r\n           \r\n         />\r\n         {validPassword? <Text style={styles.text}>Password</Text> : showErrorField(\"Password\")}\r\n         <CustomInput placeholder={\"*******\"} value={password} setValue={setPassword} secureTextEntry iconNameEntry='form-textbox-password'/>\r\n"
+                },
+                {
+                    "date": 1674921673513,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -200,13 +200,9 @@\n   selectList:{\r\n     backgroundColor: \"#eceffa\",\r\n     borderColor: COLORS.wingblue,\r\n     borderRadius: 5,\r\n-        paddingHorizontal: 0,\r\n-        paddingVertical: 15,\r\n-        marginVertical: 12,\r\n-        borderWidth: 1,\r\n-        width: \"63%\",\r\n+    \r\n   },\r\n   iconContainerStyles:{\r\n     position: 'absolute',\r\n     right: 10,\r\n"
+                },
+                {
+                    "date": 1674921710014,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -146,8 +146,9 @@\n const styles = StyleSheet.create({\r\n   container: {\r\n     flex: 1,\r\n     backgroundColor: COLORS.eggshell,\r\n+    paddingBottom: 20\r\n     \r\n   },\r\n   containerLogo: {\r\n     flexDirection: 'row',\r\n"
+                },
+                {
+                    "date": 1674921767527,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -146,9 +146,9 @@\n const styles = StyleSheet.create({\r\n   container: {\r\n     flex: 1,\r\n     backgroundColor: COLORS.eggshell,\r\n-    paddingBottom: 20\r\n+    paddingBottom: 100\r\n     \r\n   },\r\n   containerLogo: {\r\n     flexDirection: 'row',\r\n"
+                },
+                {
+                    "date": 1674921803094,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -146,9 +146,9 @@\n const styles = StyleSheet.create({\r\n   container: {\r\n     flex: 1,\r\n     backgroundColor: COLORS.eggshell,\r\n-    paddingBottom: 100\r\n+    marginBottom: 100\r\n     \r\n   },\r\n   containerLogo: {\r\n     flexDirection: 'row',\r\n"
+                },
+                {
+                    "date": 1674921845221,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -84,8 +84,9 @@\n     setValidName(true); \r\n   }\r\n   return (\r\n     <ScrollView style={styles.container}>\r\n+      <View style={{paddingBottom:20}}\r\n       <View style={styles.containerLogo}>\r\n         <CustomBackButton onPress={() => navigation.navigate(\"Landing\")}></CustomBackButton>\r\n         <Image source={require('../../../assets/images/logo_azul_escuro.png')} resizeMode='contain' style={[styles.logo, {height: height * 0.15}]}></Image>\r\n         <Text style={styles.wingman}>Registo</Text>\r\n@@ -138,17 +139,19 @@\n           onCancel={hideDatePicker}\r\n           style={styles.calendar}\r\n         />\r\n       </View> */}\r\n+    \r\n+      </View>\r\n     </ScrollView>\r\n   );\r\n }\r\n \r\n const styles = StyleSheet.create({\r\n   container: {\r\n     flex: 1,\r\n     backgroundColor: COLORS.eggshell,\r\n-    marginBottom: 100\r\n+\r\n     \r\n   },\r\n   containerLogo: {\r\n     flexDirection: 'row',\r\n"
+                },
+                {
+                    "date": 1674921861401,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -84,9 +84,9 @@\n     setValidName(true); \r\n   }\r\n   return (\r\n     <ScrollView style={styles.container}>\r\n-      <View style={{paddingBottom:20}}\r\n+      <View style={{paddingBottom:20}}>\r\n       <View style={styles.containerLogo}>\r\n         <CustomBackButton onPress={() => navigation.navigate(\"Landing\")}></CustomBackButton>\r\n         <Image source={require('../../../assets/images/logo_azul_escuro.png')} resizeMode='contain' style={[styles.logo, {height: height * 0.15}]}></Image>\r\n         <Text style={styles.wingman}>Registo</Text>\r\n"
+                },
+                {
+                    "date": 1674921867927,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -84,9 +84,9 @@\n     setValidName(true); \r\n   }\r\n   return (\r\n     <ScrollView style={styles.container}>\r\n-      <View style={{paddingBottom:20}}>\r\n+      <View style={{paddingBottom:25}}>\r\n       <View style={styles.containerLogo}>\r\n         <CustomBackButton onPress={() => navigation.navigate(\"Landing\")}></CustomBackButton>\r\n         <Image source={require('../../../assets/images/logo_azul_escuro.png')} resizeMode='contain' style={[styles.logo, {height: height * 0.15}]}></Image>\r\n         <Text style={styles.wingman}>Registo</Text>\r\n"
+                },
+                {
+                    "date": 1674921891937,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -84,9 +84,9 @@\n     setValidName(true); \r\n   }\r\n   return (\r\n     <ScrollView style={styles.container}>\r\n-      <View style={{paddingBottom:25}}>\r\n+      <View style={{paddingBottom:35}}>\r\n       <View style={styles.containerLogo}>\r\n         <CustomBackButton onPress={() => navigation.navigate(\"Landing\")}></CustomBackButton>\r\n         <Image source={require('../../../assets/images/logo_azul_escuro.png')} resizeMode='contain' style={[styles.logo, {height: height * 0.15}]}></Image>\r\n         <Text style={styles.wingman}>Registo</Text>\r\n"
+                },
+                {
+                    "date": 1674921928561,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -154,9 +154,9 @@\n     \r\n   },\r\n   containerLogo: {\r\n     flexDirection: 'row',\r\n-    top: 40,\r\n+    top: 30,\r\n     paddingVertical: 20,\r\n     alignContent: 'center',\r\n     alignItems: 'center'\r\n   \r\n"
+                },
+                {
+                    "date": 1674921958736,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -154,17 +154,17 @@\n     \r\n   },\r\n   containerLogo: {\r\n     flexDirection: 'row',\r\n-    top: 30,\r\n+    top: 10,\r\n     paddingVertical: 20,\r\n     alignContent: 'center',\r\n     alignItems: 'center'\r\n   \r\n   },\r\n   placeButtons:{\r\n     alignItems: 'center',\r\n-    top: 20,\r\n+    top: 10,\r\n     width: \"100%\",\r\n   },\r\n   placeInput:{\r\n     alignItems: 'center',\r\n"
+                },
+                {
+                    "date": 1674921980901,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -162,14 +162,14 @@\n   \r\n   },\r\n   placeButtons:{\r\n     alignItems: 'center',\r\n-    top: 10,\r\n+    top: 20,\r\n     width: \"100%\",\r\n   },\r\n   placeInput:{\r\n     alignItems: 'center',\r\n-    width: \"100%\",\r\n+    width: \"50%\",\r\n \r\n   },\r\n   logo: {\r\n     flex:0.5,\r\n"
+                },
+                {
+                    "date": 1674921988899,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -167,9 +167,10 @@\n     width: \"100%\",\r\n   },\r\n   placeInput:{\r\n     alignItems: 'center',\r\n-    width: \"50%\",\r\n+    top: 0,\r\n+    width: \"100%\",\r\n \r\n   },\r\n   logo: {\r\n     flex:0.5,\r\n"
+                },
+                {
+                    "date": 1674921994127,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -167,9 +167,9 @@\n     width: \"100%\",\r\n   },\r\n   placeInput:{\r\n     alignItems: 'center',\r\n-    top: 0,\r\n+    top: 10\r\n     width: \"100%\",\r\n \r\n   },\r\n   logo: {\r\n"
+                },
+                {
+                    "date": 1674922004694,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -155,9 +155,9 @@\n   },\r\n   containerLogo: {\r\n     flexDirection: 'row',\r\n     top: 10,\r\n-    paddingVertical: 20,\r\n+    paddingVertical: 10,\r\n     alignContent: 'center',\r\n     alignItems: 'center'\r\n   \r\n   },\r\n@@ -167,9 +167,8 @@\n     width: \"100%\",\r\n   },\r\n   placeInput:{\r\n     alignItems: 'center',\r\n-    top: 10\r\n     width: \"100%\",\r\n \r\n   },\r\n   logo: {\r\n"
+                },
+                {
+                    "date": 1674922027460,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -155,9 +155,10 @@\n   },\r\n   containerLogo: {\r\n     flexDirection: 'row',\r\n     top: 10,\r\n-    paddingVertical: 10,\r\n+    paddingVertical: 4,\r\n+    paddingTop: 5,\r\n     alignContent: 'center',\r\n     alignItems: 'center'\r\n   \r\n   },\r\n"
+                },
+                {
+                    "date": 1674922032653,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -156,9 +156,9 @@\n   containerLogo: {\r\n     flexDirection: 'row',\r\n     top: 10,\r\n     paddingVertical: 4,\r\n-    paddingTop: 5,\r\n+    paddingTop: 20,\r\n     alignContent: 'center',\r\n     alignItems: 'center'\r\n   \r\n   },\r\n"
+                },
+                {
+                    "date": 1674922066194,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -205,8 +205,9 @@\n   selectList:{\r\n     backgroundColor: \"#eceffa\",\r\n     borderColor: COLORS.wingblue,\r\n     borderRadius: 5,\r\n+    alignSelf: 'flex-start',\r\n     \r\n   },\r\n   iconContainerStyles:{\r\n     position: 'absolute',\r\n"
+                },
+                {
+                    "date": 1674922082903,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -205,9 +205,10 @@\n   selectList:{\r\n     backgroundColor: \"#eceffa\",\r\n     borderColor: COLORS.wingblue,\r\n     borderRadius: 5,\r\n-    alignSelf: 'flex-start',\r\n+    //align box to the right\r\n+    alignSelf: 'flex-end',\r\n     \r\n   },\r\n   iconContainerStyles:{\r\n     position: 'absolute',\r\n"
+                },
+                {
+                    "date": 1674922120179,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -206,9 +206,9 @@\n     backgroundColor: \"#eceffa\",\r\n     borderColor: COLORS.wingblue,\r\n     borderRadius: 5,\r\n     //align box to the right\r\n-    alignSelf: 'flex-end',\r\n+    alignSelf: 'flex-start',\r\n     \r\n   },\r\n   iconContainerStyles:{\r\n     position: 'absolute',\r\n"
+                },
+                {
+                    "date": 1674922128937,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -207,8 +207,9 @@\n     borderColor: COLORS.wingblue,\r\n     borderRadius: 5,\r\n     //align box to the right\r\n     alignSelf: 'flex-start',\r\n+    justifyContent: 'flex-start',\r\n     \r\n   },\r\n   iconContainerStyles:{\r\n     position: 'absolute',\r\n"
+                },
+                {
+                    "date": 1674922155239,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -206,11 +206,11 @@\n     backgroundColor: \"#eceffa\",\r\n     borderColor: COLORS.wingblue,\r\n     borderRadius: 5,\r\n     //align box to the right\r\n-    alignSelf: 'flex-start',\r\n-    justifyContent: 'flex-start',\r\n+   flex: 1\r\n     \r\n+    \r\n   },\r\n   iconContainerStyles:{\r\n     position: 'absolute',\r\n     right: 10,\r\n"
+                },
+                {
+                    "date": 1674922162169,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -206,9 +206,8 @@\n     backgroundColor: \"#eceffa\",\r\n     borderColor: COLORS.wingblue,\r\n     borderRadius: 5,\r\n     //align box to the right\r\n-   flex: 1\r\n     \r\n     \r\n   },\r\n   iconContainerStyles:{\r\n"
+                },
+                {
+                    "date": 1674922267906,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -111,8 +111,9 @@\n           boxStyles={styles.selectList}\r\n           dropdownStyles={styles.dropdownStyles}\r\n           iconContainer={styles.iconContainerStyles}\r\n           inputStyles={[styles.text, {color:'black',textAlign: 'left'}]}\r\n+          style={{alignSelf: 'flex-start'}}\r\n           \r\n         />\r\n         {validPassword? <Text style={styles.text}>Password</Text> : showErrorField(\"Password\")}\r\n         <CustomInput placeholder={\"*******\"} value={password} setValue={setPassword} secureTextEntry iconNameEntry='form-textbox-password'/>\r\n"
+                },
+                {
+                    "date": 1674922287667,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -111,9 +111,8 @@\n           boxStyles={styles.selectList}\r\n           dropdownStyles={styles.dropdownStyles}\r\n           iconContainer={styles.iconContainerStyles}\r\n           inputStyles={[styles.text, {color:'black',textAlign: 'left'}]}\r\n-          style={{alignSelf: 'flex-start'}}\r\n           \r\n         />\r\n         {validPassword? <Text style={styles.text}>Password</Text> : showErrorField(\"Password\")}\r\n         <CustomInput placeholder={\"*******\"} value={password} setValue={setPassword} secureTextEntry iconNameEntry='form-textbox-password'/>\r\n"
+                },
+                {
+                    "date": 1674922372449,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -85,8 +85,11 @@\n   }\r\n   return (\r\n     <ScrollView style={styles.container}>\r\n       <View style={{paddingBottom:35}}>\r\n+        <View>\r\n+          <Text style={Styles.miniWingman}>Wingman</Text>\r\n+        </View>\r\n       <View style={styles.containerLogo}>\r\n         <CustomBackButton onPress={() => navigation.navigate(\"Landing\")}></CustomBackButton>\r\n         <Image source={require('../../../assets/images/logo_azul_escuro.png')} resizeMode='contain' style={[styles.logo, {height: height * 0.15}]}></Image>\r\n         <Text style={styles.wingman}>Registo</Text>\r\n"
+                },
+                {
+                    "date": 1674922378036,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -86,9 +86,9 @@\n   return (\r\n     <ScrollView style={styles.container}>\r\n       <View style={{paddingBottom:35}}>\r\n         <View>\r\n-          <Text style={Styles.miniWingman}>Wingman</Text>\r\n+          <Text style={styles.miniWingman}>Wingman</Text>\r\n         </View>\r\n       <View style={styles.containerLogo}>\r\n         <CustomBackButton onPress={() => navigation.navigate(\"Landing\")}></CustomBackButton>\r\n         <Image source={require('../../../assets/images/logo_azul_escuro.png')} resizeMode='contain' style={[styles.logo, {height: height * 0.15}]}></Image>\r\n"
+                },
+                {
+                    "date": 1674922397287,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -174,8 +174,11 @@\n     alignItems: 'center',\r\n     width: \"100%\",\r\n \r\n   },\r\n+  miniWingman : {\r\n+    fontsize: 20,\r\n+  }\r\n   logo: {\r\n     flex:0.5,\r\n     width: \"70%\",\r\n     minWidth:40,\r\n"
+                },
+                {
+                    "date": 1674922475534,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -85,9 +85,9 @@\n   }\r\n   return (\r\n     <ScrollView style={styles.container}>\r\n       <View style={{paddingBottom:35}}>\r\n-        <View>\r\n+        <View style={styles.wingmanHeader}>\r\n           <Text style={styles.miniWingman}>Wingman</Text>\r\n         </View>\r\n       <View style={styles.containerLogo}>\r\n         <CustomBackButton onPress={() => navigation.navigate(\"Landing\")}></CustomBackButton>\r\n@@ -174,11 +174,16 @@\n     alignItems: 'center',\r\n     width: \"100%\",\r\n \r\n   },\r\n+  wingmanHeader : {\r\n+    top: 10,\r\n+    paddingVertical: 4,\r\n+    paddingTop: 20,\r\n+  },\r\n   miniWingman : {\r\n     fontsize: 20,\r\n-  }\r\n+  },\r\n   logo: {\r\n     flex:0.5,\r\n     width: \"70%\",\r\n     minWidth:40,\r\n"
+                },
+                {
+                    "date": 1674922482723,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -175,9 +175,9 @@\n     width: \"100%\",\r\n \r\n   },\r\n   wingmanHeader : {\r\n-    top: 10,\r\n+    top: 30,\r\n     paddingVertical: 4,\r\n     paddingTop: 20,\r\n   },\r\n   miniWingman : {\r\n"
+                },
+                {
+                    "date": 1674922490352,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -175,9 +175,10 @@\n     width: \"100%\",\r\n \r\n   },\r\n   wingmanHeader : {\r\n-    top: 30,\r\n+    top: 50,\r\n+    left: 20,\r\n     paddingVertical: 4,\r\n     paddingTop: 20,\r\n   },\r\n   miniWingman : {\r\n"
+                },
+                {
+                    "date": 1674922510576,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -86,8 +86,10 @@\n   return (\r\n     <ScrollView style={styles.container}>\r\n       <View style={{paddingBottom:35}}>\r\n         <View style={styles.wingmanHeader}>\r\n+        <Image source={require('../../../assets/images/logo_azul_escuro.png')} resizeMode='contain' style={[styles.logo, {height: height * 0.15}]}></Image>\r\n+\r\n           <Text style={styles.miniWingman}>Wingman</Text>\r\n         </View>\r\n       <View style={styles.containerLogo}>\r\n         <CustomBackButton onPress={() => navigation.navigate(\"Landing\")}></CustomBackButton>\r\n"
+                },
+                {
+                    "date": 1674922516450,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -92,9 +92,8 @@\n           <Text style={styles.miniWingman}>Wingman</Text>\r\n         </View>\r\n       <View style={styles.containerLogo}>\r\n         <CustomBackButton onPress={() => navigation.navigate(\"Landing\")}></CustomBackButton>\r\n-        <Image source={require('../../../assets/images/logo_azul_escuro.png')} resizeMode='contain' style={[styles.logo, {height: height * 0.15}]}></Image>\r\n         <Text style={styles.wingman}>Registo</Text>\r\n       </View>\r\n   \r\n       <View style={styles.placeInput}>\r\n"
+                },
+                {
+                    "date": 1674922522403,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -86,9 +86,9 @@\n   return (\r\n     <ScrollView style={styles.container}>\r\n       <View style={{paddingBottom:35}}>\r\n         <View style={styles.wingmanHeader}>\r\n-        <Image source={require('../../../assets/images/logo_azul_escuro.png')} resizeMode='contain' style={[styles.logo, {height: height * 0.15}]}></Image>\r\n+        <Image source={require('../../../assets/images/logo_azul_escuro.png')} resizeMode='contain' style={[styles.logo, {height: height * 0.1}]}></Image>\r\n \r\n           <Text style={styles.miniWingman}>Wingman</Text>\r\n         </View>\r\n       <View style={styles.containerLogo}>\r\n"
+                },
+                {
+                    "date": 1674922542413,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -87,9 +87,8 @@\n     <ScrollView style={styles.container}>\r\n       <View style={{paddingBottom:35}}>\r\n         <View style={styles.wingmanHeader}>\r\n         <Image source={require('../../../assets/images/logo_azul_escuro.png')} resizeMode='contain' style={[styles.logo, {height: height * 0.1}]}></Image>\r\n-\r\n           <Text style={styles.miniWingman}>Wingman</Text>\r\n         </View>\r\n       <View style={styles.containerLogo}>\r\n         <CustomBackButton onPress={() => navigation.navigate(\"Landing\")}></CustomBackButton>\r\n@@ -176,8 +175,9 @@\n     width: \"100%\",\r\n \r\n   },\r\n   wingmanHeader : {\r\n+    flexDirection: 'row',\r\n     top: 50,\r\n     left: 20,\r\n     paddingVertical: 4,\r\n     paddingTop: 20,\r\n"
+                },
+                {
+                    "date": 1674922560734,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -177,18 +177,18 @@\n   },\r\n   wingmanHeader : {\r\n     flexDirection: 'row',\r\n     top: 50,\r\n-    left: 20,\r\n+    \r\n     paddingVertical: 4,\r\n     paddingTop: 20,\r\n   },\r\n   miniWingman : {\r\n     fontsize: 20,\r\n   },\r\n   logo: {\r\n     flex:0.5,\r\n-    width: \"70%\",\r\n+    width: \"40%\",\r\n     minWidth:40,\r\n     maxWidth: 300,\r\n     maxHeight: 120,\r\n     paddingVertical:40,\r\n"
+                },
+                {
+                    "date": 1674922566878,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -186,9 +186,9 @@\n     fontsize: 20,\r\n   },\r\n   logo: {\r\n     flex:0.5,\r\n-    width: \"40%\",\r\n+    width: \"10%\",\r\n     minWidth:40,\r\n     maxWidth: 300,\r\n     maxHeight: 120,\r\n     paddingVertical:40,\r\n"
+                },
+                {
+                    "date": 1674922572451,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -191,9 +191,9 @@\n     minWidth:40,\r\n     maxWidth: 300,\r\n     maxHeight: 120,\r\n     paddingVertical:40,\r\n-    padding: -20\r\n+    padding: 0,\r\n   },\r\n   wingman:{\r\n     fontFamily: 'SoraBold',\r\n     fontSize: 40,\r\n"
+                },
+                {
+                    "date": 1674922616520,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -85,14 +85,11 @@\n   }\r\n   return (\r\n     <ScrollView style={styles.container}>\r\n       <View style={{paddingBottom:35}}>\r\n-        <View style={styles.wingmanHeader}>\r\n-        <Image source={require('../../../assets/images/logo_azul_escuro.png')} resizeMode='contain' style={[styles.logo, {height: height * 0.1}]}></Image>\r\n-          <Text style={styles.miniWingman}>Wingman</Text>\r\n-        </View>\r\n       <View style={styles.containerLogo}>\r\n         <CustomBackButton onPress={() => navigation.navigate(\"Landing\")}></CustomBackButton>\r\n+        <Image source={require('../../../assets/images/logo_azul_escuro.png')} resizeMode='contain' style={[styles.logo, {height: height * 0.15}]}></Image>\r\n         <Text style={styles.wingman}>Registo</Text>\r\n       </View>\r\n   \r\n       <View style={styles.placeInput}>\r\n@@ -114,8 +111,9 @@\n           boxStyles={styles.selectList}\r\n           dropdownStyles={styles.dropdownStyles}\r\n           iconContainer={styles.iconContainerStyles}\r\n           inputStyles={[styles.text, {color:'black',textAlign: 'left'}]}\r\n+         \r\n           \r\n         />\r\n         {validPassword? <Text style={styles.text}>Password</Text> : showErrorField(\"Password\")}\r\n         <CustomInput placeholder={\"*******\"} value={password} setValue={setPassword} secureTextEntry iconNameEntry='form-textbox-password'/>\r\n@@ -174,26 +172,16 @@\n     alignItems: 'center',\r\n     width: \"100%\",\r\n \r\n   },\r\n-  wingmanHeader : {\r\n-    flexDirection: 'row',\r\n-    top: 50,\r\n-    \r\n-    paddingVertical: 4,\r\n-    paddingTop: 20,\r\n-  },\r\n-  miniWingman : {\r\n-    fontsize: 20,\r\n-  },\r\n   logo: {\r\n     flex:0.5,\r\n-    width: \"10%\",\r\n+    width: \"70%\",\r\n     minWidth:40,\r\n     maxWidth: 300,\r\n     maxHeight: 120,\r\n     paddingVertical:40,\r\n-    padding: 0,\r\n+    padding: -20\r\n   },\r\n   wingman:{\r\n     fontFamily: 'SoraBold',\r\n     fontSize: 40,\r\n"
+                },
+                {
+                    "date": 1674922798419,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -155,9 +155,9 @@\n     \r\n   },\r\n   containerLogo: {\r\n     flexDirection: 'row',\r\n-    top: 10,\r\n+    top: 4,\r\n     paddingVertical: 4,\r\n     paddingTop: 20,\r\n     alignContent: 'center',\r\n     alignItems: 'center'\r\n"
+                },
+                {
+                    "date": 1674925274676,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -155,9 +155,9 @@\n     \r\n   },\r\n   containerLogo: {\r\n     flexDirection: 'row',\r\n-    top: 4,\r\n+    top: 10,\r\n     paddingVertical: 4,\r\n     paddingTop: 20,\r\n     alignContent: 'center',\r\n     alignItems: 'center'\r\n"
+                }
+            ],
+            "date": 1674920580326,
+            "name": "Commit-0",
+            "content": "import React from \"react\";\r\nimport { StyleSheet, TextInput, View, Button, Image,useWindowDimensions } from \"react-native\";\r\nimport { RadioButton,Text } from 'react-native-paper';\r\nimport { useState } from \"react\";\r\nimport AuthContext from \"../../context/AuthProvider\";\r\nimport { SelectList } from 'react-native-dropdown-select-list'\r\nimport {FONTS,COLORS, SHADOWS, SIZES } from '../../constants'\r\nimport CustomInput from \"../../components/CustomInput\";\r\nimport CustomButton from \"../../components/CustomButton\";\r\nimport { ScrollView } from \"react-native-gesture-handler\";\r\nimport CustomTextButton from \"../../components/CustomTextButton\";\r\nimport CustomBackButton from \"../../components/CustomBackButton\";\r\nimport DateTimePickerModal from \"react-native-modal-datetime-picker\";\r\n\r\n\r\nfunction RegisterScreen({ navigation }) {\r\n  //login form\r\n  const [name,setName] = useState(\"\");\r\n  const [email, setEmail] = useState(\"\");\r\n  const [birthdate,setBirthdate] = useState(\"\");\r\n  const [password, setPassword] = useState(\"\");\r\n  const [confirmarPassword, setConfirmarPassword] = useState(\"\");\r\n  const [validEmail, setValidEmail] = useState(true);\r\n  const [validName, setValidName] = useState(true);\r\n  const [validBirthdate, setValidBirthdate] = useState(true);\r\n  const [validPassword, setValidPassword] = useState(true);\r\n  const [validConfirmPassword, setValidConfirmPassword] = useState(true);\r\n\r\n\r\n\r\n  const { signUp } = React.useContext(AuthContext);\r\n  const registo = async () =>{\r\n    const params = {name,email,birthdate,gender,password}\r\n    const response = await signUp(params)\r\n    if(!isNaN(+response)){\r\n      navigation.navigate(\"Login\")\r\n    }\r\n  }\r\n  const {height, width} = useWindowDimensions();\r\n\r\n  const data = [\r\n      {key:\"0\", value:'Masculino'},\r\n      {key:\"1\", value:'Feminino'},\r\n      {key:\"2\", value:'Outro'},\r\n  ]\r\n  const [gender, setSelected] = React.useState(\"2\");\r\n  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);\r\n  const [date, setDate] = useState('09-10-2020');\r\n\r\n  const showDatePicker = () => {\r\n    setDatePickerVisibility(true);\r\n  };\r\n\r\n  const hideDatePicker = () => {\r\n    setDatePickerVisibility(false);\r\n  };\r\n\r\n  const handleConfirm = (date) => {\r\n    console.warn(\"A date has been picked: \", date);\r\n    hideDatePicker();\r\n  };\r\n\r\n  function alertMessage(){\r\n    name=='' ? setValidName(false): setValidName(true);\r\n    password=='' ? setValidPassword(false): setValidPassword(true);\r\n    confirmarPassword=='' ? setValidConfirmPassword(false): setValidConfirmPassword(true);\r\n    birthdate=='' ? setValidBirthdate(false):setValidBirthdate(true)\r\n    email=='' ? setValidEmail(false):setValidEmail(true)\r\n    if (password!=confirmarPassword) return \"Passwords não coincidem!\"\r\n    else return \"Campos obrigatórios não preenchidos!\"\r\n  }\r\n\r\n  function showErrorField(text){\r\n  return(<Text style= {{alignSelf: 'flex-start', paddingHorizontal:30}}>\r\n            <Text style={styles.text}>{text}</Text>\r\n            <Text style={styles.error}> * Campo Obrigatório</Text>\r\n          </Text>)\r\n  }\r\n  function setAllVarsTrue(){\r\n    setValidEmail(true);\r\n    setValidName(true);\r\n    setValidBirthdate(true);\r\n    setValidConfirmPassword(true);\r\n    setValidName(true); \r\n  }\r\n  return (\r\n    <ScrollView style={styles.container}>\r\n      <View style={styles.containerLogo}>\r\n        <CustomBackButton onPress={() => navigation.navigate(\"Landing\")}></CustomBackButton>\r\n        <Image source={require('../../../assets/images/logo_azul_escuro.png')} resizeMode='contain' style={[styles.logo, {height: height * 0.15}]}></Image>\r\n        <Text style={styles.wingman}>Registo</Text>\r\n      </View>\r\n  \r\n      <View style={styles.placeInput}>\r\n      {validName? <Text style={styles.text}>Nome</Text> : showErrorField(\"Nome\")}\r\n        <CustomInput placeholder={\"p.e.: João Miguel Silva\"} value={name} setValue={setName} iconNameEntry='person'/>\r\n        {validEmail? <Text style={styles.text}>Email</Text> : showErrorField(\"Email\")}\r\n        <CustomInput placeholder={\"joao@email.com\"} value={email} setValue={setEmail} iconNameEntry='email'/>\r\n        {validBirthdate? <Text style={styles.text}>Data de Nascimento</Text> : showErrorField(\"Data de Nascimento\")}\r\n        <CustomInput placeholder={\"aaaa-mm-dd\"} value={birthdate} setValue={setBirthdate}iconNameEntry='date-range'/>\r\n        <Text style={styles.text}>Género</Text>\r\n        <SelectList \r\n          setSelected={(val) => {val === 'Feminino'? setSelected('1') : val === 'Masculino'? setSelected('0') :setSelected('2') }} \r\n          data={data} \r\n          save=\"value\"\r\n          search={false}\r\n          defaultOption={{key: \"0\", value: 'Masculino'}}\r\n          fontFamily=\"SoraLight\"\r\n          boxStyles={styles.selectList}\r\n          inputStyles={[styles.text, {color:'black'}]}\r\n          dropdownStyles={styles.dropdownStyles}\r\n          \r\n        />\r\n        {validPassword? <Text style={styles.text}>Password</Text> : showErrorField(\"Password\")}\r\n        <CustomInput placeholder={\"*******\"} value={password} setValue={setPassword} secureTextEntry iconNameEntry='form-textbox-password'/>\r\n        {validConfirmPassword? <Text style={styles.text}>Confirmar Password</Text> : showErrorField(\"Confirmar Password\")}\r\n        <CustomInput placeholder={\"*******\"} value={confirmarPassword} setValue={setConfirmarPassword} secureTextEntry iconNameEntry='form-textbox-password'/>\r\n\r\n      </View>\r\n      <View style={styles.placeButtons}>\r\n      <CustomButton text=\"Registar\" \r\n      onPress={\r\n        () => {email!='' && password!='' && birthdate!='' && name!='' && password==confirmarPassword? \r\n                (registo(), setAllVarsTrue()) : alert(alertMessage())}} \r\n        />\r\n\r\n      <CustomTextButton onPress={() => navigation.navigate(\"Login\")} textNormal=\"Já tem conta? \" textButton=\"Login!\" textSize={16}></CustomTextButton>\r\n\r\n      </View> \r\n{/*       <View>\r\n        <Button title=\"Show Date Picker\" onPress={showDatePicker} />\r\n        <DateTimePickerModal\r\n          isVisible={isDatePickerVisible}\r\n          mode=\"date\"\r\n          onConfirm={handleConfirm}\r\n          onCancel={hideDatePicker}\r\n          style={styles.calendar}\r\n        />\r\n      </View> */}\r\n    </ScrollView>\r\n  );\r\n}\r\n\r\nconst styles = StyleSheet.create({\r\n  container: {\r\n    flex: 1,\r\n    backgroundColor: COLORS.eggshell,\r\n    \r\n  },\r\n  containerLogo: {\r\n    flexDirection: 'row',\r\n    top: 40,\r\n    paddingVertical: 20,\r\n    alignContent: 'center',\r\n    alignItems: 'center'\r\n  \r\n  },\r\n  placeButtons:{\r\n    alignItems: 'center',\r\n    top: 20,\r\n    width: \"100%\",\r\n  },\r\n  placeInput:{\r\n    alignItems: 'center',\r\n    width: \"100%\",\r\n\r\n  },\r\n  logo: {\r\n    flex:0.5,\r\n    width: \"70%\",\r\n    minWidth:40,\r\n    maxWidth: 300,\r\n    maxHeight: 120,\r\n    paddingVertical:40,\r\n    padding: -20\r\n  },\r\n  wingman:{\r\n    fontFamily: 'SoraBold',\r\n    fontSize: 40,\r\n    color: COLORS.wingDarkBlue,\r\n    paddingVertical:40,\r\n    flex:3\r\n  },\r\n  text:{\r\n    color: COLORS.wingDarkBlue,\r\n    fontFamily:\"SoraLight\",\r\n    fontSize: 15,\r\n    alignSelf: 'flex-start',\r\n    paddingHorizontal:30,\r\n  },\r\n  error:{\r\n    color: 'red',\r\n    fontFamily:\"SoraLight\",\r\n    fontSize: SIZES.small,\r\n    alignSelf: 'flex-start',\r\n    paddingHorizontal:30,\r\n  },\r\n  selectList:{\r\n    backgroundColor: \"#eceffa\",\r\n    borderColor: COLORS.wingblue,\r\n  },\r\n  dropdownStyles:{\r\n    maxHeight: 120,\r\n    backgroundColor: \"#eceffa\",\r\n    borderColor:COLORS.wingblue\r\n  },\r\n  containerNovo: {\r\n    flex: 1,\r\n    alignItems: \"center\",\r\n    justifyContent: \"center\"\r\n },\r\n calendar: {\r\n  width: \"70%\",\r\n  \r\n},\r\n  \r\n});\r\n\r\nexport default RegisterScreen;\r\n"
+        }
+    ]
+}

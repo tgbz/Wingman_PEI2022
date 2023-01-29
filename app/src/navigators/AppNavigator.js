@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useWindowDimensions } from 'react-native';
+import { Platform, StatusBar } from 'react-native';
 // Screens
 import HomeScreen from "../screens/HomeScreen.js"
 import ProfileScreen from "../screens/ProfileScreen.js"
@@ -18,10 +18,11 @@ import FilterScreen from '../screens/FilterScreen.js';
 import AddExpenseScreen from '../screens/AddExpenseScreen.js';
 import EditExpenseScreen from '../screens/EditExpenseScreen.js';
 import OCRScreen from '../screens/OCRScreen.js';
-
 import { COLORS,SIZES } from '../constants/theme.js';
 import PoliticsSuggestionScreen from '../screens/PoliticsSuggestionScreen.js';
 import ActivityTable from '../components/ActivityTable.js';
+import StatisticsScreen from '../screens/StatisticsScreen.js';
+import Modal from 'react-native-modal';
 
 
 // Screens Names
@@ -53,7 +54,7 @@ function MainContainer() {
               iconName = focused ? 'person-circle' : 'person-circle-outline'
             } else if (rn == politics) {
               iconName = focused ? 'journal' : 'journal-outline'
-            }else if (rn == "ActivitySummary") {
+            }else if (rn == "Stats") {
               iconName = focused ? 'bar-chart' : 'bar-chart-outline'
             }
             return <Ionicons name={iconName} size = {size} color = {color}/>
@@ -81,6 +82,7 @@ function MainContainer() {
           marginBottom: 10,
           position: 'absolute',
           overflow: 'hidden',
+          height: Platform.OS === 'ios' ? 80 : 75,
           },
          /*LEFT BUTTON Ionicons name="chevron-back to navigate back
           headerLeft: ({navigation}) => (
@@ -91,7 +93,7 @@ function MainContainer() {
           ),*/
         })}>
           
-        <Tab.Screen name={politics} component={PoliticsScreen} options={{title:"Políticas"}}/>
+        <Tab.Screen name={politics} component={PoliticsScreen} options={{headerShown: false}}/>
         <Tab.Screen name={homeName} component={HomeScreen} options={{headerShown: false}} />
   {/* add screen to a new tab called add expense, no label */}
         <Tab.Screen name="AddExpense" component={AddExpenseScreen} options={{headerShown: false, 
@@ -100,7 +102,7 @@ function MainContainer() {
         ),
         title:"Adicionar Despesa"
       }}/>
-        <Tab.Screen name="ActivitySummary" component={ActivitySummaryScreen} options={{title:"Atividade",headerShown: false}} />
+        <Tab.Screen name="Stats" component={StatisticsScreen} options={{title:"Estatísticas",headerShown: false}} />
         <Tab.Screen name={profileName} component={ProfileScreen} options={{title:"Perfil",headerShown: false}}/>
 
        {/* <Tab.Screen name={profileEditName} component={ProfileEditScreen} options={{headerShown: false}}/>
@@ -108,7 +110,6 @@ function MainContainer() {
       </Tab.Navigator>
   );
 }
-
 
 // Nest the tab navigator inside the Home Stack Screen
 // This way the bottom tab navigator will not be shown on the Profile Edit and Pass Edit Screens
@@ -118,8 +119,8 @@ export default function HomeStack() {
         headerTitleStyle: {
         fontFamily: 'SoraMedium',
         fontSize: SIZES.medium,
-        backgroundColor: 'transparent',
-        },headerBackTitleVisible: false, headerTintColor: COLORS.wingDarkBlue,headerTitleAlign:"center",headerShadowVisible: false, headerTransparent: true,
+        backgroundColor: COLORS.wingDarkBlue,
+        },headerBackTitleVisible: false, headerTintColor: COLORS.wingDarkBlue,headerTitleAlign:"center",headerShadowVisible: false
         // backgrond color of the header 
        /*headerLeft: () => (
         <Ionicons name="chevron-back"
@@ -135,15 +136,10 @@ export default function HomeStack() {
         <Stack.Screen name="Accounts" component={AccountsScreen}   options={{title:"Minhas Contas"}}/>
         <Stack.Screen name="Account" component={AccountScreen} options={({ route }) => ({ title: route.params.name })} />
         <Stack.Screen name="AddAccount" component={AddAccountScreen}   options={{title:"Adicionar Conta"}}/>
-        <Stack.Screen name="Politics" component={PoliticsScreen} options={{title:"Políticas de Consumo"}}/>
+        <Stack.Screen name="Politics" component={PoliticsScreen} options={{title:"Políticas de Consumo", headerStyle: { backgroundColor: COLORS.eggshell}}}/>
         <Stack.Screen name="PoliticsSuggestion" component={PoliticsSuggestionScreen} options={{title:"Sugestões de Consumo"}}/>
-        <Stack.Screen name="ActivitySummary" component={ActivitySummaryScreen} options={({ navigation }) => ({
-                                                                                title: 'Resumo de Atividade',
-                                                                                headerRight: () => (
-                                                                                  <Ionicons name="options" size={24} onPress={() => navigation.navigate("Filter")}/>
-                                                                                )
-                                                                               
-                                                                              })}/>
+        <Stack.Screen name="ActivitySummary" component={ActivitySummaryScreen} options={{
+                                                                                title: 'Resumo de Atividade ', headerStyle: { backgroundColor: COLORS.eggshell}}}/>
         <Stack.Screen name="Filter" component={FilterScreen} options={{title:"Filtros",  presentation: 'modal'}}/>
         <Stack.Screen name="EditExpense" component={EditExpenseScreen} options={{title:"Transação"}}/>
         <Stack.Screen name="OCR" component={OCRScreen} options={{title:"OCR"}}/>

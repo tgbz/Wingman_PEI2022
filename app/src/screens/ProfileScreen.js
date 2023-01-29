@@ -7,6 +7,7 @@ import {
   Button,
   StyleSheet,
   Platform,
+  StatusBar,
   TouchableOpacity,
 } from 'react-native'
 import React from 'react'
@@ -76,15 +77,25 @@ export default function ProfileScreen({ navigation }) {
     return monthName
   }
   // handleData that converts 1990-10-12T00:00:00.000Z to 12 de Outubro de 1990
-  function handleData(data) {
+
+function handleData(data) {
+  const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+  "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+];
+
     const date = new Date(data)
-    const day = date.getDate()
-    const month = date.getMonth() + 1
-    const year = date.getFullYear()
-    const newDate = day + ' de ' + getMonthName(month) + ' de ' + year
+    //get day number
+    const day = date.getDate().toString()
+    //Get the month name in portuguese, the name
+    const month = date.getMonth()
+    const monthName = monthNames[month]
+
+    //get year
+    const year = date.getFullYear().toString()
+    console.log(month)
+    const newDate = `${day} de ${monthName} de ${year}`
     return newDate
   }
-
   const [photo, setPhoto] = React.useState(null)
   const [hasGalleryPermission, setHasGalleryPermission] = React.useState(null)
   const [pickedImage, setPickedImage] = React.useState(null)
@@ -176,7 +187,7 @@ export default function ProfileScreen({ navigation }) {
           <Text style={styles.pageTitle}>Meu Perfil</Text>
         </View>
         */}
-        <View style={{ alignSelf: 'center', marginTop: 30 }}>
+        <View style={{ alignSelf: 'center'}}>
           <View style={styles.profileImage}>
             {photo ? (
               (console.log('I have photo!! ' + JSON.stringify(photo)),
@@ -212,7 +223,7 @@ export default function ProfileScreen({ navigation }) {
         </View>
 
         <View style={styles.nameContainer}>
-          <Text style={{ fontFamily: 'SoraLight', fontSize: SIZES.extraLarge }}>
+          <Text style={{ fontFamily: 'SoraRegular', fontSize: 26 }}>
             {data ? data.name : 'Loading...'}
           </Text>
         </View>
@@ -296,6 +307,7 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: COLORS.eggshell,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   navigationBar: {
     // in case i wanto to add a button in the right side
@@ -322,8 +334,8 @@ const styles = StyleSheet.create({
     right: 20,
   },
   profileImage: {
-    width: 200,
-    height: 200,
+    width: 170,
+    height: 170,
     borderRadius: 100,
     overflow: 'hidden',
   },
@@ -350,13 +362,13 @@ const styles = StyleSheet.create({
   },
   textTag: {
     fontFamily: 'SoraBold',
-    fontSize: SIZES.medium,
+    fontSize: SIZES.font,
     color: COLORS.wingDarkBlue,
   },
   textInfo: {
     //marginLeft: 30,
     fontFamily: 'SoraLight',
-    fontSize: SIZES.medium,
+    fontSize: SIZES.font,
   },
   infoLine: {
     flexDirection: 'row',

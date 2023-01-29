@@ -46,7 +46,7 @@ export default function PoliticsScreen({navigation}){
 
   function adjustData( categoryData) {
     categoryData.forEach(element => {
-        let obj = {idcategory: element.idcategory, plafond: element.plafond}
+        let obj = {idcategory: element.idcategory, plafond:element.plafond}
         finalCategoryData.push(obj)
   
     });
@@ -80,8 +80,10 @@ const showValue = (idcategory, plafond) => {
 }
 function getTable (){
   finalCategoryData.forEach(elem => {
-      tableData.push([CATEGORIES[elem.idcategory].icon, CATEGORIES[elem.idcategory].name,showValue(elem.idcategory, elem.plafond), '€']);
+      tableData.push([CATEGORIES[elem.idcategory].icon, CATEGORIES[elem.idcategory].name,showValue(elem.idcategory, (elem.plafond)), '€']);
     })
+  
+
   return tableData;
 }  
 
@@ -242,6 +244,7 @@ const styles = StyleSheet.create({
     flex: 1, 
     padding: 16, 
     paddingTop: 10, 
+    paddingBottom: 60
      },
 wrapper: { 
     flexDirection: 'row' },
@@ -271,7 +274,7 @@ row: {
 text: { 
     padding: 5,
     fontFamily: FONTS.medium,
-    fontSize: SIZES.medium,
+    fontSize: SIZES.font,
     color: COLORS.wingDarkBlue },
 roundshape:  {
     backgroundColor: 'lightgreen',

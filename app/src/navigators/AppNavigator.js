@@ -20,9 +20,9 @@ import EditExpenseScreen from '../screens/EditExpenseScreen.js';
 import OCRScreen from '../screens/OCRScreen.js';
 import { COLORS,SIZES } from '../constants/theme.js';
 import PoliticsSuggestionScreen from '../screens/PoliticsSuggestionScreen.js';
-import ActivityTable from '../components/ActivityTable.js';
+
 import StatisticsScreen from '../screens/StatisticsScreen.js';
-import Modal from 'react-native-modal';
+
 
 
 // Screens Names
@@ -93,7 +93,10 @@ function MainContainer() {
           ),*/
         })}>
           
+        {/*Send refresh true by route.params to politics screen
         <Tab.Screen name={politics} component={PoliticsScreen} options={{headerShown: false}}/>
+         */}
+        <Tab.Screen name={politics} component={PoliticsScreen} options={{headerShown: false}} />
         <Tab.Screen name={homeName} component={HomeScreen} options={{headerShown: false}} />
   {/* add screen to a new tab called add expense, no label */}
         <Tab.Screen name="AddExpense" component={AddExpenseScreen} options={{headerShown: false, 

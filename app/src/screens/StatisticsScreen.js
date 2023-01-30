@@ -27,6 +27,7 @@ import { CATEGORIES, CATEGORIESCOLORS } from '../constants'
 import { BarChart } from 'react-native-chart-kit'
 import _ from 'lodash' //Fazer Clone dos objetos
 import { set } from 'react-native-reanimated'
+import { useIsFocused } from "@react-navigation/core";
 
 function StatisticsScreen({ navigation }) {
   const { width } = useWindowDimensions()
@@ -129,6 +130,8 @@ function StatisticsScreen({ navigation }) {
     novembro: '11',
     dezembro: '12',
   }
+
+  
   // fetch the data for the correct month when the month is changed
   useEffect(() => {
     // got the month and year from the months array
@@ -141,17 +144,25 @@ function StatisticsScreen({ navigation }) {
     const date = year + '-' + monthNumber + '-' + '01'
     flatListRef.current.scrollToIndex({ animated: true, index: selectedMonth });
     fecthData(token, date)
-  }, [selectedMonth])
+  }, [selectedMonth,token])
 
+  const isFocused = useIsFocused();
+  
   useEffect(() => {
     if (token.id) {
       const today = new Date()
       // format  2023-01-01
       const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+      setSelectedMonth(11)
       flatListRef.current.scrollToIndex({ animated: true, index: selectedMonth });
       fecthData(token, date)
     }
-  }, [token])
+  }, [isFocused])
+
+
+
+
+
 
   // screen that on top has a scrool horizontal to select th month
   // and on the bottom has a bar chart with the incomes vs expenses data of the month selected
@@ -269,8 +280,8 @@ function StatisticsScreen({ navigation }) {
                   {/*At the end of the row show spent and planfond */}
                   <View style={{ alignItems: 'flex-end', paddingRight: 20 }}>
                     {/*If the spent is bigger than the plafond show the plafond in red */}
-                    {item.total_spent > item.plafond && (
-                      <>
+                    {/*item.total_spent > item.plafond && (
+                      <>*/}
                         <Text
                           style={{
                             fontSize: 14,
@@ -283,8 +294,8 @@ function StatisticsScreen({ navigation }) {
                         <Text style={{ fontSize: 13, color: COLORS.wingDarkBlue, opacity: 0.8 }}>
                           {Number(item.plafond).toFixed(0)} €
                         </Text>
-                      </>
-                    )}
+                     {/* </>
+                    )}  */}
                   </View>
                 </View>
               )}

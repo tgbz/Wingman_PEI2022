@@ -38,6 +38,14 @@ export default function AddExpenseScreen({ navigation }) {
   const [date, setDate] = useState(formattedDate)
 
   // TODO: Validate form data
+  const [validTitle, setValidTitle] = useState(true)
+  const [validValue, setValidValue] = useState(true)
+  const [validDescription, setValidDescription] = useState(true)
+  const [validDate, setValidDate] = useState(true)
+
+
+
+
 
   useEffect(() => {
     AsyncStorage.getItem('userToken')
@@ -75,6 +83,85 @@ export default function AddExpenseScreen({ navigation }) {
     setIsDebit(true)
     setDate(formattedDate)
   }
+
+  function validateForm() {
+    let valid = true
+    if (title == '') {
+      setValidTitle(false)
+      valid = false
+    } else {
+      setValidTitle(true)
+    }
+
+    if (value == '') {
+      setValidValue(false)
+      valid = false
+    } else {
+      setValidValue(true)
+    }
+    if (date == '') {
+      setValidDate(false)
+      valid = false
+    }
+    else if ( date > formattedDate) {
+      setValidDate(false)
+      valid = false
+    }
+    //check if date is in format yyyy-mm-dd
+    else if (date.match(/^\d{4}-\d{2}-\d{2}$/) == null) {
+      setValidDate(false)
+      valid = false
+    } else {
+      setValidDate(true)
+    }
+
+    return valid
+  }
+
+
+  function showErrorField(text){
+    var textToWrite = ""
+
+    if (text == 'Título'){
+      if (!title){
+        textToWrite = "* Campo Obrigatório"
+      }
+    }
+    else if (text == 'Valor'){
+      if (!value){
+        textToWrite = "*Obrigatório"
+      }
+      // check if value is number
+      else if (isNaN(value)){
+        textToWrite = "* Valor inválido"
+      }
+    }
+    else if (text == 'Data'){
+      if (!date){
+        textToWrite = "*Obrigatório"
+      }
+      //check if date is valid
+    else if (!date.includes("-") ||
+      date.length != 10 ||
+      date.split("-")[0].length != 4 ||
+      date.split("-")[1].length != 2 ||
+      date.split("-")[2].length != 2     
+        ){
+        textToWrite = "* Formato inválido"
+      }
+      //check if date is in the future
+      else if (date > formattedDate){
+        textToWrite = "* Data inválida"
+      }
+    }
+
+
+
+    return(<Text style= {{alignSelf: 'flex-start'}}>
+              <Text style={styles.textTag}>{text}</Text>
+              <Text style={styles.error}> {textToWrite}</Text>
+            </Text>)
+    }
 
   function handleDeleteProduct(index) {
     // Delete product at the specified index
@@ -214,6 +301,9 @@ export default function AddExpenseScreen({ navigation }) {
     })
   }
 
+
+
+  
   return (
     console.log('--------------\nToken data AddExpense: ' + JSON.stringify(token) + '\n--------------'),
     (
@@ -225,7 +315,7 @@ export default function AddExpenseScreen({ navigation }) {
             {/* Title input */}
 
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={styles.textTag}>Título</Text>
+            {validTitle ? (<Text style={styles.textTag}>Título</Text>) : showErrorField('Título')}
             {/* Button with camera icon to navigate to OCR aligned to right */}
             <TouchableOpacity
               style={{ position: 'absolute', right: 0 }}
@@ -253,7 +343,7 @@ export default function AddExpenseScreen({ navigation }) {
               ]}
             >
               <View style={{ flex: 1, padding:0, flexWrap: 'wrap'}}>
-                <Text style={styles.textTag}>Valor</Text>
+                {validValue ? (<Text style={styles.textTag}>Valor</Text>) : showErrorField('Valor')}
                 <View
                   style={[styles.buttonStyle, { width: width * 0.36}]}
                 >
@@ -268,7 +358,7 @@ export default function AddExpenseScreen({ navigation }) {
                 </View>
               </View>
               <View style={{ flex: 1, padding: 0, flexWrap: 'wrap' }}>
-                <Text style={styles.textTag}>Data</Text>
+                {validDate ? (<Text style={styles.textTag}>Data</Text>) : showErrorField('Data')}
                 <View
                   style={[styles.buttonStyle, { width: width * 0.4}]}
                 >
@@ -304,7 +394,7 @@ export default function AddExpenseScreen({ navigation }) {
             ) : null}
 
             {/* Description input */}
-            <Text style={styles.textTag}>Descrição</Text>
+            {validDescription ? (<Text style={styles.textTag}>Descrição</Text>) : showErrorField('Descrição') }
 
             <TextInput
               multiline={true}
@@ -384,8 +474,12 @@ export default function AddExpenseScreen({ navigation }) {
           <View style={styles.containerBTN}>
             <CustomButton
               onPress={() => {
+
+              if (validateForm() == true) {
                 handleCleanForm(),
                 handleFormSubmission()
+              }
+               
               }}
               text="Adicionar Movimento"
               type="TERTIARY"
@@ -416,9 +510,16 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   textTag: {
-    fontFamily: 'SoraBold',
-    fontSize: SIZES.medium,
     color: COLORS.wingDarkBlue,
+    fontFamily: "SoraMedium",
+    fontSize: 15,
+    alignSelf: "flex-start",
+  },
+  error : {
+    color: "red",
+    fontFamily: "SoraMedium",
+    fontSize: SIZES.small,
+    alignSelf: "flex-start",
   },
   textInfo: {
     fontFamily: 'SoraLight',

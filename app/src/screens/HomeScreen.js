@@ -205,15 +205,17 @@ function HomeScreen({ navigation }) {
     );
     //console.log('total_plafond: ' + total_plafond)
     //console.log('spent: ' + spent)
-    if (spent >= total_plafond) {
+    if (spent > total_plafond) {
       // TODO: change this to 1
       data.data = [1];
       //console.log(selector +' :'+ Math.round(spent / total_plafond))
       // arredonda para inteiro
       //data.data = [Math.round(spent / total_plafond)];
+    } else if (spent == 0 ) {
+      data.data = [0];
     } else data.data = [Math.round((spent * 100) / total_plafond)/100];
 
-    data.percSpent = (spent >= total_plafond) ? 100 : Math.round((spent * 100) / total_plafond);
+    data.percSpent = data.data*100;
     data.total_spent = spent;
     data.plafond = total_plafond;
     data.labels = [selector];

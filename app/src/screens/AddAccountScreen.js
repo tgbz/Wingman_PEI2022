@@ -59,6 +59,107 @@ export default function AddAccountScreen({ navigation }) {
   const [titular,setTitular]= useState('')
   const [contribuinte,setContribuinte]= useState('')
   const [iban,setIban]= useState('')
+  const [validName, setValidName] = useState(true)
+  const [validTitular, setValidTitular] = useState(true)
+  const [validContribuinte, setValidContribuinte] = useState(true)
+  const [validIban, setValidIban] = useState(true)
+
+
+  const validateForm = () => {
+    // check if all fields are filled with proper information
+    let isValid = true
+
+    if (!name) {
+      isValid = false
+      setValidName(false)
+    }
+    if (!titular) {
+      isValid = false
+      setValidTitular(false)
+    }
+    if (!contribuinte) {
+      isValid = false
+      setValidContribuinte(false)
+    }
+    if (!iban) {
+      isValid = false
+      setValidIban(false)
+    }
+    //check titular has no numbers
+    if (titular.match(/\d+/g)) {
+      isValid = false
+      setValidTitular(false)
+    }
+    //check contribuinte is contruibuinte portugues
+    if (contribuinte.length != 9) {
+      isValid = false
+      setValidContribuinte(false)
+    }
+    //check if is a valid IBAN
+    if (iban.length != 25) {
+      isValid = false
+      setValidIban(false)
+    }
+  
+    return isValid
+
+  };
+
+  function setAllVarsTrue(){
+    setValidName(true)
+    setValidTitular(true)
+    setValidContribuinte(true)
+    setValidIban(true)
+  };
+  function showErrorField(text){
+    console.log("In showErrorField")
+    console.log(name)
+    console.log(titular)
+    console.log(contribuinte)
+    console.log(iban)
+    var textToWrite = ""
+    //check if name is empty
+    if(text == "Nome Conta") {
+      if (!name) {
+        textToWrite = "* Campo Obrigatório"
+      }
+      else if (name.length < 1) {
+        textToWrite = "*Nome da conta inválido"
+      }
+    }
+    //check if titular is empty
+    if (text == "Titular") {
+      if (!titular) {
+        textToWrite = "* Campo Obrigatório"
+      }
+      else if (titular.match(/\d+/g)) {
+        textToWrite = "*Titular não pode conter números"
+      }
+    }
+    //check if contribuinte is empty
+    if (text == "Contribuinte") {
+      if (!contribuinte) {
+        textToWrite = "* Campo Obrigatório"
+      }
+      else if (contribuinte.length != 9) {
+        textToWrite = "*Contribuinte inválido"
+      }
+    }
+    //check if iban is empty
+    if (text == "IBAN") {
+      if (!iban) {
+        textToWrite = "* Campo Obrigatório"
+      }
+      else if (iban.length != 25) {
+        textToWrite = "*IBAN inválido"
+      }
+    }
+    
+    return(<Text style= {{alignSelf: 'flex-start'}}>
+    <Text style={styles.textTag}>{text}</Text>
+    <Text style={styles.error}> {textToWrite}</Text>
+  </Text>)
+  }
   
   // handleAddAccount() -> send data to server
   const handleAddAccount = async () => {
@@ -96,27 +197,29 @@ export default function AddAccountScreen({ navigation }) {
       {/* CONTAINER COM OUTLINE */}
       <View style={styles.infoContainer}>
       <View style={styles.infoLine}>
-              <Text style={styles.textTag}>Nome Conta</Text>
+              {validName ? (<Text style={styles.textTag}>Nome Conta</Text> ): (showErrorField("Nome Conta"))}
               <CustomInput placeholder={"Conta Pessoal"} value={name} setValue={setName} widthScale={0.8}/>
           </View>
           <View style={styles.infoLine}>
-              <Text style={styles.textTag}>Titular</Text>
+              {validTitular ? (<Text style={styles.textTag}>Titular</Text> ): (showErrorField("Titular"))}
               <CustomInput placeholder={""} value={titular} setValue={setTitular} widthScale={0.8}/>
           </View>
 
           <View style={styles.infoLine}>
-            <Text style={styles.textTag}>Contribuinte</Text>
+            {validContribuinte ? (<Text style={styles.textTag}>Contribuinte</Text>) : (showErrorField("Contribuinte"))}
             <CustomInput placeholder={""} value={contribuinte} setValue={setContribuinte} widthScale={0.8}/>
           </View>
           
           <View style={styles.infoLine}>
-            <Text style={styles.textTag}>IBAN</Text>
+            {validIban ? (<Text style={styles.textTag}>IBAN</Text>) :( showErrorField("IBAN"))}
             <CustomInput placeholder={"PT50 0000 0000 0000 0000 0000 0"} value={iban} setValue={setIban} widthScale={0.8}/>
           </View>
       </View>
       <View style={styles.containerBTN}>
         <CustomButton
-          onPress={() => handleAddAccount()}
+          onPress={() =>  {if(validateForm() == true) {
+            handleAddAccount(), setAllVarsTrue()}
+          }}
           text="Adicionar"
           type="TERTIARY"
           widthScale={0.8}
@@ -175,10 +278,16 @@ const styles = StyleSheet.create({
       marginBottom: 10,
     },
     textTag: {
-      fontFamily: 'SoraBold',
-      fontSize: SIZES.medium,
       color: COLORS.wingDarkBlue,
-      marginBottom: 5,
+      fontFamily: "SoraMedium",
+      fontSize: 15,
+      alignSelf: "flex-start",
+    },
+    error: {
+      color: "red",
+      fontFamily: "SoraLight",
+      fontSize: SIZES.small,
+      alignSelf: "flex-start",
     },
     textInfo: {
       //marginLeft: 30,

@@ -134,7 +134,7 @@ class Receipt():
 						jump = True
 				else:
 					value = float(match.group(4).replace(',','.').replace(' ',''))
-				self.items[itemName] = round(value,2)
+				self.items[itemName] = [1,round(value,2)]
 
 	def parse_date(self):
 		date_str = None

@@ -66,7 +66,6 @@ export default function FilterScreen({navigation}){
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.eggshell}}>
       <ScrollView>
         <View style={styles.valor}>
-            <Text style={styles.text}>Valor (€)</Text>
             <View style={{flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 10}}>
                 <TouchableOpacity onPress={() => setValorSelect(0)} style={[styles.button, {width: width/3- 25, backgroundColor: getColor(0)[0]}]}>
                 <Text style={[styles.textValor, {color:getColor(0)[1]}]}>Todos </Text >
@@ -104,8 +103,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   text : {
-    fontFamily: 'SoraBold',
-    fontSize: SIZES.extraLarge,
+    fontFamily: 'SoraMedium',
+    fontSize: SIZES.medium,
   },
   button: {
     backgroundColor: COLORS.wingDarkBlue,
@@ -117,7 +116,7 @@ const styles = StyleSheet.create({
   textValor : {
     color: 'white', 
     fontFamily: 'SoraMedium', 
-    fontSize: SIZES.medium, 
+    fontSize: SIZES.font, 
     alignContent: 'center', 
     alignItems: 'center', 
     alignSelf:'center',

@@ -1,4 +1,4 @@
-import { View, Text, Pressable, Button, Image, TouchableOpacity, useWindowDimensions, Dimensions, ImageBackground } from 'react-native'
+import { View, Text, Pressable, Platform, StatusBar, Button, Image, TouchableOpacity, useWindowDimensions, Dimensions, ImageBackground } from 'react-native'
 import React from 'react'
 import { CATEGORIES, CATEGORIESCOLORS, COLORS, FONTS, SHADOWS, SIZES } from '../constants'
 import { useState, useEffect } from 'react'
@@ -12,6 +12,7 @@ import { useRoute } from '@react-navigation/native'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { CheckBox, Icon } from '@rneui/themed';
 import Modal from 'react-native-modal';
+
 import TypeTransaction from '../components/TypeTransaction'
 var accents = require('remove-accents');
 
@@ -191,7 +192,12 @@ export default function PoliticsScreen({ navigation }) {
   }
 
   const buttonAllNone = (iconName, text) => {
-    return <View style={{flexDirection:'row', justifyContent:'center', paddingVertical:'1.5%'}}><TouchableOpacity onPress={handleAll}><Text style={{paddingVertical: 5, fontFamily:FONTS.light }}>{text}</Text><MaterialCommunityIcons name={iconName} size={24} color={COLORS.wingDarkBlue}/></TouchableOpacity></View>
+    return <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'flex-start', paddingVertical:'1.5%'}}>
+      <TouchableOpacity onPress={handleAll}>
+      <MaterialCommunityIcons name={iconName} size={24} color={COLORS.wingDarkBlue}/>
+      </TouchableOpacity>
+      <Text style={{paddingVertical: 5, paddingHorizontal: 5, fontFamily:FONTS.light }}>{text}</Text>
+      </View>
   }
 
 
@@ -199,16 +205,18 @@ export default function PoliticsScreen({ navigation }) {
       adjustData(transactionsData)
   }
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.eggshell }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.eggshell, paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}>
       <ScrollView>
       {filters &&
-          <Modal isVisible={filters} hasBackdrop={false} transparent={true} backdropColor="rgba(0,0,0,0.5)">
-           <View style={styles.modalView}>
+      <>
+          <Modal  isVisible={filters} hasBackdrop={false} transparent={true} backdropColor="rgba(0,0,0,0.5)">
+            <SafeAreaView style={styles.modalView}>
+           <View >
               <ScrollView >
                 <TypeTransaction valorSelected={valorSelect} setValorSelect={handleValorSelect}></TypeTransaction>
 
                 <View style={styles.valor}>
-                  <View style={{flexDirection:'row', justifyContent: 'space-between'}}>
+                  <View style={{flexDirection:'row', justifyContent: 'space-between' , alignItems:'center'}}>
                     <Text style={styles.text}>Categorias </Text>
                     {allCats? buttonAllNone('checkbox-blank-outline', 'Nenhuma'):buttonAllNone('checkbox-multiple-marked-outline', 'Todas')}
                   </View>
@@ -225,7 +233,10 @@ export default function PoliticsScreen({ navigation }) {
                   </TouchableOpacity>
                 </View>
             </View>
+            </SafeAreaView>
           </Modal>
+
+    </>
         }
         {
           <View>
@@ -268,7 +279,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: 'SoraBold',
-    fontSize: SIZES.extraLarge,
+    fontSize: SIZES.large,
   },
   button: {
     borderRadius: 10,
@@ -278,7 +289,7 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   buttonText:{
-    fontFamily: FONTS.medium,
+    fontFamily: FONTS.small,
     alignSelf:'center',
     paddingVertical: 10
   },
@@ -296,16 +307,8 @@ const styles = StyleSheet.create({
   modalView: {
     backgroundColor: COLORS.eggshell,
     borderRadius: 20,
-   
+    margin: -40,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
   },
 
   textStyle: {

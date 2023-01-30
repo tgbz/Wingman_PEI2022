@@ -7,6 +7,8 @@ import {
   Button,
   Dimensions,
   Image,
+  Platform,
+  StatusBar,
   useWindowDimensions,
   FlatList,
 } from 'react-native'
@@ -47,12 +49,15 @@ function StatisticsScreen({ navigation }) {
 
   //  function to get 12 months before the current month
   const getMonths = () => {
+    const monthNames = ["janeiro", "fevereiro", "março", "abril", "maio", "junho",
+    "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"
+  ];
     let date = new Date()
     date.setMonth(date.getMonth() - 12)
     for (let i = 0; i < 12; i++) {
       date.setMonth(date.getMonth() + 1)
       months.push({
-        month: date.toLocaleString('pt-br', { month: 'long' }),
+        month: monthNames[date.getMonth()],
         year: date.getFullYear(),
       })
     }
@@ -204,14 +209,14 @@ function StatisticsScreen({ navigation }) {
             </View>
             {/* Two containers in line */}
             <View style={styles.incomeExpenseContainer}>
-              <View style={[styles.IEContainer,{shadowColor: 'green'}]}>
+              <View style={[styles.IEContainer]}>
                 <MaterialCommunityIcons name="arrow-up" style={styles.incomeIcon} />
                 <View style={styles.IETextContainer}>
                   <Text style={styles.IEText}>Receitas</Text>
                   <Text style={styles.IENumber}>{income} €</Text>
                 </View>
               </View>
-              <View style={[styles.IEContainer,{shadowColor: 'red'}]}>
+              <View style={[styles.IEContainer]}>
                 <MaterialCommunityIcons name="arrow-down" style={styles.expenseIcon} />
                 <View style={styles.IETextContainer}>
                   <Text style={styles.IEText}>Despesas</Text>
@@ -288,6 +293,7 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: COLORS.white,
+    paddingTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
   },
   container: {
     flex: 1,
@@ -432,7 +438,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     backgroundColor: COLORS.eggshell,
-    elevation: 5,
     //shadowOffset: { width: 5, height: 5 },
     //shadowOpacity: 0.3, 
     //shadowRadius: 5,

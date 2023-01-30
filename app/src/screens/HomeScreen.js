@@ -217,7 +217,6 @@ function HomeScreen({ navigation }) {
     data.total_spent = spent;
     data.plafond = total_plafond;
     data.labels = [selector];
-    console.log(data);
     return data;
   }
 
@@ -433,7 +432,11 @@ function HomeScreen({ navigation }) {
             headerHome={true}
             navigation={navigation}
           ></ActivityTable>
+<<<<<<< HEAD
           
+=======
+
+>>>>>>> 9fab60b6f02d17bcb744132c53c8ad5ecf8467ae
         </ScrollView>
       </SafeAreaView>
     )

@@ -156,8 +156,9 @@ const styles = StyleSheet.create({
   },
   containerLogo: {
     flexDirection: 'row',
-    top: 20,
-    paddingVertical: 10,
+    top: 10,
+    paddingVertical: 4,
+    paddingTop: 20,
     alignContent: 'center',
     alignItems: 'center'
   

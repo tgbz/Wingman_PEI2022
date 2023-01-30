@@ -7,6 +7,7 @@ import {
   Button,
   StyleSheet,
   Platform,
+  StatusBar
 } from 'react-native'
 import {Card, Title, Paragraph } from 'react-native-paper'
 import React from 'react'
@@ -95,6 +96,7 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: COLORS.white,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
    
   },
   textTag: {

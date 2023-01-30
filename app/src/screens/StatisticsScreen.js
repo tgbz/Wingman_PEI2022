@@ -11,8 +11,9 @@ import {
   StatusBar,
   useWindowDimensions,
   FlatList,
+  SafeAreaView
 } from 'react-native'
-import { SafeAreaView } from 'react-navigation'
+
 import { ScrollView } from 'react-native-gesture-handler'
 import { useRoute } from '@react-navigation/native'
 import { useState, useEffect } from 'react'
@@ -53,7 +54,9 @@ function StatisticsScreen({ navigation }) {
     "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"
   ];
     let date = new Date()
-    date.setMonth(date.getMonth() - 12)
+    //console.log("........" ,date)
+    date.setMonth(date.getMonth() - 13)
+    //console.log("........" ,date.getMonth())
     for (let i = 0; i < 12; i++) {
       date.setMonth(date.getMonth() + 1)
       months.push({
@@ -144,9 +147,6 @@ function StatisticsScreen({ navigation }) {
     if (token.id) {
       const today = new Date()
       // format  2023-01-01
-      console.log("today")
-      console.log("\n\n\n\n")
-      console.log(today)
       const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
       flatListRef.current.scrollToIndex({ animated: true, index: selectedMonth });
       fecthData(token, date)
@@ -160,7 +160,7 @@ function StatisticsScreen({ navigation }) {
     getMonths(),
     //console.log(months),
     (
-      <SafeAreaView style={styles.root} forceInset={{ horizontal: 'never' }}>
+      <SafeAreaView style={styles.root} >
         <ScrollView>
           {/*Container with border and rounded corners */}
           <View style={styles.container}>
@@ -206,9 +206,12 @@ function StatisticsScreen({ navigation }) {
           </View>
 
           <View style={styles.containerC}>
+            
             <View style={styles.balanceContainer}>
               <Text style={styles.balanceText}>{income-expense} €</Text>
-              <Text style={styles.percentageBalance}>Gastaste {Math.round((expense*100)/income)}% do que ganhaste</Text>
+              {console.log('Expense: ', expense)}
+              {(expense==0)? <Text style={styles.percentageBalance}>Não tiveste gastos</Text> : <Text style={styles.percentageBalance}>Gastaste {Math.round((expense*100)/income)}% do que ganhaste</Text>}
+
             </View>
             {/* Two containers in line */}
             <View style={styles.incomeExpenseContainer}>
@@ -237,7 +240,8 @@ function StatisticsScreen({ navigation }) {
             <FlatList
               //data={dataCategories}
               // order the data by the total spent
-              data={dataCategories.sort((a, b) => b.total_spent - a.total_spent)}
+             //(item.total_spent / item.plafond)
+              data={dataCategories.sort((a, b) => (b.total_spent/b.plafond)- (a.total_spent/a.plafond))}
               keyExtractor={(item, index) => index.toString()}
               renderItem={({ item }) => (
                 <View style={styles.categoryContainer}>
@@ -285,6 +289,7 @@ function StatisticsScreen({ navigation }) {
                 </View>
               )}
             />
+
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -296,7 +301,7 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: COLORS.white,
-    paddingTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 20,
   },
   container: {
     flex: 1,
@@ -472,7 +477,7 @@ const styles = StyleSheet.create({
     color: COLORS.wingDarkBlue,
     fontFamily: 'SoraMedium',
     fontSize: 24,
-  },
+  }
 })
 
 export default StatisticsScreen

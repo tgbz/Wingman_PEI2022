@@ -20,9 +20,9 @@ const ProductInputModal = ({ isModalVisible,generalCategory,getCategoryIcon,getC
   // if setProductToEdit is not { } then set the fields to the productToEdit values
   useEffect(() => {
     if (isEdit) {
-      console.log('productToEdit',productToEdit.description)
+      //console.log('productToEdit type',typeof(productToEdit.value))
       setDescription(productToEdit.description)
-      setValue(productToEdit.value)
+      setValue(productToEdit.value.toString())
       setQuantity(productToEdit.quantity)
       setIdcategory(productToEdit.idcategory)
     }else{

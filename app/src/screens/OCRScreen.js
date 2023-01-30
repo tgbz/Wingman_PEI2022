@@ -118,9 +118,6 @@ const sendPost = async () => {
 const transformData = (transData) => {      
     var purchase = JSON.parse(transData);
     let products = []
-    console.log(purchase['items'])
-    console.log(typeof(purchase['items']))
-
     Object.keys(purchase.items).forEach((key, index) => {
       products.push({
         idcategory: 22,

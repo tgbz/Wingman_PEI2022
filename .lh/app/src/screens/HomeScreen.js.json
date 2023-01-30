@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 81,
+            "activePatchIndex": 92,
             "patches": [
                 {
                     "date": 1674127451404,
@@ -332,6 +332,50 @@
                 {
                     "date": 1674932940923,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -216,9 +216,8 @@\n     data.percSpent = (spent >= total_plafond) ? 100 : Math.round((spent * 100) / total_plafond);\r\n     data.total_spent = spent;\r\n     data.plafond = total_plafond;\r\n     data.labels = [selector];\r\n-    console.log(data);\r\n     return data;\r\n   }\r\n \r\n   // every time route.params is true when user add despesa e edit despesa, refresh data\r\n"
+                },
+                {
+                    "date": 1675060621287,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -204,9 +204,9 @@\n         spent\r\n     );\r\n     //console.log('total_plafond: ' + total_plafond)\r\n     //console.log('spent: ' + spent)\r\n-    if (spent >= total_plafond) {\r\n+    if (spent > total_plafond) {\r\n       // TODO: change this to 1\r\n       data.data = [1];\r\n       //console.log(selector +' :'+ Math.round(spent / total_plafond))\r\n       // arredonda para inteiro\r\n"
+                },
+                {
+                    "date": 1675060686405,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -210,8 +210,10 @@\n       data.data = [1];\r\n       //console.log(selector +' :'+ Math.round(spent / total_plafond))\r\n       // arredonda para inteiro\r\n       //data.data = [Math.round(spent / total_plafond)];\r\n+    } else if (spent == 0 ) {\r\n+      data.data = [0];\r\n     } else data.data = [Math.round((spent * 100) / total_plafond)/100];\r\n \r\n     data.percSpent = (spent >= total_plafond) ? 100 : Math.round((spent * 100) / total_plafond);\r\n     data.total_spent = spent;\r\n"
+                },
+                {
+                    "date": 1675060745559,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -214,9 +214,9 @@\n     } else if (spent == 0 ) {\r\n       data.data = [0];\r\n     } else data.data = [Math.round((spent * 100) / total_plafond)/100];\r\n \r\n-    data.percSpent = (spent >= total_plafond) ? 100 : Math.round((spent * 100) / total_plafond);\r\n+    data.percSpent = data*100;\r\n     data.total_spent = spent;\r\n     data.plafond = total_plafond;\r\n     data.labels = [selector];\r\n     return data;\r\n"
+                },
+                {
+                    "date": 1675061112385,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -214,9 +214,9 @@\n     } else if (spent == 0 ) {\r\n       data.data = [0];\r\n     } else data.data = [Math.round((spent * 100) / total_plafond)/100];\r\n \r\n-    data.percSpent = data*100;\r\n+    data.percSpent = 0;\r\n     data.total_spent = spent;\r\n     data.plafond = total_plafond;\r\n     data.labels = [selector];\r\n     return data;\r\n"
+                },
+                {
+                    "date": 1675061121892,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -214,9 +214,9 @@\n     } else if (spent == 0 ) {\r\n       data.data = [0];\r\n     } else data.data = [Math.round((spent * 100) / total_plafond)/100];\r\n \r\n-    data.percSpent = 0;\r\n+    data.percSpent = data*100;\r\n     data.total_spent = spent;\r\n     data.plafond = total_plafond;\r\n     data.labels = [selector];\r\n     return data;\r\n"
+                },
+                {
+                    "date": 1675081842809,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,8 +9,9 @@\n   Image,\r\n   SafeAreaView,\r\n   Platform,\r\n   StatusBar,\r\n+  useWindowDimensions\r\n } from \"react-native\";\r\n import { ScrollView } from \"react-native-gesture-handler\";\r\n import { useRoute } from \"@react-navigation/native\";\r\n import { useState, useEffect } from \"react\";\r\n@@ -23,8 +24,9 @@\n import _ from \"lodash\"; //Fazer Clone dos objetos\r\n import ActivityTable from \"../components/ActivityTable\";\r\n \r\n function HomeScreen({ navigation }) {\r\n+  const { height, width } = useWindowDimensions();\r\n   const [token, setToken] = useState(\"\");\r\n   const [transactionsData, setTransactionsData] = useState([]);\r\n \r\n   const { signOut } = React.useContext(AuthContext);\r\n@@ -214,9 +216,9 @@\n     } else if (spent == 0 ) {\r\n       data.data = [0];\r\n     } else data.data = [Math.round((spent * 100) / total_plafond)/100];\r\n \r\n-    data.percSpent = data*100;\r\n+    data.percSpent = data.data*100;\r\n     data.total_spent = spent;\r\n     data.plafond = total_plafond;\r\n     data.labels = [selector];\r\n     return data;\r\n@@ -224,9 +226,9 @@\n \r\n   // every time route.params is true when user add despesa e edit despesa, refresh data\r\n   const route = useRoute();\r\n   useEffect(() => {\r\n-    console.log(\"route.params: \" + JSON.stringify(route.params));\r\n+    //console.log(\"route.params: \" + JSON.stringify(route.params));\r\n     // dont do shit if route.params is undefined\r\n     if (route.params) {\r\n       // se nao for undefined\r\n       if (route.params.refresh) {\r\n@@ -433,9 +435,8 @@\n             data={transactionsList}\r\n             headerHome={true}\r\n             navigation={navigation}\r\n           ></ActivityTable>\r\n-\r\n         </ScrollView>\r\n       </SafeAreaView>\r\n     )\r\n   );\r\n"
+                },
+                {
+                    "date": 1675081892502,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,8 @@\n   Image,\r\n   SafeAreaView,\r\n   Platform,\r\n   StatusBar,\r\n-  useWindowDimensions\r\n } from \"react-native\";\r\n import { ScrollView } from \"react-native-gesture-handler\";\r\n import { useRoute } from \"@react-navigation/native\";\r\n import { useState, useEffect } from \"react\";\r\n@@ -24,9 +23,8 @@\n import _ from \"lodash\"; //Fazer Clone dos objetos\r\n import ActivityTable from \"../components/ActivityTable\";\r\n \r\n function HomeScreen({ navigation }) {\r\n-  const { height, width } = useWindowDimensions();\r\n   const [token, setToken] = useState(\"\");\r\n   const [transactionsData, setTransactionsData] = useState([]);\r\n \r\n   const { signOut } = React.useContext(AuthContext);\r\n@@ -336,9 +334,9 @@\n                       style={{\r\n                         position: \"absolute\",\r\n                         alignSelf: \"center\",\r\n                         top: \"50%\",\r\n-                        transform: [{ translateY: -26 }],\r\n+                        transform: [{ translateY: height }],\r\n                         fontFamily: FONTS.medium,\r\n                         fontSize: SIZES.small,\r\n                         color: COLORS.wingDarkBlue,\r\n                       }}\r\n"
+                },
+                {
+                    "date": 1675081924433,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -334,9 +334,9 @@\n                       style={{\r\n                         position: \"absolute\",\r\n                         alignSelf: \"center\",\r\n                         top: \"50%\",\r\n-                        transform: [{ translateY: height }],\r\n+                        transform: [{ translateY: height*-.1 }],\r\n                         fontFamily: FONTS.medium,\r\n                         fontSize: SIZES.small,\r\n                         color: COLORS.wingDarkBlue,\r\n                       }}\r\n"
+                },
+                {
+                    "date": 1675081939192,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -334,9 +334,9 @@\n                       style={{\r\n                         position: \"absolute\",\r\n                         alignSelf: \"center\",\r\n                         top: \"50%\",\r\n-                        transform: [{ translateY: height*-.1 }],\r\n+                        transform: [{ translateY: height*-.0.07 }],\r\n                         fontFamily: FONTS.medium,\r\n                         fontSize: SIZES.small,\r\n                         color: COLORS.wingDarkBlue,\r\n                       }}\r\n"
+                },
+                {
+                    "date": 1675081945906,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -334,9 +334,9 @@\n                       style={{\r\n                         position: \"absolute\",\r\n                         alignSelf: \"center\",\r\n                         top: \"50%\",\r\n-                        transform: [{ translateY: height*-.0.07 }],\r\n+                        transform: [{ translateY: height*-0.04 }],\r\n                         fontFamily: FONTS.medium,\r\n                         fontSize: SIZES.small,\r\n                         color: COLORS.wingDarkBlue,\r\n                       }}\r\n"
+                },
+                {
+                    "date": 1675081959377,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -334,9 +334,9 @@\n                       style={{\r\n                         position: \"absolute\",\r\n                         alignSelf: \"center\",\r\n                         top: \"50%\",\r\n-                        transform: [{ translateY: height*-0.04 }],\r\n+                        transform: [{ translateY: height*-0.03 }],\r\n                         fontFamily: FONTS.medium,\r\n                         fontSize: SIZES.small,\r\n                         color: COLORS.wingDarkBlue,\r\n                       }}\r\n@@ -364,9 +364,9 @@\n                       style={{\r\n                         position: \"absolute\",\r\n                         alignSelf: \"center\",\r\n                         top: \"50%\",\r\n-                        transform: [{ translateY: -26 }],\r\n+                        transform: [{ translateY: height*-0.03}],\r\n                         fontFamily: FONTS.medium,\r\n                         fontSize: SIZES.small,\r\n                         color: COLORS.wingDarkBlue,\r\n                       }}\r\n@@ -393,9 +393,9 @@\n                       style={{\r\n                         position: \"absolute\",\r\n                         alignSelf: \"center\",\r\n                         top: \"50%\",\r\n-                        transform: [{ translateY: -26 }],\r\n+                        transform: [{ translateY: height*-0.03}],\r\n                         fontFamily: FONTS.medium,\r\n                         fontSize: SIZES.small,\r\n                         color: COLORS.wingDarkBlue,\r\n                       }}\r\n"
                 }
             ],
             "date": 1674127451404,

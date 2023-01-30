@@ -144,6 +144,9 @@ function StatisticsScreen({ navigation }) {
     if (token.id) {
       const today = new Date()
       // format  2023-01-01
+      console.log("today")
+      console.log("\n\n\n\n")
+      console.log(today)
       const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
       flatListRef.current.scrollToIndex({ animated: true, index: selectedMonth });
       fecthData(token, date)

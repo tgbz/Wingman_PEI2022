@@ -9,6 +9,10 @@ const ProductInputModal = ({ isModalVisible,generalCategory,getCategoryIcon,getC
   const [quantity, setQuantity] = useState(1)
   const [idcategory, setIdcategory] = useState(generalCategory)
   const [isCategoryModalVisible, setIsCategoryModalVisible] = useState(false);
+  const [validDescription, setValidDescription] = useState(true)
+  const [validValue, setValidValue] = useState(true)
+  const [validQuantity, setValidQuantity] = useState(true)
+  
 
   // // TODO: Validate form data
 
@@ -51,6 +55,70 @@ const ProductInputModal = ({ isModalVisible,generalCategory,getCategoryIcon,getC
     
   }
 
+
+  function showErrorField(text){
+
+    let textToWrite = ''
+    if (text === 'Produto') {
+      if (!description) {
+        textToWrite = '* Campo obrigatório'
+      }
+    }
+    if (text === 'Valor') {
+      if (!value) {
+        textToWrite = '* Campo obrigatório'
+      }
+      if (isNaN(value)) {
+        textToWrite = '* Valor inválido'
+      }
+    }
+    if (text === 'Quantidade') {
+      if (!quantity) {
+        textToWrite = '* Campo obrigatório'
+      }
+      if (isNaN(quantity)) {
+        textToWrite = '* Valor inválido'
+      }
+    }
+
+  
+
+
+    return(<Text style= {{alignSelf: 'flex-start'}}>
+    <Text style={styles.textTag}>{text}</Text>
+    <Text style={styles.error}> {textToWrite}</Text>
+  </Text>)
+  }
+
+
+  function validateForm() {
+    let isValid = true
+    if (description === '') {
+      setValidDescription(false)
+      isValid = false
+    }
+    if (value === '') {
+      setValidValue(false)
+      isValid = false
+    }
+    if (quantity === '') {
+      setValidQuantity(false)
+      isValid = false
+    }
+
+    //if value is not a number
+    if (isNaN(value)) {
+      setValidValue(false)
+      isValid = false
+    }
+    //if quantity is not a number
+    if (isNaN(quantity)) {
+      setValidQuantity(false)
+      isValid = false
+    }
+    return isValid
+  }
+
   // ismodalvisibleCT function
 
 
@@ -60,7 +128,7 @@ const ProductInputModal = ({ isModalVisible,generalCategory,getCategoryIcon,getC
       <View style={styles.modalContainer}>
         <Text style={styles.modalTitle}>Adicionar Produto</Text>
         <View style={styles.inputContainer}>
-          <Text style={styles.textTag}>Produto:</Text>
+          {validDescription ? (<Text style={styles.textTag}>Produto</Text>): showErrorField('Produto')}
           <CustomInput 
               placeholder={'Queijo'}
               value={description}
@@ -69,7 +137,7 @@ const ProductInputModal = ({ isModalVisible,generalCategory,getCategoryIcon,getC
             />
 
 
-          <Text style={styles.textTag}>Valor:</Text>
+          {validValue ? (<Text style={styles.textTag}>Valor</Text>): showErrorField('Valor')}
           <CustomInput
               placeholder={'10.50'}
               value={value}
@@ -80,7 +148,7 @@ const ProductInputModal = ({ isModalVisible,generalCategory,getCategoryIcon,getC
             />
 
 
-          <Text style={styles.textTag}>Quantidade:</Text>
+          {validQuantity ? (<Text style={styles.textTag}>Quantidade</Text>) : showErrorField('Quantidade')}
           
             <View
                   style={[styles.buttonStyle, { width: width * 0.8}]}
@@ -116,13 +184,20 @@ const ProductInputModal = ({ isModalVisible,generalCategory,getCategoryIcon,getC
             style={styles.saveButton}
             onPress={() => {
               if (isEdit) {
+                if (validateForm())
+                {
                 onEdit({ description, value, quantity, idcategory });
                 handleClean();
                 setIsCategoryModalVisible(false);
+                }
               } else {
+
+                if (validateForm()) {
+
                 onSave({ description, value, quantity, idcategory });
                 handleClean();
                 setIsCategoryModalVisible(false);
+                }
               }
                 }}
           >
@@ -222,6 +297,12 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderColor: COLORS.wingblue,
     alignItems: 'center',
+  },
+  error : {
+    color: "red",
+    fontFamily: "SoraMedium",
+    fontSize: SIZES.small,
+    alignSelf: "flex-start",
   },
   textButton: {
     flex: 0.95,

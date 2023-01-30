@@ -21,7 +21,7 @@ function LandingScreen({navigation}) {
         </View>
 
         <View style={[styles.container, {top: height *0.47}]}>
-        <Image style={[styles.preview,{height: height*0.81}]} source={require('../../../assets/images/preview-home.png')}></Image>
+        <Image style={[styles.preview,{height: height*0.82}]} source={require('../../../assets/images/preview-home.png')}></Image>
         
         <View style={[styles.containerBTN,  {bottom: height*0.22}]}>
             <TouchableOpacity onPress={() => navigation.navigate("Login")} style={styles.button}>
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   },
   preview:{
     width: "150%",
-    maxHeight: 700,
+    maxHeight: 800,
     position: "absolute",
     bottom: "-16%",
     }

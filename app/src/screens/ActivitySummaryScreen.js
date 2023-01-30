@@ -49,7 +49,7 @@ export default function PoliticsScreen({ navigation }) {
   const handleAddChecks = (value) => {
     checks[value] = !checks[value];
     setChecks({ ...checks });
-    console.log("Checks no fim", checks)
+    //console.log("Checks no fim", checks)
 
   };
 
@@ -92,9 +92,7 @@ export default function PoliticsScreen({ navigation }) {
   const applyFilters = () => {
     var c = 0
     Object.keys(checks).forEach(elem => {checks[elem]? c=c+1: c})
-    
-
-    console.log(c)
+    //console.log(c)
     if (c >0){
     handleCloseModalPress()
     setFilters(false)
@@ -117,6 +115,20 @@ export default function PoliticsScreen({ navigation }) {
           aux[elem] = value
   
       }); return aux})
+  }
+
+  const handleAll = () => {
+    allCheck(!allCats)
+    setAllCats(!allCats)
+  }
+
+  const buttonAllNone = (iconName, text) => {
+    return <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'flex-start', paddingVertical:'1.5%'}}>
+      <TouchableOpacity onPress={handleAll}>
+      <MaterialCommunityIcons name={iconName} size={24} color={COLORS.wingDarkBlue}/>
+      </TouchableOpacity>
+      <Text style={{paddingVertical: 5, paddingHorizontal: 5, fontFamily:FONTS.light }}>{text}</Text>
+      </View>
   }
 
   /////////////////FIM - FILTROS///////////////////
@@ -171,7 +183,7 @@ export default function PoliticsScreen({ navigation }) {
   const route = useRoute()
 
   useEffect(() => {
-    console.log('route.params: ' + JSON.stringify(route.params))
+    //console.log('route.params: ' + JSON.stringify(route.params))
     // dont do shit if route.params is undefined
     if (route.params) {
       // se nao for undefined
@@ -186,19 +198,7 @@ export default function PoliticsScreen({ navigation }) {
 
   const handleCloseModalPress = () => setFilters(false);
 
-  const handleAll = () => {
-    allCheck(!allCats)
-    setAllCats(!allCats)
-  }
-
-  const buttonAllNone = (iconName, text) => {
-    return <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'flex-start', paddingVertical:'1.5%'}}>
-      <TouchableOpacity onPress={handleAll}>
-      <MaterialCommunityIcons name={iconName} size={24} color={COLORS.wingDarkBlue}/>
-      </TouchableOpacity>
-      <Text style={{paddingVertical: 5, paddingHorizontal: 5, fontFamily:FONTS.light }}>{text}</Text>
-      </View>
-  }
+  
 
 
   if (transactionsList.length===0){

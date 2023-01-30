@@ -225,7 +225,7 @@ function HomeScreen({ navigation }) {
   // every time route.params is true when user add despesa e edit despesa, refresh data
   const route = useRoute();
   useEffect(() => {
-    console.log("route.params: " + JSON.stringify(route.params));
+    //console.log("route.params: " + JSON.stringify(route.params));
     // dont do shit if route.params is undefined
     if (route.params) {
       // se nao for undefined
@@ -434,7 +434,6 @@ function HomeScreen({ navigation }) {
             headerHome={true}
             navigation={navigation}
           ></ActivityTable>
-
         </ScrollView>
       </SafeAreaView>
     )

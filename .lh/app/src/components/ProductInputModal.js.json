@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 6,
+            "activePatchIndex": 7,
             "patches": [
                 {
                     "date": 1675079330127,
@@ -32,6 +32,10 @@
                 {
                     "date": 1675079785912,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,25 +60,25 @@\n \r\n     let textToWrite = ''\r\n     if (text === 'Produto') {\r\n       if (!description) {\r\n-        textToWrite = 'Campo obrigatório'\r\n+        textToWrite = '* Campo obrigatório'\r\n       }\r\n     }\r\n     if (text === 'Valor') {\r\n       if (!value) {\r\n-        textToWrite = 'Campo obrigatório'\r\n+        textToWrite = '* Campo obrigatório'\r\n       }\r\n       if (isNaN(value)) {\r\n-        textToWrite = 'Valor inválido'\r\n+        textToWrite = '* Valor inválido'\r\n       }\r\n     }\r\n     if (text === 'Quantidade') {\r\n       if (!quantity) {\r\n-        textToWrite = 'Campo obrigatório'\r\n+        textToWrite = '* Campo obrigatório'\r\n       }\r\n       if (isNaN(quantity)) {\r\n-        textToWrite = 'Valor inválido'\r\n+        textToWrite = '* Valor inválido'\r\n       }\r\n     }\r\n \r\n   \r\n@@ -127,18 +127,18 @@\n     <Modal animationType=\"slide\" transparent={false} visible={isModalVisible}>\r\n       <View style={styles.modalContainer}>\r\n         <Text style={styles.modalTitle}>Adicionar Produto</Text>\r\n         <View style={styles.inputContainer}>\r\n-          {validDescription ? (<Text style={styles.textTag}>Produto:</Text>): showErrorField('Produto')}\r\n+          {validDescription ? (<Text style={styles.textTag}>Produto</Text>): showErrorField('Produto')}\r\n           <CustomInput \r\n               placeholder={'Queijo'}\r\n               value={description}\r\n               setValue={setDescription}\r\n               widthScale={0.8}\r\n             />\r\n \r\n \r\n-          {validValue ? (<Text style={styles.textTag}>Valor:</Text>): showErrorField('Valor')}\r\n+          {validValue ? (<Text style={styles.textTag}>Valor</Text>): showErrorField('Valor')}\r\n           <CustomInput\r\n               placeholder={'10.50'}\r\n               value={value}\r\n               setValue={setValue}\r\n@@ -147,9 +147,9 @@\n               widthScale={0.8}\r\n             />\r\n \r\n \r\n-          {validQuantity ? (<Text style={styles.textTag}>Quantidade:</Text>) : showErrorField('Quantidade')}\r\n+          {validQuantity ? (<Text style={styles.textTag}>Quantidade</Text>) : showErrorField('Quantidade')}\r\n           \r\n             <View\r\n                   style={[styles.buttonStyle, { width: width * 0.8}]}\r\n                 >\r\n"
+                },
+                {
+                    "date": 1675081520504,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -183,11 +183,14 @@\n           <TouchableOpacity\r\n             style={styles.saveButton}\r\n             onPress={() => {\r\n               if (isEdit) {\r\n+                if (validateForm())\r\n+                {\r\n                 onEdit({ description, value, quantity, idcategory });\r\n                 handleClean();\r\n                 setIsCategoryModalVisible(false);\r\n+                }\r\n               } else {\r\n \r\n                 if (validateForm()) {\r\n \r\n"
                 }
             ],
             "date": 1675079330127,

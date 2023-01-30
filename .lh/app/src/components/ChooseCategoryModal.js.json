@@ -1,0 +1,22 @@
+{
+    "sourceFile": "app/src/components/ChooseCategoryModal.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1675081700750,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1675081710609,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n             onPress={() => {\r\n               setisModalVisibleCT(false)\r\n             }}\r\n           >\r\n-            <Ionicons name=\"\" size={24} color=\"#333\" />\r\n+            <Ionicons name=\"ios-close\" size={24} color=\"#333\" />\r\n           </TouchableOpacity>\r\n         </View>\r\n         <ScrollView showsVerticalScrollIndicator={false}>\r\n           <View style={styles.categoriesContainer}>\r\n"
+                }
+            ],
+            "date": 1675081700750,
+            "name": "Commit-0",
+            "content": "import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'\r\nimport { CATEGORIES, COLORS, SIZES } from '../constants'\r\nimport React from 'react'\r\nimport CustomButton from '../components/CustomButton'\r\nimport { SafeAreaView } from 'react-native-safe-area-context'\r\nimport { Ionicons } from '@expo/vector-icons'\r\nexport default function ChooseCategoryModal({\r\n  isModalVisibleCT,\r\n  setisModalVisibleCT,\r\n  setSelectedCategory,\r\n}) {\r\n  return (\r\n    <Modal animationType=\"slide\" transparent={false} visible={isModalVisibleCT}>\r\n      <View style={styles.modalContainer}>\r\n        <View style={styles.modalHeader}>\r\n          <Text style={styles.modalTitle}>Selecione a Categoria</Text>\r\n          <TouchableOpacity\r\n            onPress={() => {\r\n              setisModalVisibleCT(false)\r\n            }}\r\n          >\r\n            <Ionicons name=\"\" size={24} color=\"#333\" />\r\n          </TouchableOpacity>\r\n        </View>\r\n        <ScrollView showsVerticalScrollIndicator={false}>\r\n          <View style={styles.categoriesContainer}>\r\n            {Object.entries(CATEGORIES).map(([key, { icon, name }]) => (\r\n              <TouchableOpacity\r\n                key={key}\r\n                onPress={() => {\r\n                  setisModalVisibleCT(false)\r\n                \r\n                  setSelectedCategory(key)\r\n                }}\r\n                style={styles.categoryContainer}\r\n              >\r\n                <View style={{ flexDirection: 'row', alignItems: 'center' }}>\r\n                  {icon}\r\n                  <Text\r\n                    style={{\r\n                      marginStart: 10,\r\n                      fontFamily: 'SoraRegular',\r\n                      fontSize: SIZES.font,\r\n                      color: COLORS.wingDarkBlue,\r\n                    }}\r\n                  >\r\n                    {name}\r\n                  </Text>\r\n                </View>\r\n              </TouchableOpacity>\r\n            ))}\r\n          </View>\r\n        </ScrollView>\r\n      </View>\r\n    </Modal>\r\n  )\r\n}\r\n\r\nconst styles = StyleSheet.create({\r\n  modalContainer: {\r\n    flex: 1,\r\n   marginTop: 30,\r\n    //alignItems: 'center',\r\n    justifyContent: 'center',\r\n    backgroundColor: 'white',\r\n    padding: 30,\r\n  },\r\n  modalTitle: {\r\n    fontFamily: 'SoraBold',\r\n    fontSize: SIZES.medium,\r\n    color: COLORS.wingDarkBlue,\r\n    //marginBottom: 10,\r\n    marginStart: 10,\r\n  },\r\n  categoriesContainer: {\r\n    flex: 1,\r\n    flexDirection: 'column',\r\n    alignItems: 'felx-start',\r\n    justifyContent: 'center',\r\n  },\r\n  categoryContainer: {\r\n    alignItems: 'center',\r\n    justifyContent: 'center',\r\n    margin: 8,\r\n  },\r\n  modalHeader: {\r\n    flexDirection: 'row',\r\n    alignItems: 'center',\r\n    justifyContent: 'space-between',\r\n    marginBottom: 10,\r\n    }\r\n})\r\n"
+        }
+    ]
+}

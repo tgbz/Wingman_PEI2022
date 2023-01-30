@@ -184,9 +184,12 @@ const ProductInputModal = ({ isModalVisible,generalCategory,getCategoryIcon,getC
             style={styles.saveButton}
             onPress={() => {
               if (isEdit) {
+                if (validateForm())
+                {
                 onEdit({ description, value, quantity, idcategory });
                 handleClean();
                 setIsCategoryModalVisible(false);
+                }
               } else {
 
                 if (validateForm()) {

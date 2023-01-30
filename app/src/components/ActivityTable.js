@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
           alignSelf:'flex-end'
         },
         wrapper: { 
-            flexDirection: 'row' },
+            flexDirection: 'row' 
+        },
         row: {  
             height: 50 , 
             paddingLeft: 10,

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 81,
+            "activePatchIndex": 86,
             "patches": [
                 {
                     "date": 1674127451404,
@@ -332,6 +332,26 @@
                 {
                     "date": 1674932940923,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -216,9 +216,8 @@\n     data.percSpent = (spent >= total_plafond) ? 100 : Math.round((spent * 100) / total_plafond);\r\n     data.total_spent = spent;\r\n     data.plafond = total_plafond;\r\n     data.labels = [selector];\r\n-    console.log(data);\r\n     return data;\r\n   }\r\n \r\n   // every time route.params is true when user add despesa e edit despesa, refresh data\r\n"
+                },
+                {
+                    "date": 1675060621287,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -204,9 +204,9 @@\n         spent\r\n     );\r\n     //console.log('total_plafond: ' + total_plafond)\r\n     //console.log('spent: ' + spent)\r\n-    if (spent >= total_plafond) {\r\n+    if (spent > total_plafond) {\r\n       // TODO: change this to 1\r\n       data.data = [1];\r\n       //console.log(selector +' :'+ Math.round(spent / total_plafond))\r\n       // arredonda para inteiro\r\n"
+                },
+                {
+                    "date": 1675060686405,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -210,8 +210,10 @@\n       data.data = [1];\r\n       //console.log(selector +' :'+ Math.round(spent / total_plafond))\r\n       // arredonda para inteiro\r\n       //data.data = [Math.round(spent / total_plafond)];\r\n+    } else if (spent == 0 ) {\r\n+      data.data = [0];\r\n     } else data.data = [Math.round((spent * 100) / total_plafond)/100];\r\n \r\n     data.percSpent = (spent >= total_plafond) ? 100 : Math.round((spent * 100) / total_plafond);\r\n     data.total_spent = spent;\r\n"
+                },
+                {
+                    "date": 1675060745559,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -214,9 +214,9 @@\n     } else if (spent == 0 ) {\r\n       data.data = [0];\r\n     } else data.data = [Math.round((spent * 100) / total_plafond)/100];\r\n \r\n-    data.percSpent = (spent >= total_plafond) ? 100 : Math.round((spent * 100) / total_plafond);\r\n+    data.percSpent = data*100;\r\n     data.total_spent = spent;\r\n     data.plafond = total_plafond;\r\n     data.labels = [selector];\r\n     return data;\r\n"
+                },
+                {
+                    "date": 1675061112385,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -214,9 +214,9 @@\n     } else if (spent == 0 ) {\r\n       data.data = [0];\r\n     } else data.data = [Math.round((spent * 100) / total_plafond)/100];\r\n \r\n-    data.percSpent = data*100;\r\n+    data.percSpent = 0;\r\n     data.total_spent = spent;\r\n     data.plafond = total_plafond;\r\n     data.labels = [selector];\r\n     return data;\r\n"
+                },
+                {
+                    "date": 1675061121892,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -214,9 +214,9 @@\n     } else if (spent == 0 ) {\r\n       data.data = [0];\r\n     } else data.data = [Math.round((spent * 100) / total_plafond)/100];\r\n \r\n-    data.percSpent = 0;\r\n+    data.percSpent = data*100;\r\n     data.total_spent = spent;\r\n     data.plafond = total_plafond;\r\n     data.labels = [selector];\r\n     return data;\r\n"
                 }
             ],
             "date": 1674127451404,

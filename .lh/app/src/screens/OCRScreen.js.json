@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 7,
+            "activePatchIndex": 16,
             "patches": [
                 {
                     "date": 1674931935609,
@@ -36,6 +36,42 @@
                 {
                     "date": 1674932073205,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -276,9 +276,9 @@\n     justifyContent:\"center\",\r\n     borderRadius: 22   // it will be height/2\r\n     },\r\n   item: {\r\n-    alignSelf: \"center\",\r\n+    \r\n     color:'white',\r\n     },\r\n   imageContainer: {\r\n     padding: 20\r\n"
+                },
+                {
+                    "date": 1675059043899,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -256,9 +256,9 @@\n   bt: {\r\n     paddingVertical: 10,\r\n   },\r\n   textInicial: {\r\n-    padding: 20,\r\n+    padding: 10,\r\n     fontFamily: FONTS.medium,\r\n     fontSize: SIZES.medium,\r\n     \r\n     alignItems: 'center',\r\n@@ -276,9 +276,9 @@\n     justifyContent:\"center\",\r\n     borderRadius: 22   // it will be height/2\r\n     },\r\n   item: {\r\n-    \r\n+    alignSelf: \"center\",\r\n     color:'white',\r\n     },\r\n   imageContainer: {\r\n     padding: 20\r\n"
+                },
+                {
+                    "date": 1675059051927,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -259,10 +259,9 @@\n   textInicial: {\r\n     padding: 10,\r\n     fontFamily: FONTS.medium,\r\n     fontSize: SIZES.medium,\r\n-    \r\n-    alignItems: 'center',\r\n+    justifyContent: 'center',\r\n     color: COLORS.wingDarkBlue\r\n     \r\n   },\r\n   text: {\r\n"
+                },
+                {
+                    "date": 1675059063112,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -260,8 +260,10 @@\n     padding: 10,\r\n     fontFamily: FONTS.medium,\r\n     fontSize: SIZES.medium,\r\n     justifyContent: 'center',\r\n+    //align text to center\r\n+    textAlign: 'center',\r\n     color: COLORS.wingDarkBlue\r\n     \r\n   },\r\n   text: {\r\n"
+                },
+                {
+                    "date": 1675059097596,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -165,9 +165,9 @@\n   return ( askPermission(), \r\n  \r\n     <SafeAreaView style={styles.root}>\r\n        <ScrollView style={ {backgroundColor: COLORS.white} }>\r\n-           {!loaded && <Text style={styles.textInicial}>Carrega a fotografia da tua fatura:</Text>}\r\n+           {!loaded && <Text style={styles.textInicial}>Carrega a tua despesa:</Text>}\r\n \r\n     {pickedImage.length === 0 &&\r\n     <View style={{\r\n         backgroundColor: COLORS.eggshell,\r\n"
+                },
+                {
+                    "date": 1675059192292,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -220,9 +220,9 @@\n       }\r\n \r\n     \r\n         <TouchableOpacity onPress={()  => sendPost()} style={[styles.button, { width: width*0.70, backgroundColor: disabled? '#E8E8E8': COLORS.orange}]} disabled={disabled}>\r\n-            <Text style={[styles.text , {color: disabled? '#C0C0C0': COLORS.white}]}>Continuar   <Entypo name=\"arrow-right\" size={25} style={styles.item} color={COLORS.wingDarkBlue}/>\r\n+            <Text style={[styles.text , {color: disabled? '#C0C0C0': COLORS.white}]}>Continuar   <Entypo name=\"arrow-right\" size={24} style={styles.item} color={COLORS.wingDarkBlue}/>\r\n             </Text>\r\n         </TouchableOpacity>\r\n     \r\n     \r\n"
+                },
+                {
+                    "date": 1675059218534,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -277,10 +277,9 @@\n     justifyContent:\"center\",\r\n     borderRadius: 22   // it will be height/2\r\n     },\r\n   item: {\r\n-    alignSelf: \"center\",\r\n-    color:'white',\r\n+   \r\n     },\r\n   imageContainer: {\r\n     padding: 20\r\n     },\r\n"
+                },
+                {
+                    "date": 1675059230986,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -268,18 +268,19 @@\n   },\r\n   text: {\r\n     fontFamily: FONTS.medium,\r\n     fontSize: SIZES.medium,\r\n-    justifyContent: 'center'\r\n+    \r\n   },\r\n   roundshape:  {\r\n     height: 50, //any of height\r\n     width: 50, //any of width\r\n     justifyContent:\"center\",\r\n     borderRadius: 22   // it will be height/2\r\n     },\r\n   item: {\r\n-   \r\n+    alignSelf: \"center\",\r\n+    color:'white',\r\n     },\r\n   imageContainer: {\r\n     padding: 20\r\n     },\r\n"
+                },
+                {
+                    "date": 1675059244964,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -267,10 +267,10 @@\n     \r\n   },\r\n   text: {\r\n     fontFamily: FONTS.medium,\r\n-    fontSize: SIZES.medium,\r\n-    \r\n+    fontSize: SIZES.font,\r\n+    justifyContent: 'center',\r\n   },\r\n   roundshape:  {\r\n     height: 50, //any of height\r\n     width: 50, //any of width\r\n"
+                },
+                {
+                    "date": 1675059279845,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -220,9 +220,9 @@\n       }\r\n \r\n     \r\n         <TouchableOpacity onPress={()  => sendPost()} style={[styles.button, { width: width*0.70, backgroundColor: disabled? '#E8E8E8': COLORS.orange}]} disabled={disabled}>\r\n-            <Text style={[styles.text , {color: disabled? '#C0C0C0': COLORS.white}]}>Continuar   <Entypo name=\"arrow-right\" size={24} style={styles.item} color={COLORS.wingDarkBlue}/>\r\n+            <Text style={[styles.text , {color: disabled? '#C0C0C0': COLORS.white}]}>Continuar \r\n             </Text>\r\n         </TouchableOpacity>\r\n     \r\n     \r\n@@ -267,9 +267,9 @@\n     \r\n   },\r\n   text: {\r\n     fontFamily: FONTS.medium,\r\n-    fontSize: SIZES.font,\r\n+    fontSize: SIZES.medium,\r\n     justifyContent: 'center',\r\n   },\r\n   roundshape:  {\r\n     height: 50, //any of height\r\n"
                 }
             ],
             "date": 1674931935609,

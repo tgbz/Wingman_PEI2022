@@ -71,7 +71,7 @@ export default function ProfileEditScreen({ navigation }) {
     // merge the two objects
     //const updatedData = { ...userData, ...newData }
     //console.log(updatedData)
-    const resp = await fetch(`${serverURL}/users/updateProfile/${token.id}`, {
+    const resp = await fetch(`${serverURL}/users/userProfile/${token.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

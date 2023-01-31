@@ -10,8 +10,12 @@ const upload = multer({
 });
 
 router.post("/avatar/", upload.single("avatarFile"), function (req, res, next) {
-  //console.log(req.file)
-  //console.log(req.body)
+  console.log(req.file)
+  console.log(req.body)
+  if (!fs.existsSync("files/avatar")){
+    fs.mkdirSync("files/avatar");
+}
+
   let file = req.file;
   let oldPath = __dirname + "/../" + file.path;
   let newPath = __dirname + "/../files/avatar/";
@@ -25,11 +29,11 @@ router.post("/avatar/", upload.single("avatarFile"), function (req, res, next) {
       files.forEach((file) => {
         if (file.split(".")[0] == id) {
           console.log("file already exists: " + file + " deleting...");
-          fs.unlink(newPath, (err) => {
+          fs.unlink(newPath + file, (err) => {
             if (err) {
               console.log(err);
             }
-          });
+          });          
         }
       });
     }
@@ -43,7 +47,7 @@ router.post("/avatar/", upload.single("avatarFile"), function (req, res, next) {
     if (err) {
       console.log(err);
     }
-    //console.log('RRR')
+    console.log('RRR')
     fs.unlinkSync(oldPath);
     res.jsonp("Ficheiro gravado com sucesso!");
     // Mudar para status

@@ -22,6 +22,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { ProgressChart } from "react-native-chart-kit";
 import _ from "lodash"; //Fazer Clone dos objetos
 import ActivityTable from "../components/ActivityTable";
+import { useIsFocused } from "@react-navigation/core";
 
 function HomeScreen({ navigation }) {
   const [token, setToken] = useState("");
@@ -125,6 +126,8 @@ function HomeScreen({ navigation }) {
   // USER DATA
   const [userData, setUserData] = useState([]);
   const [photo, setPhoto] = useState("");
+  
+ // const [photo, setPhoto] = useState(route.params.photoURI || "" ); // retrieve the photoURI from params, use an empty string as a default value
 
   const fetchData = async (token) => {
     const resp1 = await fetch(`${serverURL}/users/userProfile/${token.id}`);
@@ -228,7 +231,12 @@ function HomeScreen({ navigation }) {
     //console.log("route.params: " + JSON.stringify(route.params));
     // dont do shit if route.params is undefined
     if (route.params) {
+      console.log("route.params: " + JSON.stringify(route.params));
       // se nao for undefined
+      if (route.params.photoURI)  {
+        // se for true
+        setPhoto(route.params.photoURI);
+      }
       if (route.params.refresh) {
         // se for true
         console.log("Refresh Home Screen");
@@ -240,6 +248,7 @@ function HomeScreen({ navigation }) {
       }
     }
   }, [route.params]);
+
 
   return (
     adjustData(transactionsData),
@@ -494,16 +503,19 @@ const styles = StyleSheet.create({
     flex: 1,
     width: undefined,
     height: undefined,
+    borderRadius: 100,
+    top: 0,
+    left: 7,
   },
   profileImage: {
     // put image in the upper left corner
     position: "absolute",
-    top: 5,
-    left: 10,
+    top: 0,
+    left: 7,
     width: 60,
     height: 60,
     borderRadius: 100,
-    overflow: "hidden",
+    //overflow: "hidden",
   },
   card1: {
     // outline in wing blue, rounded corners

@@ -130,7 +130,7 @@ class Receipt():
 				for c in itemName:
 					if (c.isalpha()):
 						alpha+=1
-				if alpha < (len(itemName) - alpha):
+				if alpha < (len(itemName) - alpha) or len(itemName) < 4:
 					continue
 				if i < len(self.lines)-1:
 					if SequenceMatcher('poupanca imediata', re.sub(r'[^a-zA-Z]','',self.lines[i+1])).ratio() > 0.85:

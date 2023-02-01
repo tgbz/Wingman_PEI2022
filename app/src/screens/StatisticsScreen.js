@@ -51,12 +51,12 @@ function StatisticsScreen({ navigation }) {
 
   //  function to get 12 months before the current month
   const getMonths = () => {
-    const monthNames = ["janeiro", "fevereiro", "março", "abril", "maio", "junho",
+    const monthNames = ["janeiro", "febreiro", "março", "abril", "maio", "junho",
     "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"
   ];
     let date = new Date()
     //console.log("........" ,date)
-    date.setMonth(date.getMonth() - 13)
+    date.setMonth(date.getMonth() - 12)
     //console.log("........" ,date.getMonth())
     for (let i = 0; i < 12; i++) {
       date.setMonth(date.getMonth() + 1)
@@ -65,6 +65,7 @@ function StatisticsScreen({ navigation }) {
         year: date.getFullYear(),
       })
     }
+    //console.log("Months: ", months)
   }
 
   const navigateToPrevious = () => {
@@ -110,9 +111,9 @@ function StatisticsScreen({ navigation }) {
         },
     })
     const dataBalance = await responseBalance.json()
-    console.log('Data Balance: ', dataBalance[0])
-    console.log('Income: ', dataBalance[0].income)
-    console.log('Expense: ', dataBalance[0].despesa)
+    //console.log('Data Balance: ', dataBalance[0])
+    //console.log('Income: ', dataBalance[0].income)
+    //console.log('Expense: ', dataBalance[0].despesa)
     setIncome(Math.round(dataBalance[0].income))
     setExpense(Math.round(dataBalance[0].despesa))
   }
@@ -143,6 +144,7 @@ function StatisticsScreen({ navigation }) {
     // format  2023-01-01
     const date = year + '-' + monthNumber + '-' + '01'
     flatListRef.current.scrollToIndex({ animated: true, index: selectedMonth });
+    console.log('Date to fetch token select: ', date)
     fecthData(token, date)
   }, [selectedMonth,token])
 
@@ -155,6 +157,7 @@ function StatisticsScreen({ navigation }) {
       const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
       setSelectedMonth(11)
       flatListRef.current.scrollToIndex({ animated: true, index: selectedMonth });
+      console.log('Date to focused: ', date)
       fecthData(token, date)
     }
   }, [isFocused])
@@ -220,8 +223,10 @@ function StatisticsScreen({ navigation }) {
             
             <View style={styles.balanceContainer}>
               <Text style={styles.balanceText}>{income-expense} €</Text>
-              {console.log('Expense: ', expense)}
-              {(expense==0)? <Text style={styles.percentageBalance}>Não tiveste gastos</Text> : <Text style={styles.percentageBalance}>Gastaste {Math.round((expense*100)/income)}% do que ganhaste</Text>}
+              {/*console.log('Expense: ', expense)*/}
+              {(expense==0)? <Text style={styles.percentageBalance}>Não tiveste gastos</Text> 
+              : expense > income ? <Text style={styles.percentageBalance}>Gastaste mais do que ganhaste</Text>
+              :<Text style={styles.percentageBalance}>Gastaste {Math.round((expense*100)/income)}% do que ganhaste</Text>}
 
             </View>
             {/* Two containers in line */}

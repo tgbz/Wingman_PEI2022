@@ -62,7 +62,7 @@ class Receipt():
 			self.total = 0
 			for item in self.items.keys():
 				self.total += self.items[item][1]
-
+			self.total = round(self.total,2)
 		return self.to_json()
 	
 	def close_match(self,keyword,accuracy=0.6):
@@ -133,7 +133,7 @@ class Receipt():
 						alpha+=1
 				if alpha < (len(itemName) - alpha):
 					continue
-				if i < len(self.lines-1):
+				if i < len(self.lines)-1:
 					if SequenceMatcher('poupancaimediata', re.sub(r'[^a-zA-Z]','',self.lines[i+1])).ratio() > 0.85:
 						ivalue = float(match.group(4).replace(',','.').replace(' ',''))
 						matchP = re.search(valueRE,self.lines[i+1])
@@ -146,7 +146,7 @@ class Receipt():
 				self.items[itemName] = [1,round(value,2)]
 			elif matchNoPrice:
 				itemName = matchNoPrice.group(2)
-				if i < len(self.lines-1):
+				if i < len(self.lines)-1:
 					matchQtd = re.search(qtdRE,self.lines[i+1])
 					if matchQtd:
 						try:
@@ -154,7 +154,7 @@ class Receipt():
 						except:
 							qtd = 1
 						value = float(matchQtd.group(3).replace(',','.').replace(' ',''))
-						if i < len(self.lines-2):
+						if i < len(self.lines)-2:
 							if SequenceMatcher('poupancaimediata', re.sub(r'[^a-zA-Z]','',self.lines[i+2])).ratio() > 0.85:
 								matchP = re.search(valueRE,self.lines[i+1])
 								if matchP:
@@ -163,7 +163,7 @@ class Receipt():
 								jump += 1
 
 						jump += 1
-				self.items[itemName] = [qtd,round(value,2)]
+						self.items[itemName] = [qtd,round(value,2)]
 						
 
 	def parse_date(self):

@@ -208,7 +208,11 @@ class Receipt():
 
 def concat(r1,r2):
 	l1 = r1.lines
+	print("R1 Lines")
+	print(r1.lines)
 	l2 = r2.lines
+	print("R2 Lines")
+	print(r2.lines)
 
 	newlines = []
 
@@ -223,7 +227,9 @@ def concat(r1,r2):
 				
 
 	nl = l1 + newlines
-	r1.lines = nl
+	r1.lines = nl 
+	print("Final R1")
+	print(r1.lines)
 	
 	return r1.parse()
 	

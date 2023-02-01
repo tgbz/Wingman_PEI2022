@@ -5,6 +5,7 @@ import dateutil.parser
 import json
 import os
 import preProcessing as pp
+from datetime import datetime
 
 
 
@@ -26,6 +27,7 @@ debug,output = False,False
 
 class Receipt():
 	def __init__(self,raw,info_json):
+		print(raw)
 		self.raw = raw
 		self.lines = self.normalize(raw)
 		self.market = None
@@ -53,7 +55,7 @@ class Receipt():
 		if self.total == None or self.total == 0:
 			self.total = 0
 			for item in self.items.keys():
-				self.total += self.items[item]
+				self.total += self.items[item][1]
 
 		return self.to_json()
 	
@@ -90,7 +92,7 @@ class Receipt():
 				itemName = match.group(1)
 				valueDecimal = float(match.group(4))*0.01
 				value = float(match.group(3))+valueDecimal
-				self.items[itemName] = round(value,2)
+				self.items[itemName] = [1,round(value,2)]
 
 	def parse_items_continente(self):
 		for i,line in enumerate(self.lines):
@@ -104,7 +106,7 @@ class Receipt():
 				itemName = match.group(1)
 				valueDecimal = float(match.group(4))*0.01
 				value = float(match.group(3))+valueDecimal
-				self.items[itemName] = round(value,2)
+				self.items[itemName] = [1,round(value,2)]
 			
 	def parse_items_pd(self):
 		jump = False
@@ -124,16 +126,16 @@ class Receipt():
 						alpha+=1
 				if alpha < (len(itemName) - alpha):
 					continue
-
-				if get_close_matches('poupanca', self.lines[i+1].split(), 1, 0.6):
-					ivalue = float(match.group(4).replace(',','.').replace(' ',''))
-					matchP = re.search(valueRE,self.lines[i+1])
-					if matchP:
-						pvalue = float(matchP.group(0).replace(',','.').replace(' ',''))
-						value = ivalue-pvalue
-						jump = True
-				else:
-					value = float(match.group(4).replace(',','.').replace(' ',''))
+				if i <= len(self.lines-1):
+					if get_close_matches('poupanca', self.lines[i+1].split(), 1, 0.6):
+						ivalue = float(match.group(4).replace(',','.').replace(' ',''))
+						matchP = re.search(valueRE,self.lines[i+1])
+						if matchP:
+							pvalue = float(matchP.group(0).replace(',','.').replace(' ',''))
+							value = ivalue-pvalue
+							jump = True
+					else:
+						value = float(match.group(4).replace(',','.').replace(' ',''))
 				self.items[itemName] = [1,round(value,2)]
 
 	def parse_date(self):
@@ -151,6 +153,10 @@ class Receipt():
 					break
 				except ValueError:
 					continue
+
+		if date_str == None:
+			date_str = datetime.today().strftime('%d-%m-%Y')
+
 		return date_str
 
 	def parse_total_pd(self):
@@ -226,5 +232,13 @@ def parseImage(files):
 
 if __name__ == '__main__':
 	filename,debug,output = pp.parse()
+	preProc = [pp.scaling,pp.normalize,pp.remove_noise,pp.remove_shadows]
 
+	image = pp.cv2.imread(filename)
+	if debug: pp.show(image,'Original')
+
+	raw = pp.generate_text('out',pp.pipeline(image,preProc),output)
+	r = Receipt(raw,'info.json')
+
+	print(r.parse())
 

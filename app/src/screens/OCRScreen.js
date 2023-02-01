@@ -118,6 +118,10 @@ const sendPost = async () => {
 const transformData = (transData) => {      
     var purchase = JSON.parse(transData);
     let products = []
+    console.log(purchase.date)
+     // trasform date to yyyy-mm-dd
+    purchase.date = purchase.date.split('-').reverse().join('-')
+    console.log(purchase.date)
     Object.keys(purchase.items).forEach((key, index) => {
       products.push({
         idcategory: 22,

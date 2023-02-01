@@ -218,7 +218,7 @@ function HomeScreen({ navigation }) {
       data.data = [0];
     } else data.data = [Math.round((spent * 100) / total_plafond)/100];
 
-    data.percSpent = data.data*100;
+    data.percSpent = Math.round(data.data*100);
     data.total_spent = spent;
     data.plafond = total_plafond;
     data.labels = [selector];

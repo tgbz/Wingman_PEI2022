@@ -29,20 +29,22 @@ router.post("/avatar/", upload.single("avatarFile"), function (req, res, next) {
       files.forEach((file) => {
         if (file.split(".")[0] == id) {
           console.log("file already exists: " + file + " deleting...");
-          fs.unlink(newPath + file, (err) => {
+          fs.unlink(newPath+ '/' + file, (err) => {
             if (err) {
               console.log(err);
             }
           });          
         }
       });
+      copyFile(oldPath, newPath, id, file.mimetype.split("/")[1], res);
     }
   });
+});
 
-  newPath = newPath + id + "." + file.mimetype.split("/")[1];
+function copyFile(oldPath, newPath, id, type, res){
+  newPath = newPath + id + "." + type;
   console.log(newPath);
   console.log(oldPath);
-
   fs.copyFile(oldPath, newPath, function (err) {
     if (err) {
       console.log(err);
@@ -52,7 +54,7 @@ router.post("/avatar/", upload.single("avatarFile"), function (req, res, next) {
     res.jsonp("Ficheiro gravado com sucesso!");
     // Mudar para status
   });
-});
+}
 
 router.get("/avatar/:id", function (req, res, next) {
   // console.log(__dirname + '/../files/avatar/' + req.params.id + '.jpeg')

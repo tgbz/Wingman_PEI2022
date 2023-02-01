@@ -145,7 +145,7 @@ class Receipt():
 						value = float(match.group(4).replace(',','.').replace(' ',''))
 				self.items[itemName] = [1,round(value,2)]
 			elif matchNoPrice:
-				itemName = match.group(2)
+				itemName = matchNoPrice.group(2)
 				if i < len(self.lines-1):
 					matchQtd = re.search(qtdRE,self.lines[i+1])
 					if matchQtd:

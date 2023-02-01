@@ -185,7 +185,7 @@ const  maisImg = <View style={styles.bt}>
     </View>
   }
   {pickedImage.length > 0 && pickedImage.map(element => {
-    return <View  key={element.fileName} style={{
+    return <View  key={element.uri} style={{
         backgroundColor: COLORS.eggshell,
         width: (element.width > width*0.7?width*0.7:element.width)+5,
         height: (element.height > height*0.4?height*0.4:element.height)+5,

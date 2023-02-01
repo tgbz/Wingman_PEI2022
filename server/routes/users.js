@@ -58,6 +58,7 @@ router.get("/register", function (req, res) {
 });
 
 router.get("/userProfile/:id", function (req, res){
+  console.log(req.body)
   Users.getUser(req.params.id)
   .then( dados => res.jsonp(dados))
   .catch(erro => res.status(500).jsonp(erro))

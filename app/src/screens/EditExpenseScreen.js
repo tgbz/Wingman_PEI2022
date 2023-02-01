@@ -151,7 +151,7 @@ function fetchDataOCR () {
   const [isEdit, setIsEdit] = useState(false)
   // handle edit product opens the modal with the product info already filled
   function handleEditProduct(index) {
-    //console.log('handleEditProduct')
+    console.log(products[index])
     //console.log(products[index])
     setIsModalVisible(true)
     setIsEdit(true)
@@ -160,7 +160,6 @@ function fetchDataOCR () {
   }
 
   function handleEditProductSubmit(productInfo) {
-    //console.log('handleEditProductSubmit')
     //console.log(productInfo)
     //console.log(indexToEdit)
     const newProducts = [...products]
@@ -528,7 +527,7 @@ function fetchDataOCR () {
             ></CustomButton>}
             {originOCR &&
             <CustomButton
-              onPress={() => {console.log("Carreguei aqui 1 vez"), navigation.navigate('Home')}}
+              onPress={() => {navigation.navigate('Home')}}
               text="Cancelar Despesa"
               type="SECONDARY"
               widthScale={0.8}

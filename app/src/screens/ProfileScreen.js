@@ -31,8 +31,6 @@ const createFormData = (pickedImage, user) => {
   data.append('avatarFile', pickedImage)
   data.append('user', user)
   console.log('\nDATA FORM: ' + JSON.stringify(data))
-
-
   return data
 }
 
@@ -120,6 +118,9 @@ function handleData(data) {
       //setToUpload(true)
       setPhoto(result.uri)
       setPickedImage(result)
+      //  alert that the photo was uploaded
+      alert('Foto alterada com sucesso!')
+      navigation.navigate("Casa", { photoURI: result.uri }); // pass the photoURI to Home screen
     }
   }
 

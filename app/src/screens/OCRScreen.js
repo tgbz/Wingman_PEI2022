@@ -121,8 +121,8 @@ const transformData = (transData) => {
     Object.keys(purchase.items).forEach((key, index) => {
       products.push({
         idcategory: 22,
-        value:purchase.items[key],
-        quantity: 1,
+        value:purchase.items[key][1],
+        quantity: purchase.items[key][0],
         description: key         
       })
       });
@@ -166,7 +166,7 @@ const  maisImg = <View style={styles.bt}>
  
     <SafeAreaView style={styles.root}>
        <ScrollView style={ {backgroundColor: COLORS.white} }>
-           {!loaded && <Text style={styles.textInicial}>Carrega a fotografia da tua fatura:</Text>}
+           {!loaded && <Text style={styles.textInicial}>Carrega a tua despesa:</Text>}
 
     {pickedImage.length === 0 &&
     <View style={{
@@ -185,7 +185,7 @@ const  maisImg = <View style={styles.bt}>
     </View>
   }
   {pickedImage.length > 0 && pickedImage.map(element => {
-    return <View  key={element.fileName} style={{
+    return <View  key={element.uri} style={{
         backgroundColor: COLORS.eggshell,
         width: (element.width > width*0.7?width*0.7:element.width)+5,
         height: (element.height > height*0.4?height*0.4:element.height)+5,
@@ -221,7 +221,7 @@ const  maisImg = <View style={styles.bt}>
 
     
         <TouchableOpacity onPress={()  => sendPost()} style={[styles.button, { width: width*0.70, backgroundColor: disabled? '#E8E8E8': COLORS.orange}]} disabled={disabled}>
-            <Text style={[styles.text , {color: disabled? '#C0C0C0': COLORS.white}]}>Continuar   <Entypo name="arrow-right" size={25} style={styles.item} color={COLORS.wingDarkBlue}/>
+            <Text style={[styles.text , {color: disabled? '#C0C0C0': COLORS.white}]}>Continuar 
             </Text>
         </TouchableOpacity>
     
@@ -257,18 +257,19 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   textInicial: {
-    padding: 20,
+    padding: 10,
     fontFamily: FONTS.medium,
     fontSize: SIZES.medium,
-    
-    alignItems: 'center',
+    justifyContent: 'center',
+    //align text to center
+    textAlign: 'center',
     color: COLORS.wingDarkBlue
     
   },
   text: {
     fontFamily: FONTS.medium,
     fontSize: SIZES.medium,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   roundshape:  {
     height: 50, //any of height

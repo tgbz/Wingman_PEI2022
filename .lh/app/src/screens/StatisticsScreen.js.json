@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 12,
+            "activePatchIndex": 17,
             "patches": [
                 {
                     "date": 1674933871985,
@@ -56,6 +56,26 @@
                 {
                     "date": 1674935310919,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,10 +55,8 @@\n     let date = new Date()\r\n     date.setMonth(date.getMonth() - 12)\r\n     for (let i = 0; i < 12; i++) {\r\n       date.setMonth(date.getMonth() + 1)\r\n-      console.log(date.getMonth())\r\n-      console.log(monthNames[date.getMonth()])\r\n       months.push({\r\n         month: monthNames[date.getMonth()],\r\n         year: date.getFullYear(),\r\n       })\r\n"
+                },
+                {
+                    "date": 1675080237065,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -143,8 +143,9 @@\n   useEffect(() => {\r\n     if (token.id) {\r\n       const today = new Date()\r\n       // format  2023-01-01\r\n+      console.log(today)\r\n       const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()\r\n       flatListRef.current.scrollToIndex({ animated: true, index: selectedMonth });\r\n       fecthData(token, date)\r\n     }\r\n"
+                },
+                {
+                    "date": 1675080262361,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -143,8 +143,10 @@\n   useEffect(() => {\r\n     if (token.id) {\r\n       const today = new Date()\r\n       // format  2023-01-01\r\n+      console.log(\"today\")\r\n+      console.log(\"\\n\\n\\n\\n\")\r\n       console.log(today)\r\n       const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()\r\n       flatListRef.current.scrollToIndex({ animated: true, index: selectedMonth });\r\n       fecthData(token, date)\r\n"
+                },
+                {
+                    "date": 1675080281491,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -146,9 +146,9 @@\n       // format  2023-01-01\r\n       console.log(\"today\")\r\n       console.log(\"\\n\\n\\n\\n\")\r\n       console.log(today)\r\n-      const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()\r\n+      const date = today.getFullYear() + '-' + (today.getMonth()) + '-' + today.getDate()\r\n       flatListRef.current.scrollToIndex({ animated: true, index: selectedMonth });\r\n       fecthData(token, date)\r\n     }\r\n   }, [token])\r\n"
+                },
+                {
+                    "date": 1675080391729,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,9 +52,9 @@\n     const monthNames = [\"janeiro\", \"fevereiro\", \"março\", \"abril\", \"maio\", \"junho\",\r\n     \"julho\", \"agosto\", \"setembro\", \"outubro\", \"novembro\", \"dezembro\"\r\n   ];\r\n     let date = new Date()\r\n-    date.setMonth(date.getMonth() - 12)\r\n+    date.setMonth(date.getMonth() - 11)\r\n     for (let i = 0; i < 12; i++) {\r\n       date.setMonth(date.getMonth() + 1)\r\n       months.push({\r\n         month: monthNames[date.getMonth()],\r\n@@ -146,9 +146,9 @@\n       // format  2023-01-01\r\n       console.log(\"today\")\r\n       console.log(\"\\n\\n\\n\\n\")\r\n       console.log(today)\r\n-      const date = today.getFullYear() + '-' + (today.getMonth()) + '-' + today.getDate()\r\n+      const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()\r\n       flatListRef.current.scrollToIndex({ animated: true, index: selectedMonth });\r\n       fecthData(token, date)\r\n     }\r\n   }, [token])\r\n"
+                },
+                {
+                    "date": 1675080414571,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,9 +52,9 @@\n     const monthNames = [\"janeiro\", \"fevereiro\", \"março\", \"abril\", \"maio\", \"junho\",\r\n     \"julho\", \"agosto\", \"setembro\", \"outubro\", \"novembro\", \"dezembro\"\r\n   ];\r\n     let date = new Date()\r\n-    date.setMonth(date.getMonth() - 11)\r\n+    date.setMonth(date.getMonth() - 12)\r\n     for (let i = 0; i < 12; i++) {\r\n       date.setMonth(date.getMonth() + 1)\r\n       months.push({\r\n         month: monthNames[date.getMonth()],\r\n"
                 }
             ],
             "date": 1674933871985,

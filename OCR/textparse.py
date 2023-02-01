@@ -111,7 +111,7 @@ class Receipt():
 	def parse_items_pd(self):
 		jump = False
 		for i,line in enumerate(self.lines):
-			if get_close_matches('resumo', line.split(), 1, 0.9):
+			if SequenceMatcher(None,'resumo',line).ratio() > 0.8:
 				break
 			if jump:
 				jump = False
@@ -126,7 +126,7 @@ class Receipt():
 						alpha+=1
 				if alpha < (len(itemName) - alpha):
 					continue
-				if i < len(self.lines-1):
+				if i < len(self.lines)-1:
 					if get_close_matches('poupanca', self.lines[i+1].split(), 1, 0.6):
 						ivalue = float(match.group(4).replace(',','.').replace(' ',''))
 						matchP = re.search(valueRE,self.lines[i+1])
@@ -180,7 +180,11 @@ class Receipt():
 
 def concat(r1,r2):
 	l1 = r1.lines
+	print("R1 Lines")
+	print(r1.lines)
 	l2 = r2.lines
+	print("R2 Lines")
+	print(r2.lines)
 
 	newlines = []
 
@@ -195,7 +199,9 @@ def concat(r1,r2):
 				
 
 	nl = l1 + newlines
-	r1.lines = nl
+	r1.lines = nl 
+	print("Final R1")
+	print(r1.lines)
 	
 	return r1.parse()
 	

@@ -369,7 +369,6 @@ def gen_name(name):
 
 
 def generate_text(name,image,out = False):
-    pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
     text = pytesseract.image_to_string(image)
     if out:
         with open(gen_name(name.replace('>', '')), "w") as f:

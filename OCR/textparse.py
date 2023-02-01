@@ -17,7 +17,7 @@ pdItemRE = r'(\S+) ([a-zA-Z].+)\s( |)((\d|\d{2})[,. ]{1,2}(\d{2}|\d{3}))$'
 
 noPricePDItemRE = r'(\S+) ([a-zA-Z \d]{4,})$'
 
-pdTotalRE = r'([a-zA-Z].+)\s( |)((\d|\d{2})[,. ]{1,2}(\d{2}|\d{3}))$'
+pdTotalRE = r'^([a-zA-Z ]+)[ ]{0,2}(\d{1,4}[., ]{1,2}\d{1,2})'
 
 lidlItemRE = r'^([^\d][^\n]+) ((\d|\d{2})[^\d]{0,2}(\d{2}|\d{3}))[ a-zA-Z]*$'
 
@@ -134,7 +134,7 @@ class Receipt():
 				if alpha < (len(itemName) - alpha):
 					continue
 				if i < len(self.lines)-1:
-					if SequenceMatcher('poupancaimediata', re.sub(r'[^a-zA-Z]','',self.lines[i+1])).ratio() > 0.85:
+					if SequenceMatcher('poupanca imediata', re.sub(r'[^a-zA-Z]','',self.lines[i+1])).ratio() > 0.85:
 						ivalue = float(match.group(4).replace(',','.').replace(' ',''))
 						matchP = re.search(valueRE,self.lines[i+1])
 						if matchP:
@@ -155,7 +155,7 @@ class Receipt():
 							qtd = 1
 						value = float(matchQtd.group(3).replace(',','.').replace(' ',''))
 						if i < len(self.lines)-2:
-							if SequenceMatcher('poupancaimediata', re.sub(r'[^a-zA-Z]','',self.lines[i+2])).ratio() > 0.85:
+							if SequenceMatcher('poupanca imediata', re.sub(r'[^a-zA-Z]','',self.lines[i+2])).ratio() > 0.85:
 								matchP = re.search(valueRE,self.lines[i+1])
 								if matchP:
 									pvalue = float(matchP.group(0).replace(',','.').replace(' ',''))
@@ -188,12 +188,15 @@ class Receipt():
 		return date_str
 
 	def parse_total_pd(self):
+		r = None
 		for line in self.lines:
 			m = re.search(pdTotalRE,line)
-			if m:
-				if SequenceMatcher(None,m.group(1),"total a pagar").ratio() > 0.9:
-					return float(m.group(3).replace(',','.').replace(' ',''))
-		return None
+			if m:				
+				if SequenceMatcher(None,re.sub(r'[^a-zA-Z]','',m.group(1)),"total a pagar").ratio() > 0.9:
+					return float(m.group(2).replace(',','.').replace(' ',''))
+				if SequenceMatcher(None,re.sub(r'[^a-zA-Z]','',m.group(1)),"multibanco").ratio() > 0.9:
+					r = float(m.group(2).replace(',','.').replace(' ',''))
+		return r
 
 	def to_json(self):
 		object_data = {

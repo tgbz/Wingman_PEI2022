@@ -126,7 +126,7 @@ class Receipt():
 						alpha+=1
 				if alpha < (len(itemName) - alpha):
 					continue
-				if i <= len(self.lines-1):
+				if i < len(self.lines-1):
 					if get_close_matches('poupanca', self.lines[i+1].split(), 1, 0.6):
 						ivalue = float(match.group(4).replace(',','.').replace(' ',''))
 						matchP = re.search(valueRE,self.lines[i+1])

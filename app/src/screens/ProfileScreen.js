@@ -129,6 +129,7 @@ function handleData(data) {
   }
 
   const handleUploadPhoto = () => {
+    console.log("eiii")
     console.log('handleUploadPhoto ' + JSON.stringify(pickedImage))
     fetch(`${serverURL}/files/avatar/`, {
       method: 'POST',

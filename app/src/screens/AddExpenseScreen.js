@@ -285,6 +285,7 @@ export default function AddExpenseScreen({ navigation }) {
       type: isDebit ? 'Debito' : 'Credito',
       products: products, // quantity , value , idcategory , description
     }
+    console.log("Valores", newData)
     const resp = await fetch(`${serverURL}/purchases/createPurchase/`, {
       method: 'POST',
       headers: {

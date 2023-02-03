@@ -67,8 +67,8 @@ const pickFromCamera = async () =>{
       quality: 0.7})
     if (!data.cancelled) {
       setPhoto(data.uri)
-      data.name = "Cam".concat(String(pickId))
-      data.fileName = "Cam".concat(String(pickId))
+      data["name"]= "Cam".concat(String(pickId))
+      data["fileName"]= "Cam".concat(String(pickId))
       setPickId(pickId+1)
       setPickedImage(pickedImage.concat(data))
       setDisabled(false)
@@ -82,26 +82,28 @@ const pickFromCamera = async () =>{
 
 
 const createFormData = () => {
-  //console.log('Create form data: ' + JSON.stringify(pickedImage) + ' ' + JSON.stringify(user))
   const data = new FormData()
   //for each image, do this 
   pickedImage.forEach(element => {
-        element.path = Platform.OS === 'ios' ? element.uri.replace('file://', '') : element.uri
-        element.name = element.fileName
+        element.path = Platform.OS === 'ios'||Platform.OS === 'android' ? element.uri.replace('file://', '') : element.uri
+       !element.fileName? element["fileName"] = "Img".concat(String(pickId)) : element.fileName
+        element["name"] = element.fileName
+        element["type"] = "image/jpeg"
         data.append(element.fileName, element);
 })
-  return data
+console.log('Create form data: ' + JSON.stringify(data))
+return data
 }
 
 //send Post request with all imagens inside 
 const sendPost = async () => {
   setLoading(true)
   //console.log('handleUploadPhoto ' + JSON.stringify(pickedImage))
-  const resp = await fetch(`http://94.60.175.136:8000/ocr/upload`, {
+  const resp = await fetch(`http://192.168.1.65:5003/upload`, {
     method: 'POST',
     body: createFormData(),
     headers: {
-      Accept: 'application/json',
+      Accept: '*/*',
       'Content-Type': 'multipart/form-data',
     },
   })
@@ -118,6 +120,9 @@ const sendPost = async () => {
 const transformData = (transData) => {      
     var purchase = JSON.parse(transData);
     let products = []
+    console.log(purchase['items'])
+    console.log(typeof(purchase['items']))
+
     Object.keys(purchase.items).forEach((key, index) => {
       products.push({
         idcategory: 22,
@@ -166,7 +171,7 @@ const  maisImg = <View style={styles.bt}>
  
     <SafeAreaView style={styles.root}>
        <ScrollView style={ {backgroundColor: COLORS.white} }>
-           {!loaded && <Text style={styles.textInicial}>Carrega a tua despesa:</Text>}
+           {!loaded && <Text style={styles.textInicial}>Carrega a fotografia da tua fatura:</Text>}
 
     {pickedImage.length === 0 &&
     <View style={{
@@ -185,7 +190,7 @@ const  maisImg = <View style={styles.bt}>
     </View>
   }
   {pickedImage.length > 0 && pickedImage.map(element => {
-    return <View  key={element.fileName} style={{
+    return <View  key={element.uri} style={{
         backgroundColor: COLORS.eggshell,
         width: (element.width > width*0.7?width*0.7:element.width)+5,
         height: (element.height > height*0.4?height*0.4:element.height)+5,
@@ -221,7 +226,7 @@ const  maisImg = <View style={styles.bt}>
 
     
         <TouchableOpacity onPress={()  => sendPost()} style={[styles.button, { width: width*0.70, backgroundColor: disabled? '#E8E8E8': COLORS.orange}]} disabled={disabled}>
-            <Text style={[styles.text , {color: disabled? '#C0C0C0': COLORS.white}]}>Continuar 
+            <Text style={[styles.text , {color: disabled? '#C0C0C0': COLORS.white}]}>Continuar   <Entypo name="arrow-right" size={25} style={styles.item} color={COLORS.wingDarkBlue}/>
             </Text>
         </TouchableOpacity>
     
@@ -257,19 +262,18 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   textInicial: {
-    padding: 10,
+    padding: 20,
     fontFamily: FONTS.medium,
     fontSize: SIZES.medium,
-    justifyContent: 'center',
-    //align text to center
-    textAlign: 'center',
+    
+    alignItems: 'center',
     color: COLORS.wingDarkBlue
     
   },
   text: {
     fontFamily: FONTS.medium,
     fontSize: SIZES.medium,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   roundshape:  {
     height: 50, //any of height

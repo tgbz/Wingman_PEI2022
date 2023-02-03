@@ -10,7 +10,7 @@ export default function ChooseCategoryModal({
   setSelectedCategory,
 }) {
   return (
-    console.log("oublea"+isModalVisibleCT),
+    //console.log("oublea"+isModalVisibleCT),
     <Modal animationType="slide" transparent={false} visible={isModalVisibleCT}>
       <View style={styles.modalContainer}>
         <View style={styles.modalHeader}>

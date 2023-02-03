@@ -1,18 +1,19 @@
 import React from 'react'
 import { Table, Row, Data } from 'react-native-table-component'
-import { Modal, Text, TextInput, TouchableOpacity, StyleSheet, View } from 'react-native'
+import { Modal, Text, TextInput, TouchableOpacity, StyleSheet, View, useWindowDimensions} from 'react-native'
 import { COLORS,FONTS,SIZES } from '../constants'
 
 import { MaterialIcons,MaterialCommunityIcons } from 'react-native-vector-icons'
 
 const ProductTable = ({ products, handleDeleteProduct,getCategoryIcon,handleEditProduct }) => {
-  const tableHead = ['Produto', 'Valor', ]
+  const tableHead = ['Produto', 'Valor']
+  const {width} = useWindowDimensions();
   
   return (
     <Table>
       <Row
         data={tableHead}
-        widthArr={[130, 85, 120]}
+        widthArr={[0.35*width, 0.45*width]}
         style={styles.header}
         textStyle={styles.headerText}
       />
@@ -37,7 +38,7 @@ const ProductTable = ({ products, handleDeleteProduct,getCategoryIcon,handleEdit
               onPress={() => handleDeleteProduct(index)}
             />,
           ]}
-          widthArr={[40,100, 70, 50,30, 40]}
+          widthArr={[0.1*width,0.25*width, 0.15*width, 0.1*width,0.1*width, 0.1*width]}
           style={styles.row}
           textStyle={styles.rowText}
         />

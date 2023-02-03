@@ -339,8 +339,8 @@ function fetchDataOCR () {
     }).then((resp) => {
       if (resp.status === 200) {
         alert('Transação excluída com sucesso!')
-        navigation.goBack({ refresh: true }) 
-       // navigation.navigate('Casa', { refresh: true })
+        //navigation.goBack({ refresh: true }) 
+        navigation.navigate('Casa', { refresh: true })
       } else {
         alert('Erro ao excluir transação!')
       }

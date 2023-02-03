@@ -5,6 +5,7 @@ import dateutil.parser
 import json
 import os
 import preProcessing as pp
+from datetime import datetime
 
 
 
@@ -14,13 +15,19 @@ date2RE = r'(\d{2})[\/|\-](\d{2})[\/|\-](\d{4})'
 
 pdItemRE = r'(\S+) ([a-zA-Z].+)\s( |)((\d|\d{2})[,. ]{1,2}(\d{2}|\d{3}))$'
 
-pdTotalRE = r'([a-zA-Z].+)\s( |)((\d|\d{2})[,. ]{1,2}(\d{2}|\d{3}))$'
+noPricePDItemRE = r'(\S+) ([a-zA-Z \d]{4,})$'
+
+pdTotalRE = r'^([a-zA-Z ]+)[ ]{0,2}(\d{1,4}[., ]{1,2}\d{1,2})'
 
 lidlItemRE = r'^([^\d][^\n]+) ((\d|\d{2})[^\d]{0,2}(\d{2}|\d{3}))[ a-zA-Z]*$'
 
 totalRE = r'([^0-9])+[ ]{0,1}(\d{1,2}[., ]{1,2}\d{2}|\d{3})'
 
 valueRE = r'(\d+[,| |.]+\d+)'
+
+qtdRE = r'(\d{1,2}[., ]{0,2}\d{0,3}) {0,2}[xX] {0,2}(\d{1,2}[,. ]{1,2}\d{2,3}) {1,2}(\d{1,2}[,. ]{1,2}\d{2})'
+
+
 
 debug,output = False,False
 
@@ -53,8 +60,8 @@ class Receipt():
 		if self.total == None or self.total == 0:
 			self.total = 0
 			for item in self.items.keys():
-				self.total += self.items[item]
-
+				self.total += self.items[item][1]
+			self.total = round(self.total,2)
 		return self.to_json()
 	
 	def close_match(self,keyword,accuracy=0.6):
@@ -90,7 +97,7 @@ class Receipt():
 				itemName = match.group(1)
 				valueDecimal = float(match.group(4))*0.01
 				value = float(match.group(3))+valueDecimal
-				self.items[itemName] = round(value,2)
+				self.items[itemName] = [1,round(value,2)]
 
 	def parse_items_continente(self):
 		for i,line in enumerate(self.lines):
@@ -104,17 +111,18 @@ class Receipt():
 				itemName = match.group(1)
 				valueDecimal = float(match.group(4))*0.01
 				value = float(match.group(3))+valueDecimal
-				self.items[itemName] = round(value,2)
+				self.items[itemName] = [1,round(value,2)]
 			
 	def parse_items_pd(self):
-		jump = False
+		jump = 0
 		for i,line in enumerate(self.lines):
-			if get_close_matches('resumo', line.split(), 1, 0.9):
+			if SequenceMatcher(None,'resumo',line).ratio() > 0.8:
 				break
-			if jump:
-				jump = False
+			if jump > 0:
+				jump -= 1
 				continue
 			match = re.search(pdItemRE,line)
+			matchNoPrice = re.search(noPricePDItemRE,line)
 			if match:
 				value = 0
 				itemName = match.group(2)
@@ -122,19 +130,40 @@ class Receipt():
 				for c in itemName:
 					if (c.isalpha()):
 						alpha+=1
-				if alpha < (len(itemName) - alpha):
+				if alpha < (len(itemName) - alpha) or len(itemName) < 4:
 					continue
-
-				if get_close_matches('poupanca', self.lines[i+1].split(), 1, 0.6):
-					ivalue = float(match.group(4).replace(',','.').replace(' ',''))
-					matchP = re.search(valueRE,self.lines[i+1])
-					if matchP:
-						pvalue = float(matchP.group(0).replace(',','.').replace(' ',''))
-						value = ivalue-pvalue
-						jump = True
-				else:
-					value = float(match.group(4).replace(',','.').replace(' ',''))
+				if i < len(self.lines)-1:
+					if SequenceMatcher('poupanca imediata', re.sub(r'[^a-zA-Z]','',self.lines[i+1])).ratio() > 0.85:
+						ivalue = float(match.group(4).replace(',','.').replace(' ',''))
+						matchP = re.search(valueRE,self.lines[i+1])
+						if matchP:
+							pvalue = float(matchP.group(0).replace(',','.').replace(' ',''))
+							value = ivalue-pvalue
+							jump += 1
+					else:
+						value = float(match.group(4).replace(',','.').replace(' ',''))
 				self.items[itemName] = [1,round(value,2)]
+			elif matchNoPrice:
+				itemName = matchNoPrice.group(2)
+				if i < len(self.lines)-1:
+					matchQtd = re.search(qtdRE,self.lines[i+1])
+					if matchQtd:
+						try:
+							qtd = int(matchQtd.group(1).replace(' ',''))
+						except:
+							qtd = 1
+						value = float(matchQtd.group(3).replace(',','.').replace(' ',''))
+						if i < len(self.lines)-2:
+							if SequenceMatcher('poupanca imediata', re.sub(r'[^a-zA-Z]','',self.lines[i+2])).ratio() > 0.85:
+								matchP = re.search(valueRE,self.lines[i+1])
+								if matchP:
+									pvalue = float(matchP.group(0).replace(',','.').replace(' ',''))
+									value -= pvalue
+								jump += 1
+
+						jump += 1
+						self.items[itemName] = [qtd,round(value,2)]
+						
 
 	def parse_date(self):
 		date_str = None
@@ -151,15 +180,22 @@ class Receipt():
 					break
 				except ValueError:
 					continue
+
+		if date_str == None:
+			date_str = datetime.today().strftime('%d-%m-%Y')
+
 		return date_str
 
 	def parse_total_pd(self):
+		r = None
 		for line in self.lines:
 			m = re.search(pdTotalRE,line)
-			if m:
-				if SequenceMatcher(None,m.group(1),"total a pagar").ratio() > 0.9:
-					return float(m.group(3).replace(',','.').replace(' ',''))
-		return None
+			if m:				
+				if SequenceMatcher(None,re.sub(r'[^a-zA-Z]','',m.group(1)),"total a pagar").ratio() > 0.9:
+					return float(m.group(2).replace(',','.').replace(' ',''))
+				if SequenceMatcher(None,re.sub(r'[^a-zA-Z]','',m.group(1)),"multibanco").ratio() > 0.9:
+					r = float(m.group(2).replace(',','.').replace(' ',''))
+		return r
 
 	def to_json(self):
 		object_data = {
@@ -189,7 +225,7 @@ def concat(r1,r2):
 				
 
 	nl = l1 + newlines
-	r1.lines = nl
+	r1.lines = nl 
 	
 	return r1.parse()
 	
@@ -226,5 +262,13 @@ def parseImage(files):
 
 if __name__ == '__main__':
 	filename,debug,output = pp.parse()
+	preProc = [pp.scaling,pp.normalize,pp.remove_noise,pp.remove_shadows]
 
+	image = pp.cv2.imread(filename)
+	if debug: pp.show(image,'Original')
+
+	raw = pp.generate_text('out',pp.pipeline(image,preProc),output)
+	r = Receipt(raw,'info.json')
+
+	print(r.parse())
 

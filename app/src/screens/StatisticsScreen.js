@@ -51,7 +51,7 @@ function StatisticsScreen({ navigation }) {
 
   //  function to get 12 months before the current month
   const getMonths = () => {
-    const monthNames = ["janeiro", "febreiro", "março", "abril", "maio", "junho",
+    const monthNames = ["janeiro", "fevereiro", "março", "abril", "maio", "junho",
     "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"
   ];
     let date = new Date()
@@ -119,7 +119,7 @@ function StatisticsScreen({ navigation }) {
   }
   const monthsLong = {
     janeiro: '01',
-    febreiro: '02',
+    fevereiro: '02',
     março: '03',
     abril: '04',
     maio: '05',

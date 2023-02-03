@@ -1,5 +1,6 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View, Button, Image, TouchableOpacity, useWindowDimensions } from "react-native";
+import {Platform,
+  StatusBar, SafeAreaView, StyleSheet, Text, View, Button, Image, TouchableOpacity, useWindowDimensions } from "react-native";
 import AuthContext from "../../context/AuthProvider";
 import {COLORS, SHADOWS, SIZES } from '../../constants'
 
@@ -12,7 +13,7 @@ function LandingScreen({navigation}) {
             <Image style={[styles.logo,{height: height*0.14}]} resizeMode="contain" source={require('../../../assets/images/logo-white.png')}></Image>
             <Text style={styles.wingman}>Wingman</Text>
         </View>        
-            <View style={[styles.container,{bottom:height*0.27}]}>
+            <View style={[styles.container,{bottom:height*0.22}]}>
             <Text style={styles.text}>Ganha controlo sobre as tuas </Text>
             <Text style={styles.text}>finanças, potencia as tuas</Text>
             <Text style={styles.text}>poupanças e melhora a</Text>
@@ -20,10 +21,10 @@ function LandingScreen({navigation}) {
           
         </View>
 
-        <View style={[styles.container, {top: height *0.47}]}>
-        <Image style={[styles.preview,{height: height*0.82}]} source={require('../../../assets/images/preview-home.png')}></Image>
+        <View style={[styles.container, {top: height *0.60}]}>
+        <Image style={[styles.preview,{height: height*0.9}]} source={require('../../../assets/images/preview-home.png')}></Image>
         
-        <View style={[styles.containerBTN,  {bottom: height*0.22}]}>
+        <View style={[styles.containerBTN,  {bottom: height*0.25}]}>
             <TouchableOpacity onPress={() => navigation.navigate("Login")} style={styles.button}>
                 <Text style={[styles.buttonText,{height: height*0.02}]}>Entrar</Text>
             </TouchableOpacity>
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.wingblue,
     alignItems: "center",
     justifyContent: "center",
-    padding: 20
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 20,
   },
   container: {
     alignItems: "center",
@@ -59,9 +60,17 @@ const styles = StyleSheet.create({
     
   },
   containerLogo: {
-    alignItems: "center",
-    justifyContent: "center",
-    bottom:"30%"
+    //alignItems: "center",
+    //justifyContent: "center",
+    //bottom:"30%"
+    // Put the logo at the top of the screen
+    position: 'absolute',
+    top: Platform.OS === 'android' ? StatusBar.currentHeight : 40,
+    // Put the logo at the center of the screen
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%'
+
   },
   logo: {
     width: 200,
@@ -69,7 +78,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: "SoraRegular",
-    fontSize: SIZES.large,
+    fontSize: SIZES.medium,
     color: COLORS.white,
     alignItems: "center",
     justifyContent: "center",
@@ -78,7 +87,7 @@ const styles = StyleSheet.create({
   wingman: {
     color: 'white',
     fontFamily: "SoraLight",
-    fontSize: 44,
+    fontSize: 40
     
   },
   button: {
@@ -116,7 +125,7 @@ const styles = StyleSheet.create({
     width: "150%",
     maxHeight: 800,
     position: "absolute",
-    bottom: "-16%",
+    bottom: "-20%",
     }
 });
 

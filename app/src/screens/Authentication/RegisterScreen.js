@@ -6,6 +6,9 @@ import {
   Button,
   Image,
   useWindowDimensions,
+  TouchableOpacity,
+  Platform
+
 } from "react-native";
 import { RadioButton, Text } from "react-native-paper";
 import { useState } from "react";
@@ -17,13 +20,14 @@ import CustomButton from "../../components/CustomButton";
 import { ScrollView } from "react-native-gesture-handler";
 import CustomTextButton from "../../components/CustomTextButton";
 import CustomBackButton from "../../components/CustomBackButton";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { MaterialIcons } from '@expo/vector-icons'
 
 function RegisterScreen({ navigation }) {
   //login form
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [birthdate, setBirthdate] = useState("");
+  const [birthdate, setBirthdate] = useState(new Date("1999-01-01"));
   const [password, setPassword] = useState("");
   const [confirmarPassword, setConfirmarPassword] = useState("");
   const [validEmail, setValidEmail] = useState(true);
@@ -34,7 +38,10 @@ function RegisterScreen({ navigation }) {
 
   const { signUp } = React.useContext(AuthContext);
   const registo = async () => {
-    const params = { name, email, birthdate, gender, password };
+    console.log(name);
+    console.log(birthdate);
+    const date = birthdate.toISOString().split("T")[0];
+    const params = { name, email, birthdate:date, gender, password };
     const response = await signUp(params);
     if (!isNaN(+response)) {
       navigation.navigate("Login");
@@ -48,21 +55,7 @@ function RegisterScreen({ navigation }) {
     { key: "2", value: "Outro" },
   ];
   const [gender, setSelected] = React.useState("2");
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [date, setDate] = useState("09-10-2020");
 
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
-
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
-
-  const handleConfirm = (date) => {
-    console.warn("A date has been picked: ", date);
-    hideDatePicker();
-  };
 
   function alertMessage() {
     name == "" ? setValidName(false) : setValidName(true);
@@ -87,7 +80,7 @@ function RegisterScreen({ navigation }) {
       else if (!email.includes("@") || !email.includes("."))
         textToWrite = "* Email inválido";
       
-    } else if (text == "Data de Nascimento") {
+    /*} else if (text == "Data de Nascimento") {
       if (!birthdate) textToWrite = "* Campo Obrigatório";
       //check if birthdate is in yyyy-mm-dd format and above 18 years old from today
       else if (
@@ -113,6 +106,7 @@ function RegisterScreen({ navigation }) {
         }
         if (age < 18) textToWrite = "* Idade inválida";
       }
+      */
 
 
     } else if (text == "Password") {
@@ -147,10 +141,12 @@ function RegisterScreen({ navigation }) {
       setValidEmail(false);
       isValid = false;
     }
+    /*
     if (!birthdate) {
       setValidBirthdate(false);
       isValid = false;
     }
+    */
     if (!password) {
       setValidPassword(false);
       isValid = false;
@@ -190,7 +186,17 @@ function RegisterScreen({ navigation }) {
     setValidConfirmPassword(true);
     setValidName(true);
   }
+
+  const [mode, setMode] = useState('date')
+  const [show, setShow] = useState(false)
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate
+    setShow(false)
+    setBirthdate(currentDate)
+  }
+
   return (
+    console.log(birthdate),
     <ScrollView style={styles.container}>
       <View style={{ paddingBottom: 35 }}>
         <View style={styles.containerLogo}>
@@ -228,17 +234,45 @@ function RegisterScreen({ navigation }) {
             setValue={setEmail}
             iconNameEntry="email"
           />
-          {validBirthdate ? (
+          <Text style={styles.text}>Data de Nascimento</Text>
+          {/*validBirthdate ? (
             <Text style={styles.text}>Data de Nascimento</Text>
           ) : (
             showErrorField("Data de Nascimento")
-          )}
-          <CustomInput
-            placeholder={"aaaa-mm-dd"}
+          )*/}
+          <View
+          style={[
+            styles.buttonStyle,
+            { width: width * 0.85, flexDirection: 'row', justifyContent: 'space-between' },
+          ]}
+        >
+          <Text style={styles.textButton}>
+            {birthdate.getDate() +
+              '/' +
+              (birthdate.getMonth() + 1 < 10
+                ? '0' + (birthdate.getMonth() + 1)
+                : birthdate.getMonth() + 1) +
+              '/' +
+              birthdate.getFullYear()}
+          </Text>
+          <TouchableOpacity onPress={() => setShow(!show)}>
+            <MaterialIcons name="date-range" size={18} color={COLORS.wingDarkBlue} />
+          </TouchableOpacity>
+        </View>
+            
+        {show && (
+          <View style={{ width: width * 0.85, alignSelf: 'center' }}>
+          <DateTimePicker
+            testID="dateTimePicker"
             value={birthdate}
-            setValue={setBirthdate}
-            iconNameEntry="date-range"
+            mode={mode}
+            is24Hour={true}
+            display={Platform.OS === 'ios' ? 'inline' : 'default'}
+            onChange={onChange}
+            maximumDate={new Date(new Date().setFullYear(new Date().getFullYear() - 18))}
           />
+          </View>
+        )}
           <Text style={styles.text}>Género</Text>
           <SelectList
             setSelected={(val) => {
@@ -306,16 +340,6 @@ function RegisterScreen({ navigation }) {
             textSize={16}
           ></CustomTextButton>
         </View>
-        {/*       <View>
-        <Button title="Show Date Picker" onPress={showDatePicker} />
-        <DateTimePickerModal
-          isVisible={isDatePickerVisible}
-          mode="date"
-          onConfirm={handleConfirm}
-          onCancel={hideDatePicker}
-          style={styles.calendar}
-        />
-      </View> */}
       </View>
     </ScrollView>
   );
@@ -378,6 +402,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.wingblue,
     borderRadius: 5,
     //align box to the right
+
   },
   iconContainerStyles: {
     position: "absolute",
@@ -387,6 +412,7 @@ const styles = StyleSheet.create({
   dropdownStyles: {
     backgroundColor: "#eceffa",
     borderColor: COLORS.wingblue,
+    maxHeight: 120,
   },
   containerNovo: {
     flex: 1,
@@ -395,6 +421,17 @@ const styles = StyleSheet.create({
   },
   calendar: {
     width: "70%",
+  },
+  buttonStyle: {
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 15,
+    marginVertical: 12,
+    borderWidth: 1,
+    flexDirection: 'row',
+    alignSelf: 'center',
+    borderColor: COLORS.wingblue,
+    alignItems: 'center',
   },
 });
 

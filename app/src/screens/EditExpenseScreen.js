@@ -15,7 +15,8 @@ import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 import ChooseCategoryModal from '../components/ChooseCategoryModal'
 import ProductInputModal from '../components/ProductInputModal'
 import ProductTable from '../components/ProductTable'
-import { set } from 'react-native-reanimated'
+
+import DateTimePicker from '@react-native-community/datetimepicker'
 
 
 export default function EditExpenseScreen({ navigation }) {
@@ -34,10 +35,13 @@ export default function EditExpenseScreen({ navigation }) {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [products, setProducts] = useState([])
   const [isDebit, setIsDebit] = useState(true)
-  const today = new Date()
-  const formattedDate = today.toISOString().slice(0, 10)
-  const [date, setDate] = useState(formattedDate)
+ const [date, setDate] = useState(new Date())
 
+ //Validate form data
+ const [validTitle, setValidTitle] = useState(true)
+ const [validValue, setValidValue] = useState(true)
+
+  
   useEffect(() => {
     AsyncStorage.getItem('userToken')
       .then((userToken) => setToken(JSON.parse(userToken)))
@@ -66,6 +70,7 @@ function fetchDataOCR () {
   setValue(infogen.total)
   setDescription(infogen.market)
   //if (infogen.date==null){infogen.date = Date.now()}
+  //console.log("infogen.date", infogen.date)
   setDate(treatDate(infogen.date))
   setProducts(products)
     setIsDebit(true)
@@ -92,7 +97,7 @@ function fetchDataOCR () {
     }
     setValue(purchase.value)
     setDescription(purchase.description)
-    setDate(treatDate(purchase.date))
+    setDate(new Date(purchase.date))
     setProducts(purchase.products)
     if(purchase.type == 'Debito') {
       setIsDebit(true)
@@ -107,11 +112,14 @@ function fetchDataOCR () {
   function treatDate (date) {
     //Obtain the first 10 caracteres: data
     if (typeof date === 'string') {
-      return date.slice(0, 10)
+      // "date": "03-02-2023",
+      // from dd-mm-yyyy to yyyy-mm-dd
+      let dateArray = date.split('-')
+      let dateObj = new Date(dateArray[2], dateArray[1], dateArray[0])
+      return dateObj
   }
     if (date === null){
-      var date = new Date();
-	    return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+ date.getDate();
+	    return new Date();
     }
   }
 
@@ -122,7 +130,6 @@ function fetchDataOCR () {
 
   const handleCategorySelection = (category) => {
     setSelectedCategory(category)
-
     toggleModalCT()
   }
 
@@ -265,7 +272,7 @@ function fetchDataOCR () {
     const newData = {
       // falta a CATEGORIA
       is_recurring: false,
-      date: date,
+      date: date.toISOString().slice(0, 10),
       value: value,
       title: title,
       description: description,
@@ -292,7 +299,8 @@ function fetchDataOCR () {
     })
   }
   else
-  { if(products.length == 0){
+  { 
+    if(products.length == 0){
     products.push({
       quantity: 1,
       value: value,
@@ -303,7 +311,7 @@ function fetchDataOCR () {
   const newData = {
     // falta a CATEGORIA
     is_recurring: false,
-    date: date,
+    date: date.toISOString().slice(0, 10),
     value: value,
     title: title,
     description: description,
@@ -348,13 +356,69 @@ function fetchDataOCR () {
   }
 
 
-  return ( //console.log(purchaseData),
+  function validateForm() {
+    let valid = true
+    if (title == '') {
+      setValidTitle(false)
+      valid = false
+    } else {
+      setValidTitle(true)
+    }
+    if (value == '') {
+      setValidValue(false)
+      valid = false
+    } else if (isNaN(value)) {
+      setValidValue(false)
+      valid = false
+    }else{
+      setValidValue(true)
+    }
+
+    return valid
+  }
+
+  function showErrorField(text) {
+
+    var textToWrite = ''
+
+    if (text == 'Título') {
+      if (!title) {
+        textToWrite = '*Obrigatório'
+      }
+    } else if (text == 'Valor') {
+      if (!value) {
+        textToWrite = '*Obrigatório'
+      }
+      // check if value is number
+      else if (isNaN(value)) {
+        textToWrite = '* Valor inválido'
+      }
+    } 
+
+    return (
+      <Text style={{ alignSelf: 'flex-start' }}>
+        <Text style={styles.textTag}>{text}</Text>
+        <Text style={styles.error}> {textToWrite}</Text>
+      </Text>
+    )
+  }
+
+  
+  const [mode, setMode] = useState('date')
+  const [show, setShow] = useState(false)
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate
+    setShow(false)
+    setDate(currentDate)
+  }
+
+  return ( //console.log(date),
       <SafeAreaView style={styles.root}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.infoContainer}>
             {typeContainer()}
             {/* Title input */}
-            <Text style={styles.textTag}>Título</Text>
+            {validTitle ? <Text style={styles.textTag}>Título</Text> : showErrorField('Título')}
             
             <View style={[styles.buttonStyle, { width: width * 0.8 }]}>
               <TextInput
@@ -374,7 +438,7 @@ function fetchDataOCR () {
               ]}
             >
               <View style={{ flex: 1, padding:0, flexWrap: 'wrap'}}>
-                <Text style={styles.textTag}>Valor</Text>
+              {validValue ? <Text style={styles.textTag}>Valor</Text> : showErrorField('Valor')}
                 <View
                   style={[styles.buttonStyle, { width: width * 0.36}]}
                 >
@@ -388,22 +452,45 @@ function fetchDataOCR () {
                   </TextInput>
                 </View>
               </View>
-              <View style={{ flex: 1, padding: 0, flexWrap: 'wrap' }}>
+              <View style={{ flex: 1, padding: 0 }}>
                 <Text style={styles.textTag}>Data</Text>
                 <View
-                  style={[styles.buttonStyle, { width: width * 0.4}]}
+                  style={[
+                    styles.buttonStyle,
+                    { width: width * 0.4, flexDirection: 'row', justifyContent: 'space-between' },
+                  ]}
                 >
-                  <MaterialIcons name="date-range" size={18} color={COLORS.wingDarkBlue} />
-                  <TextInput
-                    placeholder="AAAA-MM-DD"
-                    onChangeText={setDate}
-                    style={styles.textButton}
-                  >
-                    {date}
-                  </TextInput>
+                  <Text style={styles.textButton}>
+                    {date.getDate() == new Date().getDate() &&
+                    date.getMonth() == new Date().getMonth() &&
+                    date.getFullYear() == new Date().getFullYear()
+                      ? 'Hoje'
+                      : date.getDate() +
+                        '/' +
+                        (date.getMonth() + 1 < 10
+                          ? '0' + (date.getMonth() + 1)
+                          : date.getMonth() + 1) +
+                        '/' +
+                        date.getFullYear()}
+                  </Text>
+                  <TouchableOpacity onPress={() => setShow(!show)}>
+                    <MaterialIcons name="date-range" size={18} color={COLORS.wingDarkBlue} />
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>
+            {show && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={date}
+                mode={mode}
+                is24Hour={true}
+                display={Platform.OS === 'ios' ? 'inline' : 'default'}
+                onChange={onChange}
+                maximumDate={new Date()}
+              />
+            )}
+           
 
             {/* Category input */}
             {/* console.log('Expense Category: ' + getCategoryName(selectedCategory))*/}
@@ -512,7 +599,13 @@ function fetchDataOCR () {
 
           <View style={styles.containerBTN}>
             <CustomButton
-              onPress={() => {handleFormSubmission()}}
+              onPress={() => {
+              
+                if (validateForm() == true) {
+                  handleFormSubmission()
+                }
+               
+              }}
               text="Guardar Alterações"
               type="TERTIARY"
               widthScale={0.8}
@@ -582,7 +675,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textButton: {
-    flex: 0.95,
+    flex: 1,
     fontFamily: 'SoraRegular',
     fontSize: SIZES.font,
     color: COLORS.wingDarkBlue,
@@ -619,5 +712,12 @@ const styles = StyleSheet.create({
     fontSize: SIZES.font,
     color: COLORS.white,
     //marginStart: 10,
-  }
+  },
+
+  error: {
+    color: 'red',
+    fontFamily: 'SoraMedium',
+    fontSize: SIZES.small,
+    alignSelf: 'flex-start',
+  },
 })

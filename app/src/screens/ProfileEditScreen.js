@@ -1,30 +1,29 @@
-import { View, Text, Image, TouchableOpacity, useWindowDimensions } from 'react-native'
+import { View, Text, Image, TouchableOpacity, useWindowDimensions,TextInput } from 'react-native'
 import React from 'react'
-import AuthContext from '../context/AuthProvider'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { COLORS, SHADOWS, SIZES } from '../constants'
 import { useState, useEffect } from 'react'
 import { StyleSheet } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native'
 import { serverURL } from '../config/hosts'
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
-import { CustomBackButton, CustomButton, CustomInput, CustomTextButton } from '../components'
+import { MaterialIcons } from '@expo/vector-icons'
+import {  CustomButton } from '../components'
 import { SelectList } from 'react-native-dropdown-select-list'
+import DateTimePicker from '@react-native-community/datetimepicker'
 
 export default function ProfileEditScreen({ navigation }) {
-  const { height } = useWindowDimensions()
+  const { height, width } = useWindowDimensions()
   const [token, setToken] = useState('')
 
   const [name, setName] = useState('')
-  const [birthdate, setBirthdate] = useState('')
+  const [birthdate, setBirthdate] = useState(new Date())
   const data_gender = [
     { key: '0', value: 'Masculino' },
     { key: '1', value: 'Feminino' },
     { key: '2', value: 'Outro' },
   ]
+  const [gender, setGender] = useState('2')
   const [selected, setSelected] = React.useState('2')
-
   useEffect(() => {
     AsyncStorage.getItem('userToken')
       .then((userToken) => setToken(JSON.parse(userToken)))
@@ -33,15 +32,14 @@ export default function ProfileEditScreen({ navigation }) {
 
   const [data, setData] = useState([])
   const fetchData = async (token) => {
-    console.log(serverURL + '/users/userProfile/' + token.id)
+    //console.log(serverURL + '/users/userProfile/' + token.id)
     const resp = await fetch(`${serverURL}/users/userProfile/${token.id}`)
     const data = await resp.json()
-    console.log(data)
     setData(data)
-    setSelected(data.gender)
-    setBirthdate(data.birthdate.substring(0, 10))
+    setGender(data.gender)
+    setBirthdate(new Date(data.birthdate))
     setName(data.name)
-    console.log("User fetch data: "+JSON.stringify(data))
+    console.log('---------------\nUser fetch data: ' + JSON.stringify(data))
   }
   // request data from server
   useEffect(() => {
@@ -51,22 +49,15 @@ export default function ProfileEditScreen({ navigation }) {
     }
   }, [token])
 
-
-
-
   // handleFormSubmission that sends the information to the server to update the user
   // get user data and send it to the server updating the variables that were changed
   // if error occurs, it will show an alert
   // if success, it will show an alert and redirect to the profile screen
   const handleFormSubmission = async () => {
-    // get user data object that is already in the state
-    //const userData = data
-    // do an object with the new data
-    //
     const newData = {
       name: name,
       gender: selected,
-      birthdate: birthdate,
+      birthdate: birthdate.toISOString().slice(0, 10),
     }
     // merge the two objects
     //const updatedData = { ...userData, ...newData }
@@ -80,28 +71,40 @@ export default function ProfileEditScreen({ navigation }) {
     }).then((resp) => {
       if (resp.status === 200) {
         alert('Dados atualizados com sucesso!')
-        navigation.navigate('Profile',{refresh: true})
+        navigation.navigate('Profile', { refresh: true })
       } else {
         alert('Erro ao atualizar dados!')
       }
     })
   }
 
+  const [mode, setMode] = useState('date')
+  const [show, setShow] = useState(false)
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate
+    setShow(false)
+    setBirthdate(currentDate)
+  }
+
   return (
-    console.log("--------------\nToken data: "+ JSON.stringify(token) + "\n--------------"),
+    //console.log('--------------\nToken data: ' + JSON.stringify(token) + '\n--------------'),
     (
       <SafeAreaView style={styles.root}>
-        {/* Header 
-        <View style={styles.navigationBar}>
-          <CustomBackButton onPress={() => navigation.goBack()} />
-          <Text style={styles.pageTitle}>Editar Perfil</Text>
-        </View>
-        */}
-        
+
         <View style={styles.infoContainer}>
           {/* Name input */}
           <Text style={styles.textTag}>Nome</Text>
-          <CustomInput placeholder={`${data.name}`} value={name} setValue={setName} widthScale={0.8}/>
+          <View style={[styles.buttonStyle, { width: width * 0.8 }]}>
+          <TextInput
+
+            placeholder={`${data.name}`}
+            onChangeText={setName}
+            style={styles.textButton}
+          >
+            {name}
+          </TextInput>
+        </View>
+
 
           {/* Gender input */}
           {console.log('Gender selection: ' + selected)}
@@ -116,35 +119,55 @@ export default function ProfileEditScreen({ navigation }) {
             }}
             data={data_gender}
             save="value"
-            search={false}
-            //defaultOption={{key: data.gender, value: data_gender.find(x => x.key == data.gender).value}}
+            search={false}  
+            defaultOption={{key:gender, value:data_gender[gender].value}}
             fontFamily="SoraLight"
             boxStyles={styles.selectList}
-            inputStyles={[styles.text, { color: 'black' }]}
+            inputStyles={styles.textButton}
             dropdownStyles={styles.dropdownStyles}
           />
 
           {/* Birthdate input */}
           <Text style={styles.textTag}>Data de Nascimento</Text>
-          <CustomInput
-            placeholder={'aaaa-mm-dd'}
-            value={birthdate}
-            setValue={setBirthdate}
-            iconNameEntry="date-range"
-            widthScale={0.8}
-          />
+          <View
+          style={[
+            styles.buttonStyle,
+            { width: width * 0.8, flexDirection: 'row', justifyContent: 'space-between' },
+          ]}
+        >
+          <Text style={styles.textButton}>
+            {birthdate.getDate() +
+              '/' +
+              (birthdate.getMonth() + 1 < 10
+                ? '0' + (birthdate.getMonth() + 1)
+                : birthdate.getMonth() + 1) +
+              '/' +
+              birthdate.getFullYear()}
+          </Text>
+          <TouchableOpacity onPress={() => setShow(!show)}>
+            <MaterialIcons name="date-range" size={18} color={COLORS.wingDarkBlue} />
+          </TouchableOpacity>
         </View>
 
+        {show && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={birthdate}
+            mode={mode}
+            is24Hour={true}
+            display={Platform.OS === 'ios' ? 'inline' : 'default'}
+            onChange={onChange}
+            maximumDate={new Date(new Date().setFullYear(new Date().getFullYear() - 18))}
+          />
+        )}
+        </View>
+        
+
         <View style={styles.containerBTN}>
-          {/* 
-            <TouchableOpacity onPress={() => navigation.navigate("ProfileEdit")} style={[styles.button,{height: height*0.05}]}>
-                <Text style={styles.buttonText}>Guardar</Text>
-            </TouchableOpacity>
-          */}
           <CustomButton
             onPress={() => handleFormSubmission()}
             text="Guardar Alterações"
-            type = "TERTIARY"
+            type="TERTIARY"
             widthScale={0.8}
           ></CustomButton>
         </View>
@@ -158,51 +181,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.white,
   },
-  navigationBar: {
-    // in case i wanto to add a button in the right side
-    flexDirection: 'row',
-    marginTop: 10,
-    marginHorizontal: 10,
-    marginBottom: 10,
-  },
-  pageTitle: {
-    fontFamily: 'SoraMedium',
-    fontSize: SIZES.medium,
-    color: COLORS.wingDarkBlue,
-    // center the text
-    alignSelf: 'center',
-    // center the text horizontally
-    flex: 1,
-    textAlign: 'center',
-    right: 20,
-  },
-  image: {
-    flex: 1,
-    width: undefined,
-    height: undefined,
-  },
-  profileImage: {
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    overflow: 'hidden',
-  },
-  addAvatar: {
-    backgroundColor: COLORS.white,
-    position: 'absolute',
-    bottom: 5,
-    right: 1,
-    height: 50,
-    width: 50,
-    borderRadius: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  nameContainer: {
-    alignSelf: 'center',
-    alignItems: 'center',
-    marginTop: 16,
-  },
   infoContainer: {
     marginHorizontal: 40,
     marginTop: 40,
@@ -212,11 +190,6 @@ const styles = StyleSheet.create({
     fontFamily: 'SoraBold',
     fontSize: SIZES.medium,
     color: COLORS.wingDarkBlue,
-  },
-  textInfo: {
-    //marginLeft: 30,
-    fontFamily: 'SoraLight',
-    fontSize: SIZES.medium,
   },
   button: {
     backgroundColor: COLORS.wingDarkBlue,
@@ -258,11 +231,25 @@ const styles = StyleSheet.create({
     maxHeight: 120,
     backgroundColor: 'white',
     borderColor: COLORS.wingblue,
+    marginBottom: 10,
+    borderRadius: 5,
   },
-  text: {
+  buttonStyle: {
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 15,
+    marginVertical: 12,
+    borderWidth: 1,
+    flexDirection: 'row',
+    alignSelf: 'center',
+    borderColor: COLORS.wingblue,
+    alignItems: 'center',
+  },
+  textButton: {
+    flex: 1,
+    fontFamily: 'SoraRegular',
+    fontSize: SIZES.font,
     color: COLORS.wingDarkBlue,
-    fontFamily: 'SoraLight',
-    fontSize: 15,
-    alignSelf: 'flex-start',
-  },
+    marginStart: 10,
+  }
 })

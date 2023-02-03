@@ -6,7 +6,9 @@ import {
   useWindowDimensions,
   ScrollView,
   Platform,
-  StatusBar
+  StatusBar,
+  Modal,
+
 } from 'react-native'
 import React from 'react'
 import AuthContext from '../context/AuthProvider'
@@ -21,6 +23,7 @@ import { CustomButton } from '../components'
 import ChooseCategoryModal from '../components/ChooseCategoryModal'
 import ProductInputModal from '../components/ProductInputModal'
 import ProductTable from '../components/ProductTable'
+import DateTimePicker from '@react-native-community/datetimepicker'
 
 export default function AddExpenseScreen({ navigation }) {
   const { height } = useWindowDimensions()
@@ -33,19 +36,11 @@ export default function AddExpenseScreen({ navigation }) {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [products, setProducts] = useState([])
   const [isDebit, setIsDebit] = useState(true)
-  const today = new Date()
-  const formattedDate = today.toISOString().slice(0, 10)
-  const [date, setDate] = useState(formattedDate)
 
-  // TODO: Validate form data
+
+  //Validate form data
   const [validTitle, setValidTitle] = useState(true)
   const [validValue, setValidValue] = useState(true)
-  const [validDescription, setValidDescription] = useState(true)
-  const [validDate, setValidDate] = useState(true)
-
-
-
-
 
   useEffect(() => {
     AsyncStorage.getItem('userToken')
@@ -53,7 +48,6 @@ export default function AddExpenseScreen({ navigation }) {
       .catch((err) => console.log(err))
   }, [])
 
-  
   const toggleModalCT = () => {
     setisModalVisibleCT(!isModalVisibleCT)
   }
@@ -81,7 +75,7 @@ export default function AddExpenseScreen({ navigation }) {
     setDescription('')
     setProducts([])
     setIsDebit(true)
-    setDate(formattedDate)
+    setDate(new Date())
   }
 
   function validateForm() {
@@ -92,76 +86,41 @@ export default function AddExpenseScreen({ navigation }) {
     } else {
       setValidTitle(true)
     }
-
     if (value == '') {
       setValidValue(false)
       valid = false
     } else {
       setValidValue(true)
     }
-    if (date == '') {
-      setValidDate(false)
-      valid = false
-    }
-    else if ( date > formattedDate) {
-      setValidDate(false)
-      valid = false
-    }
-    //check if date is in format yyyy-mm-dd
-    else if (date.match(/^\d{4}-\d{2}-\d{2}$/) == null) {
-      setValidDate(false)
-      valid = false
-    } else {
-      setValidDate(true)
-    }
 
     return valid
   }
 
+  function showErrorField(text) {
+    console.log('showing error field')
+    var textToWrite = ''
 
-  function showErrorField(text){
-    var textToWrite = ""
-
-    if (text == 'Título'){
-      if (!title){
-        textToWrite = "* Campo Obrigatório"
+    if (text == 'Título') {
+      if (!title) {
+        textToWrite = '*Obrigatório'
       }
-    }
-    else if (text == 'Valor'){
-      if (!value){
-        textToWrite = "*Obrigatório"
+    } else if (text == 'Valor') {
+      if (!value) {
+        textToWrite = '*Obrigatório'
       }
       // check if value is number
-      else if (isNaN(value)){
-        textToWrite = "* Valor inválido"
+      else if (isNaN(value)) {
+        textToWrite = '* Valor inválido'
       }
-    }
-    else if (text == 'Data'){
-      if (!date){
-        textToWrite = "*Obrigatório"
-      }
-      //check if date is valid
-    else if (!date.includes("-") ||
-      date.length != 10 ||
-      date.split("-")[0].length != 4 ||
-      date.split("-")[1].length != 2 ||
-      date.split("-")[2].length != 2     
-        ){
-        textToWrite = "* Formato inválido"
-      }
-      //check if date is in the future
-      else if (date > formattedDate){
-        textToWrite = "* Data inválida"
-      }
-    }
+    } 
 
-
-
-    return(<Text style= {{alignSelf: 'flex-start'}}>
-              <Text style={styles.textTag}>{text}</Text>
-              <Text style={styles.error}> {textToWrite}</Text>
-            </Text>)
-    }
+    return (
+      <Text style={{ alignSelf: 'flex-start' }}>
+        <Text style={styles.textTag}>{text}</Text>
+        <Text style={styles.error}> {textToWrite}</Text>
+      </Text>
+    )
+  }
 
   function handleDeleteProduct(index) {
     // Delete product at the specified index
@@ -197,75 +156,64 @@ export default function AddExpenseScreen({ navigation }) {
     return null
   }
 
-  function typeContainer () {
-   return (
-    <View style={styles.debitCreditContainer}>
-    <TouchableOpacity
-      style={[
-        styles.debitCreditButton,
-        {
-          borderTopRightRadius: 0,
-          borderBottomRightRadius: 0,
-          backgroundColor: isDebit ? COLORS.wingDarkBlue : COLORS.white,
-        },
-      ]}
-      onPress={() => setIsDebit(true)}
-    >
-      <Text
-        style={[
-          styles.textDebitCredit,
-          {
-            color: isDebit ? COLORS.white : COLORS.wingDarkBlue,
-          },
-        ]}
-      >
-        Débito
-      </Text>
-    </TouchableOpacity>
-    <TouchableOpacity
-      style={[
-        styles.debitCreditButton,
-        {
-          borderTopLeftRadius: 0,
-          borderBottomLeftRadius: 0,
-          backgroundColor: isDebit ? COLORS.white : COLORS.wingDarkBlue ,
-        },
-      ]}
-      onPress={() => setIsDebit(false)}
-    >
-      <Text
-        style={[
-          styles.textDebitCredit,
-          {
-            color: isDebit ? COLORS.wingDarkBlue : COLORS.white,
-          },
-        ]}
-      >
-        Crédito
-      </Text>
-    </TouchableOpacity>
-  </View>
+  function typeContainer() {
+    return (
+      <View style={styles.debitCreditContainer}>
+        <TouchableOpacity
+          style={[
+            styles.debitCreditButton,
+            {
+              borderTopRightRadius: 0,
+              borderBottomRightRadius: 0,
+              backgroundColor: isDebit ? COLORS.wingDarkBlue : COLORS.white,
+            },
+          ]}
+          onPress={() => setIsDebit(true)}
+        >
+          <Text
+            style={[
+              styles.textDebitCredit,
+              {
+                color: isDebit ? COLORS.white : COLORS.wingDarkBlue,
+              },
+            ]}
+          >
+            Débito
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            styles.debitCreditButton,
+            {
+              borderTopLeftRadius: 0,
+              borderBottomLeftRadius: 0,
+              backgroundColor: isDebit ? COLORS.white : COLORS.wingDarkBlue,
+            },
+          ]}
+          onPress={() => setIsDebit(false)}
+        >
+          <Text
+            style={[
+              styles.textDebitCredit,
+              {
+                color: isDebit ? COLORS.wingDarkBlue : COLORS.white,
+              },
+            ]}
+          >
+            Crédito
+          </Text>
+        </TouchableOpacity>
+      </View>
     )
   }
-    
 
   const categoryIcon = getCategoryIcon(selectedCategory)
   const { width } = useWindowDimensions()
 
-  // router.post('/createPurchase/',function(req,res){
-  /* Purchases.addPurchase(req.body.is_recurring,
-   req.body.date, 
-   req.body.value,
-   req.body.title, 
-   req.body.description, 
-   req.body.idUser, 
-   req.body.seller,
-   req.body.type,
-   req.body.products)
-   */
 
   const handleFormSubmission = async () => {
-    if(products.length == 0){
+
+    if (products.length == 0) {
       products.push({
         quantity: 1,
         value: value,
@@ -276,7 +224,7 @@ export default function AddExpenseScreen({ navigation }) {
     const newData = {
       // falta a CATEGORIA
       is_recurring: false,
-      date: date,
+      date: date.toISOString().slice(0, 10),
       value: value,
       title: title,
       description: description,
@@ -302,11 +250,19 @@ export default function AddExpenseScreen({ navigation }) {
     })
   }
 
+  const [date, setDate] = useState(new Date())
+  const [mode, setMode] = useState('date')
+  const [show, setShow] = useState(false)
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate
+    setShow(false)
+    setDate(currentDate)
+  }
 
-
-  
   return (
-    console.log('--------------\nToken data AddExpense: ' + JSON.stringify(token) + '\n--------------'),
+    console.log(
+      '--------------\nToken data AddExpense: ' + JSON.stringify(token) + '\n--------------'
+    ),
     (
       <SafeAreaView style={styles.root}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -316,15 +272,14 @@ export default function AddExpenseScreen({ navigation }) {
             {/* Title input */}
 
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {validTitle ? (<Text style={styles.textTag}>Título</Text>) : showErrorField('Título')}
-            {/* Button with camera icon to navigate to OCR aligned to right */}
-            <TouchableOpacity
-              style={{ position: 'absolute', right: 0 }}
-              onPress={() => navigation.navigate('OCR')}
-            >
-              <MaterialIcons name="camera-alt" size={24} color={COLORS.wingDarkBlue} />
-            </TouchableOpacity>
-        
+              {validTitle ? <Text style={styles.textTag}>Título</Text> : showErrorField('Título')}
+              {/* Button with camera icon to navigate to OCR aligned to right */}
+              <TouchableOpacity
+                style={{ position: 'absolute', right: 0 }}
+                onPress={() => navigation.navigate('OCR')}
+              >
+                <MaterialIcons name="camera-alt" size={24} color={COLORS.wingDarkBlue} />
+              </TouchableOpacity>
             </View>
             <View style={[styles.buttonStyle, { width: width * 0.8 }]}>
               <TextInput
@@ -336,44 +291,66 @@ export default function AddExpenseScreen({ navigation }) {
               </TextInput>
             </View>
 
-
             {/* Value and Date input */}
             <View
               style={[
                 { flexDirection: 'row', alignContent: 'space-between', alignItems: 'stretch' },
               ]}
             >
-              <View style={{ flex: 1, padding:0, flexWrap: 'wrap'}}>
-                {validValue ? (<Text style={styles.textTag}>Valor</Text>) : showErrorField('Valor')}
-                <View
-                  style={[styles.buttonStyle, { width: width * 0.36}]}
-                >
-                  <MaterialIcons name="euro" size={18} color={COLORS.wingDarkBlue}  />
-                  <TextInput
-                    placeholder="10.25"
-                    onChangeText={setValue}
-                    style={styles.textButton}
-                  >
+              <View style={{ flex: 1, padding: 0, flexWrap: 'wrap' }}>
+                {validValue ? <Text style={styles.textTag}>Valor</Text> : showErrorField('Valor')}
+                <View style={[styles.buttonStyle, { width: width * 0.36}]}>
+                  <MaterialIcons name="euro" size={18} color={COLORS.wingDarkBlue} />
+                  <TextInput placeholder="10.25" onChangeText={setValue} style={styles.textButton}>
                     {value}
                   </TextInput>
                 </View>
               </View>
-              <View style={{ flex: 1, padding: 0, flexWrap: 'wrap' }}>
-                {validDate ? (<Text style={styles.textTag}>Data</Text>) : showErrorField('Data')}
+
+              <View style={{ flex: 1, padding: 0 }}>
+                <Text style={styles.textTag}>Data</Text>
                 <View
-                  style={[styles.buttonStyle, { width: width * 0.4}]}
+                  style={[
+                    styles.buttonStyle,
+                    { width: width * 0.4, flexDirection: 'row', justifyContent: 'space-between' },
+                  ]}
                 >
-                  <MaterialIcons name="date-range" size={18} color={COLORS.wingDarkBlue} />
-                  <TextInput
-                    placeholder="AAAA-MM-DD"
-                    onChangeText={setDate}
-                    style={styles.textButton}
-                  >
-                    {date}
-                  </TextInput>
+                  <Text style={styles.textButton}>
+                    {date.getDate() == new Date().getDate() &&
+                    date.getMonth() == new Date().getMonth() &&
+                    date.getFullYear() == new Date().getFullYear()
+                      ? 'Hoje'
+                      : date.getDate() +
+                        '/' +
+                        (date.getMonth() + 1 < 10
+                          ? '0' + (date.getMonth() + 1)
+                          : date.getMonth() + 1) +
+                        '/' +
+                        date.getFullYear()}
+                  </Text>
+                  <TouchableOpacity onPress={() => setShow(!show)}>
+                    <MaterialIcons name="date-range" size={18} color={COLORS.wingDarkBlue} />
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>
+            {show && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={date}
+                mode={mode}
+                is24Hour={true}
+                display={Platform.OS === 'ios' ? 'inline' : 'default'}
+                onChange={onChange}
+                maximumDate={new Date()}
+              />
+            )}
+            {
+             console.log('date from picker: ' + date)
+            }
+            {
+             console.log('formatted date: ' + date.toISOString().slice(0, 10))
+            }
 
             {/* Category input */}
             {products.length == 0 ? (
@@ -395,7 +372,7 @@ export default function AddExpenseScreen({ navigation }) {
             ) : null}
 
             {/* Description input */}
-            {validDescription ? (<Text style={styles.textTag}>Descrição</Text>) : showErrorField('Descrição') }
+            <Text style={styles.textTag}>Descrição</Text>
 
             <TextInput
               multiline={true}
@@ -475,19 +452,16 @@ export default function AddExpenseScreen({ navigation }) {
           <View style={styles.containerBTN}>
             <CustomButton
               onPress={() => {
-
-              if (validateForm() == true) {
-                handleCleanForm(),
-                handleFormSubmission()
-              }
-               
+                if (validateForm() == true) {
+                  handleCleanForm(), handleFormSubmission()
+                }
               }}
               text="Adicionar Movimento"
               type="TERTIARY"
               widthScale={0.8}
             ></CustomButton>
 
-<CustomButton
+            <CustomButton
               onPress={() => handleCleanForm()}
               text="Limpar Dados"
               type="SECONDARY"
@@ -504,7 +478,7 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: COLORS.white,
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   infoContainer: {
     marginHorizontal: 40,
@@ -512,15 +486,15 @@ const styles = StyleSheet.create({
   },
   textTag: {
     color: COLORS.wingDarkBlue,
-    fontFamily: "SoraMedium",
+    fontFamily: 'SoraMedium',
     fontSize: 15,
-    alignSelf: "flex-start",
+    alignSelf: 'flex-start',
   },
-  error : {
-    color: "red",
-    fontFamily: "SoraMedium",
+  error: {
+    color: 'red',
+    fontFamily: 'SoraMedium',
     fontSize: SIZES.small,
-    alignSelf: "flex-start",
+    alignSelf: 'flex-start',
   },
   textInfo: {
     fontFamily: 'SoraLight',
@@ -553,6 +527,7 @@ const styles = StyleSheet.create({
     fontSize: SIZES.font,
     color: COLORS.wingDarkBlue,
     marginStart: 10,
+    flex: 1,
   },
   productsContainer: {
     flexDirection: 'row',
@@ -570,20 +545,47 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderWidth: 1.5,
-    alignSelf:'stretch',
+    alignSelf: 'stretch',
     flexGrow: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     //marginHorizontal: 5,
-    
+
     borderColor: COLORS.wingDarkBlue,
-  // borderColor:'#ed711e'
+    // borderColor:'#ed711e'
   },
   textDebitCredit: {
     fontFamily: 'SoraMedium',
     fontSize: SIZES.font,
     color: COLORS.white,
     //marginStart: 10,
+  },
+
+  buttonContainer: {
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 15,
+    marginVertical: 12,
+    borderWidth: 1,
+    flexDirection: 'row',
+    alignSelf: 'center',
+    borderColor: COLORS.wingDarkBlue,
+    alignItems: 'center',
+  },
+  modalContainer: {
+    flex: 1,
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    width: '95%',
+    height: '30%',
+    backgroundColor: 'white',
+    padding: 20,
+    alignSelf: 'center',
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
   },
 })

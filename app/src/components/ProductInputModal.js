@@ -26,7 +26,7 @@ const ProductInputModal = ({ isModalVisible,generalCategory,getCategoryIcon,getC
       setQuantity(productToEdit.quantity)
       setIdcategory(productToEdit.idcategory)
     }else{
-      console.log('Not editing')
+      //console.log('Not editing')
       setDescription('')
       setValue('')
       setQuantity(1)

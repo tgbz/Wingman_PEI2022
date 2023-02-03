@@ -196,7 +196,7 @@ function HomeScreen({ navigation }) {
       }
     });
 
-    console.log(
+ /*   console.log(
       "selector:" +
         selector +
         "\n" +
@@ -206,6 +206,7 @@ function HomeScreen({ navigation }) {
         "spent: " +
         spent
     );
+*/
     //console.log('total_plafond: ' + total_plafond)
     //console.log('spent: ' + spent)
     if (spent > total_plafond) {

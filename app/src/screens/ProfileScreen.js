@@ -25,9 +25,9 @@ const createFormData = (pickedImage, user) => {
   console.log('Create form data: ' + JSON.stringify(pickedImage) + ' ' + JSON.stringify(user))
   const data = new FormData()
   console.log('plataforma: ' + Platform.OS)
-  pickedImage.path =
-    Platform.OS === 'ios' ? pickedImage.uri.replace('file://', '') : pickedImage.uri
-  pickedImage.name = pickedImage.fileName
+  pickedImage.path = Platform.OS === 'ios'||Platform.OS === 'android' ? pickedImage.uri.replace('file://', '') : pickedImage.uri
+  pickedImage["name"] = pickedImage.fileName? pickedImage.fileName : "imgAndroid" 
+  pickedImage["type"] = "image/jpeg"
   data.append('avatarFile', pickedImage)
   data.append('user', user)
   console.log('\nDATA FORM: ' + JSON.stringify(data))

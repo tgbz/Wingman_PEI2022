@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   },
   wingman:{
     fontFamily: 'SoraBold',
-    fontSize: 34,
+    fontSize: 20,
     color: COLORS.wingDarkBlue,
     paddingVertical:20,
     flex:3

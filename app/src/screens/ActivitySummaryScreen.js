@@ -79,10 +79,13 @@ export default function PoliticsScreen({ navigation }) {
       temp = origin.filter(element =>accents.remove(element.type)!==word )
       new_temp = temp.filter(element => checks[element.category]===true)
       //temp = temp.filter(elem => checks[element.category] )
-      setTransactionsList(new_temp)}
+      if (new_temp.length === 0) alert("Não possui nenhuma transação com estas caraterísticas!")
+      else setTransactionsList(new_temp)}
     else {
       new_temp = origin.filter(element => checks[element.category]===true)
-      setTransactionsList(new_temp)}
+      if (new_temp.length === 0) alert("Não possui nenhuma transação com estas caraterísticas!")
+      else setTransactionsList(new_temp)
+      }
 
   }
 
@@ -93,15 +96,15 @@ export default function PoliticsScreen({ navigation }) {
     var c = 0
     Object.keys(checks).forEach(elem => {checks[elem]? c=c+1: c})
     //console.log(c)
-    if (c >0){
-    handleCloseModalPress()
-    setFilters(false)
-    if (valorSelect === 2){    
-      deleteByValue("Debito")}
-    else if (valorSelect === 1){
-      deleteByValue("Credito")}
-    else if (valorSelect === 0) {
-      deleteByValue(null)}
+    if (c>0){
+      handleCloseModalPress()
+      setFilters(false)
+      if (valorSelect === 2){    
+        deleteByValue("Debito")}
+      else if (valorSelect === 1){
+        deleteByValue("Credito")}
+      else if (valorSelect === 0) {
+        deleteByValue(null)}
     }
     else alert("Tem de selecionar pelo menos 1 categoria!")
   }

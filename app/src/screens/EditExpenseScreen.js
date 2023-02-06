@@ -620,7 +620,7 @@ function fetchDataOCR () {
             ></CustomButton>}
             {originOCR &&
             <CustomButton
-              onPress={() => {navigation.navigate('Home')}}
+              onPress={() => {navigation.navigate('Casa', { refresh: true })}}
               text="Cancelar Despesa"
               type="SECONDARY"
               widthScale={0.8}

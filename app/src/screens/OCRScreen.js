@@ -99,7 +99,7 @@ return data
 const sendPost = async () => {
   setLoading(true)
   //console.log('handleUploadPhoto ' + JSON.stringify(pickedImage))
-  const resp = await fetch(`http://192.168.1.65:5003/upload`, {
+  const resp = await fetch(`http://94.60.175.136:8000/ocr/upload`, {
     method: 'POST',
     body: createFormData(),
     headers: {
